@@ -206,12 +206,23 @@ footer {
 <section id="apply">
 <div class="container">
 <h2>Apply to Join Our Agency</h2>
-<form action="mailto:shahzad@thelionforce.com" method="post" enctype="text/plain">
-<input type="text" name="Name" placeholder="Your Name" required>
-<input type="email" name="Email" placeholder="Your Email" required>
-<input type="text" name="TikTok Username" placeholder="TikTok Username" required>
-<textarea name="Message" placeholder="Tell us about your content"></textarea>
-<button class="btn" type="submit">Submit Application</button>
+<form action="https://formsubmit.co/contact@thelionforce.com" method="POST">
+
+  <!-- Security -->
+  <input type="hidden" name="_captcha" value="false">
+  <input type="hidden" name="_template" value="table">
+
+  <!-- Redirect after submit -->
+  <input type="hidden" name="_next" value="https://thelionforce.com/thank-you.html">
+
+  <input type="text" name="name" placeholder="Your Name" required>
+  <input type="email" name="email" placeholder="Your Email" required>
+  <input type="text" name="tiktok" placeholder="TikTok Username" required>
+  <input type="text" name="country" placeholder="Country / Region" required>
+
+  <textarea name="message" placeholder="Tell us about your content" required></textarea>
+
+  <button class="btn" type="submit">Apply Now</button>
 </form>
 </div>
 </section>
