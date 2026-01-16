@@ -1,211 +1,252 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>The Lion Force | TikTok Agency</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="The Lion Force is a professional TikTok Agency supporting LIVE creators across the United Kingdom, MENA, CCA, and Turkey." />
+<meta charset="UTF-8">
+<title>The Lion Force | TikTok Agency</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <style>
-    body {
-      margin: 0;
-      font-family: Arial, Helvetica, sans-serif;
-      background: #020617;
-      color: #ffffff;
-    }
+<style>
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
 
-    .container {
-      max-width: 1100px;
-      margin: auto;
-      padding: 0 20px;
-    }
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  background: #020617;
+  color: #ffffff;
+}
 
-    /* HERO */
-    header {
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      background:
-        linear-gradient(rgba(2,6,23,0.85), rgba(2,6,23,0.95)),
-        url('images/hero.png') center/cover no-repeat;
-    }
+.container {
+  max-width: 1100px;
+  margin: auto;
+  padding: 0 20px;
+}
 
-    h1 {
-      font-size: 3.2rem;
-      margin-bottom: 15px;
-      font-weight: 700;
-    }
+/* HERO */
+header {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  background:
+    linear-gradient(rgba(2,6,23,0.85), rgba(2,6,23,0.95)),
+    url('images/hero.png') center/cover no-repeat;
+}
 
-    h1 span {
-      color: #3b82f6;
-    }
+h1 {
+  font-size: 3.2rem;
+  margin-bottom: 15px;
+}
 
-    .subtitle {
-      font-size: 1.3rem;
-      color: #c7d2fe;
-      margin-bottom: 35px;
-      line-height: 1.6;
-    }
+h1 span { color: #3b82f6; }
 
-    .btn {
-      display: inline-block;
-      padding: 14px 32px;
-      font-size: 1rem;
-      font-weight: 600;
-      border-radius: 8px;
-      text-decoration: none;
-      color: #fff;
-      background: #2563eb;
-    }
+.subtitle {
+  font-size: 1.3rem;
+  color: #c7d2fe;
+  margin-bottom: 35px;
+}
 
-    /* SECTIONS */
-    section {
-      padding: 80px 0;
-      border-top: 1px solid #1e293b;
-    }
+.btn {
+  display: inline-block;
+  padding: 14px 32px;
+  font-weight: 600;
+  border-radius: 8px;
+  text-decoration: none;
+  color: #fff;
+  background: #2563eb;
+  transition: transform 0.3s ease;
+}
 
-    h2 {
-      text-align: center;
-      font-size: 2.2rem;
-      margin-bottom: 45px;
-    }
+.btn:hover { transform: scale(1.05); }
 
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 25px;
-    }
+/* SECTION */
+section {
+  padding: 80px 0;
+  border-top: 1px solid #1e293b;
+}
 
-    .card {
-      border: 1px solid #1e293b;
-      border-radius: 14px;
-      padding: 26px;
-      background: #020617;
-      transition: transform 0.2s ease, border-color 0.2s ease;
-    }
+h2 {
+  text-align: center;
+  font-size: 2.2rem;
+  margin-bottom: 45px;
+}
 
-    .card:hover {
-      transform: translateY(-5px);
-      border-color: #3b82f6;
-    }
+/* GRID */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 25px;
+}
 
-    .card img {
-      width: 100%;
-      border-radius: 12px;
-      margin-bottom: 15px;
-    }
+/* CARDS */
+.card {
+  border: 1px solid #1e293b;
+  border-radius: 14px;
+  padding: 26px;
+  background: #020617;
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 0.6s ease;
+}
 
-    .card h3 {
-      margin-bottom: 12px;
-      color: #93c5fd;
-      font-size: 1.1rem;
-    }
+.card.show {
+  opacity: 1;
+  transform: translateY(0);
+}
 
-    .card p {
-      color: #cbd5f5;
-      font-size: 0.95rem;
-      line-height: 1.6;
-    }
+.card img {
+  width: 100%;
+  border-radius: 12px;
+  margin-bottom: 15px;
+}
 
-    footer {
-      text-align: center;
-      padding: 30px 20px;
-      font-size: 0.9rem;
-      color: #94a3b8;
-      border-top: 1px solid #1e293b;
-    }
-  </style>
+.card h3 {
+  color: #93c5fd;
+  margin-bottom: 10px;
+}
+
+.card p {
+  color: #cbd5f5;
+  font-size: 0.95rem;
+}
+
+/* FORM */
+form {
+  max-width: 500px;
+  margin: auto;
+}
+
+input, textarea {
+  width: 100%;
+  padding: 14px;
+  margin-bottom: 15px;
+  border-radius: 8px;
+  border: none;
+  background: #020617;
+  color: #fff;
+  border: 1px solid #1e293b;
+}
+
+/* FAQ */
+.faq {
+  max-width: 800px;
+  margin: auto;
+}
+
+.faq-item {
+  border-bottom: 1px solid #1e293b;
+  padding: 15px 0;
+}
+
+.faq-item h4 {
+  cursor: pointer;
+  color: #93c5fd;
+}
+
+.faq-item p {
+  display: none;
+  color: #cbd5f5;
+}
+
+/* FOOTER */
+footer {
+  text-align: center;
+  padding: 30px;
+  color: #94a3b8;
+  border-top: 1px solid #1e293b;
+}
+</style>
 </head>
 
 <body>
 
-<!-- HERO SECTION -->
+<!-- HERO -->
 <header>
   <div class="container">
     <h1>The <span>Lion Force</span></h1>
-
     <p class="subtitle">
-      Official TikTok Agency supporting LIVE creators across<br />
-      <strong>United Kingdom, MENA, CCA & Turkey</strong>
+      Official TikTok Agency for<br>
+      United Kingdom • MENA • CCA • Turkey
     </p>
-
-    <a href="mailto:contact@thelionforce.com" class="btn">
-      Apply to Join Our Agency
-    </a>
+    <a href="#apply" class="btn">Apply Now</a>
   </div>
 </header>
 
 <!-- SERVICES -->
 <section>
-  <div class="container">
-    <h2>Our TikTok Agency Services</h2>
-
-    <div class="grid">
-
-      <div class="card">
-        <img src="images/live.png" alt="TikTok LIVE Creator Onboarding">
-        <h3>🎥 TikTok LIVE Creator Onboarding</h3>
-        <p>
-          Official agency onboarding for eligible creators to unlock TikTok LIVE,
-          gifts, and long-term growth opportunities.
-        </p>
-      </div>
-
-      <div class="card">
-        <img src="images/support.png" alt="Account Protection and Support">
-        <h3>🛡 Account Protection & Support</h3>
-        <p>
-          Agency-level assistance for account bans, restrictions,
-          monetization issues, and TikTok policy compliance.
-        </p>
-      </div>
-
-      <div class="card">
-        <img src="images/growth.png" alt="Growth and Monetization Strategy">
-        <h3>📈 Growth & Monetization Strategy</h3>
-        <p>
-          Proven strategies to increase followers, improve LIVE engagement,
-          and maximize creator revenue.
-        </p>
-      </div>
-
-      <div class="card">
-        <img src="images/training.png" alt="Creator Training and Guidance">
-        <h3>🎓 Creator Training & Guidance</h3>
-        <p>
-          Professional training on LIVE best practices, audience engagement,
-          content planning, and platform rules.
-        </p>
-      </div>
-
-      <div class="card">
-        <img src="images/performance.png" alt="LIVE Performance Optimization">
-        <h3>⚡ LIVE Performance Optimization</h3>
-        <p>
-          Support to optimize LIVE sessions, participation in events,
-          timing strategies, and performance improvement.
-        </p>
-      </div>
-
-      <div class="card">
-        <h3>🤝 Long-Term Creator Partnership</h3>
-        <p>
-          Transparent, long-term partnerships focused on sustainability,
-          trust, and consistent creator earnings.
-        </p>
-      </div>
-
-    </div>
-  </div>
+<div class="container">
+<h2>Our TikTok Agency Services</h2>
+<div class="grid">
+  <div class="card"><img src="images/live.png"><h3>LIVE Onboarding</h3><p>Official TikTok LIVE agency onboarding.</p></div>
+  <div class="card"><img src="images/support.png"><h3>Account Protection</h3><p>Ban & restriction support.</p></div>
+  <div class="card"><img src="images/growth.png"><h3>Growth Strategy</h3><p>Revenue & follower growth.</p></div>
+  <div class="card"><img src="images/training.png"><h3>Creator Training</h3><p>LIVE coaching & guidance.</p></div>
+  <div class="card"><img src="images/performance.png"><h3>Performance Optimization</h3><p>LIVE session improvement.</p></div>
+  <div class="card"><h3>Long-Term Partnership</h3><p>Stable, transparent collaboration.</p></div>
+</div>
+</div>
 </section>
 
-<!-- FOOTER -->
+<!-- APPLY FORM -->
+<section id="apply">
+<div class="container">
+<h2>Apply to Join Our Agency</h2>
+<form action="mailto:contact@thelionforce.com" method="post" enctype="text/plain">
+<input type="text" name="Name" placeholder="Your Name" required>
+<input type="email" name="Email" placeholder="Your Email" required>
+<input type="text" name="TikTok Username" placeholder="TikTok Username" required>
+<textarea name="Message" placeholder="Tell us about your content"></textarea>
+<button class="btn" type="submit">Submit Application</button>
+</form>
+</div>
+</section>
+
+<!-- FAQ -->
+<section>
+<div class="container">
+<h2>Frequently Asked Questions</h2>
+<div class="faq">
+  <div class="faq-item">
+    <h4>Who can join The Lion Force?</h4>
+    <p>Creators from UK, MENA, CCA & Turkey who meet TikTok LIVE eligibility.</p>
+  </div>
+  <div class="faq-item">
+    <h4>Is there any cost?</h4>
+    <p>No. Joining our agency is completely free.</p>
+  </div>
+  <div class="faq-item">
+    <h4>Will my earnings be affected?</h4>
+    <p>No. You keep your earnings. We help you grow.</p>
+  </div>
+</div>
+</div>
+</section>
+
 <footer>
-  © 2026 The Lion Force. All rights reserved.<br />
-  Professional TikTok Agency for United Kingdom, MENA, CCA & Turkey
+© 2026 The Lion Force – Official TikTok Agency
 </footer>
+
+<script>
+// ANIMATION
+const cards = document.querySelectorAll('.card');
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('show');
+    }
+  });
+});
+cards.forEach(card => observer.observe(card));
+
+// FAQ
+document.querySelectorAll('.faq-item h4').forEach(item => {
+  item.onclick = () => {
+    const p = item.nextElementSibling;
+    p.style.display = p.style.display === "block" ? "none" : "block";
+  };
+});
+</script>
 
 </body>
 </html>
