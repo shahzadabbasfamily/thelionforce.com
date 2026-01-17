@@ -355,6 +355,45 @@ document.querySelectorAll('.faq-item h4').forEach(h =>
     h.nextElementSibling.style.display === "block" ? "none" : "block"
 );
 </script>
+  
+<script>
+(async function () {
+  // Prevent redirect loop
+  if (sessionStorage.getItem("regionRedirected")) return;
+
+  try {
+    const res = await fetch("https://ipapi.co/json/");
+    const data = await res.json();
+    const country = data.country_code;
+
+    let redirectUrl = null;
+
+    // UK
+    if (country === "GB") redirectUrl = "uk.html";
+
+    // Turkey
+    else if (country === "TR") redirectUrl = "turkey.html";
+
+    // MENA countries
+    else if ([
+      "AE","SA","EG","MA","DZ","TN","JO","KW","QA","BH","OM","IQ","LB","LY","SD","YE"
+    ].includes(country)) redirectUrl = "mena.html";
+
+    // CCA countries
+    else if ([
+      "KZ","UZ","KG","TJ","TM","AZ"
+    ].includes(country)) redirectUrl = "cca.html";
+
+    if (redirectUrl) {
+      sessionStorage.setItem("regionRedirected", "true");
+      window.location.href = redirectUrl;
+    }
+
+  } catch (e) {
+    console.log("Geo redirect failed", e);
+  }
+})();
+</script>
 
 </body>
 </html>
