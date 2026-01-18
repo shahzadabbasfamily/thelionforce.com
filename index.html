@@ -320,22 +320,91 @@ footer {
 <section id="apply">
 <div class="container">
 <h2>Apply to Join Our Official TikTok LIVE Agency</h2>
-<form action="https://formsubmit.co/futuredbuild@gmail.com" method="POST">
-<input type="hidden" name="_captcha" value="false">
-<input type="hidden" name="_template" value="table">
-<input type="hidden" name="_next" value="https://thelionforce.com/thank-you.html">
 
-<input type="text" name="name" placeholder="Your Name" required>
-<input type="email" name="email" placeholder="Your Email" required>
-<input type="text" name="tiktok" placeholder="TikTok Username" required>
-<input type="text" name="country" placeholder="Country / Region" required>
-<textarea name="message" placeholder="Tell us about your content" required></textarea>
+    <!-- WHATSAPP APPLY (PRIMARY) -->
+    <div style="text-align:center; margin-bottom:40px;">
+      <p style="color:#94a3b8; margin-bottom:15px;">
+        Fastest response via WhatsApp (recommended)
+      </p>
 
-<button class="btn" type="submit">Apply Now</button>
-</form>
+      <a
+        href="https://wa.me/447539357381?text=Hi%20I%20want%20to%20apply%20to%20join%20The%20Lion%20Force%20TikTok%20LIVE%20Agency.%0A%0ATikTok%20Username:%0ACountry:%0ALIVE%20Status:"
+        class="btn whatsapp-btn"
+        target="_blank"
+        onclick="gtag('event','whatsapp_apply',{page:window.location.pathname});"
+      >
+        Apply via WhatsApp
+      </a>
+
+      <p style="color:#64748b; font-size:14px; margin-top:10px;">
+        Free to join • No earnings cut • Official agency
+      </p>
+    </div>
+
+    <!-- OR DIVIDER -->
+    <p style="text-align:center; color:#64748b; margin:30px 0;">
+      — OR —
+    </p>
+
+    <!-- FORM APPLY (SECONDARY) -->
+    <form action="https://formsubmit.co/futuredbuild@gmail.com" method="POST">
+
+      <!-- Security -->
+      <input type="hidden" name="_captcha" value="false">
+      <input type="hidden" name="_template" value="table">
+      <input type="hidden" name="_next" value="https://thelionforce.com/thank-you.html">
+
+      <input type="text" name="name" placeholder="Your Name (optional)">
+
+      <input type="email" name="email" placeholder="Your Email (optional)">
+
+      <input type="tel" name="whatsapp" placeholder="WhatsApp Number (preferred)">
+
+      <input type="text" name="tiktok" placeholder="TikTok Username" required>
+
+      <input type="text" name="country" placeholder="Country / Region" required>
+
+      <textarea name="message" placeholder="Optional: Tell us about your content"></textarea>
+
+      <button class="btn" type="submit">
+        Apply via Form
+      </button>
+
+    </form>
+
+  </div>
+</section>
+<!-- FAQ -->
+<section>
+<div class="container">
+<h2>Frequently Asked Questions</h2>
+<div class="faq">
+  <div class="faq-item"><h4>Who can join?</h4><p>Eligible TikTok LIVE creators.</p></div>
+  <div class="faq-item"><h4>Is it free?</h4><p>Yes, completely free.</p></div>
+  <div class="faq-item"><h4>Do I keep earnings?</h4><p>Yes, 100%.</p></div>
+</div>
 </div>
 </section>
 
+<footer>
+© 2026 The Lion Force – Official TikTok LIVE Agency
+</footer>
+
+<script>
+const cards = document.querySelectorAll('.card');
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(entry => entry.isIntersecting && entry.target.classList.add('show'));
+});
+cards.forEach(card => observer.observe(card));
+
+document.querySelectorAll('.faq-item h4').forEach(h =>
+  h.onclick = () => h.nextElementSibling.style.display =
+    h.nextElementSibling.style.display === "block" ? "none" : "block"
+);
+</script>
+
+</body>
+</html>
 <!-- FAQ -->
 <section>
 <div class="container">
