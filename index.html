@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+
 <title>The Lion Force | Official TikTok LIVE Agency</title>
 
 <!-- Google Analytics -->
@@ -14,15 +15,16 @@
 </script>
 
 <meta name="description" content="The Lion Force is an official TikTok LIVE agency helping creators in the UK, MENA, Turkey and CCA with onboarding, growth, monetization, and account protection.">
-<meta name="keywords" content="TikTok LIVE agency, TikTok agency, TikTok creators UK, TikTok creators MENA, TikTok LIVE onboarding">
-<meta name="author" content="The Lion Force">
+
+<meta name="keywords" content="TikTok LIVE agency, TikTok agency, TikTok creators UK, TikTok creators MENA, TikTok agency Turkey, TikTok agency CCA">
+
 <meta name="robots" content="index, follow">
 <link rel="canonical" href="https://thelionforce.com/">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <!-- Open Graph -->
 <meta property="og:title" content="The Lion Force | Official TikTok LIVE Agency">
-<meta property="og:description" content="Official TikTok LIVE agency helping creators grow, monetize and stay protected.">
+<meta property="og:description" content="Helping TikTok creators grow, monetize and stay protected with official LIVE agency support.">
 <meta property="og:image" content="https://thelionforce.com/images/hero.png">
 <meta property="og:url" content="https://thelionforce.com/">
 <meta property="og:type" content="website">
@@ -46,7 +48,15 @@
       "name": "Is it free to join?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Yes. Joining The Lion Force is 100% free and creators keep their earnings."
+        "text": "Yes. Joining The Lion Force TikTok LIVE agency is completely free."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Which regions do you support?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "We support creators in the United Kingdom, MENA, Turkey and CCA regions."
       }
     }
   ]
@@ -131,9 +141,11 @@ h2 {
   border-radius: 14px;
   padding: 26px;
   background: #020617;
+  text-decoration: none;
+  color: inherit;
   opacity: 0;
   transform: translateY(30px);
-  transition: all 0.6s ease;
+  transition: all 0.4s ease;
 }
 
 .card.show {
@@ -141,12 +153,19 @@ h2 {
   transform: translateY(0);
 }
 
+.card:hover {
+  border-color: #2563eb;
+  transform: translateY(-6px);
+}
+
 .card h3 {
   color: #93c5fd;
+  margin-bottom: 10px;
 }
 
 .card p {
   color: #cbd5f5;
+  font-size: 0.95rem;
 }
 
 /* FORM */
@@ -194,21 +213,6 @@ footer {
   border-top: 1px solid #1e293b;
 }
 
-/* FLOATING WHATSAPP */
-.whatsapp-float {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  background: #25D366;
-  color: #fff;
-  padding: 14px 18px;
-  border-radius: 50px;
-  font-weight: 600;
-  text-decoration: none;
-  box-shadow: 0 4px 12px rgba(0,0,0,.3);
-  z-index: 9999;
-}
-
 /* MOBILE */
 @media (max-width: 768px) {
   header h1 { font-size: 32px; }
@@ -220,29 +224,36 @@ footer {
 
 <body>
 
+<!-- HERO -->
 <header>
   <div class="container">
     <h1>Official TikTok LIVE Agency for Creators</h1>
     <p class="subtitle">
       Helping TikTok creators in <strong>UK, MENA, Turkey & CCA</strong>
-      grow, monetize and stay protected.
+      grow, monetize, and protect their accounts.
     </p>
-    <a href="#apply" class="btn">Apply to Join</a>
+    <a href="#apply" class="btn">Apply to Join Our Agency</a>
   </div>
 </header>
 
+<!-- REGIONS -->
 <section>
   <div class="container">
     <h2>TikTok LIVE Agency by Region</h2>
+    <p style="text-align:center; max-width:800px; margin:0 auto 40px; color:#cbd5f5;">
+      Choose your region to get official LIVE onboarding and growth support.
+    </p>
+
     <div class="grid">
-      <a href="uk.html" class="card"><h3>United Kingdom</h3></a>
-      <a href="mena.html" class="card"><h3>MENA</h3></a>
-      <a href="turkey.html" class="card"><h3>Turkey</h3></a>
-      <a href="cca.html" class="card"><h3>CCA</h3></a>
+      <a href="uk.html" class="card"><h3>United Kingdom</h3><p>UK TikTok LIVE creators</p></a>
+      <a href="mena.html" class="card"><h3>MENA</h3><p>Middle East & North Africa</p></a>
+      <a href="turkey.html" class="card"><h3>Turkey</h3><p>Turkey TikTok creators</p></a>
+      <a href="cca.html" class="card"><h3>CCA</h3><p>Central & Caucasus Asia</p></a>
     </div>
   </div>
 </section>
 
+<!-- SERVICES -->
 <section>
   <div class="container">
     <h2>TikTok LIVE Services</h2>
@@ -254,36 +265,40 @@ footer {
   </div>
 </section>
 
+<!-- APPLY -->
 <section id="apply">
   <div class="container">
     <h2>Apply to Join Our Agency</h2>
 
-    <div style="text-align:center;margin-bottom:40px;">
-      <a href="https://wa.me/447539357381" target="_blank" class="btn">Apply via WhatsApp</a>
+    <div style="text-align:center; margin-bottom:40px;">
+      <a href="https://wa.me/447539357381" class="btn" target="_blank">
+        Apply via WhatsApp (Fastest)
+      </a>
     </div>
 
     <form action="https://formsubmit.co/futuredbuild@gmail.com" method="POST">
       <input type="hidden" name="_captcha" value="false">
       <input type="hidden" name="_next" value="https://thelionforce.com/thank-you.html">
 
-      <input type="text" name="name" placeholder="Your Name (optional)">
+      <input type="text" name="name" placeholder="Name (optional)">
       <input type="email" name="email" placeholder="Email (optional)">
-      <input type="tel" name="whatsapp" placeholder="WhatsApp Number">
       <input type="text" name="tiktok" placeholder="TikTok Username" required>
-      <input type="text" name="country" placeholder="Country" required>
-      <textarea name="message" placeholder="Optional message"></textarea>
+      <input type="text" name="country" placeholder="Country / Region" required>
+      <textarea name="message" placeholder="Tell us about your content (optional)"></textarea>
 
       <button class="btn" type="submit">Apply via Form</button>
     </form>
   </div>
 </section>
 
+<!-- FAQ -->
 <section>
   <div class="container">
-    <h2>FAQ</h2>
+    <h2>Frequently Asked Questions</h2>
     <div class="faq">
-      <div class="faq-item"><h4>Is it free?</h4><p>Yes, completely free.</p></div>
-      <div class="faq-item"><h4>Do I keep earnings?</h4><p>Yes, 100%.</p></div>
+      <div class="faq-item"><h4>Is it free?</h4><p>Yes, 100% free.</p></div>
+      <div class="faq-item"><h4>Do I keep earnings?</h4><p>Yes, you keep 100%.</p></div>
+      <div class="faq-item"><h4>Which regions?</h4><p>UK, MENA, Turkey & CCA.</p></div>
     </div>
   </div>
 </section>
@@ -292,12 +307,10 @@ footer {
 © 2026 The Lion Force – Official TikTok LIVE Agency
 </footer>
 
-<a class="whatsapp-float" href="https://wa.me/447539357381" target="_blank">💬 WhatsApp</a>
-
 <script>
 const cards = document.querySelectorAll('.card');
 const observer = new IntersectionObserver(entries => {
-  entries.forEach(entry => entry.isIntersecting && entry.target.classList.add('show'));
+  entries.forEach(e => e.isIntersecting && e.target.classList.add('show'));
 });
 cards.forEach(card => observer.observe(card));
 
