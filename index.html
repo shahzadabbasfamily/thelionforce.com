@@ -149,6 +149,51 @@
             color: var(--light);
             font-size: 1.5rem;
             cursor: pointer;
+            z-index: 1001;
+        }
+
+        /* Mobile Menu Styles */
+        .nav-links.mobile-open {
+            display: flex !important;
+            position: fixed;
+            top: 70px;
+            left: 0;
+            right: 0;
+            flex-direction: column;
+            background: rgba(5, 5, 5, 0.98);
+            backdrop-filter: blur(20px);
+            padding: 1.5rem 2rem;
+            gap: 1rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            z-index: 999;
+            animation: slideDown 0.3s ease;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .nav-links.mobile-open a {
+            padding: 1rem;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.05);
+            text-align: center;
+            font-size: 1.1rem;
+        }
+
+        .nav-links.mobile-open a:hover {
+            background: rgba(255, 0, 80, 0.2);
+        }
+
+        .nav-links.mobile-open .nav-cta {
+            background: var(--primary);
         }
 
         /* Hero Section */
@@ -1546,7 +1591,7 @@
                         <i class="fas fa-chevron-down"></i>
                     </button>
                     <div class="faq-answer">
-                        <p>Yes! Joining The Lion Force is completely free. </p>
+                        <p>Yes! Joining The Lion Force is completely free. We operate on a revenue-sharing model where we take a small percentage of your LIVE earnings. This means we only succeed when you succeed. No upfront costs, no hidden fees.</p>
                     </div>
                 </div>
                 <div class="faq-item animate-on-scroll">
@@ -1555,7 +1600,7 @@
                         <i class="fas fa-chevron-down"></i>
                     </button>
                     <div class="faq-answer">
-                        <p>Absolutely! You keep all of your earnings, and many creators actually earn MORE with us due to our growth strategies and optimization support.</p>
+                        <p>Absolutely! You keep the majority of your earnings. Our revenue share is industry-competitive, and many creators actually earn MORE with us due to our growth strategies and optimization support. You'll receive detailed monthly reports of all earnings.</p>
                     </div>
                 </div>
                 <div class="faq-item animate-on-scroll">
@@ -1699,7 +1744,10 @@
         // Mobile menu toggle
         function toggleMobileMenu() {
             const navLinks = document.querySelector('.nav-links');
-            navLinks.style.display = navLinks.style.display === 'flex' ? 'none' : 'flex';
+            const menuBtn = document.querySelector('.mobile-menu-btn i');
+            navLinks.classList.toggle('mobile-open');
+            menuBtn.classList.toggle('fa-bars');
+            menuBtn.classList.toggle('fa-times');
         }
 
         // Scroll animations
