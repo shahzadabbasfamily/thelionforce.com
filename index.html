@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="The Lion Force - Official TikTok LIVE Agency helping creators in UK, MENA, Turkey & CCA grow, monetize, and protect their accounts. Join 10,000+ successful creators.">
-    <meta name="keywords" content="TikTok LIVE Agency, TikTok creators, monetization, UK, MENA, Turkey, CCA, grow followers">
+    <meta name="description" content="The Lion Force - Official TikTok LIVE Agency helping creators in UK, MENA, Turkey, Italy & CCA grow, monetize, and protect their accounts. Join 10,000+ successful creators.">
+    <meta name="keywords" content="TikTok LIVE Agency, TikTok creators, monetization, UK, MENA, Turkey, Italy, CCA, grow followers">
     <meta property="og:title" content="The Lion Force | Official TikTok LIVE Agency">
     <meta property="og:description" content="Join the #1 TikTok LIVE Agency. Grow your audience, maximize earnings, and protect your account.">
     <meta property="og:image" content="https://thelionforce.com/og-image.jpg">
@@ -783,7 +783,7 @@
             font-size: 0.95rem;
         }
 
-                .form-group input,
+        .form-group input,
         .form-group select,
         .form-group textarea {
             width: 100%;
@@ -797,8 +797,11 @@
             transition: all 0.3s ease;
         }
 
+        /* Fix select dropdown styling */
         .form-group select {
             appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
             background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23888888' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
             background-repeat: no-repeat;
             background-position: right 1rem center;
@@ -806,10 +809,23 @@
             cursor: pointer;
         }
 
+        /* Fix dropdown options background */
         .form-group select option {
             background: #1a1a1a;
             color: #ffffff;
             padding: 10px;
+        }
+
+        /* Fix for WebKit browsers dropdown */
+        select::-webkit-listbox {
+            background: #1a1a1a;
+            color: #ffffff;
+        }
+
+        /* Fix for Firefox */
+        select:-moz-focusring {
+            color: transparent;
+            text-shadow: 0 0 0 #ffffff;
         }
 
         .form-group input:focus,
@@ -823,6 +839,44 @@
         .form-group input::placeholder,
         .form-group textarea::placeholder {
             color: var(--gray);
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .form-submit {
+            width: 100%;
+            padding: 1.25rem 2rem;
+            background: #FF0050;
+            background: var(--primary);
+            color: #ffffff;
+            color: var(--light);
+            border: none;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+
+        .form-submit:hover {
+            background: #D60044;
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(255, 0, 80, 0.4);
+        }
+
+        .form-submit i {
+            font-size: 1rem;
         }
 
         /* FAQ Section */
@@ -1142,14 +1196,14 @@
                     Official TikTok LIVE Partner Agency
                 </div>
                 <h1>Turn Your TikTok Into a <span>Thriving Career</span></h1>
-                <p class="hero-description">The Lion Force helps TikTok creators in United Kingdom, MENA, Turkey & CCA grow their audience, maximize earnings, and protect their accounts with official TikTok support.</p>
+                <p class="hero-description">The Lion Force helps TikTok creators in United Kingdom, MENA, Turkey, Italy & CCA grow their audience, maximize earnings, and protect their accounts with official TikTok support.</p>
                 <div class="hero-stats">
                     <div class="stat">
-                        <span class="stat-number">5K+</span>
+                        <span class="stat-number">10K+</span>
                         <span class="stat-label">Active Creators</span>
                     </div>
                     <div class="stat">
-                        <span class="stat-number">$10M+</span>
+                        <span class="stat-number">$50M+</span>
                         <span class="stat-label">Creator Earnings</span>
                     </div>
                     <div class="stat">
@@ -1199,7 +1253,7 @@
             </div>
             <div class="trust-item">
                 <i class="fas fa-users"></i>
-                <span>5,000+ Creators</span>
+                <span>10,000+ Creators</span>
             </div>
             <div class="trust-item">
                 <i class="fas fa-globe"></i>
@@ -1250,6 +1304,14 @@
                 <p>Specialized support for Central & South Asian creators with multi-language assistance and regional expertise.</p>
                 <a href="https://wa.me/447539357381?text=Hi%20I%20want%20to%20apply%20for%20CCA%20region" class="region-link" target="_blank">
                     Apply for CCA <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+            <div class="region-card animate-on-scroll">
+                <div class="region-icon">🇮🇹</div>
+                <h3>Italy</h3>
+                <p>Dedicated support for Italian TikTok creators with Italian language assistance and local market expertise.</p>
+                <a href="https://wa.me/447539357381?text=Hi%20I%20want%20to%20apply%20for%20Italy%20region" class="region-link" target="_blank">
+                    Apply for Italy <i class="fas fa-arrow-right"></i>
                 </a>
             </div>
         </div>
@@ -1376,7 +1438,7 @@
                 Limited Spots Available - Apply Today!
             </div>
             <h2>Ready to Transform Your TikTok Career?</h2>
-            <p>Join 5,000+ successful creators who trust The Lion Force. Get official TikTok support, maximize your earnings, and grow your audience faster than ever.</p>
+            <p>Join 10,000+ successful creators who trust The Lion Force. Get official TikTok support, maximize your earnings, and grow your audience faster than ever.</p>
             <div class="cta-buttons">
                 <a href="https://wa.me/447539357381?text=Hi%20I%20want%20to%20apply%20to%20join%20The%20Lion%20Force%20TikTok%20LIVE%20Agency." class="btn btn-whatsapp" target="_blank">
                     <i class="fab fa-whatsapp"></i>
@@ -1445,7 +1507,7 @@
                             <option value="mena">MENA (Middle East & North Africa)</option>
                             <option value="turkey">Turkey</option>
                             <option value="cca">CCA (Central & South Asia)</option>
-                            <option value="turkey">Italy</option>
+                            <option value="italy">Italy</option>
                         </select>
                     </div>
                     <div class="form-group">
@@ -1475,7 +1537,7 @@
                         <i class="fas fa-chevron-down"></i>
                     </button>
                     <div class="faq-answer">
-                        <p>We welcome TikTok creators from United Kingdom, MENA, Turkey, and CCA regions who are serious about growing their presence. While there's no minimum follower requirement, creators with 1,000+ followers typically see the best results. You must be 18+ and have a clean account history.</p>
+                        <p>We welcome TikTok creators from United Kingdom, MENA, Turkey, Italy, and CCA regions who are serious about growing their presence. While there's no minimum follower requirement, creators with 1,000+ followers typically see the best results. You must be 18+ and have a clean account history.</p>
                     </div>
                 </div>
                 <div class="faq-item animate-on-scroll">
@@ -1484,7 +1546,7 @@
                         <i class="fas fa-chevron-down"></i>
                     </button>
                     <div class="faq-answer">
-                        <p>Yes! Joining The Lion Force is completely free. </p>
+                        <p>Yes! Joining The Lion Force is completely free. We operate on a revenue-sharing model where we take a small percentage of your LIVE earnings. This means we only succeed when you succeed. No upfront costs, no hidden fees.</p>
                     </div>
                 </div>
                 <div class="faq-item animate-on-scroll">
@@ -1493,7 +1555,7 @@
                         <i class="fas fa-chevron-down"></i>
                     </button>
                     <div class="faq-answer">
-                        <p>Absolutely! You keep all of your earnings, and many creators actually earn MORE with us due to our growth strategies and optimization support.</p>
+                        <p>Absolutely! You keep the majority of your earnings. Our revenue share is industry-competitive, and many creators actually earn MORE with us due to our growth strategies and optimization support. You'll receive detailed monthly reports of all earnings.</p>
                     </div>
                 </div>
                 <div class="faq-item animate-on-scroll">
@@ -1502,7 +1564,7 @@
                         <i class="fas fa-chevron-down"></i>
                     </button>
                     <div class="faq-answer">
-                        <p>TikTok review applications within 24-48 hours. If approved, you can start LIVE streaming with our support immediately. WhatsApp applications typically get faster responses than form submissions.</p>
+                        <p>We review applications within 24-48 hours. If approved, you can start LIVE streaming with our support immediately. WhatsApp applications typically get faster responses than form submissions.</p>
                     </div>
                 </div>
                 <div class="faq-item animate-on-scroll">
@@ -1536,7 +1598,7 @@
                         <span class="logo-icon">🦁</span>
                         <span class="logo-text">The Lion Force</span>
                     </a>
-                    <p>The official TikTok LIVE Agency helping creators grow, monetize, and protect their accounts across UK, MENA, Turkey & CCA.</p>
+                    <p>The official TikTok LIVE Agency helping creators grow, monetize, and protect their accounts across UK, MENA, Turkey, Italy & CCA.</p>
                     <div class="social-links">
                         <a href="#" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
                         <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
@@ -1551,6 +1613,7 @@
                         <li><a href="#">MENA</a></li>
                         <li><a href="#">Turkey</a></li>
                         <li><a href="#">CCA</a></li>
+                        <li><a href="#">Italy</a></li>
                     </ul>
                 </div>
                 <div class="footer-column">
