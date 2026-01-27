@@ -1,50 +1,534 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Application Submitted | The Lion Force</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Thank you for applying to The Lion Force - Official TikTok LIVE Agency. Your application has been submitted successfully.">
+    <title>Application Submitted | The Lion Force</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🦁%3C/text%3E%3C/svg%3E">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #FF0050;
+            --primary-dark: #D60044;
+            --secondary: #00F2EA;
+            --accent: #FFD700;
+            --dark: #0a0a0a;
+            --darker: #050505;
+            --light: #ffffff;
+            --gray: #888888;
+            --gradient: linear-gradient(135deg, #FF0050 0%, #FF6B6B 50%, #00F2EA 100%);
+        }
 
-  <style>
-    body {
-      margin: 0;
-      font-family: Arial, Helvetica, sans-serif;
-      background: #020617;
-      color: #ffffff;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      text-align: center;
-    }
-    .box {
-      max-width: 500px;
-      padding: 40px;
-      background: #020617;
-      border: 1px solid #1e293b;
-      border-radius: 16px;
-    }
-    h1 {
-      color: #38bdf8;
-    }
-    a {
-      display: inline-block;
-      margin-top: 20px;
-      padding: 12px 24px;
-      background: #2563eb;
-      color: #fff;
-      text-decoration: none;
-      border-radius: 8px;
-    }
-  </style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--darker);
+            color: var(--light);
+            line-height: 1.6;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Background Animation */
+        .page-bg {
+            position: fixed;
+            inset: 0;
+            background: 
+                radial-gradient(ellipse at 20% 20%, rgba(255, 0, 80, 0.15) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 80%, rgba(0, 242, 234, 0.1) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 50%, rgba(255, 215, 0, 0.05) 0%, transparent 50%);
+            z-index: -1;
+        }
+
+        .confetti-container {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            overflow: hidden;
+            z-index: 0;
+        }
+
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            animation: confetti-fall 4s ease-out forwards;
+        }
+
+        .confetti:nth-child(1) { left: 10%; background: var(--primary); animation-delay: 0s; }
+        .confetti:nth-child(2) { left: 20%; background: var(--secondary); animation-delay: 0.2s; }
+        .confetti:nth-child(3) { left: 30%; background: var(--accent); animation-delay: 0.4s; }
+        .confetti:nth-child(4) { left: 40%; background: var(--primary); animation-delay: 0.6s; }
+        .confetti:nth-child(5) { left: 50%; background: var(--secondary); animation-delay: 0.8s; }
+        .confetti:nth-child(6) { left: 60%; background: var(--accent); animation-delay: 1s; }
+        .confetti:nth-child(7) { left: 70%; background: var(--primary); animation-delay: 1.2s; }
+        .confetti:nth-child(8) { left: 80%; background: var(--secondary); animation-delay: 1.4s; }
+        .confetti:nth-child(9) { left: 90%; background: var(--accent); animation-delay: 1.6s; }
+        .confetti:nth-child(10) { left: 15%; background: var(--primary); animation-delay: 1.8s; }
+        .confetti:nth-child(11) { left: 25%; background: var(--secondary); animation-delay: 2s; }
+        .confetti:nth-child(12) { left: 35%; background: var(--accent); animation-delay: 2.2s; }
+        .confetti:nth-child(13) { left: 45%; background: var(--primary); animation-delay: 2.4s; }
+        .confetti:nth-child(14) { left: 55%; background: var(--secondary); animation-delay: 2.6s; }
+        .confetti:nth-child(15) { left: 65%; background: var(--accent); animation-delay: 2.8s; }
+        .confetti:nth-child(16) { left: 75%; background: var(--primary); animation-delay: 3s; }
+        .confetti:nth-child(17) { left: 85%; background: var(--secondary); animation-delay: 3.2s; }
+        .confetti:nth-child(18) { left: 95%; background: var(--accent); animation-delay: 3.4s; }
+
+        @keyframes confetti-fall {
+            0% { transform: translateY(-100px) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+        }
+
+        /* Main Container */
+        .thankyou-container {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Success Card */
+        .success-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 30px;
+            padding: 4rem 3rem;
+            max-width: 600px;
+            width: 100%;
+            text-align: center;
+            backdrop-filter: blur(20px);
+            animation: card-appear 0.6s ease-out;
+        }
+
+        @keyframes card-appear {
+            from { opacity: 0; transform: translateY(30px) scale(0.95); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        /* Success Icon */
+        .success-icon {
+            width: 120px;
+            height: 120px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 2rem;
+            animation: icon-pulse 2s infinite;
+            box-shadow: 0 20px 60px rgba(255, 0, 80, 0.4);
+        }
+
+        @keyframes icon-pulse {
+            0%, 100% { transform: scale(1); box-shadow: 0 20px 60px rgba(255, 0, 80, 0.4); }
+            50% { transform: scale(1.05); box-shadow: 0 25px 70px rgba(255, 0, 80, 0.6); }
+        }
+
+        .success-icon i {
+            font-size: 3.5rem;
+            color: var(--light);
+        }
+
+        /* Typography */
+        .success-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(0, 242, 234, 0.1);
+            border: 1px solid rgba(0, 242, 234, 0.3);
+            color: var(--secondary);
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+        }
+
+        h1 {
+            font-size: clamp(2rem, 5vw, 3rem);
+            font-weight: 800;
+            margin-bottom: 1rem;
+            line-height: 1.2;
+        }
+
+        h1 span {
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .subtitle {
+            color: var(--gray);
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+            line-height: 1.7;
+        }
+
+        /* WhatsApp Section */
+        .whatsapp-section {
+            background: rgba(37, 211, 102, 0.1);
+            border: 1px solid rgba(37, 211, 102, 0.3);
+            border-radius: 20px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .whatsapp-section p {
+            color: var(--gray);
+            font-size: 0.95rem;
+            margin-bottom: 1rem;
+        }
+
+        .whatsapp-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            background: #25D366;
+            color: var(--light);
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .whatsapp-btn:hover {
+            background: #128C7E;
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(37, 211, 102, 0.4);
+        }
+
+        .whatsapp-btn i {
+            font-size: 1.3rem;
+        }
+
+        /* Timeline */
+        .timeline {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin: 2.5rem 0;
+            flex-wrap: wrap;
+        }
+
+        .timeline-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .timeline-icon {
+            width: 50px;
+            height: 50px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            color: var(--accent);
+        }
+
+        .timeline-item.active .timeline-icon {
+            background: var(--primary);
+            border-color: var(--primary);
+            color: var(--light);
+        }
+
+        .timeline-text {
+            font-size: 0.85rem;
+            color: var(--gray);
+        }
+
+        .timeline-item.active .timeline-text {
+            color: var(--light);
+            font-weight: 600;
+        }
+
+        /* Social Proof */
+        .social-proof {
+            margin: 2rem 0;
+            padding: 1.5rem;
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 16px;
+        }
+
+        .social-proof p {
+            color: var(--gray);
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .stats-row {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--accent);
+        }
+
+        .stat-label {
+            font-size: 0.8rem;
+            color: var(--gray);
+        }
+
+        /* Buttons */
+        .button-group {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 2rem;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: var(--light);
+            border: none;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(255, 0, 80, 0.4);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--light);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--secondary);
+            color: var(--secondary);
+            transform: translateY(-3px);
+        }
+
+        /* Footer */
+        .footer {
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .footer p {
+            color: var(--gray);
+            font-size: 0.85rem;
+        }
+
+        .footer a {
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .success-card {
+                padding: 3rem 2rem;
+            }
+
+            .success-icon {
+                width: 100px;
+                height: 100px;
+            }
+
+            .success-icon i {
+                font-size: 2.5rem;
+            }
+
+            .timeline {
+                gap: 1rem;
+            }
+
+            .stats-row {
+                gap: 1.5rem;
+            }
+        }
+    </style>
+<base target="_blank">
 </head>
-
 <body>
-  <div class="box">
-    <h1>Application Submitted 🎉</h1>
-    <p>Thank you for applying to <strong>The Lion Force</strong>.</p>
-    <p>Our team will review your application and contact you soon.</p>
-    <a href="/">Back to Home</a>
-  </div>
+    <!-- Background -->
+    <div class="page-bg"></div>
+
+    <!-- Confetti Animation -->
+    <div class="confetti-container">
+        <div class="confetti"></div>
+        <div class="confetti"></div>
+        <div class="confetti"></div>
+        <div class="confetti"></div>
+        <div class="confetti"></div>
+        <div class="confetti"></div>
+        <div class="confetti"></div>
+        <div class="confetti"></div>
+        <div class="confetti"></div>
+        <div class="confetti"></div>
+        <div class="confetti"></div>
+        <div class="confetti"></div>
+        <div class="confetti"></div>
+        <div class="confetti"></div>
+        <div class="confetti"></div>
+        <div class="confetti"></div>
+        <div class="confetti"></div>
+        <div class="confetti"></div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="thankyou-container">
+        <div class="success-card">
+            <!-- Success Icon -->
+            <div class="success-icon">
+                <i class="fas fa-check"></i>
+            </div>
+
+            <!-- Badge -->
+            <div class="success-badge">
+                <i class="fas fa-paper-plane"></i>
+                Application Received
+            </div>
+
+            <!-- Title -->
+            <h1>Thank You! <span>🎉</span></h1>
+
+            <!-- Subtitle -->
+            <p class="subtitle">
+                Your application to join <strong>The Lion Force</strong> has been submitted successfully. 
+                Our team will review your application and contact you within <strong>24 hours</strong>.
+            </p>
+
+            <!-- WhatsApp Section -->
+            <div class="whatsapp-section">
+                <p><i class="fas fa-bolt" style="color: var(--accent);"></i> For faster response, message us on WhatsApp:</p>
+                <a href="https://wa.me/447539357381?text=Hi%20I%20just%20submitted%20my%20application%20to%20join%20The%20Lion%20Force" class="whatsapp-btn" target="_blank">
+                    <i class="fab fa-whatsapp"></i>
+                    Chat on WhatsApp
+                </a>
+            </div>
+
+            <!-- Timeline -->
+            <div class="timeline">
+                <div class="timeline-item active">
+                    <div class="timeline-icon"><i class="fas fa-check"></i></div>
+                    <span class="timeline-text">Applied</span>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-icon"><i class="fas fa-search"></i></div>
+                    <span class="timeline-text">Under Review</span>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-icon"><i class="fas fa-phone"></i></div>
+                    <span class="timeline-text">Contact</span>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-icon"><i class="fas fa-rocket"></i></div>
+                    <span class="timeline-text">Onboard</span>
+                </div>
+            </div>
+
+            <!-- Social Proof -->
+            <div class="social-proof">
+                <p><i class="fas fa-users" style="color: var(--secondary);"></i> Join 10,000+ creators who trust The Lion Force</p>
+                <div class="stats-row">
+                    <div class="stat-item">
+                        <div class="stat-number">10K+</div>
+                        <div class="stat-label">Active Creators</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">$50M+</div>
+                        <div class="stat-label">Paid to Creators</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">4.9★</div>
+                        <div class="stat-label">Rating</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Buttons -->
+            <div class="button-group">
+                <a href="index.html" class="btn btn-primary">
+                    <i class="fas fa-home"></i>
+                    Back to Home
+                </a>
+                <a href="https://www.tiktok.com/@thelionforce" class="btn btn-secondary" target="_blank">
+                    <i class="fab fa-tiktok"></i>
+                    Follow Us
+                </a>
+            </div>
+
+            <!-- Footer -->
+            <div class="footer">
+                <p>
+                    Questions? Email us at <a href="mailto:support@thelionforce.com">support@thelionforce.com</a><br>
+                    or reach out on <a href="https://wa.me/447539357381" target="_blank">WhatsApp</a>
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Add more confetti dynamically
+        function createConfetti() {
+            const container = document.querySelector('.confetti-container');
+            const colors = ['#FF0050', '#00F2EA', '#FFD700'];
+            
+            for (let i = 0; i < 30; i++) {
+                setTimeout(() => {
+                    const confetti = document.createElement('div');
+                    confetti.className = 'confetti';
+                    confetti.style.left = Math.random() * 100 + '%';
+                    confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
+                    confetti.style.animationDuration = (3 + Math.random() * 2) + 's';
+                    confetti.style.animationDelay = Math.random() * 2 + 's';
+                    container.appendChild(confetti);
+                    
+                    setTimeout(() => confetti.remove(), 5000);
+                }, i * 100);
+            }
+        }
+
+        // Trigger confetti on load
+        window.addEventListener('load', createConfetti);
+        
+        // Repeat confetti every 5 seconds
+        setInterval(createConfetti, 5000);
+    </script>
 </body>
 </html>
