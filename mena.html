@@ -1,257 +1,647 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="The Lion Force MENA - Official TikTok LIVE Agency for Middle East & North Africa creators. Arabic support, local payment solutions.">
+    <meta name="keywords" content="TikTok LIVE Agency MENA, Middle East TikTok, North Africa creators, Dubai, Saudi Arabia, Egypt, monetization MENA">
+    <title>The Lion Force MENA | TikTok LIVE Agency for Middle East & North Africa</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🦁%3C/text%3E%3C/svg%3E">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #FF0050;
+            --primary-dark: #D60044;
+            --secondary: #00F2EA;
+            --accent: #FFD700;
+            --dark: #0a0a0a;
+            --darker: #050505;
+            --light: #ffffff;
+            --gray: #888888;
+            --gradient: linear-gradient(135deg, #FF0050 0%, #FF6B6B 50%, #00F2EA 100%);
+        }
 
-<title>TikTok LIVE Agency in Mena | The Lion Force</title>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--darker);
+            color: var(--light);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
 
-<!-- Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-QB7L4Q9PLC"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-QB7L4Q9PLC');
-</script>
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: var(--dark); }
+        ::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 4px; }
 
-<meta name="description" content="The Lion Force is an official TikTok LIVE agency helping creators in the Mena Region grow, monetize, and protect their TikTok LIVE accounts.">
+        .navbar {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 1000;
+            padding: 1rem 2rem;
+            background: rgba(5, 5, 5, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.3s ease;
+        }
+        .navbar.scrolled { padding: 0.75rem 2rem; background: rgba(5, 5, 5, 0.98); }
 
-<meta name="keywords" content="TikTok LIVE agency Mena, TikTok agency United Arab Emirates, TikTok creators UAE, TikTok LIVE onboarding UAE">
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
 
-<meta name="author" content="The Lion Force">
-<meta name="robots" content="index, follow">
+        .logo { display: flex; align-items: center; gap: 0.75rem; text-decoration: none; color: var(--light); }
+        .logo-icon { font-size: 2rem; animation: pulse 2s infinite; }
+        @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.1); } }
+        .logo-text { font-size: 1.5rem; font-weight: 800; background: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
 
-<link rel="canonical" href="https://thelionforce.com/mena.html">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+        .nav-links { display: flex; gap: 2rem; align-items: center; }
+        .nav-links a { color: var(--gray); text-decoration: none; font-weight: 500; transition: color 0.3s ease; font-size: 0.95rem; }
+        .nav-links a:hover { color: var(--light); }
+        .nav-cta { background: var(--primary); color: var(--light) !important; padding: 0.6rem 1.5rem; border-radius: 50px; font-weight: 600; transition: all 0.3s ease !important; }
+        .nav-cta:hover { background: var(--primary-dark); transform: translateY(-2px); box-shadow: 0 10px 30px rgba(255, 0, 80, 0.3); }
 
-<!-- Open Graph -->
-<meta property="og:title" content="TikTok LIVE Agency in Mena | The Lion Force">
-<meta property="og:description" content="Official TikTok LIVE agency for Mena creators. Grow, monetize, and protect your account.">
-<meta property="og:image" content="https://thelionforce.com/images/hero.png">
-<meta property="og:url" content="https://thelionforce.com/mena.html">
-<meta property="og:type" content="website">
+        .mobile-menu-btn { display: none; background: none; border: none; color: var(--light); font-size: 1.5rem; cursor: pointer; }
 
-<!-- FAQ Schema -->
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "FAQPage",
-  "mainEntity": [
-    {
-      "@type": "Question",
-      "name": "What is The Lion Force TikTok LIVE Agency?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "The Lion Force is an official TikTok LIVE agency helping Mena creators with LIVE onboarding, growth, monetization, and account protection."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "Is it free to join?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Yes. Joining The Lion Force TikTok LIVE agency is completely free."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "Do creators keep their earnings?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Yes. Creators keep 100% of their TikTok LIVE earnings."
-      }
-    }
-  ]
-}
-</script>
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            padding: 8rem 2rem 4rem;
+            overflow: hidden;
+        }
+        .hero-bg {
+            position: absolute;
+            inset: 0;
+            background: 
+                radial-gradient(ellipse at 20% 50%, rgba(255, 0, 80, 0.15) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 50%, rgba(0, 242, 234, 0.1) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 100%, rgba(255, 215, 0, 0.05) 0%, transparent 50%);
+        }
+        .hero-particles { position: absolute; inset: 0; overflow: hidden; }
+        .particle { position: absolute; width: 4px; height: 4px; background: var(--primary); border-radius: 50%; opacity: 0.5; animation: float 15s infinite; }
+        @keyframes float { 0%, 100% { transform: translateY(100vh) rotate(0deg); opacity: 0; } 10% { opacity: 0.5; } 90% { opacity: 0.5; } 100% { transform: translateY(-100vh) rotate(720deg); opacity: 0; } }
 
-<style>
-*{box-sizing:border-box}
-html{scroll-behavior:smooth}
-body{margin:0;font-family:Arial,Helvetica,sans-serif;background:#020617;color:#fff}
-.container{max-width:1100px;margin:auto;padding:0 20px}
+        .hero-content {
+            max-width: 1400px;
+            width: 100%;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+        }
 
-/* HERO */
-header{
-  min-height:100vh;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  text-align:center;
-  background:
-  linear-gradient(rgba(2,6,23,.85),rgba(2,6,23,.95)),
-  url('images/hero.png') center/cover no-repeat;
-}
-h1{font-size:3.2rem;margin-bottom:15px}
-.subtitle{font-size:1.3rem;color:#c7d2fe;margin-bottom:35px}
-.btn{
-  display:inline-block;
-  padding:14px 32px;
-  font-weight:600;
-  border-radius:8px;
-  text-decoration:none;
-  color:#fff;
-  background:#2563eb;
-}
-.btn:hover{transform:scale(1.05)}
+        .region-flag { font-size: 3rem; margin-bottom: 1rem; }
+        .hero-badge { display: inline-flex; align-items: center; gap: 0.5rem; background: rgba(255, 0, 80, 0.1); border: 1px solid rgba(255, 0, 80, 0.3); padding: 0.5rem 1rem; border-radius: 50px; font-size: 0.85rem; color: var(--primary); margin-bottom: 1.5rem; }
+        .hero-badge i { color: var(--accent); }
+        .hero h1 { font-size: clamp(2.5rem, 5vw, 4rem); font-weight: 900; line-height: 1.1; margin-bottom: 1.5rem; }
+        .hero h1 span { background: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        .hero-description { font-size: 1.2rem; color: var(--gray); margin-bottom: 2rem; max-width: 500px; }
+        .hero-stats { display: flex; gap: 2.5rem; margin-bottom: 2.5rem; }
+        .stat { text-align: center; }
+        .stat-number { font-size: 2.5rem; font-weight: 800; color: var(--accent); display: block; }
+        .stat-label { font-size: 0.85rem; color: var(--gray); }
+        .hero-buttons { display: flex; gap: 1rem; flex-wrap: wrap; }
 
-/* SECTION */
-section{padding:80px 0;border-top:1px solid #1e293b}
-h2{text-align:center;font-size:2.2rem;margin-bottom:45px}
+        .btn { display: inline-flex; align-items: center; gap: 0.5rem; padding: 1rem 2rem; border-radius: 50px; font-weight: 600; text-decoration: none; transition: all 0.3s ease; font-size: 1rem; border: none; cursor: pointer; }
+        .btn-primary { background: var(--primary); color: var(--light); }
+        .btn-primary:hover { background: var(--primary-dark); transform: translateY(-3px); box-shadow: 0 15px 40px rgba(255, 0, 80, 0.4); }
+        .btn-secondary { background: transparent; color: var(--light); border: 2px solid rgba(255, 255, 255, 0.2); }
+        .btn-secondary:hover { border-color: var(--secondary); color: var(--secondary); transform: translateY(-3px); }
+        .btn-whatsapp { background: #25D366; color: var(--light); }
+        .btn-whatsapp:hover { background: #128C7E; transform: translateY(-3px); box-shadow: 0 15px 40px rgba(37, 211, 102, 0.4); }
 
-/* GRID */
-.grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
-  gap:25px;
-}
+        .hero-visual { position: relative; }
+        .hero-image-container { position: relative; border-radius: 30px; overflow: hidden; box-shadow: 0 50px 100px rgba(255, 0, 80, 0.2); }
+        .hero-image { width: 100%; height: auto; display: block; }
 
-/* CARDS */
-.card{
-  border:1px solid #1e293b;
-  border-radius:14px;
-  padding:26px;
-  background:#020617;
-}
-.card img{width:100%;border-radius:12px;margin-bottom:15px}
-.card h3{color:#93c5fd;margin-bottom:10px}
-.card p{color:#cbd5f5;font-size:.95rem}
+        .section-header { text-align: center; max-width: 700px; margin: 0 auto 4rem; }
+        .section-tag { display: inline-block; background: rgba(0, 242, 234, 0.1); color: var(--secondary); padding: 0.4rem 1rem; border-radius: 50px; font-size: 0.85rem; font-weight: 600; margin-bottom: 1rem; border: 1px solid rgba(0, 242, 234, 0.3); }
+        .section-title { font-size: clamp(2rem, 4vw, 3rem); font-weight: 800; margin-bottom: 1rem; }
+        .section-description { color: var(--gray); font-size: 1.1rem; }
 
-/* FORM */
-form{max-width:500px;margin:auto}
-input,textarea{
-  width:100%;
-  padding:14px;
-  margin-bottom:15px;
-  border-radius:8px;
-  border:1px solid #1e293b;
-  background:#020617;
-  color:#fff;
-}
+        .benefits { padding: 6rem 2rem; }
+        .benefits-grid { max-width: 1400px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; }
+        .benefit-card { background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 24px; padding: 2.5rem; transition: all 0.4s ease; }
+        .benefit-card:hover { background: rgba(255, 255, 255, 0.05); border-color: var(--primary); transform: translateY(-5px); }
+        .benefit-icon { width: 60px; height: 60px; background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%); border-radius: 16px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; color: var(--light); margin-bottom: 1.5rem; }
+        .benefit-card h3 { font-size: 1.3rem; font-weight: 700; margin-bottom: 0.75rem; }
+        .benefit-card p { color: var(--gray); font-size: 0.95rem; line-height: 1.7; }
 
-/* FAQ */
-.faq{max-width:800px;margin:auto}
-.faq-item{border-bottom:1px solid #1e293b;padding:15px 0}
-.faq-item h4{cursor:pointer;color:#93c5fd}
-.faq-item p{display:none;color:#cbd5f5}
+        .testimonials { padding: 6rem 2rem; background: rgba(255, 255, 255, 0.01); }
+        .testimonials-grid { max-width: 1400px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 2rem; }
+        .testimonial-card { background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 24px; padding: 2.5rem; position: relative; }
+        .testimonial-card::before { content: '"'; position: absolute; top: 1rem; right: 2rem; font-size: 6rem; color: var(--primary); opacity: 0.2; font-family: Georgia, serif; line-height: 1; }
+        .testimonial-header { display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem; }
+        .testimonial-avatar { width: 60px; height: 60px; border-radius: 50%; background: var(--gradient); display: flex; align-items: center; justify-content: center; font-size: 1.5rem; font-weight: 700; }
+        .testimonial-info h4 { font-weight: 700; margin-bottom: 0.25rem; }
+        .testimonial-info p { color: var(--gray); font-size: 0.9rem; }
+        .testimonial-stats { display: flex; gap: 1.5rem; margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid rgba(255, 255, 255, 0.08); }
+        .testimonial-stat { display: flex; align-items: center; gap: 0.5rem; font-size: 0.9rem; }
+        .testimonial-stat i { color: var(--accent); }
+        .testimonial-stat span { color: var(--gray); }
 
-/* FOOTER */
-footer{
-  text-align:center;
-  padding:30px;
-  color:#94a3b8;
-  border-top:1px solid #1e293b;
-}
+        .cta-section { padding: 6rem 2rem; position: relative; overflow: hidden; }
+        .cta-bg { position: absolute; inset: 0; background: radial-gradient(ellipse at 30% 50%, rgba(255, 0, 80, 0.2) 0%, transparent 50%), radial-gradient(ellipse at 70% 50%, rgba(0, 242, 234, 0.15) 0%, transparent 50%); }
+        .cta-container { max-width: 900px; margin: 0 auto; text-align: center; position: relative; z-index: 1; }
+        .cta-container h2 { font-size: clamp(2rem, 4vw, 3rem); font-weight: 800; margin-bottom: 1rem; }
+        .cta-container p { color: var(--gray); font-size: 1.1rem; margin-bottom: 2rem; }
+        .urgency-badge { display: inline-flex; align-items: center; gap: 0.5rem; background: rgba(255, 215, 0, 0.1); border: 1px solid rgba(255, 215, 0, 0.3); color: var(--accent); padding: 0.5rem 1rem; border-radius: 50px; font-size: 0.9rem; font-weight: 600; margin-bottom: 2rem; animation: pulse 2s infinite; }
+        .cta-buttons { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
 
-/* MOBILE */
-@media(max-width:768px){
-  h1{font-size:32px}
-  .subtitle{font-size:16px;max-width:320px;margin:0 auto 30px}
-  .card{text-align:center}
-}
-</style>
+        .application { padding: 6rem 2rem; background: rgba(255, 255, 255, 0.01); }
+        .application-container { max-width: 700px; margin: 0 auto; }
+        .form-card { background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 30px; padding: 3rem; }
+        .form-group { margin-bottom: 1.5rem; }
+        .form-group label { display: block; margin-bottom: 0.5rem; font-weight: 500; font-size: 0.95rem; }
+        .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 1rem 1.25rem; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 12px; color: var(--light); font-size: 1rem; font-family: inherit; transition: all 0.3s ease; }
+        .form-group select { appearance: none; -webkit-appearance: none; -moz-appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23888888' d='M6 8L1 3h10z'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 1rem center; padding-right: 2.5rem; cursor: pointer; }
+        .form-group select option { background: #1a1a1a; color: #ffffff; padding: 10px; }
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus { outline: none; border-color: var(--primary); background: rgba(255, 255, 255, 0.08); }
+        .form-group input::placeholder, .form-group textarea::placeholder { color: var(--gray); }
+        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+        .form-submit { width: 100%; padding: 1.25rem 2rem; background: #FF0050; background: var(--primary); color: #ffffff; color: var(--light); border: none; border-radius: 12px; font-size: 1.1rem; font-weight: 600; cursor: pointer; transition: all 0.3s ease; margin-top: 1rem; display: flex; align-items: center; justify-content: center; gap: 0.5rem; font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; }
+        .form-submit:hover { background: #D60044; background: var(--primary-dark); transform: translateY(-2px); box-shadow: 0 10px 30px rgba(255, 0, 80, 0.4); }
+        .form-submit i { font-size: 1rem; }
+
+        .faq { padding: 6rem 2rem; }
+        .faq-container { max-width: 800px; margin: 0 auto; }
+        .faq-item { background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 16px; margin-bottom: 1rem; overflow: hidden; }
+        .faq-question { width: 100%; padding: 1.5rem; background: none; border: none; color: var(--light); font-size: 1.1rem; font-weight: 600; text-align: left; cursor: pointer; display: flex; justify-content: space-between; align-items: center; transition: all 0.3s ease; }
+        .faq-question:hover { background: rgba(255, 255, 255, 0.02); }
+        .faq-question i { transition: transform 0.3s ease; color: var(--primary); }
+        .faq-item.active .faq-question i { transform: rotate(180deg); }
+        .faq-answer { max-height: 0; overflow: hidden; transition: max-height 0.3s ease, padding 0.3s ease; }
+        .faq-item.active .faq-answer { max-height: 300px; padding: 0 1.5rem 1.5rem; }
+        .faq-answer p { color: var(--gray); line-height: 1.7; }
+
+        .footer { padding: 4rem 2rem 2rem; border-top: 1px solid rgba(255, 255, 255, 0.05); }
+        .footer-container { max-width: 1400px; margin: 0 auto; }
+        .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 4rem; margin-bottom: 3rem; }
+        .footer-brand p { color: var(--gray); margin: 1rem 0; max-width: 300px; }
+        .social-links { display: flex; gap: 1rem; }
+        .social-links a { width: 45px; height: 45px; background: rgba(255, 255, 255, 0.05); border-radius: 12px; display: flex; align-items: center; justify-content: center; color: var(--light); text-decoration: none; transition: all 0.3s ease; }
+        .social-links a:hover { background: var(--primary); transform: translateY(-3px); }
+        .footer-column h4 { font-weight: 700; margin-bottom: 1.5rem; font-size: 1rem; }
+        .footer-column ul { list-style: none; }
+        .footer-column li { margin-bottom: 0.75rem; }
+        .footer-column a { color: var(--gray); text-decoration: none; transition: color 0.3s ease; font-size: 0.95rem; }
+        .footer-column a:hover { color: var(--light); }
+        .footer-bottom { padding-top: 2rem; border-top: 1px solid rgba(255, 255, 255, 0.05); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
+        .footer-bottom p { color: var(--gray); font-size: 0.9rem; }
+        .footer-bottom-links { display: flex; gap: 2rem; }
+        .footer-bottom-links a { color: var(--gray); text-decoration: none; font-size: 0.9rem; transition: color 0.3s ease; }
+        .footer-bottom-links a:hover { color: var(--light); }
+
+        .floating-whatsapp { position: fixed; bottom: 2rem; right: 2rem; width: 60px; height: 60px; background: #25D366; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--light); font-size: 1.8rem; text-decoration: none; box-shadow: 0 10px 30px rgba(37, 211, 102, 0.4); transition: all 0.3s ease; z-index: 999; animation: whatsappPulse 2s infinite; }
+        @keyframes whatsappPulse { 0%, 100% { box-shadow: 0 10px 30px rgba(37, 211, 102, 0.4); } 50% { box-shadow: 0 10px 40px rgba(37, 211, 102, 0.6); } }
+        .floating-whatsapp:hover { transform: scale(1.1); }
+
+        .other-regions { padding: 4rem 2rem; background: rgba(255, 255, 255, 0.01); border-top: 1px solid rgba(255, 255, 255, 0.05); }
+        .other-regions-container { max-width: 1400px; margin: 0 auto; text-align: center; }
+        .other-regions h3 { font-size: 1.5rem; margin-bottom: 2rem; color: var(--gray); }
+        .region-links { display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; }
+        .region-link-btn { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.75rem 1.5rem; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 50px; color: var(--light); text-decoration: none; font-weight: 500; transition: all 0.3s ease; }
+        .region-link-btn:hover { background: var(--primary); border-color: var(--primary); transform: translateY(-2px); }
+
+        @media (max-width: 1024px) {
+            .hero-content { grid-template-columns: 1fr; text-align: center; }
+            .hero-description { margin: 0 auto 2rem; }
+            .hero-stats { justify-content: center; }
+            .hero-buttons { justify-content: center; }
+            .hero-visual { order: -1; }
+            .footer-grid { grid-template-columns: 1fr 1fr; }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .mobile-menu-btn { display: block; }
+            .hero { padding: 7rem 1.5rem 3rem; }
+            .hero-stats { flex-direction: column; gap: 1.5rem; }
+            .form-row { grid-template-columns: 1fr; }
+            .footer-grid { grid-template-columns: 1fr; gap: 2rem; }
+            .footer-bottom { flex-direction: column; text-align: center; }
+        }
+    </style>
+<base target="_blank">
 </head>
-
 <body>
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                <span class="logo-icon">🦁</span>
+                <span class="logo-text">The Lion Force</span>
+            </a>
+            <div class="nav-links">
+                <a href="uk.html">🇬🇧 UK</a>
+                <a href="mena.html" class="nav-cta">🌍 MENA</a>
+                <a href="turkey.html">🇹🇷 Turkey</a>
+                <a href="cca.html">🏔️ CCA</a>
+                <a href="italy.html">🇮🇹 Italy</a>
+            </div>
+            <button class="mobile-menu-btn" onclick="toggleMobileMenu()">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </nav>
 
-<!-- HERO -->
-<header>
-  <div class="container">
-    <h1>TikTok LIVE Agency for Mena Creators</h1>
-    <p class="subtitle">
-      Helping TikTok creators in the <strong>Mena</strong>
-      grow, monetize LIVE streams, and protect their accounts.
-    </p>
-    <a href="#apply" class="btn">Apply as a Mena Creator</a>
-  </div>
-</header>
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-bg"></div>
+        <div class="hero-particles" id="particles"></div>
+        <div class="hero-content">
+            <div class="hero-text">
+                <div class="region-flag">🌍</div>
+                <div class="hero-badge">
+                    <i class="fas fa-check-circle"></i>
+                    Official TikTok LIVE Partner for MENA
+                </div>
+                <h1>MENA's Leading TikTok <span>LIVE Agency</span></h1>
+                <p class="hero-description">The Lion Force helps creators across the Middle East & North Africa grow their TikTok presence with Arabic support, regional payment solutions, and dedicated MENA expertise.</p>
+                <div class="hero-stats">
+                    <div class="stat">
+                        <span class="stat-number">3K+</span>
+                        <span class="stat-label">MENA Creators</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-number">$20M+</span>
+                        <span class="stat-label">MENA Earnings</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-number">4.9★</span>
+                        <span class="stat-label">MENA Rating</span>
+                    </div>
+                </div>
+                <div class="hero-buttons">
+                    <a href="https://wa.me/447539357381?text=Hi%20I%20want%20to%20apply%20for%20MENA%20region" class="btn btn-whatsapp" target="_blank">
+                        <i class="fab fa-whatsapp"></i>
+                        Apply via WhatsApp
+                    </a>
+                    <a href="#apply" class="btn btn-secondary">
+                        <i class="fas fa-file-alt"></i>
+                        Apply via Form
+                    </a>
+                </div>
+            </div>
+            <div class="hero-visual">
+                <div class="hero-image-container">
+                    <img src="hero-image.png" alt="MENA TikTok Creator" class="hero-image">
+                </div>
+            </div>
+        </div>
+    </section>
 
-<!-- WHY Mena -->
-<section>
-  <div class="container">
-    <h2>Why Mena Creators Choose The Lion Force</h2>
-    <p style="text-align:center;max-width:800px;margin:auto;color:#cbd5f5">
-      We are an official TikTok LIVE agency supporting creators across the Mena with
-      direct onboarding, growth strategy, monetization support, and account protection.
-    </p>
-  </div>
-</section>
+    <!-- Benefits Section -->
+    <section class="benefits" id="benefits">
+        <div class="section-header">
+            <span class="section-tag">Why MENA Creators Choose Us</span>
+            <h2 class="section-title">Benefits for MENA Creators</h2>
+            <p class="section-description">Everything you need to succeed as a TikTok creator in the Middle East & North Africa.</p>
+        </div>
+        <div class="benefits-grid">
+            <div class="benefit-card">
+                <div class="benefit-icon"><i class="fas fa-language"></i></div>
+                <h3>Arabic Support</h3>
+                <p>Dedicated Arabic-speaking managers who understand the MENA market and can communicate in your preferred language.</p>
+            </div>
+            <div class="benefit-card">
+                <div class="benefit-icon"><i class="fas fa-money-bill-wave"></i></div>
+                <h3>Regional Payments</h3>
+                <p>Flexible payment options including bank transfers, PayPal, and regional payment methods across MENA countries.</p>
+            </div>
+            <div class="benefit-card">
+                <div class="benefit-icon"><i class="fas fa-moon"></i></div>
+                <h3>Arabian Time Support</h3>
+                <p>Support team available during Arabian Standard Time (AST) for quick responses during your local hours.</p>
+            </div>
+            <div class="benefit-card">
+                <div class="benefit-icon"><i class="fas fa-users"></i></div>
+                <h3>MENA Creator Network</h3>
+                <p>Connect with fellow MENA creators from Dubai, Riyadh, Cairo, and across the region. Build valuable partnerships.</p>
+            </div>
+            <div class="benefit-card">
+                <div class="benefit-icon"><i class="fas fa-shield-alt"></i></div>
+                <h3>Cultural Sensitivity</h3>
+                <p>Content guidance that respects MENA cultural values while maximizing your reach and engagement.</p>
+            </div>
+            <div class="benefit-card">
+                <div class="benefit-icon"><i class="fas fa-chart-line"></i></div>
+                <h3>MENA Market Insights</h3>
+                <p>Data-driven strategies tailored to MENA audiences and trending content in the Arab world.</p>
+            </div>
+        </div>
+    </section>
 
-<!-- SERVICES -->
-<section>
-<div class="container">
-<h2>TikTok LIVE Agency Services</h2>
-<div class="grid">
-  <div class="card"><img src="images/live.png"><h3>LIVE Onboarding</h3><p>Official TikTok LIVE access.</p></div>
-  <div class="card"><img src="images/support.png"><h3>Account Protection</h3><p>Ban & restriction support.</p></div>
-  <div class="card"><img src="images/growth.png"><h3>Growth Strategy</h3><p>Increase followers & revenue.</p></div>
-  <div class="card"><img src="images/training.png"><h3>Creator Training</h3><p>LIVE coaching & guidance.</p></div>
-  <div class="card"><img src="images/performance.png"><h3>Performance Optimization</h3><p>Improve LIVE sessions.</p></div>
-  <div class="card"><img src="images/partnership.png"><h3>Long-Term Partnership</h3><p>Stable collaboration.</p></div>
-</div>
-</div>
-</section>
+    <!-- Testimonials -->
+    <section class="testimonials">
+        <div class="section-header">
+            <span class="section-tag">Success Stories</span>
+            <h2 class="section-title">MENA Creators Who Succeeded</h2>
+            <p class="section-description">Join thousands of successful MENA creators with The Lion Force.</p>
+        </div>
+        <div class="testimonials-grid">
+            <div class="testimonial-card">
+                <div class="testimonial-header">
+                    <div class="testimonial-avatar">FA</div>
+                    <div class="testimonial-info">
+                        <h4>Fatima A.</h4>
+                        <p>Fashion Creator, Dubai</p>
+                    </div>
+                </div>
+                <p>"Having Arabic-speaking support made everything so much easier. They understood my content and helped me grow from 8K to 250K followers in just 6 months. The payment options for UAE are perfect!"</p>
+                <div class="testimonial-stats">
+                    <div class="testimonial-stat"><i class="fas fa-users"></i><span>+242K Followers</span></div>
+                    <div class="testimonial-stat"><i class="fas fa-dollar-sign"></i><span>$5K+/month</span></div>
+                </div>
+            </div>
+            <div class="testimonial-card">
+                <div class="testimonial-header">
+                    <div class="testimonial-avatar">OK</div>
+                    <div class="testimonial-info">
+                        <h4>Omar K.</h4>
+                        <p>Gaming Creator, Saudi Arabia</p>
+                    </div>
+                </div>
+                <p>"The MENA team really understands our market. They helped me navigate content guidelines while growing my audience. Now I earn more from TikTok than I ever imagined possible!"</p>
+                <div class="testimonial-stats">
+                    <div class="testimonial-stat"><i class="fas fa-dollar-sign"></i><span>$7,500/month</span></div>
+                    <div class="testimonial-stat"><i class="fas fa-star"></i><span>Full Time</span></div>
+                </div>
+            </div>
+            <div class="testimonial-card">
+                <div class="testimonial-header">
+                    <div class="testimonial-avatar">NH</div>
+                    <div class="testimonial-info">
+                        <h4>Nour H.</h4>
+                        <p>Lifestyle Creator, Egypt</p>
+                    </div>
+                </div>
+                <p>"The Arabic support team is amazing! They helped me understand everything and my channel grew 500% in 8 months. Getting paid to my Egyptian bank was seamless."</p>
+                <div class="testimonial-stats">
+                    <div class="testimonial-stat"><i class="fas fa-users"></i><span>+180K Followers</span></div>
+                    <div class="testimonial-stat"><i class="fas fa-handshake"></i><span>Brand Deals</span></div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-<!-- APPLY -->
-<section id="apply">
-<div class="container">
-<h2>Apply to Join Our Official TikTok LIVE Agency</h2>
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="cta-bg"></div>
+        <div class="cta-container">
+            <div class="urgency-badge">
+                <i class="fas fa-fire"></i>
+                Limited MENA Spots Available!
+            </div>
+            <h2>Ready to Grow Your MENA TikTok Career?</h2>
+            <p>Join 3,000+ MENA creators earning with The Lion Force. Get Arabic support, regional payments, and dedicated MENA expertise.</p>
+            <div class="cta-buttons">
+                <a href="https://wa.me/447539357381?text=Hi%20I%20want%20to%20apply%20for%20MENA%20region" class="btn btn-whatsapp" target="_blank">
+                    <i class="fab fa-whatsapp"></i>
+                    Apply via WhatsApp
+                </a>
+                <a href="#apply" class="btn btn-secondary">
+                    <i class="fas fa-file-alt"></i>
+                    Apply via Form
+                </a>
+            </div>
+        </div>
+    </section>
 
-<div style="text-align:center;margin-bottom:40px">
-<p style="color:#94a3b8">Fastest response via WhatsApp</p>
-<a href="https://wa.me/447539357381?text=Hi%20I%20want%20to%20apply%20to%20join%20The%20Lion%20Force%20TikTok%20LIVE%20Agency."
-class="btn" target="_blank">Apply via WhatsApp</a>
-</div>
+    <!-- Application Form -->
+    <section class="application" id="apply">
+        <div class="application-container">
+            <div class="section-header">
+                <span class="section-tag">Join MENA Creators</span>
+                <h2 class="section-title">Apply for MENA Region</h2>
+                <p class="section-description">Fill out the form below and our MENA team will get back to you within 24 hours.</p>
+            </div>
+            <div class="form-card">
+                <form id="applicationForm" onsubmit="handleSubmit(event)">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="firstName">First Name *</label>
+                            <input type="text" id="firstName" name="firstName" placeholder="Your Name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="lastName">Last Name *</label>
+                            <input type="text" id="lastName" name="lastName" placeholder="Your Last Name" required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="email">Email Address *</label>
+                            <input type="email" id="email" name="email" placeholder="your@email.com" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">WhatsApp Number *</label>
+                            <input type="tel" id="phone" name="phone" placeholder="+971 50 123 4567" required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="tiktok">TikTok Username *</label>
+                            <input type="text" id="tiktok" name="tiktok" placeholder="@yourusername" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="followers">Current Followers *</label>
+                            <select id="followers" name="followers" required>
+                                <option value="">Select range</option>
+                                <option value="1000-5000">1,000 - 5,000</option>
+                                <option value="5000-10000">5,000 - 10,000</option>
+                                <option value="10000-50000">10,000 - 50,000</option>
+                                <option value="50000-100000">50,000 - 100,000</option>
+                                <option value="100000+">100,000+</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="country">Your Country *</label>
+                        <select id="country" name="country" required>
+                            <option value="">Select your country</option>
+                            <option value="uae">United Arab Emirates</option>
+                            <option value="saudi">Saudi Arabia</option>
+                            <option value="egypt">Egypt</option>
+                            <option value="qatar">Qatar</option>
+                            <option value="kuwait">Kuwait</option>
+                            <option value="bahrain">Bahrain</option>
+                            <option value="oman">Oman</option>
+                            <option value="jordan">Jordan</option>
+                            <option value="lebanon">Lebanon</option>
+                            <option value="morocco">Morocco</option>
+                            <option value="other">Other MENA Country</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Tell us about yourself (Optional)</label>
+                        <textarea id="message" name="message" rows="4" placeholder="Share your content niche, goals, or any questions..."></textarea>
+                    </div>
+                    <button type="submit" class="form-submit">
+                        <i class="fas fa-paper-plane"></i> Submit MENA Application
+                    </button>
+                </form>
+            </div>
+        </div>
+    </section>
 
-<p style="text-align:center;color:#64748b">— OR —</p>
+    <!-- FAQ Section -->
+    <section class="faq" id="faq">
+        <div class="faq-container">
+            <div class="section-header">
+                <span class="section-tag">MENA FAQ</span>
+                <h2 class="section-title">Frequently Asked Questions (MENA)</h2>
+                <p class="section-description">Got questions about joining from MENA? We've got answers.</p>
+            </div>
+            <div class="faq-list">
+                <div class="faq-item">
+                    <button class="faq-question" onclick="toggleFaq(this)">
+                        Do you offer Arabic language support?
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Yes! We have dedicated Arabic-speaking managers who can communicate with you in Arabic. They understand the MENA market and can provide culturally relevant guidance for your content.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question" onclick="toggleFaq(this)">
+                        What payment methods are available for MENA?
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p>We offer multiple payment options for MENA creators including bank transfers to UAE, Saudi, Egyptian and other MENA banks, PayPal, and other regional payment methods. Payments are processed monthly.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question" onclick="toggleFaq(this)">
+                        Which MENA countries do you support?
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p>We support creators from all MENA countries including UAE, Saudi Arabia, Egypt, Qatar, Kuwait, Bahrain, Oman, Jordan, Lebanon, Morocco, Tunisia, Algeria, and more.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question" onclick="toggleFaq(this)">
+                        What are your support hours for MENA?
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Our MENA support team is available Sunday-Thursday, 9 AM - 6 PM Arabian Standard Time (AST). WhatsApp support is available for urgent issues with typical response times under 2 hours.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-<form action="https://formsubmit.co/futuredbuild@gmail.com" method="POST">
-<input type="hidden" name="_captcha" value="false">
-<input type="hidden" name="_template" value="table">
-<input type="hidden" name="_next" value="https://thelionforce.com/thank-you.html">
+    <!-- Other Regions -->
+    <section class="other-regions">
+        <div class="other-regions-container">
+            <h3>Looking for another region?</h3>
+            <div class="region-links">
+                <a href="uk.html" class="region-link-btn">🇬🇧 UK</a>
+                <a href="turkey.html" class="region-link-btn">🇹🇷 Turkey</a>
+                <a href="cca.html" class="region-link-btn">🏔️ CCA</a>
+                <a href="italy.html" class="region-link-btn">🇮🇹 Italy</a>
+                <a href="index.html" class="region-link-btn">🌐 Global</a>
+            </div>
+        </div>
+    </section>
 
-<input type="text" name="name" placeholder="Your Name (optional)">
-<input type="email" name="email" placeholder="Your Email (optional)">
-<input type="tel" name="whatsapp" placeholder="WhatsApp Number">
-<input type="text" name="tiktok" placeholder="TikTok Username" required>
-<input type="text" name="country" placeholder="Country" required>
-<textarea name="message" placeholder="Optional message"></textarea>
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <a href="index.html" class="logo">
+                        <span class="logo-icon">🦁</span>
+                        <span class="logo-text">The Lion Force</span>
+                    </a>
+                    <p>The official TikTok LIVE Agency helping MENA creators grow, monetize, and protect their accounts.</p>
+                    <div class="social-links">
+                        <a href="#" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
+                        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h4>MENA Countries</h4>
+                    <ul>
+                        <li><a href="#">UAE</a></li>
+                        <li><a href="#">Saudi Arabia</a></li>
+                        <li><a href="#">Egypt</a></li>
+                        <li><a href="#">Qatar</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Support</h4>
+                    <ul>
+                        <li><a href="https://wa.me/447539357381">WhatsApp MENA</a></li>
+                        <li><a href="#faq">MENA FAQ</a></li>
+                        <li><a href="privacy.html">Privacy Policy</a></li>
+                        <li><a href="terms.html">Terms of Service</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 The Lion Force MENA – Official TikTok LIVE Agency. All rights reserved.</p>
+                <div class="footer-bottom-links">
+                    <a href="privacy.html">Privacy Policy</a>
+                    <a href="terms.html">Terms of Service</a>
+                </div>
+            </div>
+        </div>
+    </footer>
 
-<button class="btn" type="submit">Apply via Form</button>
-</form>
-</div>
-</section>
+    <!-- Floating WhatsApp -->
+    <a href="https://wa.me/447539357381?text=Hi%20I%20want%20to%20apply%20for%20MENA%20region" class="floating-whatsapp" target="_blank" aria-label="Contact MENA Team on WhatsApp">
+        <i class="fab fa-whatsapp"></i>
+    </a>
 
-<!-- FAQ -->
-<section>
-<div class="container">
-<h2>Frequently Asked Questions</h2>
-<div class="faq">
-  <div class="faq-item"><h4>Is it free?</h4><p>Yes, completely free.</p></div>
-  <div class="faq-item"><h4>Do I keep earnings?</h4><p>Yes, 100%.</p></div>
-  <div class="faq-item"><h4>Who can join?</h4><p>Eligible TikTok LIVE creators.</p></div>
-</div>
-</div>
-</section>
+    <script>
+        window.addEventListener('scroll', () => {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 50) navbar.classList.add('scrolled');
+            else navbar.classList.remove('scrolled');
+        });
 
-<footer>
-© 2026 The Lion Force – Official TikTok LIVE Agency
-</footer>
+        const particlesContainer = document.getElementById('particles');
+        for (let i = 0; i < 30; i++) {
+            const particle = document.createElement('div');
+            particle.className = 'particle';
+            particle.style.left = Math.random() * 100 + '%';
+            particle.style.animationDelay = Math.random() * 15 + 's';
+            particle.style.animationDuration = (15 + Math.random() * 10) + 's';
+            particlesContainer.appendChild(particle);
+        }
 
-!-- FLOATING WHATSAPP -->
-<a href="https://wa.me/447539357381?text=Hi%20I%20want%20to%20apply%20to%20join%20The%20Lion%20Force%20TikTok%20LIVE%20Agency."
-style="position:fixed;bottom:20px;right:20px;background:#25D366;color:#fff;
-padding:14px 18px;border-radius:50px;font-weight:600;text-decoration:none;
-box-shadow:0 4px 12px rgba(0,0,0,.3);z-index:9999;">
-💬 WhatsApp
-</a>
+        function toggleFaq(button) {
+            const faqItem = button.parentElement;
+            const isActive = faqItem.classList.contains('active');
+            document.querySelectorAll('.faq-item').forEach(item => item.classList.remove('active'));
+            if (!isActive) faqItem.classList.add('active');
+        }
 
-<script>
-document.querySelectorAll('.faq-item h4').forEach(h=>{
-  h.onclick=()=>h.nextElementSibling.style.display=
-  h.nextElementSibling.style.display==="block"?"none":"block";
-});
-</script>
+        function handleSubmit(e) {
+            e.preventDefault();
+            alert('Thank you for your MENA application! Our MENA team will review it and contact you within 24 hours via WhatsApp.');
+            document.getElementById('applicationForm').reset();
+        }
 
+        function toggleMobileMenu() {
+            const navLinks = document.querySelector('.nav-links');
+            navLinks.style.display = navLinks.style.display === 'flex' ? 'none' : 'flex';
+        }
+    </script>
 </body>
 </html>
