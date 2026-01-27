@@ -67,7 +67,59 @@
         .nav-cta { background: var(--primary); color: var(--light) !important; padding: 0.6rem 1.5rem; border-radius: 50px; font-weight: 600; transition: all 0.3s ease !important; }
         .nav-cta:hover { background: var(--primary-dark); transform: translateY(-2px); box-shadow: 0 10px 30px rgba(255, 0, 80, 0.3); }
 
-        .mobile-menu-btn { display: none; background: none; border: none; color: var(--light); font-size: 1.5rem; cursor: pointer; }
+                .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--light);
+            font-size: 1.5rem;
+            cursor: pointer;
+            z-index: 1001;
+        }
+
+        /* Mobile Menu Styles */
+        .nav-links.mobile-open {
+            display: flex !important;
+            position: fixed;
+            top: 70px;
+            left: 0;
+            right: 0;
+            flex-direction: column;
+            background: rgba(5, 5, 5, 0.98);
+            backdrop-filter: blur(20px);
+            padding: 1.5rem 2rem;
+            gap: 1rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            z-index: 999;
+            animation: slideDown 0.3s ease;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .nav-links.mobile-open a {
+            padding: 1rem;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.05);
+            text-align: center;
+            font-size: 1.1rem;
+        }
+
+        .nav-links.mobile-open a:hover {
+            background: rgba(255, 0, 80, 0.2);
+        }
+
+        .nav-links.mobile-open .nav-cta {
+            background: var(--primary);
+        }
 
         .hero {
             min-height: 100vh;
@@ -638,7 +690,10 @@
 
         function toggleMobileMenu() {
             const navLinks = document.querySelector('.nav-links');
-            navLinks.style.display = navLinks.style.display === 'flex' ? 'none' : 'flex';
+            const menuBtn = document.querySelector('.mobile-menu-btn i');
+            navLinks.classList.toggle('mobile-open');
+            menuBtn.classList.toggle('fa-bars');
+            menuBtn.classList.toggle('fa-times');
         }
     </script>
 </body>
