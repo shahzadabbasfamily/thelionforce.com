@@ -783,7 +783,7 @@
             font-size: 0.95rem;
         }
 
-        .form-group input,
+                .form-group input,
         .form-group select,
         .form-group textarea {
             width: 100%;
@@ -797,6 +797,21 @@
             transition: all 0.3s ease;
         }
 
+        .form-group select {
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23888888' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 1rem center;
+            padding-right: 2.5rem;
+            cursor: pointer;
+        }
+
+        .form-group select option {
+            background: #1a1a1a;
+            color: #ffffff;
+            padding: 10px;
+        }
+
         .form-group input:focus,
         .form-group select:focus,
         .form-group textarea:focus {
@@ -808,31 +823,6 @@
         .form-group input::placeholder,
         .form-group textarea::placeholder {
             color: var(--gray);
-        }
-
-        .form-row {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1rem;
-        }
-
-        .form-submit {
-            width: 100%;
-            padding: 1.25rem;
-            background: var(--primary);
-            color: var(--light);
-            border: none;
-            border-radius: 12px;
-            font-size: 1.1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            margin-top: 1rem;
-        }
-
-        .form-submit:hover {
-            background: var(--primary-dark);
-            transform: translateY(-2px);
         }
 
         /* FAQ Section */
@@ -1155,11 +1145,11 @@
                 <p class="hero-description">The Lion Force helps TikTok creators in United Kingdom, MENA, Turkey & CCA grow their audience, maximize earnings, and protect their accounts with official TikTok support.</p>
                 <div class="hero-stats">
                     <div class="stat">
-                        <span class="stat-number">10K+</span>
+                        <span class="stat-number">5K+</span>
                         <span class="stat-label">Active Creators</span>
                     </div>
                     <div class="stat">
-                        <span class="stat-number">$50M+</span>
+                        <span class="stat-number">$10M+</span>
                         <span class="stat-label">Creator Earnings</span>
                     </div>
                     <div class="stat">
@@ -1209,11 +1199,11 @@
             </div>
             <div class="trust-item">
                 <i class="fas fa-users"></i>
-                <span>10,000+ Creators</span>
+                <span>5,000+ Creators</span>
             </div>
             <div class="trust-item">
                 <i class="fas fa-globe"></i>
-                <span>4 Regions Covered</span>
+                <span>5 Regions Covered</span>
             </div>
             <div class="trust-item">
                 <i class="fas fa-headset"></i>
@@ -1335,13 +1325,11 @@
                 </div>
             </div>
             <div class="testimonial-card animate-on-scroll">
-    <div class="testimonial-header">
-        <div class="testimonial-avatar">
-            <img src="images/hero.png" alt="Ahmed M.">
-        </div>
-        <div class="testimonial-info">
-            <h4>Ahmed M.</h4>
-            <p>Gaming Creator, MENA</p>
+                <div class="testimonial-header">
+                    <div class="testimonial-avatar">AM</div>
+                    <div class="testimonial-info">
+                        <h4>Ahmed M.</h4>
+                        <p>Gaming Creator, MENA</p>
                     </div>
                 </div>
                 <p>"The account protection alone is worth it. When my account got restricted, The Lion Force team resolved it within 24 hours. Incredible support!"</p>
@@ -1388,7 +1376,7 @@
                 Limited Spots Available - Apply Today!
             </div>
             <h2>Ready to Transform Your TikTok Career?</h2>
-            <p>Join 10,000+ successful creators who trust The Lion Force. Get official TikTok support, maximize your earnings, and grow your audience faster than ever.</p>
+            <p>Join 5,000+ successful creators who trust The Lion Force. Get official TikTok support, maximize your earnings, and grow your audience faster than ever.</p>
             <div class="cta-buttons">
                 <a href="https://wa.me/447539357381?text=Hi%20I%20want%20to%20apply%20to%20join%20The%20Lion%20Force%20TikTok%20LIVE%20Agency." class="btn btn-whatsapp" target="_blank">
                     <i class="fab fa-whatsapp"></i>
@@ -1457,6 +1445,7 @@
                             <option value="mena">MENA (Middle East & North Africa)</option>
                             <option value="turkey">Turkey</option>
                             <option value="cca">CCA (Central & South Asia)</option>
+                            <option value="turkey">Italy</option>
                         </select>
                     </div>
                     <div class="form-group">
@@ -1495,7 +1484,7 @@
                         <i class="fas fa-chevron-down"></i>
                     </button>
                     <div class="faq-answer">
-                        <p>Yes! Joining The Lion Force is completely free. We operate on a revenue-sharing model where we take a small percentage of your LIVE earnings. This means we only succeed when you succeed. No upfront costs, no hidden fees.</p>
+                        <p>Yes! Joining The Lion Force is completely free. </p>
                     </div>
                 </div>
                 <div class="faq-item animate-on-scroll">
@@ -1504,7 +1493,7 @@
                         <i class="fas fa-chevron-down"></i>
                     </button>
                     <div class="faq-answer">
-                        <p>Absolutely! You keep the majority of your earnings. Our revenue share is industry-competitive, and many creators actually earn MORE with us due to our growth strategies and optimization support. You'll receive detailed monthly reports of all earnings.</p>
+                        <p>Absolutely! You keep all of your earnings, and many creators actually earn MORE with us due to our growth strategies and optimization support.</p>
                     </div>
                 </div>
                 <div class="faq-item animate-on-scroll">
@@ -1513,7 +1502,7 @@
                         <i class="fas fa-chevron-down"></i>
                     </button>
                     <div class="faq-answer">
-                        <p>We review applications within 24-48 hours. If approved, you can start LIVE streaming with our support immediately. WhatsApp applications typically get faster responses than form submissions.</p>
+                        <p>TikTok review applications within 24-48 hours. If approved, you can start LIVE streaming with our support immediately. WhatsApp applications typically get faster responses than form submissions.</p>
                     </div>
                 </div>
                 <div class="faq-item animate-on-scroll">
