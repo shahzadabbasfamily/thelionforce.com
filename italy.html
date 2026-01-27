@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="The Lion Force Italy - Official TikTok LIVE Agency for Italian creators. Italian language support, Euro payments, local market expertise.">
+    <meta name="keywords" content="TikTok LIVE Agency Italy, Italian TikTok creators, Roma, Milano, Napoli, monetization Italy">
+    <title>The Lion Force Italy | TikTok LIVE Agency for Italian Creators</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🦁%3C/text%3E%3C/svg%3E">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #FF0050;
+            --primary-dark: #D60044;
+            --secondary: #00F2EA;
+            --accent: #FFD700;
+            --dark: #0a0a0a;
+            --darker: #050505;
+            --light: #ffffff;
+            --gray: #888888;
+            --gradient: linear-gradient(135deg, #FF0050 0%, #FF6B6B 50%, #00F2EA 100%);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--darker);
+            color: var(--light);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: var(--dark); }
+        ::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 4px; }
+
+        .navbar {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 1000;
+            padding: 1rem 2rem;
+            background: rgba(5, 5, 5, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.3s ease;
+        }
+        .navbar.scrolled { padding: 0.75rem 2rem; background: rgba(5, 5, 5, 0.98); }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo { display: flex; align-items: center; gap: 0.75rem; text-decoration: none; color: var(--light); }
+        .logo-icon { font-size: 2rem; animation: pulse 2s infinite; }
+        @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.1); } }
+        .logo-text { font-size: 1.5rem; font-weight: 800; background: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+
+        .nav-links { display: flex; gap: 2rem; align-items: center; }
+        .nav-links a { color: var(--gray); text-decoration: none; font-weight: 500; transition: color 0.3s ease; font-size: 0.95rem; }
+        .nav-links a:hover { color: var(--light); }
+        .nav-cta { background: var(--primary); color: var(--light) !important; padding: 0.6rem 1.5rem; border-radius: 50px; font-weight: 600; transition: all 0.3s ease !important; }
+        .nav-cta:hover { background: var(--primary-dark); transform: translateY(-2px); box-shadow: 0 10px 30px rgba(255, 0, 80, 0.3); }
+
+        .mobile-menu-btn { display: none; background: none; border: none; color: var(--light); font-size: 1.5rem; cursor: pointer; }
+
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            padding: 8rem 2rem 4rem;
+            overflow: hidden;
+        }
+        .hero-bg {
+            position: absolute;
+            inset: 0;
+            background: 
+                radial-gradient(ellipse at 20% 50%, rgba(255, 0, 80, 0.15) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 50%, rgba(0, 242, 234, 0.1) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 100%, rgba(255, 215, 0, 0.05) 0%, transparent 50%);
+        }
+        .hero-particles { position: absolute; inset: 0; overflow: hidden; }
+        .particle { position: absolute; width: 4px; height: 4px; background: var(--primary); border-radius: 50%; opacity: 0.5; animation: float 15s infinite; }
+        @keyframes float { 0%, 100% { transform: translateY(100vh) rotate(0deg); opacity: 0; } 10% { opacity: 0.5; } 90% { opacity: 0.5; } 100% { transform: translateY(-100vh) rotate(720deg); opacity: 0; } }
+
+        .hero-content {
+            max-width: 1400px;
+            width: 100%;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .region-flag { font-size: 3rem; margin-bottom: 1rem; }
+        .hero-badge { display: inline-flex; align-items: center; gap: 0.5rem; background: rgba(255, 0, 80, 0.1); border: 1px solid rgba(255, 0, 80, 0.3); padding: 0.5rem 1rem; border-radius: 50px; font-size: 0.85rem; color: var(--primary); margin-bottom: 1.5rem; }
+        .hero-badge i { color: var(--accent); }
+        .hero h1 { font-size: clamp(2.5rem, 5vw, 4rem); font-weight: 900; line-height: 1.1; margin-bottom: 1.5rem; }
+        .hero h1 span { background: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        .hero-description { font-size: 1.2rem; color: var(--gray); margin-bottom: 2rem; max-width: 500px; }
+        .hero-stats { display: flex; gap: 2.5rem; margin-bottom: 2.5rem; }
+        .stat { text-align: center; }
+        .stat-number { font-size: 2.5rem; font-weight: 800; color: var(--accent); display: block; }
+        .stat-label { font-size: 0.85rem; color: var(--gray); }
+        .hero-buttons { display: flex; gap: 1rem; flex-wrap: wrap; }
+
+        .btn { display: inline-flex; align-items: center; gap: 0.5rem; padding: 1rem 2rem; border-radius: 50px; font-weight: 600; text-decoration: none; transition: all 0.3s ease; font-size: 1rem; border: none; cursor: pointer; }
+        .btn-primary { background: var(--primary); color: var(--light); }
+        .btn-primary:hover { background: var(--primary-dark); transform: translateY(-3px); box-shadow: 0 15px 40px rgba(255, 0, 80, 0.4); }
+        .btn-secondary { background: transparent; color: var(--light); border: 2px solid rgba(255, 255, 255, 0.2); }
+        .btn-secondary:hover { border-color: var(--secondary); color: var(--secondary); transform: translateY(-3px); }
+        .btn-whatsapp { background: #25D366; color: var(--light); }
+        .btn-whatsapp:hover { background: #128C7E; transform: translateY(-3px); box-shadow: 0 15px 40px rgba(37, 211, 102, 0.4); }
+
+        .hero-visual { position: relative; }
+        .hero-image-container { position: relative; border-radius: 30px; overflow: hidden; box-shadow: 0 50px 100px rgba(255, 0, 80, 0.2); }
+        .hero-image { width: 100%; height: auto; display: block; }
+
+        .section-header { text-align: center; max-width: 700px; margin: 0 auto 4rem; }
+        .section-tag { display: inline-block; background: rgba(0, 242, 234, 0.1); color: var(--secondary); padding: 0.4rem 1rem; border-radius: 50px; font-size: 0.85rem; font-weight: 600; margin-bottom: 1rem; border: 1px solid rgba(0, 242, 234, 0.3); }
+        .section-title { font-size: clamp(2rem, 4vw, 3rem); font-weight: 800; margin-bottom: 1rem; }
+        .section-description { color: var(--gray); font-size: 1.1rem; }
+
+        .benefits { padding: 6rem 2rem; }
+        .benefits-grid { max-width: 1400px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; }
+        .benefit-card { background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 24px; padding: 2.5rem; transition: all 0.4s ease; }
+        .benefit-card:hover { background: rgba(255, 255, 255, 0.05); border-color: var(--primary); transform: translateY(-5px); }
+        .benefit-icon { width: 60px; height: 60px; background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%); border-radius: 16px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; color: var(--light); margin-bottom: 1.5rem; }
+        .benefit-card h3 { font-size: 1.3rem; font-weight: 700; margin-bottom: 0.75rem; }
+        .benefit-card p { color: var(--gray); font-size: 0.95rem; line-height: 1.7; }
+
+        .testimonials { padding: 6rem 2rem; background: rgba(255, 255, 255, 0.01); }
+        .testimonials-grid { max-width: 1400px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 2rem; }
+        .testimonial-card { background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 24px; padding: 2.5rem; position: relative; }
+        .testimonial-card::before { content: '"'; position: absolute; top: 1rem; right: 2rem; font-size: 6rem; color: var(--primary); opacity: 0.2; font-family: Georgia, serif; line-height: 1; }
+        .testimonial-header { display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem; }
+        .testimonial-avatar { width: 60px; height: 60px; border-radius: 50%; background: var(--gradient); display: flex; align-items: center; justify-content: center; font-size: 1.5rem; font-weight: 700; }
+        .testimonial-info h4 { font-weight: 700; margin-bottom: 0.25rem; }
+        .testimonial-info p { color: var(--gray); font-size: 0.9rem; }
+        .testimonial-stats { display: flex; gap: 1.5rem; margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid rgba(255, 255, 255, 0.08); }
+        .testimonial-stat { display: flex; align-items: center; gap: 0.5rem; font-size: 0.9rem; }
+        .testimonial-stat i { color: var(--accent); }
+        .testimonial-stat span { color: var(--gray); }
+
+        .cta-section { padding: 6rem 2rem; position: relative; overflow: hidden; }
+        .cta-bg { position: absolute; inset: 0; background: radial-gradient(ellipse at 30% 50%, rgba(255, 0, 80, 0.2) 0%, transparent 50%), radial-gradient(ellipse at 70% 50%, rgba(0, 242, 234, 0.15) 0%, transparent 50%); }
+        .cta-container { max-width: 900px; margin: 0 auto; text-align: center; position: relative; z-index: 1; }
+        .cta-container h2 { font-size: clamp(2rem, 4vw, 3rem); font-weight: 800; margin-bottom: 1rem; }
+        .cta-container p { color: var(--gray); font-size: 1.1rem; margin-bottom: 2rem; }
+        .urgency-badge { display: inline-flex; align-items: center; gap: 0.5rem; background: rgba(255, 215, 0, 0.1); border: 1px solid rgba(255, 215, 0, 0.3); color: var(--accent); padding: 0.5rem 1rem; border-radius: 50px; font-size: 0.9rem; font-weight: 600; margin-bottom: 2rem; animation: pulse 2s infinite; }
+        .cta-buttons { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+
+        .application { padding: 6rem 2rem; background: rgba(255, 255, 255, 0.01); }
+        .application-container { max-width: 700px; margin: 0 auto; }
+        .form-card { background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 30px; padding: 3rem; }
+        .form-group { margin-bottom: 1.5rem; }
+        .form-group label { display: block; margin-bottom: 0.5rem; font-weight: 500; font-size: 0.95rem; }
+        .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 1rem 1.25rem; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 12px; color: var(--light); font-size: 1rem; font-family: inherit; transition: all 0.3s ease; }
+        .form-group select { appearance: none; -webkit-appearance: none; -moz-appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23888888' d='M6 8L1 3h10z'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 1rem center; padding-right: 2.5rem; cursor: pointer; }
+        .form-group select option { background: #1a1a1a; color: #ffffff; padding: 10px; }
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus { outline: none; border-color: var(--primary); background: rgba(255, 255, 255, 0.08); }
+        .form-group input::placeholder, .form-group textarea::placeholder { color: var(--gray); }
+        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+        .form-submit { width: 100%; padding: 1.25rem 2rem; background: #FF0050; background: var(--primary); color: #ffffff; color: var(--light); border: none; border-radius: 12px; font-size: 1.1rem; font-weight: 600; cursor: pointer; transition: all 0.3s ease; margin-top: 1rem; display: flex; align-items: center; justify-content: center; gap: 0.5rem; font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; }
+        .form-submit:hover { background: #D60044; background: var(--primary-dark); transform: translateY(-2px); box-shadow: 0 10px 30px rgba(255, 0, 80, 0.4); }
+        .form-submit i { font-size: 1rem; }
+
+        .faq { padding: 6rem 2rem; }
+        .faq-container { max-width: 800px; margin: 0 auto; }
+        .faq-item { background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 16px; margin-bottom: 1rem; overflow: hidden; }
+        .faq-question { width: 100%; padding: 1.5rem; background: none; border: none; color: var(--light); font-size: 1.1rem; font-weight: 600; text-align: left; cursor: pointer; display: flex; justify-content: space-between; align-items: center; transition: all 0.3s ease; }
+        .faq-question:hover { background: rgba(255, 255, 255, 0.02); }
+        .faq-question i { transition: transform 0.3s ease; color: var(--primary); }
+        .faq-item.active .faq-question i { transform: rotate(180deg); }
+        .faq-answer { max-height: 0; overflow: hidden; transition: max-height 0.3s ease, padding 0.3s ease; }
+        .faq-item.active .faq-answer { max-height: 300px; padding: 0 1.5rem 1.5rem; }
+        .faq-answer p { color: var(--gray); line-height: 1.7; }
+
+        .footer { padding: 4rem 2rem 2rem; border-top: 1px solid rgba(255, 255, 255, 0.05); }
+        .footer-container { max-width: 1400px; margin: 0 auto; }
+        .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 4rem; margin-bottom: 3rem; }
+        .footer-brand p { color: var(--gray); margin: 1rem 0; max-width: 300px; }
+        .social-links { display: flex; gap: 1rem; }
+        .social-links a { width: 45px; height: 45px; background: rgba(255, 255, 255, 0.05); border-radius: 12px; display: flex; align-items: center; justify-content: center; color: var(--light); text-decoration: none; transition: all 0.3s ease; }
+        .social-links a:hover { background: var(--primary); transform: translateY(-3px); }
+        .footer-column h4 { font-weight: 700; margin-bottom: 1.5rem; font-size: 1rem; }
+        .footer-column ul { list-style: none; }
+        .footer-column li { margin-bottom: 0.75rem; }
+        .footer-column a { color: var(--gray); text-decoration: none; transition: color 0.3s ease; font-size: 0.95rem; }
+        .footer-column a:hover { color: var(--light); }
+        .footer-bottom { padding-top: 2rem; border-top: 1px solid rgba(255, 255, 255, 0.05); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
+        .footer-bottom p { color: var(--gray); font-size: 0.9rem; }
+        .footer-bottom-links { display: flex; gap: 2rem; }
+        .footer-bottom-links a { color: var(--gray); text-decoration: none; font-size: 0.9rem; transition: color 0.3s ease; }
+        .footer-bottom-links a:hover { color: var(--light); }
+
+        .floating-whatsapp { position: fixed; bottom: 2rem; right: 2rem; width: 60px; height: 60px; background: #25D366; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--light); font-size: 1.8rem; text-decoration: none; box-shadow: 0 10px 30px rgba(37, 211, 102, 0.4); transition: all 0.3s ease; z-index: 999; animation: whatsappPulse 2s infinite; }
+        @keyframes whatsappPulse { 0%, 100% { box-shadow: 0 10px 30px rgba(37, 211, 102, 0.4); } 50% { box-shadow: 0 10px 40px rgba(37, 211, 102, 0.6); } }
+        .floating-whatsapp:hover { transform: scale(1.1); }
+
+        .other-regions { padding: 4rem 2rem; background: rgba(255, 255, 255, 0.01); border-top: 1px solid rgba(255, 255, 255, 0.05); }
+        .other-regions-container { max-width: 1400px; margin: 0 auto; text-align: center; }
+        .other-regions h3 { font-size: 1.5rem; margin-bottom: 2rem; color: var(--gray); }
+        .region-links { display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; }
+        .region-link-btn { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.75rem 1.5rem; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 50px; color: var(--light); text-decoration: none; font-weight: 500; transition: all 0.3s ease; }
+        .region-link-btn:hover { background: var(--primary); border-color: var(--primary); transform: translateY(-2px); }
+
+        @media (max-width: 1024px) {
+            .hero-content { grid-template-columns: 1fr; text-align: center; }
+            .hero-description { margin: 0 auto 2rem; }
+            .hero-stats { justify-content: center; }
+            .hero-buttons { justify-content: center; }
+            .hero-visual { order: -1; }
+            .footer-grid { grid-template-columns: 1fr 1fr; }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .mobile-menu-btn { display: block; }
+            .hero { padding: 7rem 1.5rem 3rem; }
+            .hero-stats { flex-direction: column; gap: 1.5rem; }
+            .form-row { grid-template-columns: 1fr; }
+            .footer-grid { grid-template-columns: 1fr; gap: 2rem; }
+            .footer-bottom { flex-direction: column; text-align: center; }
+        }
+    </style>
+<base target="_blank">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                <span class="logo-icon">🦁</span>
+                <span class="logo-text">The Lion Force</span>
+            </a>
+            <div class="nav-links">
+                <a href="uk.html">🇬🇧 UK</a>
+                <a href="mena.html">🌍 MENA</a>
+                <a href="turkey.html">🇹🇷 Turkey</a>
+                <a href="cca.html">🏔️ CCA</a>
+                <a href="italy.html" class="nav-cta">🇮🇹 Italy</a>
+            </div>
+            <button class="mobile-menu-btn" onclick="toggleMobileMenu()">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-bg"></div>
+        <div class="hero-particles" id="particles"></div>
+        <div class="hero-content">
+            <div class="hero-text">
+                <div class="region-flag">🇮🇹</div>
+                <div class="hero-badge">
+                    <i class="fas fa-check-circle"></i>
+                    Official TikTok LIVE Partner for Italy
+                </div>
+                <h1>Italy's Premier TikTok <span>LIVE Agency</span></h1>
+                <p class="hero-description">The Lion Force helps Italian creators from Roma to Milano, Napoli to Torino grow their TikTok presence with Italian language support and Euro payments.</p>
+                <div class="hero-stats">
+                    <div class="stat">
+                        <span class="stat-number">1.5K+</span>
+                        <span class="stat-label">Italian Creators</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-number">€8M+</span>
+                        <span class="stat-label">Italy Earnings</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-number">4.9★</span>
+                        <span class="stat-label">Italy Rating</span>
+                    </div>
+                </div>
+                <div class="hero-buttons">
+                    <a href="https://wa.me/447539357381?text=Hi%20I%20want%20to%20apply%20for%20Italy%20region" class="btn btn-whatsapp" target="_blank">
+                        <i class="fab fa-whatsapp"></i>
+                        Candidati via WhatsApp
+                    </a>
+                    <a href="#apply" class="btn btn-secondary">
+                        <i class="fas fa-file-alt"></i>
+                        Candidati via Form
+                    </a>
+                </div>
+            </div>
+            <div class="hero-visual">
+                <div class="hero-image-container">
+                    <img src="hero-image.png" alt="Italian TikTok Creator" class="hero-image">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Benefits Section -->
+    <section class="benefits" id="benefits">
+        <div class="section-header">
+            <span class="section-tag">Perché i Creatori Italiani Scelgono Noi</span>
+            <h2 class="section-title">Benefits for Italian Creators</h2>
+            <p class="section-description">Everything you need to succeed as a TikTok creator in Italy.</p>
+        </div>
+        <div class="benefits-grid">
+            <div class="benefit-card">
+                <div class="benefit-icon"><i class="fas fa-euro-sign"></i></div>
+                <h3>Pagamenti in Euro</h3>
+                <p>Ricevi pagamenti direttamente sul tuo conto bancario italiano in Euro. Veloce, sicuro e senza commissioni di conversione.</p>
+            </div>
+            <div class="benefit-card">
+                <div class="benefit-icon"><i class="fas fa-language"></i></div>
+                <h3>Supporto in Italiano</h3>
+                <p>Manager di lingua italiana dedicati che comprendono il mercato italiano e possono comunicare nella tua lingua madre.</p>
+            </div>
+            <div class="benefit-card">
+                <div class="benefit-icon"><i class="fas fa-university"></i></div>
+                <h3>Banche Italiane</h3>
+                <p>Compatibile con tutte le principali banche italiane tra cui UniCredit, Intesa Sanpaolo, Poste Italiane e altre.</p>
+            </div>
+            <div class="benefit-card">
+                <div class="benefit-icon"><i class="fas fa-users"></i></div>
+                <h3>Community di Creatori</h3>
+                <p>Connettiti con altri creator italiani da Roma, Milano, Napoli e in tutta Italia. Costruisci partnership preziose.</p>
+            </div>
+            <div class="benefit-card">
+                <div class="benefit-icon"><i class="fas fa-shield-alt"></i></div>
+                <h3>Protezione Account</h3>
+                <p>Supporto italiano dedicato per problemi di account, ban e restrizioni con tempi di risoluzione rapidi.</p>
+            </div>
+            <div class="benefit-card">
+                <div class="benefit-icon"><i class="fas fa-chart-line"></i></div>
+                <h3>Insight Mercato Italiano</h3>
+                <p>Strategie basate sui dati personalizzate per il pubblico italiano e i contenuti di tendenza in Italia.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="testimonials">
+        <div class="section-header">
+            <span class="section-tag">Storie di Successo</span>
+            <h2 class="section-title">Creator Italiani di Successo</h2>
+            <p class="section-description">Unisciti a migliaia di creator italiani di successo con The Lion Force.</p>
+        </div>
+        <div class="testimonials-grid">
+            <div class="testimonial-card">
+                <div class="testimonial-header">
+                    <div class="testimonial-avatar">MR</div>
+                    <div class="testimonial-info">
+                        <h4>Marco R.</h4>
+                        <p>Creator Cucina, Roma</p>
+                    </div>
+                </div>
+                <p>"Il supporto in italiano ha reso tutto molto più facile. Sono passato da 12K a 280K follower in soli 6 mesi. Il pagamento sulla mia banca italiana è stato perfetto!"</p>
+                <div class="testimonial-stats">
+                    <div class="testimonial-stat"><i class="fas fa-users"></i><span>+268K Follower</span></div>
+                    <div class="testimonial-stat"><i class="fas fa-euro-sign"></i><span>€2.5K+/mese</span></div>
+                </div>
+            </div>
+            <div class="testimonial-card">
+                <div class="testimonial-header">
+                    <div class="testimonial-avatar">GB</div>
+                    <div class="testimonial-info">
+                        <h4>Giulia B.</h4>
+                        <p>Creator Moda, Milano</p>
+                    </div>
+                </div>
+                <p>"Il team italiano capisce davvero il nostro mercato. Mi hanno aiutato a crescere mentre rispettavo le linee guida. Ora guadagno più di quanto avessi mai immaginato!"</p>
+                <div class="testimonial-stats">
+                    <div class="testimonial-stat"><i class="fas fa-euro-sign"></i><span>€4,000/mese</span></div>
+                    <div class="testimonial-stat"><i class="fas fa-star"></i><span>A Tempo Pieno</span></div>
+                </div>
+            </div>
+            <div class="testimonial-card">
+                <div class="testimonial-header">
+                    <div class="testimonial-avatar">LC</div>
+                    <div class="testimonial-info">
+                        <h4>Luca C.</h4>
+                        <p>Creator Fitness, Napoli</p>
+                    </div>
+                </div>
+                <p>"Ricevere pagamenti sul mio conto italiano è stato semplicissimo. Il mio canale è cresciuto del 350% in 8 mesi e ora collaboro con brand internazionali."</p>
+                <div class="testimonial-stats">
+                    <div class="testimonial-stat"><i class="fas fa-users"></i><span>+150K Follower</span></div>
+                    <div class="testimonial-stat"><i class="fas fa-handshake"></i><span>Collaborazioni</span></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="cta-bg"></div>
+        <div class="cta-container">
+            <div class="urgency-badge">
+                <i class="fas fa-fire"></i>
+                Posti Limitati per l'Italia!
+            </div>
+            <h2>Pronto a Far Crescere la Tua Carriera TikTok?</h2>
+            <p>Unisciti a 1.500+ creator italiani che guadagnano con The Lion Force. Supporto in italiano, pagamenti in Euro e assistenza locale.</p>
+            <div class="cta-buttons">
+                <a href="https://wa.me/447539357381?text=Hi%20I%20want%20to%20apply%20for%20Italy%20region" class="btn btn-whatsapp" target="_blank">
+                    <i class="fab fa-whatsapp"></i>
+                    Candidati su WhatsApp
+                </a>
+                <a href="#apply" class="btn btn-secondary">
+                    <i class="fas fa-file-alt"></i>
+                    Candidati con il Form
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Application Form -->
+    <section class="application" id="apply">
+        <div class="application-container">
+            <div class="section-header">
+                <span class="section-tag">Unisciti ai Creator Italiani</span>
+                <h2 class="section-title">Candidati per la Regione Italia</h2>
+                <p class="section-description">Compila il modulo qui sotto e il nostro team italiano ti contatterà entro 24 ore.</p>
+            </div>
+            <div class="form-card">
+                <form id="applicationForm" onsubmit="handleSubmit(event)">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="firstName">Nome *</label>
+                            <input type="text" id="firstName" name="firstName" placeholder="Il tuo nome" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="lastName">Cognome *</label>
+                            <input type="text" id="lastName" name="lastName" placeholder="Il tuo cognome" required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="email">Indirizzo Email *</label>
+                            <input type="email" id="email" name="email" placeholder="tuo@email.it" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">Numero WhatsApp *</label>
+                            <input type="tel" id="phone" name="phone" placeholder="+39 333 123 4567" required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="tiktok">Username TikTok *</label>
+                            <input type="text" id="tiktok" name="tiktok" placeholder="@username" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="followers">Follower Attuali *</label>
+                            <select id="followers" name="followers" required>
+                                <option value="">Seleziona intervallo</option>
+                                <option value="1000-5000">1.000 - 5.000</option>
+                                <option value="5000-10000">5.000 - 10.000</option>
+                                <option value="10000-50000">10.000 - 50.000</option>
+                                <option value="50000-100000">50.000 - 100.000</option>
+                                <option value="100000+">100.000+</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="city">La Tua Città *</label>
+                        <select id="city" name="city" required>
+                            <option value="">Seleziona città</option>
+                            <option value="roma">Roma</option>
+                            <option value="milano">Milano</option>
+                            <option value="napoli">Napoli</option>
+                            <option value="torino">Torino</option>
+                            <option value="palermo">Palermo</option>
+                            <option value="genova">Genova</option>
+                            <option value="bologna">Bologna</option>
+                            <option value="firenze">Firenze</option>
+                            <option value="other">Altra Città Italiana</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Parlaci di te (Opzionale)</label>
+                        <textarea id="message" name="message" rows="4" placeholder="Condividi la tua nicchia di contenuti, obiettivi o domande..."></textarea>
+                    </div>
+                    <button type="submit" class="form-submit">
+                        <i class="fas fa-paper-plane"></i> Invia Candidatura Italia
+                    </button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="faq" id="faq">
+        <div class="faq-container">
+            <div class="section-header">
+                <span class="section-tag">FAQ Italia</span>
+                <h2 class="section-title">Domande Frequenti (Italia)</h2>
+                <p class="section-description">Hai domande su come unirti dall'Italia? Ecco le risposte.</p>
+            </div>
+            <div class="faq-list">
+                <div class="faq-item">
+                    <button class="faq-question" onclick="toggleFaq(this)">
+                        Offrite supporto in italiano?
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Sì! Abbiamo manager di lingua italiana dedicati. Comprendono il mercato italiano e possono comunicare nella tua lingua madre.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question" onclick="toggleFaq(this)">
+                        Come ricevo i pagamenti?
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Ricevi pagamenti in Euro direttamente sul tuo conto bancario italiano. Lavoriamo con UniCredit, Intesa Sanpaolo, Poste Italiane e tutte le principali banche italiane.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question" onclick="toggleFaq(this)">
+                        Quali città italiane supportate?
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Supportiamo creator da tutte le città italiane: Roma, Milano, Napoli, Torino, Palermo, Genova, Bologna, Firenze e tutte le altre.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question" onclick="toggleFaq(this)">
+                        Quali sono i vostri orari di supporto?
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Il nostro team di supporto italiano è disponibile dal lunedì al venerdì, dalle 9:00 alle 18:00 ora italiana. Supporto WhatsApp disponibile per questioni urgenti.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Other Regions -->
+    <section class="other-regions">
+        <div class="other-regions-container">
+            <h3>Cerchi un'altra regione?</h3>
+            <div class="region-links">
+                <a href="uk.html" class="region-link-btn">🇬🇧 UK</a>
+                <a href="mena.html" class="region-link-btn">🌍 MENA</a>
+                <a href="turkey.html" class="region-link-btn">🇹🇷 Turkey</a>
+                <a href="cca.html" class="region-link-btn">🏔️ CCA</a>
+                <a href="index.html" class="region-link-btn">🌐 Global</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <a href="index.html" class="logo">
+                        <span class="logo-icon">🦁</span>
+                        <span class="logo-text">The Lion Force</span>
+                    </a>
+                    <p>L'Agenzia TikTok LIVE ufficiale che aiuta i creator italiani a crescere, monetizzare e proteggere i loro account.</p>
+                    <div class="social-links">
+                        <a href="#" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
+                        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h4>Città Italiane</h4>
+                    <ul>
+                        <li><a href="#">Roma</a></li>
+                        <li><a href="#">Milano</a></li>
+                        <li><a href="#">Napoli</a></li>
+                        <li><a href="#">Torino</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Supporto</h4>
+                    <ul>
+                        <li><a href="https://wa.me/447539357381">WhatsApp Italia</a></li>
+                        <li><a href="#faq">FAQ Italia</a></li>
+                        <li><a href="privacy.html">Privacy Policy</a></li>
+                        <li><a href="terms.html">Termini di Servizio</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 The Lion Force Italy – Agenzia TikTok LIVE Ufficiale. Tutti i diritti riservati.</p>
+                <div class="footer-bottom-links">
+                    <a href="privacy.html">Privacy Policy</a>
+                    <a href="terms.html">Termini di Servizio</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Floating WhatsApp -->
+    <a href="https://wa.me/447539357381?text=Hi%20I%20want%20to%20apply%20for%20Italy%20region" class="floating-whatsapp" target="_blank" aria-label="Contatta il Team Italia su WhatsApp">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <script>
+        window.addEventListener('scroll', () => {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 50) navbar.classList.add('scrolled');
+            else navbar.classList.remove('scrolled');
+        });
+
+        const particlesContainer = document.getElementById('particles');
+        for (let i = 0; i < 30; i++) {
+            const particle = document.createElement('div');
+            particle.className = 'particle';
+            particle.style.left = Math.random() * 100 + '%';
+            particle.style.animationDelay = Math.random() * 15 + 's';
+            particle.style.animationDuration = (15 + Math.random() * 10) + 's';
+            particlesContainer.appendChild(particle);
+        }
+
+        function toggleFaq(button) {
+            const faqItem = button.parentElement;
+            const isActive = faqItem.classList.contains('active');
+            document.querySelectorAll('.faq-item').forEach(item => item.classList.remove('active'));
+            if (!isActive) faqItem.classList.add('active');
+        }
+
+        function handleSubmit(e) {
+            e.preventDefault();
+            alert('Grazie per la tua candidatura! Il nostro team italiano esaminerà la tua richiesta e ti contatterà entro 24 ore via WhatsApp.');
+            document.getElementById('applicationForm').reset();
+        }
+
+        function toggleMobileMenu() {
+            const navLinks = document.querySelector('.nav-links');
+            navLinks.style.display = navLinks.style.display === 'flex' ? 'none' : 'flex';
+        }
+    </script>
+</body>
+</html>
