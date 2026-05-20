@@ -102,6 +102,111 @@
         .nav-links.mobile-open a:hover { background: rgba(255, 0, 80, 0.2); }
         .nav-links.mobile-open .nav-cta { background: var(--primary); }
 
+        /* Regions Dropdown */
+        .dropdown {
+            position: relative;
+        }
+
+        .dropdown-toggle {
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+
+        .dropdown-toggle i {
+            font-size: 0.7rem;
+            transition: transform 0.3s ease;
+        }
+
+        .dropdown:hover .dropdown-toggle i {
+            transform: rotate(180deg);
+        }
+
+        .nav-links-a {
+            color: var(--gray);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            font-size: 0.95rem;
+        }
+
+        .nav-links-a:hover {
+            color: var(--light);
+        }
+
+        .dropdown-menu {
+            display: none;
+            position: absolute;
+            top: calc(100% + 0.5rem);
+            left: 0;
+            background: rgba(15, 15, 25, 0.98);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 0.75rem;
+            min-width: 240px;
+            z-index: 9999;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+        }
+
+        .dropdown:hover .dropdown-menu {
+            display: block;
+        }
+
+        .dropdown-menu a {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.65rem 1rem;
+            border-radius: 10px;
+            font-size: 0.85rem;
+            color: var(--gray);
+            text-decoration: none;
+            transition: all 0.2s ease;
+            white-space: nowrap;
+        }
+
+        .dropdown-menu a:hover {
+            background: rgba(255, 0, 80, 0.1);
+            color: var(--light);
+        }
+
+        .dropdown-menu .dropdown-divider {
+            height: 1px;
+            background: rgba(255, 255, 255, 0.08);
+            margin: 0.5rem 0.75rem;
+        }
+
+        .dropdown-menu .dropdown-label {
+            padding: 0.4rem 1rem;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--primary);
+            font-weight: 700;
+        }
+
+        @media (max-width: 768px) {
+            .dropdown-menu {
+                position: static;
+                background: rgba(255, 255, 255, 0.02);
+                border: none;
+                box-shadow: none;
+                padding: 0.5rem 0 0.5rem 1rem;
+                min-width: auto;
+            }
+
+            .dropdown:hover .dropdown-menu {
+                display: none;
+            }
+
+            .dropdown.open .dropdown-menu {
+                display: block;
+            }
+        }
+
         .hero {
             min-height: 100vh;
             display: flex;
@@ -266,7 +371,6 @@
             .footer-bottom { flex-direction: column; text-align: center; }
         }
     </style>
-<base target="_blank">
 </head>
 <body>
     <!-- Navigation -->
@@ -277,12 +381,34 @@
                 <span class="logo-text">The Lion Force</span>
             </a>
             <div class="nav-links">
-                <a href="uk.html">🇬🇧 UK</a>
-                <a href="mena.html">🌍 MENA</a>
-                <a href="turkey.html">🇹🇷 Turkey</a>
-                <a href="cca.html">🏔️ CCA</a>
-                <a href="italy.html">🇮🇹 Italy</a>
-                <a href="france.html" class="nav-cta">🇫🇷 France</a>
+                <div class="dropdown" id="regionsDropdown">
+                    <span class="dropdown-toggle nav-links-a" onclick="toggleDropdown()">
+                        🌐 Regions <i class="fas fa-chevron-down"></i>
+                    </span>
+                    <div class="dropdown-menu">
+                        <span class="dropdown-label">All Regions</span>
+                        <a href="uk.html">🇬🇧 United Kingdom</a>
+                        <a href="mena.html">🌍 MENA</a>
+                        <a href="turkey.html">🇹🇷 Turkey</a>
+                        <a href="cca.html">🏔️ CCA</a>
+                        <a href="italy.html">🇮🇹 Italy</a>
+                        <a href="france.html">🇫🇷 France</a>
+                        <a href="philippines.html">🇵🇭 Philippines</a>
+                        <a href="au.html">🇦🇺 AU+</a>
+                        <div class="dropdown-divider"></div>
+                        <span class="dropdown-label">New Regions</span>
+                        <a href="germany.html">🇩🇪 Germany</a>
+                        <a href="netherland.html">🇳🇱 Netherlands</a>
+                        <a href="malaysia.html">🇲🇾 Malaysia</a>
+                        <a href="japan.html">🇯🇵 Japan</a>
+                        <a href="brazil.html">🇧🇷 Brazil</a>
+                    </div>
+                </div>
+                <a href="index.html#services">Services</a>
+                <a href="index.html#testimonials">Success Stories</a>
+                <a href="awards.html">🏆 Awards</a>
+                <a href="index.html#faq">FAQ</a>
+                <a href="index.html#apply" class="nav-cta">Apply Now</a>
             </div>
             <button class="mobile-menu-btn" onclick="toggleMobileMenu()">
                 <i class="fas fa-bars"></i>
@@ -586,6 +712,14 @@
                 <a href="turkey.html" class="region-link-btn">🇹🇷 Turkey</a>
                 <a href="cca.html" class="region-link-btn">🏔️ CCA</a>
                 <a href="italy.html" class="region-link-btn">🇮🇹 Italy</a>
+                <a href="philippines.html" class="region-link-btn">🇵🇭 Philippines</a>
+                <a href="au.html" class="region-link-btn">🇦🇺 AU+</a>
+                <a href="germany.html" class="region-link-btn">🇩🇪 Germany</a>
+                <a href="netherland.html" class="region-link-btn">🇳🇱 Netherlands</a>
+                <a href="malaysia.html" class="region-link-btn">🇲🇾 Malaysia</a>
+                <a href="japan.html" class="region-link-btn">🇯🇵 Japan</a>
+                <a href="brazil.html" class="region-link-btn">🇧🇷 Brazil</a>
+                <a href="awards.html" class="region-link-btn">🏆 Awards</a>
                 <a href="index.html" class="region-link-btn">🌐 Global</a>
             </div>
         </div>
