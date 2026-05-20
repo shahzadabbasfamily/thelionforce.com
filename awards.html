@@ -358,14 +358,19 @@
 
         /* Profile Image in Avatar */
         .winner-avatar-img {
-            width: 100%;
-            height: 100%;
+            width: 120px;
+            height: 120px;
             border-radius: 50%;
             object-fit: cover;
             position: relative;
             z-index: 2;
             border: 3px solid rgba(255, 215, 0, 0.5);
-            box-shadow: 0 0 30px rgba(255, 215, 0, 0.25), inset 0 0 20px rgba(255, 215, 0, 0.1);
+            box-shadow: 0 0 30px rgba(255, 215, 0, 0.25);
+            display: block;
+        }
+
+        .winner-avatar-img[src=""] {
+            display: none;
         }
 
         /* Initials Badge */
@@ -530,13 +535,16 @@
             width: 64px;
             height: 64px;
             border-radius: 50%;
-            background: var(--gradient);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-            font-weight: 700;
             flex-shrink: 0;
+            overflow: hidden;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .hof-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
         }
         .hof-info h3 { font-size: 1.1rem; font-weight: 700; margin-bottom: 0.25rem; }
         .hof-region { font-size: 0.8rem; color: var(--gray); display: flex; align-items: center; gap: 0.5rem; }
@@ -692,7 +700,7 @@
             <div class="section-header">
                 <span class="section-tag">Latest Event</span>
                 <h2 class="section-title">Universe Battle: 500K Diamond Challenge</h2>
-                <p class="section-description">Our biggest battle yet saw creators from across the UK and MENA regions compete for the ultimate 500K Diamond prize. Here are our champions.</p>
+                <p class="section-description">Our biggest battle yet — UK vs MENA Regional Finals. Two creators, one 500K Diamond prize. Meet your champions.</p>
             </div>
 
             <div class="featured-battle">
@@ -705,11 +713,11 @@
                         <div class="winner-crown">👑</div>
                         <div class="winner-avatar-wrap">
                             <div class="winner-avatar-ring"></div>
-                            <img src="images/shizuka.png" alt="Shizuka - UK Winner" class="winner-avatar-img">
+                            <img src="shizuka.jpg" alt="Shizuka" class="winner-avatar-img" onerror="this.style.display='none'">
                             <div class="winner-initials">SH</div>
                         </div>
                         <h4 class="winner-name">Shizuka</h4>
-                        <span class="winner-region winner-region-uk">🇬🇧 United Kingdom</span>
+                        <span class="winner-region winner-region-uk"><span class="flag-icon">🇬🇧</span> United Kingdom</span>
                         <div class="winner-competition">
                             <h4>TikTok Universe</h4>
                             <p>Diamonds Competition</p>
@@ -736,11 +744,11 @@
                         <div class="winner-crown">👑</div>
                         <div class="winner-avatar-wrap">
                             <div class="winner-avatar-ring"></div>
-                            <img src="images/bravegirl.png" alt="Bravegirl - MENA Winner" class="winner-avatar-img">
+                            <img src="layla.jpg" alt="Bravegirl" class="winner-avatar-img" onerror="this.style.display='none'">
                             <div class="winner-initials">BR</div>
                         </div>
                         <h4 class="winner-name">Bravegirl</h4>
-                        <span class="winner-region winner-region-mena">🌍 MENA</span>
+                        <span class="winner-region winner-region-mena"><span class="mena-dot"></span> MENA</span>
                         <div class="winner-competition">
                             <h4>TikTok Universe</h4>
                             <p>Diamonds Competition</p>
@@ -757,7 +765,7 @@
                                 <span class="winner-stat-label">Earnings</span>
                             </div>
                         </div>
-                        <a href="https://www.tiktok.com/@bravegirlbackupaccount" target="_blank" class="winner-link">
+                        <a href="https://www.tiktok.com/@bravegirl.mena" target="_blank" class="winner-link">
                             <i class="fab fa-tiktok"></i> View Profile
                         </a>
                     </div>
@@ -776,13 +784,13 @@
             </div>
 
             <div class="hof-grid">
-                <!-- Mena Hosts -->
+                <!-- UK Hosts -->
                 <div class="hof-card">
                     <div class="hof-header">
-                        <div class="hof-avatar">HA</div>
+                        <div class="hof-avatar"><img src="img/emma.jpg" alt="Emma Wilson"></div>
                         <div class="hof-info">
-                            <h3>Hania Khan</h3>
-                            <span class="hof-region"><i class="fas fa-map-marker-alt"></i> 🌍 MENA</span>
+                            <h3>Emma Wilson</h3>
+                            <span class="hof-region"><i class="fas fa-map-marker-alt"></i> 🇬🇧 United Kingdom</span>
                         </div>
                     </div>
                     <div class="hof-awards">
@@ -790,14 +798,14 @@
                         <span class="hof-award award-gold"><i class="fas fa-star"></i> Top UK Creator 2026</span>
                         <span class="hof-award award-silver"><i class="fas fa-medal"></i> Universe Battle Runner-up</span>
                     </div>
-                    <a href="https://tiktok.com/menatophost1" target="_blank" class="hof-link">
+                    <a href="https://tiktok.com" target="_blank" class="hof-link">
                         <i class="fab fa-tiktok"></i> View TikTok Profile
                     </a>
                 </div>
 
                 <div class="hof-card">
                     <div class="hof-header">
-                        <div class="hof-avatar">JK</div>
+                        <div class="hof-avatar"><img src="img/james.jpg" alt="James Kelly"></div>
                         <div class="hof-info">
                             <h3>James Kelly</h3>
                             <span class="hof-region"><i class="fas fa-map-marker-alt"></i> 🇬🇧 United Kingdom</span>
@@ -816,7 +824,7 @@
                 <!-- MENA Hosts -->
                 <div class="hof-card">
                     <div class="hof-header">
-                        <div class="hof-avatar">LA</div>
+                        <div class="hof-avatar"><img src="img/layla_hof.jpg" alt="Layla Al-Rashid"></div>
                         <div class="hof-info">
                             <h3>Layla Al-Rashid</h3>
                             <span class="hof-region"><i class="fas fa-map-marker-alt"></i> 🌍 MENA</span>
@@ -834,7 +842,7 @@
 
                 <div class="hof-card">
                     <div class="hof-header">
-                        <div class="hof-avatar">OK</div>
+                        <div class="hof-avatar"><img src="img/omar.jpg" alt="Omar Khalil"></div>
                         <div class="hof-info">
                             <h3>Omar Khalil</h3>
                             <span class="hof-region"><i class="fas fa-map-marker-alt"></i> 🌍 MENA</span>
@@ -853,7 +861,7 @@
                 <!-- Turkey -->
                 <div class="hof-card">
                     <div class="hof-header">
-                        <div class="hof-avatar">AY</div>
+                        <div class="hof-avatar"><img src="img/ahmet.jpg" alt="Ahmet Yilmaz"></div>
                         <div class="hof-info">
                             <h3>Ahmet Yilmaz</h3>
                             <span class="hof-region"><i class="fas fa-map-marker-alt"></i> 🇹🇷 Turkey</span>
@@ -872,7 +880,7 @@
                 <!-- Italy -->
                 <div class="hof-card">
                     <div class="hof-header">
-                        <div class="hof-avatar">MR</div>
+                        <div class="hof-avatar"><img src="img/marco.jpg" alt="Marco Rossi"></div>
                         <div class="hof-info">
                             <h3>Marco Rossi</h3>
                             <span class="hof-region"><i class="fas fa-map-marker-alt"></i> 🇮🇹 Italy</span>
@@ -891,7 +899,7 @@
                 <!-- France -->
                 <div class="hof-card">
                     <div class="hof-header">
-                        <div class="hof-avatar">ED</div>
+                        <div class="hof-avatar"><img src="img/emma_fr.jpg" alt="Emma Dubois"></div>
                         <div class="hof-info">
                             <h3>Emma Dubois</h3>
                             <span class="hof-region"><i class="fas fa-map-marker-alt"></i> 🇫🇷 France</span>
@@ -910,7 +918,7 @@
                 <!-- Philippines -->
                 <div class="hof-card">
                     <div class="hof-header">
-                        <div class="hof-avatar">MS</div>
+                        <div class="hof-avatar"><img src="img/maria.jpg" alt="Maria Santos"></div>
                         <div class="hof-info">
                             <h3>Maria Santos</h3>
                             <span class="hof-region"><i class="fas fa-map-marker-alt"></i> 🇵🇭 Philippines</span>
@@ -929,7 +937,7 @@
                 <!-- AU+ -->
                 <div class="hof-card">
                     <div class="hof-header">
-                        <div class="hof-avatar">SM</div>
+                        <div class="hof-avatar"><img src="img/sarah.jpg" alt="Sarah Mitchell"></div>
                         <div class="hof-info">
                             <h3>Sarah Mitchell</h3>
                             <span class="hof-region"><i class="fas fa-map-marker-alt"></i> 🇦🇺 AU+</span>
@@ -948,7 +956,7 @@
                 <!-- Germany -->
                 <div class="hof-card">
                     <div class="hof-header">
-                        <div class="hof-avatar">LK</div>
+                        <div class="hof-avatar"><img src="img/lisa.jpg" alt="Lisa K."></div>
                         <div class="hof-info">
                             <h3>Lisa K.</h3>
                             <span class="hof-region"><i class="fas fa-map-marker-alt"></i> 🇩🇪 Germany</span>
@@ -966,7 +974,7 @@
                 <!-- Japan -->
                 <div class="hof-card">
                     <div class="hof-header">
-                        <div class="hof-avatar">YT</div>
+                        <div class="hof-avatar"><img src="img/yuki.jpg" alt="Yuki T."></div>
                         <div class="hof-info">
                             <h3>Yuki T.</h3>
                             <span class="hof-region"><i class="fas fa-map-marker-alt"></i> 🇯🇵 Japan</span>
@@ -984,7 +992,7 @@
                 <!-- Brazil -->
                 <div class="hof-card">
                     <div class="hof-header">
-                        <div class="hof-avatar">CS</div>
+                        <div class="hof-avatar"><img src="img/camila.jpg" alt="Camila S."></div>
                         <div class="hof-info">
                             <h3>Camila S.</h3>
                             <span class="hof-region"><i class="fas fa-map-marker-alt"></i> 🇧🇷 Brazil</span>
