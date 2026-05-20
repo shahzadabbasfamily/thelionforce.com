@@ -1,0 +1,921 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="The Lion Force Awards - Celebrating our top TikTok creators and their achievements across UK, MENA, Turkey, Italy, France, Philippines, AU+ and more regions.">
+    <meta name="keywords" content="TikTok awards, creator awards, Universe Battle, The Lion Force winners, top creators, diamond challenge">
+    <title>The Lion Force Awards | Celebrating Our Top Creators</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🦁%3C/text%3E%3C/svg%3E">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #FF0050;
+            --primary-dark: #D60044;
+            --secondary: #00F2EA;
+            --accent: #FFD700;
+            --dark: #0a0a0a;
+            --darker: #050505;
+            --light: #ffffff;
+            --gray: #888888;
+            --gradient: linear-gradient(135deg, #FF0050 0%, #FF6B6B 50%, #00F2EA 100%);
+            --gold-gradient: linear-gradient(135deg, #FFD700 0%, #FFA500 50%, #FF6B6B 100%);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--darker);
+            color: var(--light);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: var(--dark); }
+        ::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 4px; }
+
+        .navbar {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 1000;
+            padding: 1rem 2rem;
+            background: rgba(5, 5, 5, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.3s ease;
+        }
+        .navbar.scrolled { padding: 0.75rem 2rem; background: rgba(5, 5, 5, 0.98); }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo { display: flex; align-items: center; gap: 0.75rem; text-decoration: none; color: var(--light); }
+        .logo-icon { font-size: 2rem; animation: pulse 2s infinite; }
+        @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.1); } }
+        .logo-text { font-size: 1.5rem; font-weight: 800; background: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+
+        .nav-links { display: flex; gap: 1.5rem; align-items: center; }
+        .nav-links a { color: var(--gray); text-decoration: none; font-weight: 500; transition: color 0.3s ease; font-size: 0.9rem; }
+        .nav-links a:hover { color: var(--light); }
+        .nav-cta { background: var(--primary); color: var(--light) !important; padding: 0.6rem 1.5rem; border-radius: 50px; font-weight: 600; transition: all 0.3s ease !important; }
+        .nav-cta:hover { background: var(--primary-dark); transform: translateY(-2px); box-shadow: 0 10px 30px rgba(255, 0, 80, 0.3); }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--light);
+            font-size: 1.5rem;
+            cursor: pointer;
+            z-index: 1001;
+        }
+
+        .nav-links.mobile-open {
+            display: flex !important;
+            position: fixed;
+            top: 70px;
+            left: 0;
+            right: 0;
+            flex-direction: column;
+            background: rgba(5, 5, 5, 0.98);
+            backdrop-filter: blur(20px);
+            padding: 1.5rem 2rem;
+            gap: 1rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            z-index: 999;
+            animation: slideDown 0.3s ease;
+        }
+
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .nav-links.mobile-open a {
+            padding: 1rem;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.05);
+            text-align: center;
+            font-size: 1.1rem;
+        }
+
+        /* Hero */
+        /* Regions Dropdown */
+        .dropdown {
+            position: relative;
+        }
+
+        .dropdown-toggle {
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+
+        .dropdown-toggle i {
+            font-size: 0.7rem;
+            transition: transform 0.3s ease;
+        }
+
+        .dropdown:hover .dropdown-toggle i {
+            transform: rotate(180deg);
+        }
+
+        .nav-links-a {
+            color: var(--gray);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            font-size: 0.95rem;
+        }
+
+        .nav-links-a:hover {
+            color: var(--light);
+        }
+
+        .dropdown-menu {
+            display: none;
+            position: absolute;
+            top: calc(100% + 0.5rem);
+            left: 0;
+            background: rgba(15, 15, 25, 0.98);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 0.75rem;
+            min-width: 240px;
+            z-index: 9999;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+        }
+
+        .dropdown:hover .dropdown-menu {
+            display: block;
+        }
+
+        .dropdown-menu a {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.65rem 1rem;
+            border-radius: 10px;
+            font-size: 0.85rem;
+            color: var(--gray);
+            text-decoration: none;
+            transition: all 0.2s ease;
+            white-space: nowrap;
+        }
+
+        .dropdown-menu a:hover {
+            background: rgba(255, 0, 80, 0.1);
+            color: var(--light);
+        }
+
+        .dropdown-menu .dropdown-divider {
+            height: 1px;
+            background: rgba(255, 255, 255, 0.08);
+            margin: 0.5rem 0.75rem;
+        }
+
+        .dropdown-menu .dropdown-label {
+            padding: 0.4rem 1rem;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--primary);
+            font-weight: 700;
+        }
+
+        @media (max-width: 768px) {
+            .dropdown-menu {
+                position: static;
+                background: rgba(255, 255, 255, 0.02);
+                border: none;
+                box-shadow: none;
+                padding: 0.5rem 0 0.5rem 1rem;
+                min-width: auto;
+            }
+
+            .dropdown:hover .dropdown-menu {
+                display: none;
+            }
+
+            .dropdown.open .dropdown-menu {
+                display: block;
+            }
+        }
+
+        .hero {
+            min-height: 70vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            padding: 10rem 2rem 5rem;
+            overflow: hidden;
+        }
+        .hero-bg {
+            position: absolute;
+            inset: 0;
+            background:
+                radial-gradient(ellipse at 20% 50%, rgba(255, 215, 0, 0.08) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 50%, rgba(255, 0, 80, 0.1) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 100%, rgba(0, 242, 234, 0.05) 0%, transparent 50%);
+        }
+        .hero-particles { position: absolute; inset: 0; overflow: hidden; }
+        .particle { position: absolute; width: 4px; height: 4px; background: var(--accent); border-radius: 50%; opacity: 0.3; animation: float 15s infinite; }
+        @keyframes float { 0%, 100% { transform: translateY(100vh) rotate(0deg); opacity: 0; } 10% { opacity: 0.3; } 90% { opacity: 0.3; } 100% { transform: translateY(-100vh) rotate(720deg); opacity: 0; } }
+
+        .hero-content { max-width: 900px; text-align: center; position: relative; z-index: 1; }
+        .hero-badge { display: inline-flex; align-items: center; gap: 0.5rem; background: rgba(255, 215, 0, 0.1); border: 1px solid rgba(255, 215, 0, 0.3); padding: 0.5rem 1.25rem; border-radius: 50px; font-size: 0.85rem; color: var(--accent); margin-bottom: 1.5rem; font-weight: 600; }
+        .hero h1 { font-size: clamp(2.5rem, 5vw, 4.5rem); font-weight: 900; line-height: 1.1; margin-bottom: 1.5rem; }
+        .hero h1 span { background: var(--gold-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        .hero-description { font-size: 1.2rem; color: var(--gray); margin-bottom: 2.5rem; max-width: 600px; margin-left: auto; margin-right: auto; }
+
+        .section-header { text-align: center; max-width: 700px; margin: 0 auto 4rem; }
+        .section-tag { display: inline-block; background: rgba(255, 215, 0, 0.1); color: var(--accent); padding: 0.4rem 1rem; border-radius: 50px; font-size: 0.85rem; font-weight: 600; margin-bottom: 1rem; border: 1px solid rgba(255, 215, 0, 0.3); }
+        .section-title { font-size: clamp(2rem, 4vw, 3rem); font-weight: 800; margin-bottom: 1rem; }
+        .section-description { color: var(--gray); font-size: 1.1rem; }
+
+        /* Awards */
+        .awards-section { padding: 6rem 2rem; }
+        .awards-container { max-width: 1400px; margin: 0 auto; }
+
+        /* Featured Battle */
+        .featured-battle {
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.05) 0%, rgba(255, 0, 80, 0.05) 100%);
+            border: 1px solid rgba(255, 215, 0, 0.15);
+            border-radius: 24px;
+            padding: 3rem;
+            margin-bottom: 4rem;
+            position: relative;
+            overflow: hidden;
+        }
+        .featured-battle::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 215, 0, 0.03) 0%, transparent 60%);
+            animation: rotate 20s linear infinite;
+        }
+        @keyframes rotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
+        .battle-title {
+            font-size: clamp(1.5rem, 3vw, 2.5rem);
+            font-weight: 800;
+            text-align: center;
+            margin-bottom: 0.5rem;
+            position: relative;
+        }
+        .battle-title span { background: var(--gold-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        .battle-subtitle { text-align: center; color: var(--gray); margin-bottom: 3rem; position: relative; }
+
+        .battle-winners { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; position: relative; }
+        .winner-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 215, 0, 0.2);
+            border-radius: 20px;
+            padding: 2.5rem;
+            text-align: center;
+            transition: all 0.4s ease;
+            position: relative;
+        }
+        .winner-card:hover {
+            transform: translateY(-8px);
+            border-color: rgba(255, 215, 0, 0.4);
+            box-shadow: 0 20px 60px rgba(255, 215, 0, 0.1);
+        }
+        .winner-crown { font-size: 3rem; margin-bottom: 1rem; }
+        .winner-avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            margin: 0 auto 1.5rem;
+            background: var(--gold-gradient);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--dark);
+            border: 4px solid rgba(255, 215, 0, 0.3);
+            box-shadow: 0 0 40px rgba(255, 215, 0, 0.2);
+        }
+        .winner-name { font-size: 1.5rem; font-weight: 700; margin-bottom: 0.25rem; }
+        .winner-region { display: inline-block; padding: 0.35rem 1rem; border-radius: 50px; font-size: 0.8rem; font-weight: 600; margin-bottom: 1rem; }
+        .winner-region-uk { background: rgba(59, 130, 246, 0.1); color: #3b82f6; border: 1px solid rgba(59, 130, 246, 0.2); }
+        .winner-region-mena { background: rgba(34, 197, 94, 0.1); color: #22c55e; border: 1px solid rgba(34, 197, 94, 0.2); }
+        .winner-prize { font-size: 2rem; font-weight: 800; background: var(--gold-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin-bottom: 0.5rem; }
+        .winner-prize-label { font-size: 0.85rem; color: var(--gray); }
+        .winner-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 1.5rem;
+            padding: 0.6rem 1.25rem;
+            background: var(--primary);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        .winner-link:hover { background: var(--primary-dark); transform: translateY(-2px); }
+
+        .winner-stats { display: flex; justify-content: center; gap: 2rem; margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid rgba(255, 255, 255, 0.05); }
+        .winner-stat { text-align: center; }
+        .winner-stat-value { font-size: 1.25rem; font-weight: 700; color: var(--accent); }
+        .winner-stat-label { font-size: 0.75rem; color: var(--gray); }
+
+        /* Hall of Fame */
+        .hall-of-fame { padding: 6rem 2rem; background: rgba(255, 255, 255, 0.01); }
+        .hof-container { max-width: 1400px; margin: 0 auto; }
+
+        .hof-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; }
+        .hof-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 20px;
+            padding: 2rem;
+            transition: all 0.4s ease;
+        }
+        .hof-card:hover { border-color: rgba(255, 0, 80, 0.3); transform: translateY(-5px); }
+        .hof-header { display: flex; align-items: center; gap: 1.25rem; margin-bottom: 1.5rem; }
+        .hof-avatar {
+            width: 64px;
+            height: 64px;
+            border-radius: 50%;
+            background: var(--gradient);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+        .hof-info h3 { font-size: 1.1rem; font-weight: 700; margin-bottom: 0.25rem; }
+        .hof-region { font-size: 0.8rem; color: var(--gray); display: flex; align-items: center; gap: 0.5rem; }
+        .hof-awards { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+        .hof-award {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            padding: 0.35rem 0.75rem;
+            border-radius: 50px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+        .award-gold { background: rgba(255, 215, 0, 0.1); color: var(--accent); border: 1px solid rgba(255, 215, 0, 0.2); }
+        .award-silver { background: rgba(192, 192, 192, 0.1); color: #c0c0c0; border: 1px solid rgba(192, 192, 192, 0.2); }
+        .award-bronze { background: rgba(205, 127, 50, 0.1); color: #cd7f32; border: 1px solid rgba(205, 127, 50, 0.2); }
+        .hof-link { display: inline-flex; align-items: center; gap: 0.5rem; color: var(--primary); text-decoration: none; font-size: 0.85rem; font-weight: 600; margin-top: 1rem; transition: all 0.3s; }
+        .hof-link:hover { color: var(--secondary); }
+
+        /* Stats Banner */
+        .stats-banner {
+            padding: 4rem 2rem;
+            background: linear-gradient(135deg, rgba(255, 0, 80, 0.08) 0%, rgba(0, 242, 234, 0.05) 100%);
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        .stats-container { max-width: 1400px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem; text-align: center; }
+        .stat-item h3 { font-size: 2.5rem; font-weight: 800; background: var(--gold-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin-bottom: 0.5rem; }
+        .stat-item p { color: var(--gray); font-size: 0.95rem; }
+
+        /* Footer */
+        .footer { padding: 4rem 2rem 2rem; border-top: 1px solid rgba(255, 255, 255, 0.05); }
+        .footer-container { max-width: 1400px; margin: 0 auto; }
+        .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 4rem; margin-bottom: 3rem; }
+        .footer-brand p { color: var(--gray); margin: 1rem 0; max-width: 300px; }
+        .social-links { display: flex; gap: 1rem; }
+        .social-links a { width: 45px; height: 45px; background: rgba(255, 255, 255, 0.05); border-radius: 12px; display: flex; align-items: center; justify-content: center; color: var(--light); text-decoration: none; transition: all 0.3s ease; }
+        .social-links a:hover { background: var(--primary); transform: translateY(-3px); }
+        .footer-column h4 { font-weight: 700; margin-bottom: 1.5rem; font-size: 1rem; }
+        .footer-column ul { list-style: none; }
+        .footer-column li { margin-bottom: 0.75rem; }
+        .footer-column a { color: var(--gray); text-decoration: none; transition: color 0.3s ease; font-size: 0.95rem; }
+        .footer-column a:hover { color: var(--light); }
+        .footer-bottom { padding-top: 2rem; border-top: 1px solid rgba(255, 255, 255, 0.05); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
+        .footer-bottom p { color: var(--gray); font-size: 0.9rem; }
+
+        .region-links { display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; }
+        .region-link-btn { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.75rem 1.5rem; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 50px; color: var(--light); text-decoration: none; font-weight: 500; transition: all 0.3s ease; }
+        .region-link-btn:hover { background: var(--primary); border-color: var(--primary); transform: translateY(-2px); }
+
+        .other-regions { padding: 4rem 2rem; background: rgba(255, 255, 255, 0.01); border-top: 1px solid rgba(255, 255, 255, 0.05); }
+        .other-regions-container { max-width: 1400px; margin: 0 auto; text-align: center; }
+        .other-regions h3 { font-size: 1.5rem; margin-bottom: 2rem; color: var(--gray); }
+
+        .floating-whatsapp { position: fixed; bottom: 2rem; right: 2rem; width: 60px; height: 60px; background: #25D366; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--light); font-size: 1.8rem; text-decoration: none; box-shadow: 0 10px 30px rgba(37, 211, 102, 0.4); transition: all 0.3s ease; z-index: 999; animation: whatsappPulse 2s infinite; }
+        @keyframes whatsappPulse { 0%, 100% { box-shadow: 0 10px 30px rgba(37, 211, 102, 0.4); } 50% { box-shadow: 0 10px 40px rgba(37, 211, 102, 0.6); } }
+        .floating-whatsapp:hover { transform: scale(1.1); }
+
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .mobile-menu-btn { display: block; }
+            .footer-grid { grid-template-columns: 1fr; gap: 2rem; }
+            .footer-bottom { flex-direction: column; text-align: center; }
+            .hero { padding: 8rem 1.5rem 3rem; }
+            .featured-battle { padding: 2rem 1.5rem; }
+            .battle-winners { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                <span class="logo-icon">🦁</span>
+                <span class="logo-text">The Lion Force</span>
+            </a>
+            <div class="nav-links">
+                <div class="dropdown" id="regionsDropdown">
+                    <span class="dropdown-toggle nav-links-a" onclick="toggleDropdown()">
+                        🌐 Regions <i class="fas fa-chevron-down"></i>
+                    </span>
+                    <div class="dropdown-menu">
+                        <span class="dropdown-label">All Regions</span>
+                        <a href="uk.html">🇬🇧 United Kingdom</a>
+                        <a href="mena.html">🌍 MENA</a>
+                        <a href="turkey.html">🇹🇷 Turkey</a>
+                        <a href="cca.html">🏔️ CCA</a>
+                        <a href="italy.html">🇮🇹 Italy</a>
+                        <a href="france.html">🇫🇷 France</a>
+                        <a href="philippines.html">🇵🇭 Philippines</a>
+                        <a href="au.html">🇦🇺 AU+</a>
+                        <div class="dropdown-divider"></div>
+                        <span class="dropdown-label">New Regions</span>
+                        <a href="germany.html">🇩🇪 Germany</a>
+                        <a href="netherland.html">🇳🇱 Netherlands</a>
+                        <a href="malaysia.html">🇲🇾 Malaysia</a>
+                        <a href="japan.html">🇯🇵 Japan</a>
+                        <a href="brazil.html">🇧🇷 Brazil</a>
+                    </div>
+                </div>
+                <a href="index.html#services">Services</a>
+                <a href="index.html#testimonials">Success Stories</a>
+                <a href="awards.html">🏆 Awards</a>
+                <a href="index.html#faq">FAQ</a>
+                <a href="index.html#apply" class="nav-cta">Apply Now</a>
+            </div>
+            <button class="mobile-menu-btn" onclick="toggleMobileMenu()">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-bg"></div>
+        <div class="hero-particles" id="particles"></div>
+        <div class="hero-content">
+            <div class="hero-badge">
+                <i class="fas fa-trophy"></i>
+                Celebrating Excellence
+            </div>
+            <h1>The Lion Force <span>Awards</span></h1>
+            <p class="hero-description">Recognizing our top-performing creators who have achieved extraordinary success on TikTok LIVE. From Universe Battles to regional championships, we celebrate our stars.</p>
+        </div>
+    </section>
+
+    <!-- Stats Banner -->
+    <section class="stats-banner">
+        <div class="stats-container">
+            <div class="stat-item">
+                <h3>500K+</h3>
+                <p>Diamonds Won in Battles</p>
+            </div>
+            <div class="stat-item">
+                <h3>13</h3>
+                <p>Regions Competing</p>
+            </div>
+            <div class="stat-item">
+                <h3>50+</h3>
+                <p>Award-Winning Hosts</p>
+            </div>
+            <div class="stat-item">
+                <h3>$2M+</h3>
+                <p>Prize Pool Distributed</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Battle -->
+    <section class="awards-section">
+        <div class="awards-container">
+            <div class="section-header">
+                <span class="section-tag">Latest Event</span>
+                <h2 class="section-title">Universe Battle: 500K Diamond Challenge</h2>
+                <p class="section-description">Our biggest battle yet saw creators from across the UK and MENA regions compete for the ultimate 500K Diamond prize. Here are our champions.</p>
+            </div>
+
+            <div class="featured-battle">
+                <h3 class="battle-title"><i class="fas fa-crown"></i> <span>500K Diamond Challenge</span> <i class="fas fa-crown"></i></h3>
+                <p class="battle-subtitle">May 2026 &middot; UK vs MENA Regional Finals</p>
+
+                <div class="battle-winners">
+                    <!-- UK Winner -->
+                    <div class="winner-card">
+                        <div class="winner-crown">👑</div>
+                        <div class="winner-avatar">EW</div>
+                        <h4 class="winner-name">Emma Wilson</h4>
+                        <span class="winner-region winner-region-uk">🇬🇧 United Kingdom</span>
+                        <div class="winner-prize">500K</div>
+                        <p class="winner-prize-label">Diamonds Won</p>
+                        <div class="winner-stats">
+                            <div class="winner-stat">
+                                <div class="winner-stat-value">350K</div>
+                                <div class="winner-stat-label">Followers</div>
+                            </div>
+                            <div class="winner-stat">
+                                <div class="winner-stat-value">$45K</div>
+                                <div class="winner-stat-label">Earnings</div>
+                            </div>
+                        </div>
+                        <a href="https://tiktok.com" target="_blank" class="winner-link">
+                            <i class="fab fa-tiktok"></i> View Profile
+                        </a>
+                    </div>
+
+                    <!-- MENA Winner -->
+                    <div class="winner-card">
+                        <div class="winner-crown">👑</div>
+                        <div class="winner-avatar">LA</div>
+                        <h4 class="winner-name">Layla Al-Rashid</h4>
+                        <span class="winner-region winner-region-mena">🌍 MENA</span>
+                        <div class="winner-prize">500K</div>
+                        <p class="winner-prize-label">Diamonds Won</p>
+                        <div class="winner-stats">
+                            <div class="winner-stat">
+                                <div class="winner-stat-value">420K</div>
+                                <div class="winner-stat-label">Followers</div>
+                            </div>
+                            <div class="winner-stat">
+                                <div class="winner-stat-value">$52K</div>
+                                <div class="winner-stat-label">Earnings</div>
+                            </div>
+                        </div>
+                        <a href="https://tiktok.com" target="_blank" class="winner-link">
+                            <i class="fab fa-tiktok"></i> View Profile
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Hall of Fame -->
+    <section class="hall-of-fame">
+        <div class="hof-container">
+            <div class="section-header">
+                <span class="section-tag">Hall of Fame</span>
+                <h2 class="section-title">Our Award-Winning Creators</h2>
+                <p class="section-description">Meet the incredible creators who have earned recognition across all our regions through battles, challenges, and outstanding performance.</p>
+            </div>
+
+            <div class="hof-grid">
+                <!-- UK Hosts -->
+                <div class="hof-card">
+                    <div class="hof-header">
+                        <div class="hof-avatar">EW</div>
+                        <div class="hof-info">
+                            <h3>Emma Wilson</h3>
+                            <span class="hof-region"><i class="fas fa-map-marker-alt"></i> 🇬🇧 United Kingdom</span>
+                        </div>
+                    </div>
+                    <div class="hof-awards">
+                        <span class="hof-award award-gold"><i class="fas fa-crown"></i> 500K Diamond Challenge Winner</span>
+                        <span class="hof-award award-gold"><i class="fas fa-star"></i> Top UK Creator 2026</span>
+                        <span class="hof-award award-silver"><i class="fas fa-medal"></i> Universe Battle Runner-up</span>
+                    </div>
+                    <a href="https://tiktok.com" target="_blank" class="hof-link">
+                        <i class="fab fa-tiktok"></i> View TikTok Profile
+                    </a>
+                </div>
+
+                <div class="hof-card">
+                    <div class="hof-header">
+                        <div class="hof-avatar">JK</div>
+                        <div class="hof-info">
+                            <h3>James Kelly</h3>
+                            <span class="hof-region"><i class="fas fa-map-marker-alt"></i> 🇬🇧 United Kingdom</span>
+                        </div>
+                    </div>
+                    <div class="hof-awards">
+                        <span class="hof-award award-gold"><i class="fas fa-crown"></i> UK Regional Champion Q1</span>
+                        <span class="hof-award award-silver"><i class="fas fa-medal"></i> 200K Battle Finalist</span>
+                        <span class="hof-award award-bronze"><i class="fas fa-award"></i> Rising Star UK</span>
+                    </div>
+                    <a href="https://tiktok.com" target="_blank" class="hof-link">
+                        <i class="fab fa-tiktok"></i> View TikTok Profile
+                    </a>
+                </div>
+
+                <!-- MENA Hosts -->
+                <div class="hof-card">
+                    <div class="hof-header">
+                        <div class="hof-avatar">LA</div>
+                        <div class="hof-info">
+                            <h3>Layla Al-Rashid</h3>
+                            <span class="hof-region"><i class="fas fa-map-marker-alt"></i> 🌍 MENA</span>
+                        </div>
+                    </div>
+                    <div class="hof-awards">
+                        <span class="hof-award award-gold"><i class="fas fa-crown"></i> 500K Diamond Challenge Winner</span>
+                        <span class="hof-award award-gold"><i class="fas fa-star"></i> Top MENA Creator 2026</span>
+                        <span class="hof-award award-gold"><i class="fas fa-fire"></i> Most Viewed LIVE MENA</span>
+                    </div>
+                    <a href="https://tiktok.com" target="_blank" class="hof-link">
+                        <i class="fab fa-tiktok"></i> View TikTok Profile
+                    </a>
+                </div>
+
+                <div class="hof-card">
+                    <div class="hof-header">
+                        <div class="hof-avatar">OK</div>
+                        <div class="hof-info">
+                            <h3>Omar Khalil</h3>
+                            <span class="hof-region"><i class="fas fa-map-marker-alt"></i> 🌍 MENA</span>
+                        </div>
+                    </div>
+                    <div class="hof-awards">
+                        <span class="hof-award award-gold"><i class="fas fa-crown"></i> MENA Battle Champion</span>
+                        <span class="hof-award award-silver"><i class="fas fa-medal"></i> 300K Challenge Finalist</span>
+                        <span class="hof-award award-bronze"><i class="fas fa-award"></i> Breakout Creator MENA</span>
+                    </div>
+                    <a href="https://tiktok.com" target="_blank" class="hof-link">
+                        <i class="fab fa-tiktok"></i> View TikTok Profile
+                    </a>
+                </div>
+
+                <!-- Turkey -->
+                <div class="hof-card">
+                    <div class="hof-header">
+                        <div class="hof-avatar">AY</div>
+                        <div class="hof-info">
+                            <h3>Ahmet Yilmaz</h3>
+                            <span class="hof-region"><i class="fas fa-map-marker-alt"></i> 🇹🇷 Turkey</span>
+                        </div>
+                    </div>
+                    <div class="hof-awards">
+                        <span class="hof-award award-gold"><i class="fas fa-crown"></i> Turkey Champion 2026</span>
+                        <span class="hof-award award-silver"><i class="fas fa-medal"></i> Cross-Region Finalist</span>
+                        <span class="hof-award award-bronze"><i class="fas fa-award"></i> Most Engaging Host</span>
+                    </div>
+                    <a href="https://tiktok.com" target="_blank" class="hof-link">
+                        <i class="fab fa-tiktok"></i> View TikTok Profile
+                    </a>
+                </div>
+
+                <!-- Italy -->
+                <div class="hof-card">
+                    <div class="hof-header">
+                        <div class="hof-avatar">MR</div>
+                        <div class="hof-info">
+                            <h3>Marco Rossi</h3>
+                            <span class="hof-region"><i class="fas fa-map-marker-alt"></i> 🇮🇹 Italy</span>
+                        </div>
+                    </div>
+                    <div class="hof-awards">
+                        <span class="hof-award award-gold"><i class="fas fa-crown"></i> Italy Food Creator Award</span>
+                        <span class="hof-award award-silver"><i class="fas fa-medal"></i> 150K Battle Winner</span>
+                        <span class="hof-award award-bronze"><i class="fas fa-award"></i> Fan Favorite Italy</span>
+                    </div>
+                    <a href="https://tiktok.com" target="_blank" class="hof-link">
+                        <i class="fab fa-tiktok"></i> View TikTok Profile
+                    </a>
+                </div>
+
+                <!-- France -->
+                <div class="hof-card">
+                    <div class="hof-header">
+                        <div class="hof-avatar">ED</div>
+                        <div class="hof-info">
+                            <h3>Emma Dubois</h3>
+                            <span class="hof-region"><i class="fas fa-map-marker-alt"></i> 🇫🇷 France</span>
+                        </div>
+                    </div>
+                    <div class="hof-awards">
+                        <span class="hof-award award-gold"><i class="fas fa-crown"></i> France Beauty Queen 2026</span>
+                        <span class="hof-award award-gold"><i class="fas fa-star"></i> Highest Earning French Host</span>
+                        <span class="hof-award award-silver"><i class="fas fa-medal"></i> Universe Battle Semifinalist</span>
+                    </div>
+                    <a href="https://tiktok.com" target="_blank" class="hof-link">
+                        <i class="fab fa-tiktok"></i> View TikTok Profile
+                    </a>
+                </div>
+
+                <!-- Philippines -->
+                <div class="hof-card">
+                    <div class="hof-header">
+                        <div class="hof-avatar">MS</div>
+                        <div class="hof-info">
+                            <h3>Maria Santos</h3>
+                            <span class="hof-region"><i class="fas fa-map-marker-alt"></i> 🇵🇭 Philippines</span>
+                        </div>
+                    </div>
+                    <div class="hof-awards">
+                        <span class="hof-award award-gold"><i class="fas fa-crown"></i> PH Star Creator 2026</span>
+                        <span class="hof-award award-silver"><i class="fas fa-medal"></i> 250K Challenge Winner</span>
+                        <span class="hof-award award-bronze"><i class="fas fa-award"></i> Most Consistent Streamer</span>
+                    </div>
+                    <a href="https://tiktok.com" target="_blank" class="hof-link">
+                        <i class="fab fa-tiktok"></i> View TikTok Profile
+                    </a>
+                </div>
+
+                <!-- AU+ -->
+                <div class="hof-card">
+                    <div class="hof-header">
+                        <div class="hof-avatar">SM</div>
+                        <div class="hof-info">
+                            <h3>Sarah Mitchell</h3>
+                            <span class="hof-region"><i class="fas fa-map-marker-alt"></i> 🇦🇺 AU+</span>
+                        </div>
+                    </div>
+                    <div class="hof-awards">
+                        <span class="hof-award award-gold"><i class="fas fa-crown"></i> AU+ Creator of the Year</span>
+                        <span class="hof-award award-silver"><i class="fas fa-medal"></i> 200K Battle Winner</span>
+                        <span class="hof-award award-bronze"><i class="fas fa-award"></i> Sydney LIVE Fest Finalist</span>
+                    </div>
+                    <a href="https://tiktok.com" target="_blank" class="hof-link">
+                        <i class="fab fa-tiktok"></i> View TikTok Profile
+                    </a>
+                </div>
+
+                <!-- Germany -->
+                <div class="hof-card">
+                    <div class="hof-header">
+                        <div class="hof-avatar">LK</div>
+                        <div class="hof-info">
+                            <h3>Lisa K.</h3>
+                            <span class="hof-region"><i class="fas fa-map-marker-alt"></i> 🇩🇪 Germany</span>
+                        </div>
+                    </div>
+                    <div class="hof-awards">
+                        <span class="hof-award award-gold"><i class="fas fa-crown"></i> Germany Rising Star 2026</span>
+                        <span class="hof-award award-silver"><i class="fas fa-medal"></i> DACH Regional Finalist</span>
+                    </div>
+                    <a href="https://tiktok.com" target="_blank" class="hof-link">
+                        <i class="fab fa-tiktok"></i> View TikTok Profile
+                    </a>
+                </div>
+
+                <!-- Japan -->
+                <div class="hof-card">
+                    <div class="hof-header">
+                        <div class="hof-avatar">YT</div>
+                        <div class="hof-info">
+                            <h3>Yuki T.</h3>
+                            <span class="hof-region"><i class="fas fa-map-marker-alt"></i> 🇯🇵 Japan</span>
+                        </div>
+                    </div>
+                    <div class="hof-awards">
+                        <span class="hof-award award-gold"><i class="fas fa-crown"></i> Japan Gaming Champion</span>
+                        <span class="hof-award award-silver"><i class="fas fa-medal"></i> Asia-Pacific Finalist</span>
+                    </div>
+                    <a href="https://tiktok.com" target="_blank" class="hof-link">
+                        <i class="fab fa-tiktok"></i> View TikTok Profile
+                    </a>
+                </div>
+
+                <!-- Brazil -->
+                <div class="hof-card">
+                    <div class="hof-header">
+                        <div class="hof-avatar">CS</div>
+                        <div class="hof-info">
+                            <h3>Camila S.</h3>
+                            <span class="hof-region"><i class="fas fa-map-marker-alt"></i> 🇧🇷 Brazil</span>
+                        </div>
+                    </div>
+                    <div class="hof-awards">
+                        <span class="hof-award award-gold"><i class="fas fa-crown"></i> Brazil Dance Queen 2026</span>
+                        <span class="hof-award award-silver"><i class="fas fa-medal"></i> LATAM Challenge Winner</span>
+                    </div>
+                    <a href="https://tiktok.com" target="_blank" class="hof-link">
+                        <i class="fab fa-tiktok"></i> View TikTok Profile
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Other Regions -->
+    <section class="other-regions">
+        <div class="other-regions-container">
+            <h3>Explore All Regions</h3>
+            <div class="region-links">
+                <a href="uk.html" class="region-link-btn">🇬🇧 UK</a>
+                <a href="mena.html" class="region-link-btn">🌍 MENA</a>
+                <a href="turkey.html" class="region-link-btn">🇹🇷 Turkey</a>
+                <a href="cca.html" class="region-link-btn">🏔️ CCA</a>
+                <a href="italy.html" class="region-link-btn">🇮🇹 Italy</a>
+                <a href="france.html" class="region-link-btn">🇫🇷 France</a>
+                <a href="philippines.html" class="region-link-btn">🇵🇭 Philippines</a>
+                <a href="au.html" class="region-link-btn">🇦🇺 AU+</a>
+                <a href="germany.html" class="region-link-btn">🇩🇪 Germany</a>
+                <a href="netherland.html" class="region-link-btn">🇳🇱 Netherlands</a>
+                <a href="malaysia.html" class="region-link-btn">🇲🇾 Malaysia</a>
+                <a href="japan.html" class="region-link-btn">🇯🇵 Japan</a>
+                <a href="brazil.html" class="region-link-btn">🇧🇷 Brazil</a>
+                <a href="index.html" class="region-link-btn">🌐 Global</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <a href="index.html" class="logo">
+                        <span class="logo-icon">🦁</span>
+                        <span class="logo-text">The Lion Force</span>
+                    </a>
+                    <p>The official TikTok LIVE Agency celebrating creator excellence across 13 regions worldwide.</p>
+                    <div class="social-links">
+                        <a href="#" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
+                        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h4>Regions</h4>
+                    <ul>
+                        <li><a href="uk.html">🇬🇧 United Kingdom</a></li>
+                        <li><a href="mena.html">🌍 MENA</a></li>
+                        <li><a href="turkey.html">🇹🇷 Turkey</a></li>
+                        <li><a href="cca.html">🏔️ CCA</a></li>
+                        <li><a href="italy.html">🇮🇹 Italy</a></li>
+                        <li><a href="france.html">🇫🇷 France</a></li>
+                        <li><a href="philippines.html">🇵🇭 Philippines</a></li>
+                        <li><a href="au.html">🇦🇺 AU+</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>New Regions</h4>
+                    <ul>
+                        <li><a href="germany.html">🇩🇪 Germany</a></li>
+                        <li><a href="netherland.html">🇳🇱 Netherlands</a></li>
+                        <li><a href="malaysia.html">🇲🇾 Malaysia</a></li>
+                        <li><a href="japan.html">🇯🇵 Japan</a></li>
+                        <li><a href="brazil.html">🇧🇷 Brazil</a></li>
+                        <li><a href="awards.html">🏆 Awards</a></li>
+                        
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 The Lion Force Awards – Celebrating Creator Excellence. All rights reserved.</p>
+                <div class="footer-bottom-links" style="display: flex; gap: 2rem;">
+                    <a href="#" style="color: var(--gray); text-decoration: none;">Privacy Policy</a>
+                    <a href="#" style="color: var(--gray); text-decoration: none;">Terms of Service</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Floating WhatsApp -->
+    <a href="https://wa.me/447539357381" class="floating-whatsapp" target="_blank" aria-label="Contact on WhatsApp">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <script>
+        // Navbar scroll
+        window.addEventListener('scroll', () => {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 50) navbar.classList.add('scrolled');
+            else navbar.classList.remove('scrolled');
+        });
+
+        // Particles
+        const particlesContainer = document.getElementById('particles');
+        for (let i = 0; i < 25; i++) {
+            const particle = document.createElement('div');
+            particle.className = 'particle';
+            particle.style.left = Math.random() * 100 + '%';
+            particle.style.animationDelay = Math.random() * 15 + 's';
+            particle.style.animationDuration = (15 + Math.random() * 10) + 's';
+            particlesContainer.appendChild(particle);
+        }
+
+        // Mobile menu
+        function toggleMobileMenu() {
+            document.querySelector('.nav-links').classList.toggle('mobile-open');
+        }
+    </script>
+</body>
+</html>
