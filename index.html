@@ -1941,11 +1941,116 @@
             }
         }
 
-        // Form submission
+        // =============================================
+        // FORM SUBMISSION SETUP (REQUIRED)
+        // =============================================
+        // Option 1 (RECOMMENDED): Formspree — Get your free form endpoint:
+        //   1. Go to https://formspree.io/register
+        //   2. Create a new form (enter: info@thelionforce.com)
+        //   3. Copy your form endpoint URL (looks like: https://formspree.io/f/YOUR_CODE)
+        //   4. Replace the FORMSPREE_URL below with your endpoint
+        //
+        // Option 2: EmailJS — Sign up at https://www.emailjs.com/
+        //
+        // Option 3: WhatsApp only — Works immediately as fallback
+        // =============================================
+        var FORMSPREE_URL = 'https://formspree.io/f/info@thelionforce.com'; // <-- REPLACE THIS
+
+        // Form submission — sends to Formspree + WhatsApp fallback
         function handleSubmit(e) {
             e.preventDefault();
-            alert('Thank you for your application! Our team will review it and contact you within 24 hours via WhatsApp.');
-            document.getElementById('applicationForm').reset();
+            var form = document.getElementById('applicationForm');
+            var btn = form.querySelector('button[type="submit"]');
+            var originalText = btn.innerHTML;
+
+            // Collect all form data
+            var data = {
+                firstName: document.getElementById('firstName').value.trim(),
+                lastName: document.getElementById('lastName').value.trim(),
+                email: document.getElementById('email').value.trim(),
+                phone: document.getElementById('phone').value.trim(),
+                tiktok: document.getElementById('tiktok').value.trim(),
+                followers: document.getElementById('followers').value,
+                region: document.getElementById('region').value,
+                message: document.getElementById('message').value.trim()
+            };
+
+            // Validate
+            if (!data.firstName || !data.lastName || !data.email || !data.phone || !data.tiktok || !data.region) {
+                alert('Please fill in all required fields.');
+                return;
+            }
+
+            // Show loading state
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
+            btn.disabled = true;
+
+            // Build WhatsApp message as fallback
+            var regionNames = {
+                uk: 'UK', mena: 'MENA', turkey: 'Turkey', cca: 'CCA',
+                italy: 'Italy', france: 'France', philippines: 'Philippines',
+                au: 'AU+', germany: 'Germany', netherlands: 'Netherlands',
+                malaysia: 'Malaysia', japan: 'Japan', brazil: 'Brazil'
+            };
+            var regionLabel = regionNames[data.region] || data.region;
+
+            var waMessage = encodeURIComponent(
+                '*🦁 New Lion Force Application*\n\n' +
+                '*Name:* ' + data.firstName + ' ' + data.lastName + '\n' +
+                '*Email:* ' + data.email + '\n' +
+                '*WhatsApp:* ' + data.phone + '\n' +
+                '*TikTok:* ' + data.tiktok + '\n' +
+                '*Followers:* ' + data.followers + '\n' +
+                '*Region:* ' + regionLabel + '\n' +
+                (data.message ? '*Message:* ' + data.message : '') +
+                '\n_Sent from thelionforce.com_'
+            );
+
+            // Try Formspree first
+            fetch(FORMSPREE_URL, {
+                method: 'POST',
+                headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    firstName: data.firstName,
+                    lastName: data.lastName,
+                    email: data.email,
+                    phone: data.phone,
+                    tiktok: data.tiktok,
+                    followers: data.followers,
+                    region: regionLabel,
+                    message: data.message,
+                    _subject: 'New Application: ' + data.firstName + ' ' + data.lastName + ' (' + regionLabel + ')'
+                })
+            })
+            .then(function(response) {
+                if (response.ok) {
+                    btn.innerHTML = '<i class="fas fa-check"></i> Sent!';
+                    btn.style.background = '#22c55e';
+                    alert('✅ Application submitted successfully! Our team will contact you within 24 hours.');
+                    form.reset();
+                    setTimeout(function() {
+                        btn.innerHTML = originalText;
+                        btn.style.background = '';
+                        btn.disabled = false;
+                    }, 3000);
+                } else {
+                    throw new Error('Formspree error');
+                }
+            })
+            .catch(function(error) {
+                // Formspree not set up yet — fall back to WhatsApp
+                console.log('Formspree not configured, using WhatsApp fallback');
+                btn.innerHTML = '<i class="fab fa-whatsapp"></i> Send via WhatsApp';
+                btn.style.background = '#25D366';
+
+                setTimeout(function() {
+                    window.open('https://wa.me/447539357381?text=' + waMessage, '_blank');
+                    form.reset();
+                    btn.innerHTML = originalText;
+                    btn.style.background = '';
+                    btn.disabled = false;
+                }, 600);
+            });
         }
 
         // Mobile menu toggle
