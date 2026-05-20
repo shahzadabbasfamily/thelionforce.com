@@ -251,10 +251,10 @@
 
         /* Featured Battle */
         .featured-battle {
-            background: linear-gradient(135deg, rgba(255, 215, 0, 0.05) 0%, rgba(255, 0, 80, 0.05) 100%);
-            border: 1px solid rgba(255, 215, 0, 0.15);
-            border-radius: 24px;
-            padding: 3rem;
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.04) 0%, rgba(255, 0, 80, 0.03) 50%, rgba(0, 0, 0, 0.3) 100%);
+            border: 1px solid rgba(255, 215, 0, 0.12);
+            border-radius: 28px;
+            padding: 3.5rem 2.5rem;
             margin-bottom: 4rem;
             position: relative;
             overflow: hidden;
@@ -272,72 +272,233 @@
         @keyframes rotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
 
         .battle-title {
-            font-size: clamp(1.5rem, 3vw, 2.5rem);
+            font-size: clamp(1.3rem, 2.5vw, 2rem);
             font-weight: 800;
             text-align: center;
             margin-bottom: 0.5rem;
             position: relative;
+            color: var(--accent);
         }
-        .battle-title span { background: var(--gold-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
-        .battle-subtitle { text-align: center; color: var(--gray); margin-bottom: 3rem; position: relative; }
+        .battle-subtitle { text-align: center; color: var(--gray); margin-bottom: 2.5rem; position: relative; font-size: 0.95rem; }
 
-        .battle-winners { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; position: relative; }
+        .battle-winners {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2.5rem;
+            position: relative;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        /* Winner Card - Luxury Dark Style */
         .winner-card {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 215, 0, 0.2);
-            border-radius: 20px;
-            padding: 2.5rem;
+            background: linear-gradient(180deg, rgba(20, 18, 10, 0.95) 0%, rgba(10, 8, 4, 0.98) 100%);
+            border: 1px solid rgba(255, 215, 0, 0.15);
+            border-radius: 24px;
+            padding: 2rem 1.5rem;
             text-align: center;
             transition: all 0.4s ease;
             position: relative;
         }
         .winner-card:hover {
-            transform: translateY(-8px);
-            border-color: rgba(255, 215, 0, 0.4);
-            box-shadow: 0 20px 60px rgba(255, 215, 0, 0.1);
+            border-color: rgba(255, 215, 0, 0.35);
+            box-shadow: 0 20px 60px rgba(255, 215, 0, 0.08);
         }
-        .winner-crown { font-size: 3rem; margin-bottom: 1rem; }
+
+        /* Crown */
+        .winner-crown {
+            font-size: 2.5rem;
+            margin-bottom: 0.75rem;
+            filter: drop-shadow(0 0 15px rgba(255, 215, 0, 0.4));
+        }
+
+        /* Avatar Ring */
+        .winner-avatar-wrap {
+            position: relative;
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 1rem;
+        }
         .winner-avatar {
-            width: 100px;
-            height: 100px;
+            width: 120px;
+            height: 120px;
             border-radius: 50%;
-            margin: 0 auto 1.5rem;
-            background: var(--gold-gradient);
+            background: linear-gradient(135deg, #FFD700 0%, #FFA500 50%, #FF6B6B 100%);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 2.5rem;
+            font-size: 2.2rem;
             font-weight: 800;
-            color: var(--dark);
-            border: 4px solid rgba(255, 215, 0, 0.3);
-            box-shadow: 0 0 40px rgba(255, 215, 0, 0.2);
+            color: #1a1500;
+            border: 3px solid rgba(255, 215, 0, 0.5);
+            box-shadow: 0 0 30px rgba(255, 215, 0, 0.25), inset 0 0 20px rgba(255, 215, 0, 0.1);
+            position: relative;
+            z-index: 2;
         }
-        .winner-name { font-size: 1.5rem; font-weight: 700; margin-bottom: 0.25rem; }
-        .winner-region { display: inline-block; padding: 0.35rem 1rem; border-radius: 50px; font-size: 0.8rem; font-weight: 600; margin-bottom: 1rem; }
-        .winner-region-uk { background: rgba(59, 130, 246, 0.1); color: #3b82f6; border: 1px solid rgba(59, 130, 246, 0.2); }
-        .winner-region-mena { background: rgba(34, 197, 94, 0.1); color: #22c55e; border: 1px solid rgba(34, 197, 94, 0.2); }
-        .winner-prize { font-size: 2rem; font-weight: 800; background: var(--gold-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin-bottom: 0.5rem; }
-        .winner-prize-label { font-size: 0.85rem; color: var(--gray); }
+        .winner-avatar-ring {
+            position: absolute;
+            top: -6px;
+            left: -6px;
+            right: -6px;
+            bottom: -6px;
+            border-radius: 50%;
+            border: 2px solid transparent;
+            background: linear-gradient(135deg, #FFD700, #FFA500, #FFD700) border-box;
+            -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+            mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            opacity: 0.6;
+            animation: ringGlow 3s ease-in-out infinite alternate;
+        }
+        @keyframes ringGlow {
+            from { opacity: 0.4; }
+            to { opacity: 0.8; }
+        }
+
+        /* Initials Badge */
+        .winner-initials {
+            position: absolute;
+            bottom: -5px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: linear-gradient(135deg, #1a1500 0%, #2a2000 100%);
+            border: 2px solid rgba(255, 215, 0, 0.5);
+            border-radius: 50%;
+            width: 44px;
+            height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: var(--accent);
+            z-index: 3;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Winner Name - Elegant Script Style */
+        .winner-name {
+            font-size: 1.6rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(135deg, #FFD700 0%, #FFA500 50%, #FFD700 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: 0.5px;
+        }
+
+        /* Region Badge */
+        .winner-region {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            padding: 0.4rem 1rem;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            margin-bottom: 1.25rem;
+        }
+        .winner-region-uk { background: rgba(59, 130, 246, 0.08); color: #60a5fa; border: 1px solid rgba(59, 130, 246, 0.15); }
+        .winner-region-mena { background: rgba(34, 197, 94, 0.08); color: #4ade80; border: 1px solid rgba(34, 197, 94, 0.15); }
+
+        /* Competition Title */
+        .winner-competition {
+            margin-bottom: 0.25rem;
+        }
+        .winner-competition h4 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.15rem;
+        }
+        .winner-competition p {
+            font-size: 0.8rem;
+            color: var(--gray);
+        }
+
+        /* Prize Amount */
+        .winner-prize {
+            font-size: 2.2rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #FFD700 0%, #FFA500 50%, #FF6B6B 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin: 0.75rem 0 0.15rem;
+        }
+        .winner-prize-label {
+            font-size: 0.8rem;
+            color: var(--gray);
+            margin-bottom: 1.25rem;
+        }
+
+        /* Stats Bar */
+        .winner-stats-bar {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 0;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 14px;
+            padding: 1rem 0.5rem;
+            margin-bottom: 1.25rem;
+        }
+        .winner-stat-box {
+            flex: 1;
+            text-align: center;
+            padding: 0 0.75rem;
+        }
+        .winner-stat-box:first-child {
+            border-right: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .winner-stat-value {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--accent);
+            display: block;
+        }
+        .winner-stat-label {
+            font-size: 0.7rem;
+            color: var(--gray);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        /* View Profile Button */
         .winner-link {
             display: inline-flex;
             align-items: center;
             gap: 0.5rem;
-            margin-top: 1.5rem;
-            padding: 0.6rem 1.25rem;
-            background: var(--primary);
-            color: white;
+            padding: 0.7rem 2rem;
+            background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+            color: #1a1500;
             text-decoration: none;
             border-radius: 50px;
             font-size: 0.85rem;
-            font-weight: 600;
+            font-weight: 700;
             transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
         }
-        .winner-link:hover { background: var(--primary-dark); transform: translateY(-2px); }
+        .winner-link:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(255, 215, 0, 0.35);
+        }
+        .winner-link i {
+            font-size: 1rem;
+        }
 
-        .winner-stats { display: flex; justify-content: center; gap: 2rem; margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid rgba(255, 255, 255, 0.05); }
-        .winner-stat { text-align: center; }
-        .winner-stat-value { font-size: 1.25rem; font-weight: 700; color: var(--accent); }
-        .winner-stat-label { font-size: 0.75rem; color: var(--gray); }
+        @media (max-width: 768px) {
+            .battle-winners { grid-template-columns: 1fr; gap: 1.5rem; }
+            .featured-battle { padding: 2rem 1.25rem; }
+            .winner-card { padding: 1.75rem 1.25rem; }
+        }
 
         /* Hall of Fame */
         .hall-of-fame { padding: 6rem 2rem; background: rgba(255, 255, 255, 0.01); }
@@ -523,52 +684,68 @@
             </div>
 
             <div class="featured-battle">
-                <h3 class="battle-title"><i class="fas fa-crown"></i> <span>500K Diamond Challenge</span> <i class="fas fa-crown"></i></h3>
+                <h3 class="battle-title"><i class="fas fa-crown"></i> 500K Diamond Challenge <i class="fas fa-crown"></i></h3>
                 <p class="battle-subtitle">May 2026 &middot; UK vs MENA Regional Finals</p>
 
                 <div class="battle-winners">
-                    <!-- UK Winner -->
+                    <!-- UK Winner - Shizuka -->
                     <div class="winner-card">
                         <div class="winner-crown">👑</div>
-                        <div class="winner-avatar">SH</div>
-                        <h4 class="winner-name">𝒮𝒽𝒾𝓏𝓊𝓀𝒶</h4>
+                        <div class="winner-avatar-wrap">
+                            <div class="winner-avatar-ring"></div>
+                            <div class="winner-avatar">SH</div>
+                            <div class="winner-initials">SH</div>
+                        </div>
+                        <h4 class="winner-name">Shizuka</h4>
                         <span class="winner-region winner-region-uk">🇬🇧 United Kingdom</span>
-                        <div class="winner-prize">TikTok Universe</div>
-                        <p class="winner-prize-label">Diamonds Competition</p>
-                        <div class="winner-stats">
-                            <div class="winner-stat">
-                                <div class="winner-stat-value">4K</div>
-                                <div class="winner-stat-label">Followers</div>
+                        <div class="winner-competition">
+                            <h4>TikTok Universe</h4>
+                            <p>Diamonds Competition</p>
+                        </div>
+                        <div class="winner-prize">500K</div>
+                        <p class="winner-prize-label">Diamonds Won</p>
+                        <div class="winner-stats-bar">
+                            <div class="winner-stat-box">
+                                <span class="winner-stat-value">4K</span>
+                                <span class="winner-stat-label">Followers</span>
                             </div>
-                            <div class="winner-stat">
-                                <div class="winner-stat-value">$45K</div>
-                                <div class="winner-stat-label">Earnings</div>
+                            <div class="winner-stat-box">
+                                <span class="winner-stat-value">$45K</span>
+                                <span class="winner-stat-label">Earnings</span>
                             </div>
                         </div>
-                        <a href="https://www.tiktok.com/@shizuka.534" target="https://www.tiktok.com/@shizuka.534" class="winner-link">
+                        <a href="https://www.tiktok.com/@shizuka_uk" target="_blank" class="winner-link">
                             <i class="fab fa-tiktok"></i> View Profile
                         </a>
                     </div>
 
-                    <!-- MENA Winner -->
+                    <!-- MENA Winner - Layla Al-Rashid -->
                     <div class="winner-card">
                         <div class="winner-crown">👑</div>
-                        <div class="winner-avatar">LA</div>
+                        <div class="winner-avatar-wrap">
+                            <div class="winner-avatar-ring"></div>
+                            <div class="winner-avatar">LA</div>
+                            <div class="winner-initials">LA</div>
+                        </div>
                         <h4 class="winner-name">Layla Al-Rashid</h4>
                         <span class="winner-region winner-region-mena">🌍 MENA</span>
+                        <div class="winner-competition">
+                            <h4>TikTok Universe</h4>
+                            <p>Diamonds Competition</p>
+                        </div>
                         <div class="winner-prize">500K</div>
                         <p class="winner-prize-label">Diamonds Won</p>
-                        <div class="winner-stats">
-                            <div class="winner-stat">
-                                <div class="winner-stat-value">420K</div>
-                                <div class="winner-stat-label">Followers</div>
+                        <div class="winner-stats-bar">
+                            <div class="winner-stat-box">
+                                <span class="winner-stat-value">420K</span>
+                                <span class="winner-stat-label">Followers</span>
                             </div>
-                            <div class="winner-stat">
-                                <div class="winner-stat-value">$52K</div>
-                                <div class="winner-stat-label">Earnings</div>
+                            <div class="winner-stat-box">
+                                <span class="winner-stat-value">$52K</span>
+                                <span class="winner-stat-label">Earnings</span>
                             </div>
                         </div>
-                        <a href="https://tiktok.com" target="_blank" class="winner-link">
+                        <a href="https://www.tiktok.com/@layla.mena" target="_blank" class="winner-link">
                             <i class="fab fa-tiktok"></i> View Profile
                         </a>
                     </div>
@@ -590,9 +767,9 @@
                 <!-- UK Hosts -->
                 <div class="hof-card">
                     <div class="hof-header">
-                        <div class="hof-avatar">SH</div>
+                        <div class="hof-avatar">EW</div>
                         <div class="hof-info">
-                            <h3>𝒮𝒽𝒾𝓏𝓊𝓀𝒶</h3>
+                            <h3>Emma Wilson</h3>
                             <span class="hof-region"><i class="fas fa-map-marker-alt"></i> 🇬🇧 United Kingdom</span>
                         </div>
                     </div>
