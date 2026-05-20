@@ -285,7 +285,6 @@
             .footer-bottom { flex-direction: column; text-align: center; }
         }
     </style>
-<base target="_blank">
 </head>
 <body>
     <!-- Navigation -->
@@ -296,11 +295,34 @@
                 <span class="logo-text">The Lion Force</span>
             </a>
             <div class="nav-links">
-                <a href="uk.html" class="nav-cta">🇬🇧 UK</a>
-                <a href="mena.html">MENA</a>
-                <a href="turkey.html">Turkey</a>
-                <a href="cca.html">CCA</a>
-                <a href="italy.html">Italy</a>
+                <div class="dropdown" id="regionsDropdown">
+                    <span class="dropdown-toggle nav-links-a" onclick="toggleDropdown()">
+                        🌐 Regions <i class="fas fa-chevron-down"></i>
+                    </span>
+                    <div class="dropdown-menu">
+                        <span class="dropdown-label">All Regions</span>
+                        <a href="uk.html">🇬🇧 United Kingdom</a>
+                        <a href="mena.html">🌍 MENA</a>
+                        <a href="turkey.html">🇹🇷 Turkey</a>
+                        <a href="cca.html">🏔️ CCA</a>
+                        <a href="italy.html">🇮🇹 Italy</a>
+                        <a href="france.html">🇫🇷 France</a>
+                        <a href="philippines.html">🇵🇭 Philippines</a>
+                        <a href="au.html">🇦🇺 AU+</a>
+                        <div class="dropdown-divider"></div>
+                        <span class="dropdown-label">New Regions</span>
+                        <a href="germany.html">🇩🇪 Germany</a>
+                        <a href="netherland.html">🇳🇱 Netherlands</a>
+                        <a href="malaysia.html">🇲🇾 Malaysia</a>
+                        <a href="japan.html">🇯🇵 Japan</a>
+                        <a href="brazil.html">🇧🇷 Brazil</a>
+                    </div>
+                </div>
+                <a href="index.html#services">Services</a>
+                <a href="index.html#testimonials">Success Stories</a>
+                <a href="awards.html">🏆 Awards</a>
+                <a href="index.html#faq">FAQ</a>
+                <a href="index.html#apply" class="nav-cta">Apply Now</a>
             </div>
             <button class="mobile-menu-btn" onclick="toggleMobileMenu()">
                 <i class="fas fa-bars"></i>
@@ -602,6 +624,14 @@
                 <a href="cca.html" class="region-link-btn">🏔️ CCA</a>
                 <a href="italy.html" class="region-link-btn">🇮🇹 Italy</a>
                 <a href="france.html" class="region-link-btn">🇫🇷 France</a>
+                <a href="philippines.html" class="region-link-btn">🇵🇭 Philippines</a>
+                <a href="au.html" class="region-link-btn">🇦🇺 AU+</a>
+                <a href="germany.html" class="region-link-btn">🇩🇪 Germany</a>
+                <a href="netherland.html" class="region-link-btn">🇳🇱 Netherlands</a>
+                <a href="malaysia.html" class="region-link-btn">🇲🇾 Malaysia</a>
+                <a href="japan.html" class="region-link-btn">🇯🇵 Japan</a>
+                <a href="brazil.html" class="region-link-btn">🇧🇷 Brazil</a>
+                <a href="awards.html" class="region-link-btn">🏆 Awards</a>
                 <a href="index.html" class="region-link-btn">🌐 Global</a>
             </div>
         </div>
