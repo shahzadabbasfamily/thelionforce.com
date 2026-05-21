@@ -1895,7 +1895,7 @@
         </div>
     </section>
 
-    <!-- Star Creators -->
+<!-- Star Creators -->
     <section class="hall-of-fame" id="hall-of-fame">
         <div class="hof-container">
             <div class="section-header animate-on-scroll">
@@ -2116,7 +2116,7 @@
             </div>
         </div>
     </section>
-
+    
     <!-- CTA Section -->
     <section class="cta-section">
         <div class="cta-bg"></div>
@@ -2578,6 +2578,33 @@
                 document.querySelector('.dropdown').classList.remove('open');
             }
         }
+
+        function closeMobileMenu() {
+            const navLinks = document.querySelector('.nav-links');
+            const menuBtn = document.querySelector('.mobile-menu-btn i');
+            navLinks.classList.remove('mobile-open');
+            menuBtn.classList.remove('fa-times');
+            menuBtn.classList.add('fa-bars');
+            document.querySelector('.dropdown').classList.remove('open');
+        }
+
+        // Auto-close mobile menu when clicking any nav link
+        document.querySelectorAll('.nav-links a').forEach(function(link) {
+            link.addEventListener('click', function() {
+                if (window.innerWidth <= 1150) {
+                    closeMobileMenu();
+                }
+            });
+        });
+
+        // Auto-close mobile menu when clicking dropdown menu links
+        document.querySelectorAll('.dropdown-menu a').forEach(function(link) {
+            link.addEventListener('click', function() {
+                if (window.innerWidth <= 1150) {
+                    closeMobileMenu();
+                }
+            });
+        });
 
         // Regions dropdown toggle (mobile)
         function toggleDropdown() {
