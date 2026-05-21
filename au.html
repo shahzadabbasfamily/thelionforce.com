@@ -1,6 +1,86 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- Geo Redirect: Send visitors to their correct regional page -->
+    <script>
+    (function() {
+        // Prevent redirect loops — only run once per session
+        if (sessionStorage.getItem('geoRedirectDone')) return;
+
+        fetch('https://ipapi.co/json/')
+            .then(function(r) { return r.json(); })
+            .then(function(data) {
+                var country = data.country_code;
+                var redirectUrl = null;
+
+                // MENA countries
+                var menaCountries = ['AE','SA','QA','KW','BH','OM','EG','MA','JO','LB','IQ','DZ','TN','LY','SD','SO','YE','PS','DJ','KM','MR'];
+                if (menaCountries.indexOf(country) !== -1) {
+                    redirectUrl = 'mena.html';
+                }
+                // Turkey
+                else if (country === 'TR') {
+                    redirectUrl = 'turkey.html';
+                }
+                // UK
+                else if (country === 'GB') {
+                    redirectUrl = 'uk.html';
+                }
+                // Italy
+                else if (country === 'IT') {
+                    redirectUrl = 'italy.html';
+                }
+                // France
+                else if (country === 'FR') {
+                    redirectUrl = 'france.html';
+                }
+                // Germany
+                else if (country === 'DE') {
+                    redirectUrl = 'germany.html';
+                }
+                // Philippines
+                else if (country === 'PH') {
+                    redirectUrl = 'philippines.html';
+                }
+                // Australia / New Zealand
+                else if (country === 'AU' || country === 'NZ') {
+                    redirectUrl = 'au.html';
+                }
+                // Netherlands
+                else if (country === 'NL') {
+                    redirectUrl = 'netherland.html';
+                }
+                // Malaysia
+                else if (country === 'MY') {
+                    redirectUrl = 'malaysia.html';
+                }
+                // Japan
+                else if (country === 'JP') {
+                    redirectUrl = 'japan.html';
+                }
+                // Brazil
+                else if (country === 'BR') {
+                    redirectUrl = 'brazil.html';
+                }
+                // CCA countries
+                var ccaCountries = ['AM','AZ','BY','GE','KG','KZ','MD','TJ','TM','UA','UZ'];
+                if (ccaCountries.indexOf(country) !== -1) {
+                    redirectUrl = 'cca.html';
+                }
+
+                // Only redirect if they're on the WRONG page
+                if (redirectUrl && redirectUrl !== 'au.html') {
+                    sessionStorage.setItem('geoRedirectDone', '1');
+                    window.location.replace(redirectUrl);
+                } else {
+                    sessionStorage.setItem('geoRedirectDone', '1');
+                }
+            })
+            .catch(function() {
+                sessionStorage.setItem('geoRedirectDone', '1');
+            });
+    })();
+    </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="The Lion Force AU+ - Official TikTok LIVE Agency for Australia & New Zealand creators. Grow your audience, maximize earnings in AUD/NZD, and get dedicated local support.">
