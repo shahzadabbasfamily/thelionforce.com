@@ -751,89 +751,106 @@
         }
 
         /* Testimonials */
-        .testimonials {
+        /* Hall of Fame */
+        .hall-of-fame {
             padding: 6rem 2rem;
-            position: relative;
+            background: rgba(255, 255, 255, 0.01);
         }
-
-        .testimonials-grid {
+        .hof-container {
             max-width: 1400px;
             margin: 0 auto;
+        }
+
+        .hof-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 2rem;
         }
-
-        .testimonial-card {
+        .hof-card {
             background: rgba(255, 255, 255, 0.03);
             border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 24px;
-            padding: 2.5rem;
-            position: relative;
+            border-radius: 20px;
+            padding: 2rem;
+            transition: all 0.4s ease;
         }
-
-        .testimonial-card::before {
-            content: '"';
-            position: absolute;
-            top: 1rem;
-            right: 2rem;
-            font-size: 6rem;
-            color: var(--primary);
-            opacity: 0.2;
-            font-family: Georgia, serif;
-            line-height: 1;
+        .hof-card:hover {
+            border-color: rgba(255, 0, 80, 0.3);
+            transform: translateY(-5px);
         }
-
-        .testimonial-header {
+        .hof-header {
             display: flex;
             align-items: center;
-            gap: 1rem;
+            gap: 1.25rem;
             margin-bottom: 1.5rem;
         }
-
-        .testimonial-avatar {
-            width: 60px;
-            height: 60px;
+        .hof-avatar {
+            width: 64px;
+            height: 64px;
             border-radius: 50%;
-            background: var(--gradient);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-            font-weight: 700;
+            flex-shrink: 0;
+            overflow: hidden;
+            border: 2px solid rgba(255, 255, 255, 0.1);
         }
-
-        .testimonial-info h4 {
+        .hof-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+        .hof-info h3 {
+            font-size: 1.1rem;
             font-weight: 700;
             margin-bottom: 0.25rem;
         }
-
-        .testimonial-info p {
+        .hof-region {
+            font-size: 0.8rem;
             color: var(--gray);
-            font-size: 0.9rem;
-        }
-
-        .testimonial-stats {
-            display: flex;
-            gap: 1.5rem;
-            margin-top: 1.5rem;
-            padding-top: 1.5rem;
-            border-top: 1px solid rgba(255, 255, 255, 0.08);
-        }
-
-        .testimonial-stat {
             display: flex;
             align-items: center;
             gap: 0.5rem;
-            font-size: 0.9rem;
         }
-
-        .testimonial-stat i {
+        .hof-awards {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+        .hof-award {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            padding: 0.35rem 0.75rem;
+            border-radius: 50px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+        .award-gold {
+            background: rgba(255, 215, 0, 0.1);
             color: var(--accent);
+            border: 1px solid rgba(255, 215, 0, 0.2);
         }
-
-        .testimonial-stat span {
-            color: var(--gray);
+        .award-silver {
+            background: rgba(192, 192, 192, 0.1);
+            color: #c0c0c0;
+            border: 1px solid rgba(192, 192, 192, 0.2);
+        }
+        .award-bronze {
+            background: rgba(205, 127, 50, 0.1);
+            color: #cd7f32;
+            border: 1px solid rgba(205, 127, 50, 0.2);
+        }
+        .hof-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--primary);
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-top: 1rem;
+            transition: all 0.3s;
+        }
+        .hof-link:hover {
+            color: var(--secondary);
         }
 
         /* CTA Section */
@@ -1277,7 +1294,7 @@
 
             .regions-grid,
             .services-grid,
-            .testimonials-grid {
+            .hof-grid {
                 grid-template-columns: 1fr;
             }
 
@@ -1346,7 +1363,7 @@
                     </div>
                 </div>
                 <a href="#services">Services</a>
-                <a href="#testimonials">Success Stories</a>
+                <a href="#hall-of-fame">Hall of Fame</a>
                 <a href="awards.html">🏆 Awards</a>
                 <a href="#faq">FAQ</a>
                 <a href="#apply" class="nav-cta">Apply Now</a>
@@ -1594,72 +1611,221 @@
         </div>
     </section>
 
-    <!-- Testimonials -->
-    <section class="testimonials" id="testimonials">
-        <div class="section-header animate-on-scroll">
-            <span class="section-tag">Success Stories</span>
-            <h2 class="section-title">What Our Creators Say</h2>
-            <p class="section-description">Join thousands of successful creators who transformed their TikTok presence with The Lion Force.</p>
-        </div>
-        <div class="testimonials-grid">
-            <div class="testimonial-card animate-on-scroll">
-                <div class="testimonial-header">
-                    <div class="testimonial-avatar">SK</div>
-                    <div class="testimonial-info">
-                        <h4>Sarah K.</h4>
-                        <p>Lifestyle Creator, UK</p>
-                    </div>
-                </div>
-                <p>"Joining The Lion Force was the best decision for my TikTok career. My followers grew from 10K to 150K in just 4 months, and my earnings increased by 500%!"</p>
-                <div class="testimonial-stats">
-                    <div class="testimonial-stat">
-                        <i class="fas fa-users"></i>
-                        <span>+140K Followers</span>
-                    </div>
-                    <div class="testimonial-stat">
-                        <i class="fas fa-dollar-sign"></i>
-                        <span>+500% Earnings</span>
-                    </div>
-                </div>
+    <!-- Hall of Fame -->
+    <section class="hall-of-fame" id="hall-of-fame">
+        <div class="hof-container">
+            <div class="section-header animate-on-scroll">
+                <span class="section-tag">Hall of Fame</span>
+                <h2 class="section-title">Our Star Creators</h2>
+                <p class="section-description">Meet the incredible creators who shine across all our regions. These are the real faces of The Lion Force.</p>
             </div>
-            <div class="testimonial-card animate-on-scroll">
-                <div class="testimonial-header">
-                    <div class="testimonial-avatar">AM</div>
-                    <div class="testimonial-info">
-                        <h4>Ahmed M.</h4>
-                        <p>Gaming Creator, MENA</p>
+
+            <div class="hof-grid">
+                <!-- UK Hosts -->
+                <div class="hof-card animate-on-scroll">
+                    <div class="hof-header">
+                        <div class="hof-avatar"><img src="images/shizuka.png" alt="Shizuka"></div>
+                        <div class="hof-info">
+                            <h3>Shizuka</h3>
+                            <span class="hof-region"><i class="fas fa-map-marker-alt"></i> 🇬🇧 United Kingdom</span>
+                        </div>
                     </div>
+                    <div class="hof-awards">
+                        <span class="hof-award award-gold"><i class="fas fa-crown"></i> Top UK Creator</span>
+                        <span class="hof-award award-gold"><i class="fas fa-star"></i> Universe Battle Winner</span>
+                    </div>
+                    <a href="https://www.tiktok.com/@shizuka.534" target="_blank" class="hof-link">
+                        <i class="fab fa-tiktok"></i> View TikTok Profile
+                    </a>
                 </div>
-                <p>"The account protection alone is worth it. When my account got restricted, The Lion Force team resolved it within 24 hours. Incredible support!"</p>
-                <div class="testimonial-stats">
-                    <div class="testimonial-stat">
-                        <i class="fas fa-clock"></i>
-                        <span>24h Resolution</span>
+
+                <div class="hof-card animate-on-scroll">
+                    <div class="hof-header">
+                        <div class="hof-avatar"><img src="images/aleezay.png" alt="Aleezay"></div>
+                        <div class="hof-info">
+                            <h3>Aleezay</h3>
+                            <span class="hof-region"><i class="fas fa-map-marker-alt"></i> 🇬🇧 United Kingdom</span>
+                        </div>
                     </div>
-                    <div class="testimonial-stat">
-                        <i class="fas fa-star"></i>
-                        <span>5★ Support</span>
+                    <div class="hof-awards">
+                        <span class="hof-award award-silver"><i class="fas fa-medal"></i> Rising Star UK</span>
+                        <span class="hof-award award-bronze"><i class="fas fa-award"></i> Challenge Finalist</span>
                     </div>
+                    <a href="https://www.tiktok.com/@aleezay90" target="_blank" class="hof-link">
+                        <i class="fab fa-tiktok"></i> View TikTok Profile
+                    </a>
                 </div>
-            </div>
-            <div class="testimonial-card animate-on-scroll">
-                <div class="testimonial-header">
-                    <div class="testimonial-avatar">EY</div>
-                    <div class="testimonial-info">
-                        <h4>Emre Y.</h4>
-                        <p>Music Creator, Turkey</p>
+
+                <div class="hof-card animate-on-scroll">
+                    <div class="hof-header">
+                        <div class="hof-avatar"><img src="images/mrshaw.png" alt="Mr.Shaw"></div>
+                        <div class="hof-info">
+                            <h3>Mr.Shaw</h3>
+                            <span class="hof-region"><i class="fas fa-map-marker-alt"></i> 🇬🇧 United Kingdom</span>
+                        </div>
                     </div>
+                    <div class="hof-awards">
+                        <span class="hof-award award-gold"><i class="fas fa-crown"></i> UK Regional Champion</span>
+                        <span class="hof-award award-silver"><i class="fas fa-medal"></i> Top Male Creator UK</span>
+                    </div>
+                    <a href="https://www.tiktok.com/@mr.shaw786" target="_blank" class="hof-link">
+                        <i class="fab fa-tiktok"></i> View TikTok Profile
+                    </a>
                 </div>
-                <p>"The training and coaching sessions completely changed how I approach LIVE streaming. My viewer retention improved by 200% and gifts increased significantly."</p>
-                <div class="testimonial-stats">
-                    <div class="testimonial-stat">
-                        <i class="fas fa-eye"></i>
-                        <span>+200% Retention</span>
+
+                <div class="hof-card animate-on-scroll">
+                    <div class="hof-header">
+                        <div class="hof-avatar"><img src="images/raja.png" alt="Raja Ishaque"></div>
+                        <div class="hof-info">
+                            <h3>Raja Ishaque</h3>
+                            <span class="hof-region"><i class="fas fa-map-marker-alt"></i> 🇬🇧 United Kingdom</span>
+                        </div>
                     </div>
-                    <div class="testimonial-stat">
-                        <i class="fas fa-gift"></i>
-                        <span>+300% Gifts</span>
+                    <div class="hof-awards">
+                        <span class="hof-award award-silver"><i class="fas fa-medal"></i> UK Battle Finalist</span>
+                        <span class="hof-award award-bronze"><i class="fas fa-award"></i> Fan Favorite UK</span>
                     </div>
+                    <a href="https://www.tiktok.com/@raja.ishaque" target="_blank" class="hof-link">
+                        <i class="fab fa-tiktok"></i> View TikTok Profile
+                    </a>
+                </div>
+
+                <!-- MENA Hosts -->
+                <div class="hof-card animate-on-scroll">
+                    <div class="hof-header">
+                        <div class="hof-avatar"><img src="images/hania.png" alt="Hania Khan"></div>
+                        <div class="hof-info">
+                            <h3>Hania Khan</h3>
+                            <span class="hof-region"><i class="fas fa-map-marker-alt"></i> 🌍 MENA</span>
+                        </div>
+                    </div>
+                    <div class="hof-awards">
+                        <span class="hof-award award-gold"><i class="fas fa-crown"></i> Top MENA Creator</span>
+                        <span class="hof-award award-gold"><i class="fas fa-star"></i> Diamond Challenge Winner</span>
+                    </div>
+                    <a href="https://www.tiktok.com/@haniekhan25" target="_blank" class="hof-link">
+                        <i class="fab fa-tiktok"></i> View TikTok Profile
+                    </a>
+                </div>
+
+                <div class="hof-card animate-on-scroll">
+                    <div class="hof-header">
+                        <div class="hof-avatar"><img src="images/bravegirl.png" alt="Brave Girl"></div>
+                        <div class="hof-info">
+                            <h3>Brave Girl</h3>
+                            <span class="hof-region"><i class="fas fa-map-marker-alt"></i> 🌍 MENA</span>
+                        </div>
+                    </div>
+                    <div class="hof-awards">
+                        <span class="hof-award award-gold"><i class="fas fa-crown"></i> MENA Battle Champion</span>
+                        <span class="hof-award award-gold"><i class="fas fa-fire"></i> Most Viewed LIVE MENA</span>
+                    </div>
+                    <a href="https://www.tiktok.com/@bravegirl.me" target="_blank" class="hof-link">
+                        <i class="fab fa-tiktok"></i> View TikTok Profile
+                    </a>
+                </div>
+
+                <div class="hof-card animate-on-scroll">
+                    <div class="hof-header">
+                        <div class="hof-avatar"><img src="images/zainab.png" alt="Zainab Khan"></div>
+                        <div class="hof-info">
+                            <h3>Zainab Khan</h3>
+                            <span class="hof-region"><i class="fas fa-map-marker-alt"></i> 🌍 MENA</span>
+                        </div>
+                    </div>
+                    <div class="hof-awards">
+                        <span class="hof-award award-silver"><i class="fas fa-medal"></i> MENA Finalist</span>
+                        <span class="hof-award award-bronze"><i class="fas fa-award"></i> Breakout Creator MENA</span>
+                    </div>
+                    <a href="https://www.tiktok.com/@zainabkhan7860" target="_blank" class="hof-link">
+                        <i class="fab fa-tiktok"></i> View TikTok Profile
+                    </a>
+                </div>
+
+                <div class="hof-card animate-on-scroll">
+                    <div class="hof-header">
+                        <div class="hof-avatar"><img src="images/ashu.png" alt="Ashu Khan"></div>
+                        <div class="hof-info">
+                            <h3>Ashu Khan</h3>
+                            <span class="hof-region"><i class="fas fa-map-marker-alt"></i> 🌍 MENA</span>
+                        </div>
+                    </div>
+                    <div class="hof-awards">
+                        <span class="hof-award award-gold"><i class="fas fa-crown"></i> MENA Champion</span>
+                        <span class="hof-award award-silver"><i class="fas fa-medal"></i> Cross-Region Finalist</span>
+                    </div>
+                    <a href="https://www.tiktok.com/@ashukhan70" target="_blank" class="hof-link">
+                        <i class="fab fa-tiktok"></i> View TikTok Profile
+                    </a>
+                </div>
+
+                <div class="hof-card animate-on-scroll">
+                    <div class="hof-header">
+                        <div class="hof-avatar"><img src="images/missuni.png" alt="Miss Uni"></div>
+                        <div class="hof-info">
+                            <h3>Miss Uni</h3>
+                            <span class="hof-region"><i class="fas fa-map-marker-alt"></i> 🌍 MENA</span>
+                        </div>
+                    </div>
+                    <div class="hof-awards">
+                        <span class="hof-award award-silver"><i class="fas fa-medal"></i> MENA Runner-up</span>
+                        <span class="hof-award award-bronze"><i class="fas fa-award"></i> Most Engaging Host</span>
+                    </div>
+                    <a href="https://www.tiktok.com/@miss_uni0" target="_blank" class="hof-link">
+                        <i class="fab fa-tiktok"></i> View TikTok Profile
+                    </a>
+                </div>
+
+                <div class="hof-card animate-on-scroll">
+                    <div class="hof-header">
+                        <div class="hof-avatar"><img src="images/rumi.png" alt="Rumi"></div>
+                        <div class="hof-info">
+                            <h3>Rumi</h3>
+                            <span class="hof-region"><i class="fas fa-map-marker-alt"></i> 🌍 MENA</span>
+                        </div>
+                    </div>
+                    <div class="hof-awards">
+                        <span class="hof-award award-gold"><i class="fas fa-crown"></i> MENA Star Creator</span>
+                        <span class="hof-award award-silver"><i class="fas fa-medal"></i> Challenge Winner</span>
+                    </div>
+                    <a href="https://www.tiktok.com/@rume.1234" target="_blank" class="hof-link">
+                        <i class="fab fa-tiktok"></i> View TikTok Profile
+                    </a>
+                </div>
+
+                <div class="hof-card animate-on-scroll">
+                    <div class="hof-header">
+                        <div class="hof-avatar"><img src="images/brandedkurri.png" alt="Branded Kurri"></div>
+                        <div class="hof-info">
+                            <h3>Branded Kurri</h3>
+                            <span class="hof-region"><i class="fas fa-map-marker-alt"></i> 🌍 MENA</span>
+                        </div>
+                    </div>
+                    <div class="hof-awards">
+                        <span class="hof-award award-silver"><i class="fas fa-medal"></i> MENA Semifinalist</span>
+                        <span class="hof-award award-bronze"><i class="fas fa-award"></i> Rising Star MENA</span>
+                    </div>
+                    <a href="https://www.tiktok.com/@brandedkurri" target="_blank" class="hof-link">
+                        <i class="fab fa-tiktok"></i> View TikTok Profile
+                    </a>
+                </div>
+
+                <!-- Turkey -->
+                <div class="hof-card animate-on-scroll">
+                    <div class="hof-header">
+                        <div class="hof-avatar"><img src="images/amal.png" alt="Amal Khan"></div>
+                        <div class="hof-info">
+                            <h3>Amal Khan</h3>
+                            <span class="hof-region"><i class="fas fa-map-marker-alt"></i> 🇹🇷 Turkey</span>
+                        </div>
+                    </div>
+                    <div class="hof-awards">
+                        <span class="hof-award award-gold"><i class="fas fa-crown"></i> Turkey Champion</span>
+                        <span class="hof-award award-silver"><i class="fas fa-medal"></i> Cross-Region Finalist</span>
+                    </div>
+                    <a href="https://www.tiktok.com/@amalkhan930" target="_blank" class="hof-link">
+                        <i class="fab fa-tiktok"></i> View TikTok Profile
+                    </a>
                 </div>
             </div>
         </div>
