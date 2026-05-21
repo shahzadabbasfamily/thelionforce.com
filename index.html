@@ -1046,6 +1046,290 @@
             font-size: 1rem;
         }
 
+        /* Smart Apply - Searchable Country Dropdown */
+        .smart-apply-card {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .smart-apply {
+            text-align: center;
+        }
+
+        .country-search-wrapper {
+            margin-bottom: 2rem;
+            position: relative;
+            text-align: left;
+        }
+
+        .country-search-wrapper label {
+            display: block;
+            margin-bottom: 1rem;
+            font-weight: 600;
+            font-size: 1.1rem;
+            color: var(--light);
+            text-align: center;
+        }
+
+        .country-search-wrapper label i {
+            color: var(--secondary);
+            margin-right: 0.5rem;
+        }
+
+        .search-input-box {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .search-input-box .search-icon {
+            position: absolute;
+            left: 1.25rem;
+            color: var(--gray);
+            font-size: 1rem;
+            z-index: 2;
+            pointer-events: none;
+        }
+
+        .search-input-box .search-chevron {
+            position: absolute;
+            right: 1.25rem;
+            color: var(--primary);
+            font-size: 0.85rem;
+            z-index: 2;
+            pointer-events: none;
+            transition: transform 0.3s ease;
+        }
+
+        .search-input-box.open .search-chevron {
+            transform: rotate(180deg);
+        }
+
+        .search-input-box input {
+            width: 100%;
+            padding: 1.25rem 3rem 1.25rem 3rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            color: var(--light);
+            font-size: 1.05rem;
+            font-family: inherit;
+            transition: all 0.3s ease;
+        }
+
+        .search-input-box input:focus {
+            outline: none;
+            border-color: var(--primary);
+            background: rgba(255, 255, 255, 0.08);
+            box-shadow: 0 0 0 3px rgba(255, 0, 80, 0.15);
+        }
+
+        .search-input-box input::placeholder {
+            color: rgba(255, 255, 255, 0.3);
+        }
+
+        .country-dropdown {
+            position: absolute;
+            top: calc(100% + 8px);
+            left: 0;
+            right: 0;
+            max-height: 320px;
+            overflow-y: auto;
+            background: #1a1a1a;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            z-index: 100;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            animation: dropdownFadeIn 0.2s ease;
+        }
+
+        @keyframes dropdownFadeIn {
+            from { opacity: 0; transform: translateY(-8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .country-dropdown::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .country-dropdown::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .country-dropdown::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 3px;
+        }
+
+        .country-group-header {
+            padding: 0.6rem 1.25rem;
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: var(--primary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            background: rgba(255, 0, 80, 0.05);
+            position: sticky;
+            top: 0;
+            z-index: 2;
+        }
+
+        .country-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0.85rem 1.25rem;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+        }
+
+        .country-item:hover {
+            background: rgba(255, 0, 80, 0.1);
+        }
+
+        .country-item-name {
+            font-size: 0.95rem;
+            color: var(--light);
+        }
+
+        .country-item-region {
+            font-size: 0.7rem;
+            font-weight: 600;
+            padding: 0.2rem 0.6rem;
+            border-radius: 50px;
+            background: rgba(255, 255, 255, 0.06);
+            color: var(--gray);
+        }
+
+        .country-item-region.region-uk { color: #60a5fa; background: rgba(96, 165, 250, 0.1); }
+        .country-item-region.region-mena { color: #fbbf24; background: rgba(251, 191, 36, 0.1); }
+        .country-item-region.region-turkey { color: #f87171; background: rgba(248, 113, 113, 0.1); }
+        .country-item-region.region-italy { color: #34d399; background: rgba(52, 211, 153, 0.1); }
+        .country-item-region.region-france { color: #818cf8; background: rgba(129, 140, 248, 0.1); }
+        .country-item-region.region-philippines { color: #f472b6; background: rgba(244, 114, 182, 0.1); }
+        .country-item-region.region-au { color: #2dd4bf; background: rgba(45, 212, 191, 0.1); }
+        .country-item-region.region-germany { color: #a78bfa; background: rgba(167, 139, 250, 0.1); }
+        .country-item-region.region-netherlands { color: #fb923c; background: rgba(251, 146, 60, 0.1); }
+        .country-item-region.region-malaysia { color: #c084fc; background: rgba(192, 132, 252, 0.1); }
+        .country-item-region.region-japan { color: #f87171; background: rgba(248, 113, 113, 0.1); }
+        .country-item-region.region-brazil { color: #4ade80; background: rgba(74, 222, 128, 0.1); }
+        .country-item-region.region-cca { color: #38bdf8; background: rgba(56, 189, 248, 0.1); }
+
+        .country-no-results {
+            padding: 2rem 1.25rem;
+            text-align: center;
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+
+        .country-no-results i {
+            font-size: 2rem;
+            margin-bottom: 0.75rem;
+            display: block;
+            color: rgba(255, 255, 255, 0.15);
+        }
+
+        .apply-result {
+            animation: fadeInUp 0.5s ease;
+            padding: 2rem;
+            background: linear-gradient(135deg, rgba(255, 0, 80, 0.08) 0%, rgba(0, 242, 234, 0.05) 100%);
+            border: 1px solid rgba(255, 0, 80, 0.2);
+            border-radius: 20px;
+            margin-top: 1.5rem;
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .result-icon {
+            width: 60px;
+            height: 60px;
+            background: var(--gradient);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+            font-size: 1.5rem;
+        }
+
+        .result-info {
+            margin-bottom: 1.5rem;
+        }
+
+        .result-region {
+            font-size: 0.9rem;
+            color: var(--gray);
+            margin-bottom: 0.25rem;
+        }
+
+        .result-region span {
+            color: var(--secondary);
+            font-weight: 700;
+        }
+
+        .result-country {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--light);
+        }
+
+        .btn-apply-direct {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 1.25rem 2.5rem;
+            background: linear-gradient(135deg, #FF0050 0%, #FF6B6B 100%);
+            color: var(--light);
+            text-decoration: none;
+            border-radius: 14px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            margin-bottom: 1rem;
+        }
+
+        .btn-apply-direct:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(255, 0, 80, 0.5);
+        }
+
+        .apply-help {
+            font-size: 0.85rem;
+            color: var(--gray);
+        }
+
+        .apply-help a {
+            color: var(--secondary);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .apply-help a:hover {
+            text-decoration: underline;
+        }
+
+        .apply-fallback {
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            font-size: 0.9rem;
+            color: var(--gray);
+        }
+
+        .apply-fallback a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .apply-fallback a:hover {
+            text-decoration: underline;
+        }
+
         /* FAQ Section */
         .faq {
             padding: 6rem 2rem;
@@ -1406,8 +1690,8 @@
                         Apply via WhatsApp
                     </a>
                     <a href="#apply" class="btn btn-secondary">
-                        <i class="fas fa-file-alt"></i>
-                        Apply via Form
+                        <i class="fas fa-globe"></i>
+                        Apply by Country
                     </a>
                 </div>
             </div>
@@ -1849,87 +2133,61 @@
                     Apply via WhatsApp (Fastest)
                 </a>
                 <a href="#apply" class="btn btn-secondary">
-                    <i class="fas fa-file-alt"></i>
-                    Apply via Form
+                    <i class="fas fa-globe"></i>
+                    Apply by Country
                 </a>
             </div>
         </div>
     </section>
 
-    <!-- Application Form -->
+    <!-- Smart Apply - Country Based Direct Application -->
     <section class="application" id="apply">
         <div class="application-container">
             <div class="section-header animate-on-scroll">
                 <span class="section-tag">Join Us</span>
                 <h2 class="section-title">Apply to Join The Lion Force</h2>
-                <p class="section-description">Fill out the form below and our team will get back to you within 24 hours.</p>
+                <p class="section-description">Select your country below and get redirected to your region's direct TikTok application page. No forms, no waiting!</p>
             </div>
-            <div class="form-card animate-on-scroll">
-                <form id="applicationForm" onsubmit="handleSubmit(event)">
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="firstName">First Name *</label>
-                            <input type="text" id="firstName" name="firstName" placeholder="John" required>
+            <div class="form-card animate-on-scroll smart-apply-card">
+                <div class="smart-apply">
+                    <div class="country-search-wrapper">
+                        <label><i class="fas fa-globe"></i> Search Your Country</label>
+                        <div class="search-input-box" id="searchBox">
+                            <i class="fas fa-search search-icon"></i>
+                            <input
+                                type="text"
+                                id="countrySearch"
+                                placeholder="Type your country name..."
+                                oninput="filterCountries(this.value)"
+                                onfocus="showCountryDropdown()"
+                                autocomplete="off"
+                            >
+                            <i class="fas fa-chevron-down search-chevron" id="searchChevron"></i>
                         </div>
-                        <div class="form-group">
-                            <label for="lastName">Last Name *</label>
-                            <input type="text" id="lastName" name="lastName" placeholder="Doe" required>
+                        <div class="country-dropdown" id="countryDropdown" style="display: none;">
+                            <div class="country-list" id="countryList"></div>
                         </div>
+                        <input type="hidden" id="selectedCountryValue" value="">
+                        <input type="hidden" id="selectedCountryRegion" value="">
+                        <input type="hidden" id="selectedCountryLink" value="">
                     </div>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="email">Email Address *</label>
-                            <input type="email" id="email" name="email" placeholder="john@example.com" required>
+
+                    <div id="applyResult" class="apply-result" style="display: none;">
+                        <div class="result-icon"><i class="fas fa-map-marker-alt"></i></div>
+                        <div class="result-info">
+                            <p class="result-region">Your Region: <span id="resultRegion">-</span></p>
+                            <p class="result-country"><span id="resultCountry">-</span></p>
                         </div>
-                        <div class="form-group">
-                            <label for="phone">WhatsApp Number *</label>
-                            <input type="tel" id="phone" name="phone" placeholder="+44 123 456 7890" required>
-                        </div>
+                        <a id="applyLink" href="#" target="_blank" class="btn btn-apply-direct">
+                            <i class="fab fa-tiktok"></i> Apply Now on TikTok
+                        </a>
+                        <p class="apply-help">Having trouble? <a href="https://wa.me/447539357381?text=Hi%20I%20want%20to%20apply%20to%20join%20The%20Lion%20Force%20TikTok%20LIVE%20Agency." target="_blank">Apply via WhatsApp</a> instead</p>
                     </div>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="tiktok">TikTok Username *</label>
-                            <input type="text" id="tiktok" name="tiktok" placeholder="@yourusername" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="followers">Current Followers *</label>
-                            <select id="followers" name="followers" required>
-                                <option value="">Select range</option>
-                                <option value="1000-5000">1,000 - 5,000</option>
-                                <option value="5000-10000">5,000 - 10,000</option>
-                                <option value="10000-50000">10,000 - 50,000</option>
-                                <option value="50000-100000">50,000 - 100,000</option>
-                                <option value="100000+">100,000+</option>
-                            </select>
-                        </div>
+
+                    <div class="apply-fallback" id="applyFallback">
+                        <p>Can't find your country? <a href="https://wa.me/447539357381?text=Hi%20I%20want%20to%20apply%20to%20join%20The%20Lion%20Force%20TikTok%20LIVE%20Agency." target="_blank">Contact us on WhatsApp</a> and we'll help you join.</p>
                     </div>
-                    <div class="form-group">
-                        <label for="region">Your Region *</label>
-                        <select id="region" name="region" required>
-                            <option value="">Select your region</option>
-                            <option value="uk">United Kingdom</option>
-                            <option value="mena">MENA (Middle East & North Africa)</option>
-                            <option value="turkey">Turkey</option>
-                            <option value="cca">CCA (Central & South Asia)</option>
-                            <option value="italy">Italy</option>
-                            <option value="france">France</option>
-                            <option value="philippines">Philippines</option>
-                            <option value="au">AU+ (Australia & New Zealand)</option>
-                            <option value="germany">Germany</option>
-                            <option value="netherlands">Netherlands</option>
-                            <option value="malaysia">Malaysia</option>
-                            <option value="japan">Japan</option>
-                            <option value="brazil">Brazil</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="message">Tell us about yourself (Optional)</label>
-                        <textarea id="message" name="message" rows="4" placeholder="Share your content niche, goals, or any questions..."></textarea>
-                    </div>
-                    <button type="submit" class="form-submit">
-                        <i class="fas fa-paper-plane"></i> Submit Application
-                    </button>
-                </form>
+                </div>
             </div>
         </div>
     </section>
@@ -1958,7 +2216,7 @@
                         <i class="fas fa-chevron-down"></i>
                     </button>
                     <div class="faq-answer">
-                        <p>Yes! Joining The Lion Force is completely free.</p>
+                        <p>Yes! Joining The Lion Force is completely free. We operate on a revenue-sharing model where we take a small percentage of your LIVE earnings. This means we only succeed when you succeed. No upfront costs, no hidden fees.</p>
                     </div>
                 </div>
                 <div class="faq-item animate-on-scroll">
@@ -1967,7 +2225,7 @@
                         <i class="fas fa-chevron-down"></i>
                     </button>
                     <div class="faq-answer">
-                        <p>Absolutely! You keep all of your earnings, and many creators actually earn MORE with us due to our growth strategies and optimization support.</p>
+                        <p>Absolutely! You keep the majority of your earnings. Our revenue share is industry-competitive, and many creators actually earn MORE with us due to our growth strategies and optimization support. You'll receive detailed monthly reports of all earnings.</p>
                     </div>
                 </div>
                 <div class="faq-item animate-on-scroll">
@@ -2125,101 +2383,187 @@
         var FORMSPREE_URL = 'https://formspree.io/f/info@thelionforce.com'; // <-- REPLACE THIS
 
         // Form submission — sends to Formspree + WhatsApp fallback
-        function handleSubmit(e) {
-            e.preventDefault();
-            var form = document.getElementById('applicationForm');
-            var btn = form.querySelector('button[type="submit"]');
-            var originalText = btn.innerHTML;
+        // Smart Apply - Searchable Country Dropdown
+        // Region TikTok Links — update these with your actual agency invite links
+        var regionLinks = {
+            uk:       'https://www.tiktok.com/t/ZMkBpht7m/',
+            mena:     'https://www.tiktok.com/t/ZMksgYcFj/',
+            turkey:   'https://www.tiktok.com/t/ZSUL16nyv/',
+            italy:    'https://www.tiktok.com/t/ZSa51FX9q/',
+            france:   'https://www.tiktok.com/t/ZSaugnXAj/',
+            germany:  'https://www.tiktok.com/t/ZSxDxnD1Y/',
+            philippines: 'https://www.tiktok.com/t/ZSmUb3Wob/',
+            netherlands: 'https://www.tiktok.com/t/ZSxDQucUr/',
+            malaysia: 'https://www.tiktok.com/t/ZMAvqnJkN/',
+            japan:    'https://www.tiktok.com/t/ZSxDQQNjq/',
+            au:       'https://www.tiktok.com/t/ZSHaX6oXs/',
+            brazil:   'https://www.tiktok.com/t/ZSUL16nyv/',
+            cca:      'https://www.tiktok.com/t/ZMAv9vseA/'
+        };
 
-            // Collect all form data
-            var data = {
-                firstName: document.getElementById('firstName').value.trim(),
-                lastName: document.getElementById('lastName').value.trim(),
-                email: document.getElementById('email').value.trim(),
-                phone: document.getElementById('phone').value.trim(),
-                tiktok: document.getElementById('tiktok').value.trim(),
-                followers: document.getElementById('followers').value,
-                region: document.getElementById('region').value,
-                message: document.getElementById('message').value.trim()
-            };
+        var countryData = [
+            // United Kingdom
+            { value: 'uk', name: 'United Kingdom', region: 'United Kingdom', regionKey: 'uk', link: regionLinks.uk },
+            // MENA Region (21 countries)
+            { value: 'uae', name: 'United Arab Emirates', region: 'MENA', regionKey: 'mena', link: regionLinks.mena },
+            { value: 'bahrain', name: 'Bahrain', region: 'MENA', regionKey: 'mena', link: regionLinks.mena },
+            { value: 'djibouti', name: 'Djibouti', region: 'MENA', regionKey: 'mena', link: regionLinks.mena },
+            { value: 'algeria', name: 'Algeria', region: 'MENA', regionKey: 'mena', link: regionLinks.mena },
+            { value: 'egypt', name: 'Egypt', region: 'MENA', regionKey: 'mena', link: regionLinks.mena },
+            { value: 'iraq', name: 'Iraq', region: 'MENA', regionKey: 'mena', link: regionLinks.mena },
+            { value: 'jordan', name: 'Jordan', region: 'MENA', regionKey: 'mena', link: regionLinks.mena },
+            { value: 'comoros', name: 'Comoros', region: 'MENA', regionKey: 'mena', link: regionLinks.mena },
+            { value: 'kuwait', name: 'Kuwait', region: 'MENA', regionKey: 'mena', link: regionLinks.mena },
+            { value: 'lebanon', name: 'Lebanon', region: 'MENA', regionKey: 'mena', link: regionLinks.mena },
+            { value: 'libya', name: 'Libya', region: 'MENA', regionKey: 'mena', link: regionLinks.mena },
+            { value: 'morocco', name: 'Morocco', region: 'MENA', regionKey: 'mena', link: regionLinks.mena },
+            { value: 'mauritania', name: 'Mauritania', region: 'MENA', regionKey: 'mena', link: regionLinks.mena },
+            { value: 'oman', name: 'Oman', region: 'MENA', regionKey: 'mena', link: regionLinks.mena },
+            { value: 'palestine', name: 'Palestine', region: 'MENA', regionKey: 'mena', link: regionLinks.mena },
+            { value: 'qatar', name: 'Qatar', region: 'MENA', regionKey: 'mena', link: regionLinks.mena },
+            { value: 'saudi', name: 'Saudi Arabia', region: 'MENA', regionKey: 'mena', link: regionLinks.mena },
+            { value: 'sudan', name: 'Sudan', region: 'MENA', regionKey: 'mena', link: regionLinks.mena },
+            { value: 'somalia', name: 'Somalia', region: 'MENA', regionKey: 'mena', link: regionLinks.mena },
+            { value: 'tunisia', name: 'Tunisia', region: 'MENA', regionKey: 'mena', link: regionLinks.mena },
+            { value: 'yemen', name: 'Yemen', region: 'MENA', regionKey: 'mena', link: regionLinks.mena },
+            // Turkey
+            { value: 'turkey', name: 'Turkey', region: 'Turkey', regionKey: 'turkey', link: regionLinks.turkey },
+            // Italy
+            { value: 'italy', name: 'Italy', region: 'Italy', regionKey: 'italy', link: regionLinks.italy },
+            // France
+            { value: 'france', name: 'France', region: 'France', regionKey: 'france', link: regionLinks.france },
+            // Philippines
+            { value: 'philippines', name: 'Philippines', region: 'Philippines', regionKey: 'philippines', link: regionLinks.philippines },
+            // AU+
+            { value: 'australia', name: 'Australia', region: 'AU+', regionKey: 'au', link: regionLinks.au },
+            { value: 'newzealand', name: 'New Zealand', region: 'AU+', regionKey: 'au', link: regionLinks.au },
+            // Germany
+            { value: 'germany', name: 'Germany', region: 'Germany', regionKey: 'germany', link: regionLinks.germany },
+            // Netherlands
+            { value: 'netherlands', name: 'Netherlands', region: 'Netherlands', regionKey: 'netherlands', link: regionLinks.netherlands },
+            // Malaysia
+            { value: 'malaysia', name: 'Malaysia', region: 'Malaysia', regionKey: 'malaysia', link: regionLinks.malaysia },
+            // Japan
+            { value: 'japan', name: 'Japan', region: 'Japan', regionKey: 'japan', link: regionLinks.japan },
+            // Brazil
+            { value: 'brazil', name: 'Brazil', region: 'Brazil', regionKey: 'brazil', link: regionLinks.brazil },
+            // CCA Region (11 countries)
+            { value: 'armenia', name: 'Armenia', region: 'CCA', regionKey: 'cca', link: regionLinks.cca },
+            { value: 'azerbaijan', name: 'Azerbaijan', region: 'CCA', regionKey: 'cca', link: regionLinks.cca },
+            { value: 'belarus', name: 'Belarus', region: 'CCA', regionKey: 'cca', link: regionLinks.cca },
+            { value: 'georgia', name: 'Georgia', region: 'CCA', regionKey: 'cca', link: regionLinks.cca },
+            { value: 'kyrgyzstan', name: 'Kyrgyzstan', region: 'CCA', regionKey: 'cca', link: regionLinks.cca },
+            { value: 'kazakhstan', name: 'Kazakhstan', region: 'CCA', regionKey: 'cca', link: regionLinks.cca },
+            { value: 'moldova', name: 'Moldova', region: 'CCA', regionKey: 'cca', link: regionLinks.cca },
+            { value: 'tajikistan', name: 'Tajikistan', region: 'CCA', regionKey: 'cca', link: regionLinks.cca },
+            { value: 'turkmenistan', name: 'Turkmenistan', region: 'CCA', regionKey: 'cca', link: regionLinks.cca },
+            { value: 'ukraine', name: 'Ukraine', region: 'CCA', regionKey: 'cca', link: regionLinks.cca },
+            { value: 'uzbekistan', name: 'Uzbekistan', region: 'CCA', regionKey: 'cca', link: regionLinks.cca }
+        ];
 
-            // Validate
-            if (!data.firstName || !data.lastName || !data.email || !data.phone || !data.tiktok || !data.region) {
-                alert('Please fill in all required fields.');
+        var countryDropdownOpen = false;
+
+        function showCountryDropdown() {
+            var dropdown = document.getElementById('countryDropdown');
+            var searchBox = document.getElementById('searchBox');
+            renderCountryList(countryData);
+            dropdown.style.display = 'block';
+            searchBox.classList.add('open');
+            countryDropdownOpen = true;
+        }
+
+        function hideCountryDropdown() {
+            var dropdown = document.getElementById('countryDropdown');
+            var searchBox = document.getElementById('searchBox');
+            dropdown.style.display = 'none';
+            searchBox.classList.remove('open');
+            countryDropdownOpen = false;
+        }
+
+        function renderCountryList(countries) {
+            var listEl = document.getElementById('countryList');
+            if (countries.length === 0) {
+                listEl.innerHTML = '<div class="country-no-results"><i class="fas fa-search"></i>No countries found</div>';
                 return;
             }
 
-            // Show loading state
-            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
-            btn.disabled = true;
-
-            // Build WhatsApp message as fallback
-            var regionNames = {
-                uk: 'UK', mena: 'MENA', turkey: 'Turkey', cca: 'CCA',
-                italy: 'Italy', france: 'France', philippines: 'Philippines',
-                au: 'AU+', germany: 'Germany', netherlands: 'Netherlands',
-                malaysia: 'Malaysia', japan: 'Japan', brazil: 'Brazil'
-            };
-            var regionLabel = regionNames[data.region] || data.region;
-
-            var waMessage = encodeURIComponent(
-                '*🦁 New Lion Force Application*\n\n' +
-                '*Name:* ' + data.firstName + ' ' + data.lastName + '\n' +
-                '*Email:* ' + data.email + '\n' +
-                '*WhatsApp:* ' + data.phone + '\n' +
-                '*TikTok:* ' + data.tiktok + '\n' +
-                '*Followers:* ' + data.followers + '\n' +
-                '*Region:* ' + regionLabel + '\n' +
-                (data.message ? '*Message:* ' + data.message : '') +
-                '\n_Sent from thelionforce.com_'
-            );
-
-            // Try Formspree first
-            fetch(FORMSPREE_URL, {
-                method: 'POST',
-                headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    firstName: data.firstName,
-                    lastName: data.lastName,
-                    email: data.email,
-                    phone: data.phone,
-                    tiktok: data.tiktok,
-                    followers: data.followers,
-                    region: regionLabel,
-                    message: data.message,
-                    _subject: 'New Application: ' + data.firstName + ' ' + data.lastName + ' (' + regionLabel + ')'
-                })
-            })
-            .then(function(response) {
-                if (response.ok) {
-                    btn.innerHTML = '<i class="fas fa-check"></i> Sent!';
-                    btn.style.background = '#22c55e';
-                    alert('✅ Application submitted successfully! Our team will contact you within 24 hours.');
-                    form.reset();
-                    setTimeout(function() {
-                        btn.innerHTML = originalText;
-                        btn.style.background = '';
-                        btn.disabled = false;
-                    }, 3000);
-                } else {
-                    throw new Error('Formspree error');
-                }
-            })
-            .catch(function(error) {
-                // Formspree not set up yet — fall back to WhatsApp
-                console.log('Formspree not configured, using WhatsApp fallback');
-                btn.innerHTML = '<i class="fab fa-whatsapp"></i> Send via WhatsApp';
-                btn.style.background = '#25D366';
-
-                setTimeout(function() {
-                    window.open('https://wa.me/447539357381?text=' + waMessage, '_blank');
-                    form.reset();
-                    btn.innerHTML = originalText;
-                    btn.style.background = '';
-                    btn.disabled = false;
-                }, 600);
+            // Group by region
+            var grouped = {};
+            countries.forEach(function(c) {
+                if (!grouped[c.region]) grouped[c.region] = [];
+                grouped[c.region].push(c);
             });
+
+            var html = '';
+            for (var region in grouped) {
+                var regionKey = grouped[region][0].regionKey;
+                html += '<div class="country-group-header">' + region + '</div>';
+                grouped[region].forEach(function(c) {
+                    html += '<div class="country-item" onclick="selectCountry(\'' + c.value + '\')" data-value="' + c.value + '">' +
+                        '<span class="country-item-name">' + c.name + '</span>' +
+                        '<span class="country-item-region region-' + regionKey + '">' + c.region + '</span>' +
+                        '</div>';
+                });
+            }
+            listEl.innerHTML = html;
         }
+
+        function filterCountries(query) {
+            var dropdown = document.getElementById('countryDropdown');
+            if (!query.trim()) {
+                renderCountryList(countryData);
+                dropdown.style.display = 'block';
+                return;
+            }
+            var lowerQuery = query.toLowerCase();
+            var filtered = countryData.filter(function(c) {
+                return c.name.toLowerCase().indexOf(lowerQuery) !== -1 ||
+                       c.region.toLowerCase().indexOf(lowerQuery) !== -1;
+            });
+            renderCountryList(filtered);
+            dropdown.style.display = 'block';
+        }
+
+        function selectCountry(value) {
+            var country = countryData.find(function(c) { return c.value === value; });
+            if (!country) return;
+
+            // Update hidden fields
+            document.getElementById('selectedCountryValue').value = country.value;
+            document.getElementById('selectedCountryRegion').value = country.region;
+            document.getElementById('selectedCountryLink').value = country.link;
+
+            // Update search input to show selected country
+            document.getElementById('countrySearch').value = country.name;
+
+            // Hide dropdown
+            hideCountryDropdown();
+
+            // Show result
+            showApplyResult(country);
+        }
+
+        function showApplyResult(country) {
+            var resultDiv = document.getElementById('applyResult');
+            var regionSpan = document.getElementById('resultRegion');
+            var countrySpan = document.getElementById('resultCountry');
+            var applyLink = document.getElementById('applyLink');
+
+            regionSpan.textContent = country.region;
+            countrySpan.textContent = country.name;
+            applyLink.href = country.link;
+
+            resultDiv.style.display = 'block';
+            resultDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function(e) {
+            var wrapper = document.querySelector('.country-search-wrapper');
+            if (wrapper && !wrapper.contains(e.target)) {
+                hideCountryDropdown();
+            }
+        });
 
         // Mobile menu toggle
         function toggleMobileMenu() {
