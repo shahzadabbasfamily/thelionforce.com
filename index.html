@@ -1853,6 +1853,47 @@
             </div>
         </div>
     </section>
+
+    <!-- Services Section -->
+    <section class="services" id="services">
+        <div class="section-header animate-on-scroll">
+            <span class="section-tag">What We Offer</span>
+            <h2 class="section-title">Comprehensive Creator Support</h2>
+            <p class="section-description">Everything you need to succeed as a TikTok LIVE creator, from onboarding to long-term growth.</p>
+        </div>
+        <div class="services-grid">
+            <div class="service-card animate-on-scroll">
+                <div class="service-icon"><i class="fas fa-rocket"></i></div>
+                <h3>LIVE Onboarding</h3>
+                <p>Official TikTok LIVE onboarding with step-by-step guidance. Get verified and start broadcasting within 48 hours of approval.</p>
+            </div>
+            <div class="service-card animate-on-scroll">
+                <div class="service-icon"><i class="fas fa-shield-alt"></i></div>
+                <h3>Account Protection</h3>
+                <p>Full protection against bans and restrictions. Our team works directly with TikTok to resolve any account issues quickly.</p>
+            </div>
+            <div class="service-card animate-on-scroll">
+                <div class="service-icon"><i class="fas fa-chart-line"></i></div>
+                <h3>Growth Strategy</h3>
+                <p>Personalized growth plans to increase followers and engagement. Average creators see 300% growth in first 3 months.</p>
+            </div>
+            <div class="service-card animate-on-scroll">
+                <div class="service-icon"><i class="fas fa-graduation-cap"></i></div>
+                <h3>Creator Training</h3>
+                <p>Professional LIVE coaching and guidance. Learn best practices, content strategies, and audience engagement techniques.</p>
+            </div>
+            <div class="service-card animate-on-scroll">
+                <div class="service-icon"><i class="fas fa-cogs"></i></div>
+                <h3>Performance Optimization</h3>
+                <p>Data-driven insights to improve your LIVE sessions. Analytics, feedback, and continuous improvement recommendations.</p>
+            </div>
+            <div class="service-card animate-on-scroll">
+                <div class="service-icon"><i class="fas fa-handshake"></i></div>
+                <h3>Long-Term Partnership</h3>
+                <p>Stable collaboration with transparent terms. No hidden fees, fair revenue sharing, and dedicated account managers.</p>
+            </div>
+        </div>
+    </section>
 <!-- Star Creators -->
     <section class="hall-of-fame" id="hall-of-fame">
         <div class="hof-container">
@@ -2074,7 +2115,6 @@
             </div>
         </div>
     </section>
-    
 
     <!-- CTA Section -->
     <section class="cta-section">
@@ -2137,7 +2177,7 @@
                             <p class="result-region">Your Region: <span id="resultRegion">-</span></p>
                             <p class="result-country"><span id="resultCountry">-</span></p>
                         </div>
-                        <a id="applyLink" href="#" target="_blank" class="btn btn-apply-direct">
+                        <a id="applyLink" href="javascript:void(0)" onclick="openApplyLink()" class="btn btn-apply-direct">
                             <i class="fab fa-tiktok"></i> Apply Now on TikTok
                         </a>
                         <p class="apply-help">Having trouble? <a href="https://wa.me/447539357381?text=Hi%20I%20want%20to%20apply%20to%20join%20The%20Lion%20Force%20TikTok%20LIVE%20Agency." target="_blank">Apply via WhatsApp</a> instead</p>
@@ -2502,18 +2542,25 @@
             showApplyResult(country);
         }
 
+        var currentApplyLink = '';
+
         function showApplyResult(country) {
             var resultDiv = document.getElementById('applyResult');
             var regionSpan = document.getElementById('resultRegion');
             var countrySpan = document.getElementById('resultCountry');
-            var applyLink = document.getElementById('applyLink');
 
             regionSpan.textContent = country.region;
             countrySpan.textContent = country.name;
-            applyLink.href = country.link;
+            currentApplyLink = country.link;
 
             resultDiv.style.display = 'block';
             resultDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+
+        function openApplyLink() {
+            if (currentApplyLink) {
+                window.open(currentApplyLink, '_blank', 'noopener,noreferrer');
+            }
         }
 
         // Close dropdown when clicking outside
