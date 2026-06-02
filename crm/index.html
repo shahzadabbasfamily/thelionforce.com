@@ -376,12 +376,31 @@ function renderDashboard(el) {
 // INTERACTIONS
 // ============================================
 function renderInteractions(el) {
+  // Build manager assign dropdown for admin
+  let assignDropdown = '';
+  if (currentUser && currentUser.role === 'admin') {
+    const allUsers = getStore('users', []);
+    const managers = allUsers.filter(u => u.role === 'manager' && u.isActive === 'yes');
+    if (managers.length > 0) {
+      assignDropdown = `
+        <div class="form-group">
+          <label><i class="fas fa-user-check" style="color:#FF0050"></i> Assign to Manager *</label>
+          <select id="iAssignManager" required>
+            <option value="">Select manager</option>
+            ${managers.map(m => `<option value="${m.id}" data-name="${m.name}">${m.name} (@${m.username})</option>`).join('')}
+            <option value="${currentUser.id}" data-name="${currentUser.name}">Myself (Admin)</option>
+          </select>
+        </div>`;
+    }
+  }
+
   el.innerHTML = `
     <div style="max-width:700px;margin:0 auto">
       <div id="intMsg"></div>
       <div class="card">
         <h3><i class="fas fa-plus-circle" style="color:#FF0050"></i> Log New Interaction</h3>
         <form onsubmit="submitInteraction(event)">
+          ${assignDropdown}
           <div class="form-row">
             <div class="form-group"><label>Creator Username *</label><input type="text" id="iUsername" placeholder="@username" required></div>
             <div class="form-group"><label>Region *</label><select id="iRegion" required><option value="">Select region</option>${REGIONS.map(r => `<option>${r}</option>`).join('')}</select></div>
@@ -400,10 +419,23 @@ function renderInteractions(el) {
 
 function submitInteraction(e) {
   e.preventDefault();
+
+  // Determine assigned manager
+  let managerId = currentUser.id;
+  let managerName = currentUser.name;
+
+  // If admin selected a manager from dropdown
+  const assignEl = document.getElementById('iAssignManager');
+  if (assignEl && assignEl.value) {
+    managerId = parseInt(assignEl.value);
+    const selectedOption = assignEl.options[assignEl.selectedIndex];
+    managerName = selectedOption.getAttribute('data-name') || currentUser.name;
+  }
+
   const data = {
     id: Date.now(),
-    managerId: currentUser.id,
-    managerName: currentUser.name,
+    managerId: managerId,
+    managerName: managerName,
     creatorUsername: document.getElementById('iUsername').value.trim().replace(/^@/,''),
     region: document.getElementById('iRegion').value,
     issue: document.getElementById('iIssue').value.trim(),
@@ -699,7 +731,7 @@ function closeSidebar() { document.getElementById('sidebar').classList.remove('o
 // REGISTRATION
 // ============================================
 // Admin registration key - managers need this to register
-const ADMIN_KEY = 'lionforce2026';
+const ADMIN_KEY = 'lionforce2024';
 
 function showRegister() {
   document.querySelector('.login-box').style.display = 'none';
