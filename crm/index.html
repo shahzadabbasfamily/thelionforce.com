@@ -69,6 +69,8 @@ textarea:focus{border-color:#FF0050}
 .badge-gray{border-color:rgba(255,255,255,.1);color:#aaa;background:rgba(255,255,255,.05)}
 .clickable-card{cursor:pointer;transition:all .2s}
 .clickable-card:hover{border-color:rgba(255,0,80,.3);transform:translateY(-2px)}
+.stat-card-click{cursor:pointer;transition:all .2s}
+.stat-card-click:hover{border-color:rgba(255,0,80,.3);transform:translateY(-2px);box-shadow:0 4px 20px rgba(255,0,80,.1)}
 .modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);backdrop-filter:blur(4px);z-index:200;align-items:center;justify-content:center;padding:1rem}
 .modal-overlay.active{display:flex}
 .modal{background:#151515;border:1px solid rgba(255,255,255,.1);border-radius:16px;width:100%;max-width:600px;max-height:85vh;display:flex;flex-direction:column;overflow:hidden}
@@ -305,19 +307,38 @@ window.goPage = async function(page){
 // ============ DASHBOARD ============
 async function pageDashboard(el){
   await loadInteractions();await loadTasks();
-  const myInt=currentUser.role==='admin'?allInteractions:allInteractions.filter(i=>i.managerId===currentUser.id);
-  const myTasks=currentUser.role==='admin'?allTasks:allTasks.filter(t=>t.assignedTo===currentUser.id);
+  // ALL managers see ALL interactions and tasks - shared data
+  const viewInt=allInteractions;
+  const viewTasks=allTasks;
   el.innerHTML=`<div class="stats-grid">
-    <div class="stat-card"><div><p style="color:#888">Total Interactions</p><p style="font-size:1.75rem;font-weight:800">${myInt.length}</p></div><div class="stat-icon" style="background:linear-gradient(135deg,#3b82f6,#60a5fa)"><i class="fas fa-comments"></i></div></div>
-    <div class="stat-card"><div><p style="color:#888">Resolved</p><p style="font-size:1.75rem;font-weight:800">${myInt.filter(i=>i.status==='resolved').length}</p></div><div class="stat-icon" style="background:linear-gradient(135deg,#10b981,#34d399)"><i class="fas fa-check-circle"></i></div></div>
-    <div class="stat-card"><div><p style="color:#888">Pending</p><p style="font-size:1.75rem;font-weight:800">${myInt.filter(i=>i.status==='pending').length}</p></div><div class="stat-icon" style="background:linear-gradient(135deg,#f59e0b,#fbbf24)"><i class="fas fa-clock"></i></div></div>
-    <div class="stat-card"><div><p style="color:#888">Tasks</p><p style="font-size:1.75rem;font-weight:800">${myTasks.length}</p></div><div class="stat-icon" style="background:linear-gradient(135deg,#FF0050,#FF6B6B)"><i class="fas fa-tasks"></i></div></div>
+    <div class="stat-card stat-card-click" onclick="goPage('interactions')"><div><p style="color:#888">Total Interactions</p><p style="font-size:1.75rem;font-weight:800">${viewInt.length}</p></div><div class="stat-icon" style="background:linear-gradient(135deg,#3b82f6,#60a5fa)"><i class="fas fa-comments"></i></div></div>
+    <div class="stat-card stat-card-click" onclick="showFilteredDashboard('resolved')"><div><p style="color:#888">Resolved</p><p style="font-size:1.75rem;font-weight:800">${viewInt.filter(i=>i.status==='resolved').length}</p></div><div class="stat-icon" style="background:linear-gradient(135deg,#10b981,#34d399)"><i class="fas fa-check-circle"></i></div></div>
+    <div class="stat-card stat-card-click" onclick="showFilteredDashboard('pending')"><div><p style="color:#888">Pending</p><p style="font-size:1.75rem;font-weight:800">${viewInt.filter(i=>i.status==='pending').length}</p></div><div class="stat-icon" style="background:linear-gradient(135deg,#f59e0b,#fbbf24)"><i class="fas fa-clock"></i></div></div>
+    <div class="stat-card stat-card-click" onclick="goPage('tasks')"><div><p style="color:#888">Tasks</p><p style="font-size:1.75rem;font-weight:800">${viewTasks.length}</p></div><div class="stat-icon" style="background:linear-gradient(135deg,#FF0050,#FF6B6B)"><i class="fas fa-tasks"></i></div></div>
   </div>
   <div class="card"><h3 style="margin-bottom:1rem"><i class="fas fa-history" style="color:#FF0050"></i> Recent Interactions</h3>
-  ${myInt.length===0?'<div class="empty-state"><i class="fas fa-inbox" style="font-size:3rem;color:#333;margin-bottom:1rem;display:block"></i><p>No interactions yet</p></div>':
-    myInt.sort((a,b)=>b.createdAt-a.createdAt).slice(0,10).map(i=>`
+  <div id="dashFilterTags" style="margin-bottom:1rem;display:none"></div>
+  ${viewInt.length===0?'<div class="empty-state"><i class="fas fa-inbox" style="font-size:3rem;color:#333;margin-bottom:1rem;display:block"></i><p>No interactions yet</p></div>':
+    viewInt.sort((a,b)=>b.createdAt-a.createdAt).slice(0,10).map(i=>`
+    <div class="list-item clickable-card dash-int-item" data-status="${i.status}" onclick="openIntModal(${i.id})">
+      <div class="list-item-header"><span style="font-weight:700">@${i.creatorUsername}</span><span class="badge badge-gray">${i.region}</span><span class="badge badge-${i.status==='resolved'?'green':i.status==='pending'?'amber':'red'}">${i.status}</span>${i.managerName?`<span style="color:#666;font-size:.75rem;margin-left:auto">${i.managerName}</span>`:''}</div>
+      <p style="color:#888;font-size:.875rem">${i.issue.substring(0,120)}${i.issue.length>120?'...':''}${i.remarks?.length?` <i class="fas fa-comments" style="color:#FF0050"></i> ${i.remarks.length}`:''}</p>
+    </div>`).join('')}</div>`;
+}
+
+window.showFilteredDashboard=function(filterStatus){
+  const el=document.getElementById('mainContent');
+  const filtered=allInteractions.filter(i=>i.status===filterStatus);
+  const statusColors={resolved:'#10b981',pending:'#f59e0b',escalated:'#ef4444'};
+  el.innerHTML=`<div class="stats-grid">
+    <div class="stat-card stat-card-click" onclick="goPage('dashboard')"><div><p style="color:#888">Back to Dashboard</p><p style="font-size:1rem;font-weight:600;color:#FF0050"><i class="fas fa-arrow-left"></i> All Interactions</p></div><div class="stat-icon" style="background:linear-gradient(135deg,#FF0050,#FF6B6B)"><i class="fas fa-home"></i></div></div>
+    <div class="stat-card" style="border-color:${statusColors[filterStatus]}40"><div><p style="color:#888">${filterStatus.charAt(0).toUpperCase()+filterStatus.slice(1)}</p><p style="font-size:1.75rem;font-weight:800;color:${statusColors[filterStatus]}">${filtered.length}</p></div><div class="stat-icon" style="background:linear-gradient(135deg,${statusColors[filterStatus]},${statusColors[filterStatus]}aa)"><i class="fas fa-filter"></i></div></div>
+  </div>
+  <div class="card"><h3 style="margin-bottom:1rem"><i class="fas fa-filter" style="color:${statusColors[filterStatus]}"></i> ${filterStatus.charAt(0).toUpperCase()+filterStatus.slice(1)} Interactions</h3>
+  ${filtered.length===0?'<div class="empty-state"><p>No '+filterStatus+' interactions</p></div>':
+    filtered.sort((a,b)=>b.createdAt-a.createdAt).map(i=>`
     <div class="list-item clickable-card" onclick="openIntModal(${i.id})">
-      <div class="list-item-header"><span style="font-weight:700">@${i.creatorUsername}</span><span class="badge badge-gray">${i.region}</span><span class="badge badge-${i.status==='resolved'?'green':i.status==='pending'?'amber':'red'}">${i.status}</span></div>
+      <div class="list-item-header"><span style="font-weight:700">@${i.creatorUsername}</span><span class="badge badge-gray">${i.region}</span><span class="badge badge-${i.status==='resolved'?'green':i.status==='pending'?'amber':'red'}">${i.status}</span>${i.managerName?`<span style="color:#666;font-size:.75rem;margin-left:auto">${i.managerName}</span>`:''}</div>
       <p style="color:#888;font-size:.875rem">${i.issue.substring(0,120)}${i.issue.length>120?'...':''}${i.remarks?.length?` <i class="fas fa-comments" style="color:#FF0050"></i> ${i.remarks.length}`:''}</p>
     </div>`).join('')}</div>`;
 }
@@ -485,7 +506,7 @@ async function pageAdmin(el){
     <h3 style="margin-bottom:1rem">All Users</h3>
     ${users.map(u=>`<div class="list-item"><div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.5rem">
       <div style="display:flex;align-items:center;gap:.75rem"><div style="width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,#FF0050,#FF6B6B);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.875rem">${u.name.charAt(0).toUpperCase()}</div><div><p style="font-weight:600">${u.name}</p><p style="color:#888;font-size:.75rem">@${u.username} · ${u.email||'No email'}</p></div></div>
-      <div style="display:flex;align-items:center;gap:.5rem"><span class="badge badge-${u.role==='admin'?'red':'blue'}">${u.role}</span><span class="badge badge-${u.isActive==='yes'?'green':'gray'}">${u.isActive==='yes'?'Active':'Inactive'}</span>${u.role!=='admin'?`<button class="btn btn-sm btn-secondary" style="font-size:.75rem;padding:.4rem .8rem" onclick="toggleUser('${u.username}')">${u.isActive==='yes'?'Deactivate':'Activate'}</button>`:''}</div>
+      <div style="display:flex;align-items:center;gap:.5rem"><span class="badge badge-${u.role==='admin'?'red':'blue'}">${u.role}</span><span class="badge badge-${u.isActive==='yes'?'green':'gray'}">${u.isActive==='yes'?'Active':'Inactive'}</span>${u.role!=='admin'?`<button class="btn btn-sm btn-secondary" style="font-size:.75rem;padding:.4rem .8rem" onclick="toggleUser('${u.username}')">${u.isActive==='yes'?'Deactivate':'Activate'}</button><button class="btn btn-sm btn-red" style="font-size:.75rem;padding:.4rem .8rem" onclick="deleteUser('${u.username}')" title="Delete manager"><i class="fas fa-trash"></i></button>`:''}</div>
     </div></div>`).join('')}
   </div></div>
   <div id="iTab" class="tab-panel"><div class="card">
@@ -518,6 +539,18 @@ window.toggleUser = async function(username){
   await loadUsers();
   const u=allUsers.find(x=>x.username===username);
   if(u){u.isActive=u.isActive==='yes'?'no':'yes';await fbSet('users/'+username,u);goPage('admin')}
+}
+
+window.deleteUser = async function(username){
+  if(!confirm(`Are you sure you want to DELETE manager "@${username}"?\n\nThis action cannot be undone. All their data will remain but they will no longer be able to log in.`)) return;
+  try{
+    await loadUsers();
+    // Use Firebase remove by setting to null
+    const dbRef = ref(db, 'users/'+username);
+    const { set } = await import('https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js');
+    await set(dbRef, null);
+    goPage('admin');
+  }catch(e){alert('Error deleting: '+e.message)}
 }
 
 window.createMgr = async function(){
