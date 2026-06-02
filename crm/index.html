@@ -1,1 +1,706 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Lion Force CRM</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{height:100%}
+body{font-family:'Inter',sans-serif;background:#0a0a0a;color:#fff}
+
+/* Login */
+.login-page{min-height:100vh;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#0a0a0a 0%,#1a0a0f 50%,#0a0a0a 100%);padding:1rem}
+.login-box{width:100%;max-width:400px}
+.login-logo{text-align:center;margin-bottom:2rem}
+.login-logo .lion{font-size:3rem}
+.login-logo h1{font-size:1.5rem;font-weight:800;background:linear-gradient(135deg,#FF0050,#00F2EA);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.login-logo p{color:#888;margin-top:.25rem}
+.login-card{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:2rem}
+.login-card h2{margin-bottom:1.5rem;font-size:1.25rem}
+.form-group{margin-bottom:1rem}
+.form-group label{display:block;margin-bottom:.5rem;font-size:.875rem;color:#aaa}
+.form-group input{width:100%;padding:.875rem 1rem;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:10px;color:#fff;font-size:1rem;outline:none;transition:all .3s}
+.form-group input:focus{border-color:#FF0050;box-shadow:0 0 0 3px rgba(255,0,80,.15)}
+.btn{width:100%;padding:1rem;background:linear-gradient(135deg,#FF0050,#FF6B6B);color:#fff;border:none;border-radius:10px;font-size:1rem;font-weight:700;cursor:pointer;transition:all .3s}
+.btn:hover{transform:translateY(-2px);box-shadow:0 10px 30px rgba(255,0,80,.4)}
+.btn-secondary{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.1)}
+.btn-secondary:hover{background:rgba(255,255,255,.12);box-shadow:none}
+.btn-sm{padding:.6rem 1.2rem;font-size:.875rem;width:auto}
+.btn-green{background:linear-gradient(135deg,#10b981,#34d399)}
+.btn-blue{background:linear-gradient(135deg,#3b82f6,#60a5fa)}
+.btn-amber{background:linear-gradient(135deg,#f59e0b,#fbbf24);color:#000}
+.btn-red{background:linear-gradient(135deg,#ef4444,#f87171)}
+
+.error-msg{background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.3);color:#fca5a5;padding:.75rem 1rem;border-radius:8px;margin-bottom:1rem;font-size:.875rem}
+.success-msg{background:rgba(34,197,94,.1);border:1px solid rgba(34,197,94,.3);color:#86efac;padding:.75rem 1rem;border-radius:8px;margin-bottom:1rem;font-size:.875rem}
+
+/* App Layout */
+.app{display:none;height:100vh}
+.app.active{display:flex}
+.sidebar{width:260px;background:#111;border-right:1px solid rgba(255,255,255,.06);display:flex;flex-direction:column}
+.sidebar-header{padding:1.25rem;border-bottom:1px solid rgba(255,255,255,.06);display:flex;align-items:center;gap:.75rem}
+.sidebar-header .lion{font-size:1.75rem}
+.sidebar-header h1{font-size:1rem;font-weight:800}
+.sidebar-header p{font-size:.75rem;color:#888}
+
+.user-info{padding:1rem;border-bottom:1px solid rgba(255,255,255,.06);display:flex;align-items:center;gap:.75rem}
+.user-avatar{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,#FF0050,#FF6B6B);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.875rem}
+.user-info p{font-size:.875rem;font-weight:600}
+.user-info span{font-size:.75rem;color:#888;text-transform:capitalize}
+
+.nav{flex:1;padding:.75rem}
+.nav-item{display:flex;align-items:center;gap:.75rem;padding:.75rem 1rem;border-radius:10px;color:#aaa;text-decoration:none;font-size:.875rem;transition:all .2s;cursor:pointer;margin-bottom:.25rem;border:none;background:none;width:100%;font-family:inherit}
+.nav-item:hover{background:rgba(255,255,255,.05);color:#fff}
+.nav-item.active{background:rgba(255,0,80,.1);color:#FF0050;border:1px solid rgba(255,0,80,.2)}
+.nav-item i{width:18px;text-align:center}
+
+.sidebar-footer{padding:1rem;border-top:1px solid rgba(255,255,255,.06)}
+
+.main{flex:1;display:flex;flex-direction:column;overflow:hidden}
+.main-header{height:64px;border-bottom:1px solid rgba(255,255,255,.06);display:flex;align-items:center;justify-content:space-between;padding:0 2rem}
+.main-header h2{font-size:1.25rem}
+.main-content{flex:1;overflow-y:auto;padding:2rem}
+
+/* Cards */
+.card{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:1.5rem;margin-bottom:1.5rem}
+.card h3{font-size:1.1rem;margin-bottom:1rem;display:flex;align-items:center;gap:.5rem}
+
+.stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem;margin-bottom:1.5rem}
+.stat-card{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08);border-radius:14px;padding:1.25rem;display:flex;align-items:center;justify-content:space-between}
+.stat-card p:first-child{color:#888;font-size:.875rem}
+.stat-card p:last-child{font-size:1.75rem;font-weight:800}
+.stat-icon{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.1rem}
+
+/* Forms */
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem}
+.form-row .form-group{margin-bottom:0}
+select{width:100%;padding:.875rem 1rem;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:10px;color:#fff;font-size:1rem;outline:none}
+select option{background:#1a1a1a;color:#fff}
+textarea{width:100%;padding:.875rem 1rem;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:10px;color:#fff;font-size:1rem;outline:none;resize:vertical;font-family:inherit;min-height:80px}
+textarea:focus{border-color:#FF0050}
+
+/* Tables & Lists */
+.list-item{padding:1rem;border-radius:10px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);margin-bottom:.5rem}
+.list-item-header{display:flex;align-items:center;gap:.75rem;margin-bottom:.5rem;flex-wrap:wrap}
+.badge{display:inline-flex;align-items:center;gap:.35rem;padding:.25rem .7rem;border-radius:50px;font-size:.75rem;font-weight:600;border:1px solid}
+.badge-green{border-color:rgba(34,197,94,.3);color:#86efac;background:rgba(34,197,94,.08)}
+.badge-amber{border-color:rgba(245,158,11,.3);color:#fcd34d;background:rgba(245,158,11,.08)}
+.badge-red{border-color:rgba(239,68,68,.3);color:#fca5a5;background:rgba(239,68,68,.08)}
+.badge-blue{border-color:rgba(59,130,246,.3);color:#93c5fd;background:rgba(59,130,246,.08)}
+.badge-gray{border-color:rgba(255,255,255,.1);color:#aaa;background:rgba(255,255,255,.05)}
+
+/* Timeline */
+.timeline{position:relative;padding-left:2rem}
+.timeline::before{content:'';position:absolute;left:7px;top:0;bottom:0;width:2px;background:rgba(255,255,255,.1)}
+.timeline-item{position:relative;margin-bottom:1.5rem}
+.timeline-dot{position:absolute;left:-2rem;top:4px;width:16px;height:16px;border-radius:50%;border:2px solid;background:#0a0a0a}
+.timeline-content{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:1rem}
+
+/* Tabs */
+.tabs{display:flex;gap:.25rem;margin-bottom:1.5rem;background:rgba(255,255,255,.03);border-radius:10px;padding:.25rem;width:fit-content}
+.tab-btn{padding:.6rem 1.2rem;border-radius:8px;border:none;background:none;color:#888;font-size:.875rem;cursor:pointer;transition:all .2s;font-family:inherit}
+.tab-btn:hover{color:#fff}
+.tab-btn.active{background:rgba(255,255,255,.08);color:#fff}
+.tab-panel{display:none}
+.tab-panel.active{display:block}
+
+/* Mobile */
+.mobile-header{display:none;padding:1rem;background:#111;border-bottom:1px solid rgba(255,255,255,.06);align-items:center;justify-content:space-between}
+.mobile-menu-btn{background:none;border:none;color:#fff;font-size:1.25rem;cursor:pointer}
+
+@media(max-width:768px){
+.sidebar{position:fixed;left:-260px;top:0;bottom:0;z-index:100;transition:left .3s}
+.sidebar.open{left:0}
+.sidebar-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:99}
+.sidebar-overlay.open{display:block}
+.mobile-header{display:flex}
+.form-row{grid-template-columns:1fr}
+.stats-grid{grid-template-columns:1fr 1fr}
+.main-content{padding:1rem}
+}
+
+.empty-state{text-align:center;padding:3rem;color:#666}
+.empty-state i{font-size:3rem;margin-bottom:1rem;display:block;color:#333}
+
+/* Search */
+.search-box{display:flex;gap:.75rem;margin-bottom:1.5rem}
+.search-box input{flex:1;padding:1rem 1rem 1rem 2.75rem;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:12px;color:#fff;font-size:1rem;outline:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='18' height='18' viewBox='0 0 24 24' fill='none' stroke='%23666' stroke-width='2'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cpath d='m21 21-4.35-4.35'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:1rem center}
+.search-box input:focus{border-color:#FF0050}
+
+/* Actions */
+.actions{display:flex;gap:.5rem;flex-wrap:wrap}
+
+/* Scrollbar */
+::-webkit-scrollbar{width:6px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:rgba(255,255,255,.1);border-radius:3px}
+</style>
+</head>
+<body>
+
+<!-- LOGIN PAGE -->
+<div class="login-page" id="loginPage">
+  <div class="login-box">
+    <div class="login-logo">
+      <div class="lion">🦁</div>
+      <h1>The Lion Force</h1>
+      <p>Internal CRM Portal</p>
+    </div>
+    <div class="login-card">
+      <h2>Manager Login</h2>
+      <div id="loginError"></div>
+      <form id="loginForm">
+        <div class="form-group">
+          <label>Username</label>
+          <input type="text" id="loginUser" placeholder="Enter username" required>
+        </div>
+        <div class="form-group">
+          <label>Password</label>
+          <input type="password" id="loginPass" placeholder="Enter password" required>
+        </div>
+        <button type="submit" class="btn">Sign In</button>
+      </form>
+    </div>
+    <p style="text-align:center;color:#666;font-size:.875rem;margin-top:1.5rem">Internal use only</p>
+  </div>
+</div>
+
+<!-- APP -->
+<div class="app" id="app">
+  <div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar()"></div>
+
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <span class="lion">🦁</span>
+      <div>
+        <h1>The Lion Force</h1>
+        <p>CRM Portal</p>
+      </div>
+    </div>
+    <div class="user-info">
+      <div class="user-avatar" id="userAvatar">A</div>
+      <div>
+        <p id="userName">Admin</p>
+        <span id="userRole">admin</span>
+      </div>
+    </div>
+    <nav class="nav">
+      <button class="nav-item active" onclick="navigate('dashboard')" data-page="dashboard">
+        <i class="fas fa-chart-line"></i> Dashboard
+      </button>
+      <button class="nav-item" onclick="navigate('interactions')" data-page="interactions">
+        <i class="fas fa-comment-dots"></i> Log Interaction
+      </button>
+      <button class="nav-item" onclick="navigate('search')" data-page="search">
+        <i class="fas fa-search"></i> Creator Search
+      </button>
+      <button class="nav-item" onclick="navigate('tasks')" data-page="tasks">
+        <i class="fas fa-tasks"></i> Tasks
+      </button>
+      <button class="nav-item" onclick="navigate('admin')" data-page="admin" id="adminNav" style="display:none">
+        <i class="fas fa-shield-alt"></i> Admin Panel
+      </button>
+    </nav>
+    <div class="sidebar-footer">
+      <button class="nav-item" onclick="logout()">
+        <i class="fas fa-sign-out-alt"></i> Sign Out
+      </button>
+    </div>
+  </aside>
+
+  <div class="main">
+    <div class="mobile-header">
+      <button class="mobile-menu-btn" onclick="openSidebar()"><i class="fas fa-bars"></i></button>
+      <span style="font-weight:700">The Lion Force CRM</span>
+      <span>🦁</span>
+    </div>
+
+    <div class="main-header">
+      <h2 id="pageTitle">Dashboard</h2>
+    </div>
+
+    <div class="main-content" id="mainContent">
+      <!-- Content injected by JS -->
+    </div>
+  </div>
+</div>
+
+<script>
+// ============================================
+// DATA STORE (localStorage)
+// ============================================
+const REGIONS = ['United Kingdom','MENA','Turkey','CCA','Italy','France','Philippines','AU+','Germany','Netherlands','Malaysia','Japan','Brazil'];
+
+function getStore(key, def) {
+  try { return JSON.parse(localStorage.getItem('lf_crm_' + key)) || def; }
+  catch { return def; }
+}
+function setStore(key, val) { localStorage.setItem('lf_crm_' + key, JSON.stringify(val)); }
+
+// Seed initial admin
+function initData() {
+  if (!getStore('users', null)) {
+    setStore('users', [
+      {id:1, username:'thelionforce', password:hashPassword('thelionforce5'), name:'The Lion Force Admin', email:'admin@thelionforce.com', role:'admin', isActive:'yes', createdAt: Date.now()}
+    ]);
+    setStore('interactions', []);
+    setStore('tasks', []);
+    setStore('currentUser', null);
+  }
+}
+
+// Simple hash
+function hashPassword(pw) {
+  let h = 0;
+  for (let i = 0; i < pw.length; i++) { h = ((h << 5) - h + pw.charCodeAt(i)) | 0; }
+  return 'h' + Math.abs(h).toString(16);
+}
+function verifyPassword(pw, hash) { return hashPassword(pw) === hash; }
+
+// ============================================
+// AUTH
+// ============================================
+let currentUser = getStore('currentUser', null);
+
+function login(username, password) {
+  initData();
+  const users = getStore('users', []);
+  const user = users.find(u => u.username === username && verifyPassword(password, u.password));
+  if (!user) return { error: 'Invalid username or password' };
+  if (user.isActive === 'no') return { error: 'Account deactivated. Contact admin.' };
+  currentUser = { id: user.id, username: user.username, name: user.name, email: user.email, role: user.role };
+  setStore('currentUser', currentUser);
+  return { success: true };
+}
+
+function logout() {
+  currentUser = null;
+  setStore('currentUser', null);
+  document.getElementById('loginPage').style.display = 'flex';
+  document.getElementById('app').classList.remove('active');
+}
+
+// ============================================
+// ROUTING
+// ============================================
+let currentPage = 'dashboard';
+
+function navigate(page) {
+  currentPage = page;
+  document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+  document.querySelector(`.nav-item[data-page="${page}"]`)?.classList.add('active');
+  closeSidebar();
+
+  const titles = { dashboard:'Dashboard', interactions:'Log Interaction', search:'Creator Search', tasks:'Tasks', admin:'Admin Panel' };
+  document.getElementById('pageTitle').textContent = titles[page] || page;
+
+  const content = document.getElementById('mainContent');
+  switch(page) {
+    case 'dashboard': renderDashboard(content); break;
+    case 'interactions': renderInteractions(content); break;
+    case 'search': renderSearch(content); break;
+    case 'tasks': renderTasks(content); break;
+    case 'admin': renderAdmin(content); break;
+  }
+}
+
+// ============================================
+// DASHBOARD
+// ============================================
+function renderDashboard(el) {
+  const interactions = getStore('interactions', []);
+  const tasks = getStore('tasks', []);
+  const myInteractions = currentUser.role === 'admin' ? interactions : interactions.filter(i => i.managerId === currentUser.id);
+
+  const stats = {
+    total: myInteractions.length,
+    resolved: myInteractions.filter(i => i.status === 'resolved').length,
+    pending: myInteractions.filter(i => i.status === 'pending').length,
+    escalated: myInteractions.filter(i => i.status === 'escalated').length,
+    tasksTotal: currentUser.role === 'admin' ? tasks.length : tasks.filter(t => t.assignedTo === currentUser.id).length,
+  };
+
+  el.innerHTML = `
+    <div class="stats-grid">
+      <div class="stat-card"><div><p>Total Interactions</p><p>${stats.total}</p></div><div class="stat-icon" style="background:linear-gradient(135deg,#3b82f6,#60a5fa)"><i class="fas fa-comments"></i></div></div>
+      <div class="stat-card"><div><p>Resolved</p><p>${stats.resolved}</p></div><div class="stat-icon" style="background:linear-gradient(135deg,#10b981,#34d399)"><i class="fas fa-check-circle"></i></div></div>
+      <div class="stat-card"><div><p>Pending</p><p>${stats.pending}</p></div><div class="stat-icon" style="background:linear-gradient(135deg,#f59e0b,#fbbf24)"><i class="fas fa-clock"></i></div></div>
+      <div class="stat-card"><div><p>Escalated</p><p>${stats.escalated}</p></div><div class="stat-icon" style="background:linear-gradient(135deg,#ef4444,#f87171)"><i class="fas fa-exclamation-triangle"></i></div></div>
+    </div>
+    <div class="card">
+      <h3><i class="fas fa-history" style="color:#FF0050"></i> Recent Interactions</h3>
+      ${myInteractions.length === 0 ? '<div class="empty-state"><i class="fas fa-inbox"></i><p>No interactions yet. Start by logging one!</p></div>' :
+        myInteractions.slice().reverse().slice(0, 8).map(i => `
+        <div class="list-item">
+          <div class="list-item-header">
+            <span style="font-weight:700">@${i.creatorUsername}</span>
+            <span class="badge badge-gray">${i.region}</span>
+            <span class="badge badge-${i.status === 'resolved' ? 'green' : i.status === 'pending' ? 'amber' : 'red'}">${i.status}</span>
+          </div>
+          <p style="color:#888;font-size:.875rem">${i.issue.substring(0, 100)}${i.issue.length > 100 ? '...' : ''}</p>
+        </div>`).join('')}
+    </div>`;
+}
+
+// ============================================
+// INTERACTIONS
+// ============================================
+function renderInteractions(el) {
+  el.innerHTML = `
+    <div style="max-width:700px;margin:0 auto">
+      <div id="intMsg"></div>
+      <div class="card">
+        <h3><i class="fas fa-plus-circle" style="color:#FF0050"></i> Log New Interaction</h3>
+        <form onsubmit="submitInteraction(event)">
+          <div class="form-row">
+            <div class="form-group"><label>Creator Username *</label><input type="text" id="iUsername" placeholder="@username" required></div>
+            <div class="form-group"><label>Region *</label><select id="iRegion" required><option value="">Select region</option>${REGIONS.map(r => `<option>${r}</option>`).join('')}</select></div>
+          </div>
+          <div class="form-group"><label>Issue / Concern *</label><textarea id="iIssue" placeholder="What issue did the creator raise?" required></textarea></div>
+          <div class="form-group"><label>Action Taken *</label><textarea id="iAction" placeholder="What action did you take?" required></textarea></div>
+          <div class="form-row">
+            <div class="form-group"><label>Status</label><select id="iStatus"><option value="pending">Pending</option><option value="resolved">Resolved</option><option value="escalated">Escalated</option></select></div>
+            <div class="form-group"><label>Notes (optional)</label><textarea id="iNotes" placeholder="Additional notes..." style="min-height:46px"></textarea></div>
+          </div>
+          <button type="submit" class="btn btn-sm">Log Interaction</button>
+        </form>
+      </div>
+    </div>`;
+}
+
+function submitInteraction(e) {
+  e.preventDefault();
+  const data = {
+    id: Date.now(),
+    managerId: currentUser.id,
+    managerName: currentUser.name,
+    creatorUsername: document.getElementById('iUsername').value.trim().replace(/^@/,''),
+    region: document.getElementById('iRegion').value,
+    issue: document.getElementById('iIssue').value.trim(),
+    action: document.getElementById('iAction').value.trim(),
+    status: document.getElementById('iStatus').value,
+    notes: document.getElementById('iNotes').value.trim(),
+    createdAt: Date.now(),
+  };
+  const interactions = getStore('interactions', []);
+  interactions.push(data);
+  setStore('interactions', interactions);
+  document.getElementById('intMsg').innerHTML = '<div class="success-msg"><i class="fas fa-check-circle"></i> Interaction logged successfully!</div>';
+  e.target.reset();
+  setTimeout(() => document.getElementById('intMsg').innerHTML = '', 3000);
+}
+
+// ============================================
+// CREATOR SEARCH
+// ============================================
+function renderSearch(el) {
+  el.innerHTML = `
+    <div style="max-width:800px;margin:0 auto">
+      <p style="color:#888;margin-bottom:1rem">Search by TikTok username to see full coordination history across ALL managers</p>
+      <form class="search-box" onsubmit="doSearch(event)">
+        <input type="text" id="searchInput" placeholder="Enter TikTok username (e.g., shizuka1247)" style="flex:1">
+        <button type="submit" class="btn btn-sm">Search</button>
+      </form>
+      <div id="searchResults"></div>
+    </div>`;
+}
+
+function doSearch(e) {
+  e.preventDefault();
+  const query = document.getElementById('searchInput').value.trim().toLowerCase();
+  if (!query) return;
+  const username = query.replace(/^@/, '');
+  const allInteractions = getStore('interactions', []);
+  const results = allInteractions.filter(i => i.creatorUsername.toLowerCase() === username.toLowerCase());
+
+  const el = document.getElementById('searchResults');
+  if (results.length === 0) {
+    el.innerHTML = `<div class="card"><div class="empty-state"><i class="fas fa-user-slash"></i><p>No interactions found for "@${username}"</p><p style="font-size:.875rem;margin-top:.5rem">This creator hasn't been logged yet. Be the first to add an interaction!</p></div></div>`;
+    return;
+  }
+
+  const sorted = results.slice().sort((a, b) => b.createdAt - a.createdAt);
+
+  el.innerHTML = `
+    <div class="card">
+      <div style="display:flex;align-items:center;gap:1rem;margin-bottom:1.5rem">
+        <div style="width:50px;height:50px;border-radius:50%;background:linear-gradient(135deg,#FF0050,#00F2EA);display:flex;align-items:center;justify-content:center;font-size:1.5rem"><i class="fas fa-user"></i></div>
+        <div><h3 style="margin:0">@${username}</h3><p style="color:#888;margin:0;font-size:.875rem">${results.length} interaction(s) found across ${new Set(results.map(r => r.managerName)).size} manager(s)</p></div>
+      </div>
+      <div class="timeline">
+        ${sorted.map(i => `
+        <div class="timeline-item">
+          <div class="timeline-dot" style="border-color:${i.status === 'resolved' ? '#10b981' : i.status === 'pending' ? '#f59e0b' : '#ef4444'}"></div>
+          <div class="timeline-content">
+            <div style="display:flex;align-items:center;gap:.5rem;margin-bottom:.5rem;flex-wrap:wrap">
+              <span class="badge badge-${i.status === 'resolved' ? 'green' : i.status === 'pending' ? 'amber' : 'red'}">${i.status}</span>
+              <span class="badge badge-gray">${i.region}</span>
+              <span style="color:#666;font-size:.75rem;margin-left:auto"><i class="far fa-calendar"></i> ${new Date(i.createdAt).toLocaleDateString()}</span>
+            </div>
+            <p style="font-size:.875rem;color:#aaa;margin-bottom:.25rem"><strong style="color:#fff">Manager:</strong> ${i.managerName || 'Unknown'}</p>
+            <div style="margin-top:.5rem">
+              <p style="font-size:.75rem;color:#666;text-transform:uppercase;margin-bottom:.25rem">Issue</p>
+              <p style="font-size:.875rem;color:#ddd;margin-bottom:.5rem">${i.issue}</p>
+              <p style="font-size:.75rem;color:#666;text-transform:uppercase;margin-bottom:.25rem">Action Taken</p>
+              <p style="font-size:.875rem;color:#ddd;margin-bottom:.5rem">${i.action}</p>
+              ${i.notes ? `<p style="font-size:.75rem;color:#666;text-transform:uppercase;margin-bottom:.25rem">Notes</p><p style="font-size:.875rem;color:#888">${i.notes}</p>` : ''}
+            </div>
+          </div>
+        </div>`).join('')}
+      </div>
+    </div>`;
+}
+
+// ============================================
+// TASKS
+// ============================================
+function renderTasks(el) {
+  const allTasks = getStore('tasks', []);
+  const users = getStore('users', []);
+  const myTasks = currentUser.role === 'admin' ? allTasks : allTasks.filter(t => t.assignedTo === currentUser.id);
+
+  el.innerHTML = `
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem">
+      <p style="color:#888">${currentUser.role === 'admin' ? 'Manage and assign tasks' : 'Your assigned tasks'}</p>
+      ${currentUser.role === 'admin' ? `<button class="btn btn-sm btn-green" onclick="showNewTask()"><i class="fas fa-plus"></i> New Task</button>` : ''}
+    </div>
+    <div id="newTaskForm"></div>
+    <div id="tasksList">
+      ${myTasks.length === 0 ? '<div class="card"><div class="empty-state"><i class="fas fa-tasks"></i><p>No tasks found</p></div></div>' :
+        myTasks.slice().reverse().map(t => {
+          const assignee = users.find(u => u.id === t.assignedTo);
+          return `
+          <div class="card" style="padding:1.25rem">
+            <div style="display:flex;justify-content:space-between;align-items:start;margin-bottom:.5rem;flex-wrap:wrap;gap:.5rem">
+              <h4 style="font-size:1rem">${t.title}</h4>
+              <div style="display:flex;gap:.5rem">
+                <span class="badge badge-${t.priority === 'high' ? 'red' : t.priority === 'medium' ? 'amber' : 'blue'}">${t.priority}</span>
+                <span class="badge badge-${t.status === 'completed' ? 'green' : t.status === 'in_progress' ? 'blue' : 'gray'}">${t.status.replace('_',' ')}</span>
+              </div>
+            </div>
+            ${t.description ? `<p style="color:#aaa;font-size:.875rem;margin-bottom:.5rem">${t.description}</p>` : ''}
+            <p style="color:#666;font-size:.75rem;margin-bottom:.75rem"><i class="fas fa-user"></i> ${assignee?.name || 'Unassigned'} ${t.dueDate ? '· <i class="far fa-calendar"></i> ' + new Date(t.dueDate).toLocaleDateString() : ''}</p>
+            <div class="actions">
+              ${t.status !== 'in_progress' ? `<button class="btn btn-sm btn-blue" onclick="updateTask(${t.id},'in_progress')">Start</button>` : ''}
+              ${t.status !== 'completed' ? `<button class="btn btn-sm btn-green" onclick="updateTask(${t.id},'completed')">Complete</button>` : ''}
+              ${t.status === 'completed' ? `<button class="btn btn-sm" style="background:rgba(255,255,255,.08)" onclick="updateTask(${t.id},'open')">Reopen</button>` : ''}
+            </div>
+          </div>`;
+        }).join('')}
+    </div>`;
+}
+
+function showNewTask() {
+  const users = getStore('users', []).filter(u => u.role === 'manager' && u.isActive === 'yes');
+  document.getElementById('newTaskForm').innerHTML = `
+    <div class="card" style="margin-bottom:1rem">
+      <h3 style="margin-bottom:1rem">Create New Task</h3>
+      <form onsubmit="createTask(event)">
+        <div class="form-group"><label>Title *</label><input type="text" id="tTitle" required></div>
+        <div class="form-group"><label>Description</label><textarea id="tDesc" style="min-height:60px"></textarea></div>
+        <div class="form-row">
+          <div class="form-group"><label>Assign To *</label><select id="tAssign" required><option value="">Select manager</option>${users.map(u => `<option value="${u.id}">${u.name}</option>`).join('')}</select></div>
+          <div class="form-group"><label>Priority</label><select id="tPriority"><option value="low">Low</option><option value="medium" selected>Medium</option><option value="high">High</option></select></div>
+        </div>
+        <div class="form-group"><label>Due Date</label><input type="date" id="tDue" style="color-scheme:dark"></div>
+        <div class="actions">
+          <button type="submit" class="btn btn-sm btn-green">Create Task</button>
+          <button type="button" class="btn btn-sm btn-secondary" onclick="document.getElementById('newTaskForm').innerHTML=''">Cancel</button>
+        </div>
+      </form>
+    </div>`;
+}
+
+function createTask(e) {
+  e.preventDefault();
+  const tasks = getStore('tasks', []);
+  tasks.push({
+    id: Date.now(),
+    title: document.getElementById('tTitle').value.trim(),
+    description: document.getElementById('tDesc').value.trim(),
+    assignedTo: parseInt(document.getElementById('tAssign').value),
+    assignedBy: currentUser.id,
+    priority: document.getElementById('tPriority').value,
+    status: 'open',
+    dueDate: document.getElementById('tDue').value || null,
+    createdAt: Date.now(),
+  });
+  setStore('tasks', tasks);
+  renderTasks(document.getElementById('mainContent'));
+}
+
+function updateTask(id, status) {
+  const tasks = getStore('tasks', []);
+  const t = tasks.find(x => x.id === id);
+  if (t) { t.status = status; setStore('tasks', tasks); renderTasks(document.getElementById('mainContent')); }
+}
+
+// ============================================
+// ADMIN PANEL
+// ============================================
+function renderAdmin(el) {
+  if (currentUser.role !== 'admin') { el.innerHTML = '<div class="error-msg">Access denied. Admin only.</div>'; return; }
+  const users = getStore('users', []);
+  const interactions = getStore('interactions', []);
+
+  const stats = {
+    totalUsers: users.length,
+    managers: users.filter(u => u.role === 'manager').length,
+    active: users.filter(u => u.isActive === 'yes').length,
+    totalInteractions: interactions.length,
+  };
+
+  el.innerHTML = `
+    <div class="stats-grid" style="grid-template-columns:repeat(auto-fit,minmax(150px,1fr))">
+      <div class="stat-card"><div><p>Total Users</p><p>${stats.totalUsers}</p></div><div class="stat-icon" style="background:linear-gradient(135deg,#8b5cf6,#a78bfa)"><i class="fas fa-users"></i></div></div>
+      <div class="stat-card"><div><p>Managers</p><p>${stats.managers}</p></div><div class="stat-icon" style="background:linear-gradient(135deg,#3b82f6,#60a5fa)"><i class="fas fa-user-tie"></i></div></div>
+      <div class="stat-card"><div><p>Active</p><p>${stats.active}</p></div><div class="stat-icon" style="background:linear-gradient(135deg,#10b981,#34d399)"><i class="fas fa-user-check"></i></div></div>
+      <div class="stat-card"><div><p>Interactions</p><p>${stats.totalInteractions}</p></div><div class="stat-icon" style="background:linear-gradient(135deg,#FF0050,#FF6B6B)"><i class="fas fa-comments"></i></div></div>
+    </div>
+
+    <div class="tabs">
+      <button class="tab-btn active" onclick="switchTab(this,'managersTab')">Managers</button>
+      <button class="tab-btn" onclick="switchTab(this,'allIntTab')">All Interactions</button>
+      <button class="tab-btn" onclick="switchTab(this,'createTab')">Create Manager</button>
+    </div>
+
+    <div id="managersTab" class="tab-panel active">
+      <div class="card">
+        <h3>All Users</h3>
+        ${users.map(u => `
+        <div class="list-item">
+          <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.5rem">
+            <div style="display:flex;align-items:center;gap:.75rem">
+              <div style="width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,#FF0050,#FF6B6B);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.875rem">${u.name.charAt(0).toUpperCase()}</div>
+              <div>
+                <p style="font-weight:600">${u.name}</p>
+                <p style="color:#888;font-size:.75rem">@${u.username} · ${u.email || 'No email'}</p>
+              </div>
+            </div>
+            <div style="display:flex;align-items:center;gap:.5rem">
+              <span class="badge badge-${u.role === 'admin' ? 'red' : 'blue'}">${u.role}</span>
+              <span class="badge badge-${u.isActive === 'yes' ? 'green' : 'gray'}">${u.isActive === 'yes' ? 'Active' : 'Inactive'}</span>
+              ${u.role !== 'admin' ? `<button class="btn btn-sm btn-secondary" style="font-size:.75rem;padding:.4rem .8rem" onclick="toggleUser(${u.id})">${u.isActive === 'yes' ? 'Deactivate' : 'Activate'}</button>` : ''}
+            </div>
+          </div>
+        </div>`).join('')}
+      </div>
+    </div>
+
+    <div id="allIntTab" class="tab-panel">
+      <div class="card">
+        <h3>All Interactions (${interactions.length})</h3>
+        ${interactions.length === 0 ? '<div class="empty-state"><i class="fas fa-inbox"></i><p>No interactions yet</p></div>' :
+          interactions.slice().reverse().map(i => `
+          <div class="list-item">
+            <div class="list-item-header">
+              <span style="font-weight:700">@${i.creatorUsername}</span>
+              <span class="badge badge-gray">${i.region}</span>
+              <span class="badge badge-${i.status === 'resolved' ? 'green' : i.status === 'pending' ? 'amber' : 'red'}">${i.status}</span>
+              <span style="color:#666;font-size:.75rem;margin-left:auto">by ${i.managerName || 'Unknown'}</span>
+            </div>
+            <p style="color:#888;font-size:.875rem">${i.issue}</p>
+          </div>`).join('')}
+      </div>
+    </div>
+
+    <div id="createTab" class="tab-panel">
+      <div class="card" style="max-width:500px">
+        <h3>Create New Manager</h3>
+        <div id="createMsg"></div>
+        <form onsubmit="createManager(event)">
+          <div class="form-group"><label>Full Name *</label><input type="text" id="mName" required></div>
+          <div class="form-group"><label>Username *</label><input type="text" id="mUser" required></div>
+          <div class="form-group"><label>Password *</label><input type="password" id="mPass" required minlength="4"></div>
+          <div class="form-group"><label>Email</label><input type="email" id="mEmail" placeholder="Optional"></div>
+          <button type="submit" class="btn btn-sm btn-green"><i class="fas fa-user-plus"></i> Create Manager</button>
+        </form>
+      </div>
+    </div>`;
+}
+
+function switchTab(btn, panelId) {
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById(panelId).classList.add('active');
+}
+
+function toggleUser(id) {
+  const users = getStore('users', []);
+  const u = users.find(x => x.id === id);
+  if (u) { u.isActive = u.isActive === 'yes' ? 'no' : 'yes'; setStore('users', users); renderAdmin(document.getElementById('mainContent')); }
+}
+
+function createManager(e) {
+  e.preventDefault();
+  const users = getStore('users', []);
+  const username = document.getElementById('mUser').value.trim();
+  if (users.find(u => u.username === username)) {
+    document.getElementById('createMsg').innerHTML = '<div class="error-msg">Username already exists</div>';
+    return;
+  }
+  users.push({
+    id: Date.now(),
+    username: username,
+    password: hashPassword(document.getElementById('mPass').value),
+    name: document.getElementById('mName').value.trim(),
+    email: document.getElementById('mEmail').value.trim() || null,
+    role: 'manager',
+    isActive: 'yes',
+    createdAt: Date.now(),
+  });
+  setStore('users', users);
+  document.getElementById('createMsg').innerHTML = '<div class="success-msg">Manager created successfully!</div>';
+  e.target.reset();
+  setTimeout(() => {
+    switchTab(document.querySelectorAll('.tab-btn')[0], 'managersTab');
+    renderAdmin(document.getElementById('mainContent'));
+  }, 1500);
+}
+
+// ============================================
+// UI HELPERS
+// ============================================
+function openSidebar() { document.getElementById('sidebar').classList.add('open'); document.getElementById('sidebarOverlay').classList.add('open'); }
+function closeSidebar() { document.getElementById('sidebar').classList.remove('open'); document.getElementById('sidebarOverlay').classList.remove('open'); }
+
+// ============================================
+// INIT
+// ============================================
+document.getElementById('loginForm').addEventListener('submit', function(e) {
+  e.preventDefault();
+  const u = document.getElementById('loginUser').value.trim();
+  const p = document.getElementById('loginPass').value;
+  const result = login(u, p);
+  if (result.error) {
+    document.getElementById('loginError').innerHTML = `<div class="error-msg"><i class="fas fa-exclamation-circle"></i> ${result.error}</div>`;
+  } else {
+    // Show app
+    document.getElementById('loginPage').style.display = 'none';
+    document.getElementById('app').classList.add('active');
+    document.getElementById('userName').textContent = currentUser.name;
+    document.getElementById('userRole').textContent = currentUser.role;
+    document.getElementById('userAvatar').textContent = currentUser.name.charAt(0).toUpperCase();
+    if (currentUser.role === 'admin') document.getElementById('adminNav').style.display = 'flex';
+    navigate('dashboard');
+  }
+});
+
+// Auto-login if session exists
+if (currentUser) {
+  document.getElementById('loginPage').style.display = 'none';
+  document.getElementById('app').classList.add('active');
+  document.getElementById('userName').textContent = currentUser.name;
+  document.getElementById('userRole').textContent = currentUser.role;
+  document.getElementById('userAvatar').textContent = currentUser.name.charAt(0).toUpperCase();
+  if (currentUser.role === 'admin') document.getElementById('adminNav').style.display = 'flex';
+  navigate('dashboard');
+}
+</script>
+</body>
+</html>
