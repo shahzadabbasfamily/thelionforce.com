@@ -133,6 +133,38 @@ textarea:focus{border-color:#FF0050}
 /* Actions */
 .actions{display:flex;gap:.5rem;flex-wrap:wrap}
 
+/* Modal */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);backdrop-filter:blur(4px);z-index:200;align-items:center;justify-content:center;padding:1rem}
+.modal-overlay.active{display:flex}
+.modal{background:#151515;border:1px solid rgba(255,255,255,.1);border-radius:16px;width:100%;max-width:600px;max-height:85vh;display:flex;flex-direction:column;overflow:hidden;animation:modalIn .2s ease}
+@keyframes modalIn{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+.modal-header{padding:1.25rem 1.5rem;border-bottom:1px solid rgba(255,255,255,.08);display:flex;align-items:center;justify-content:space-between}
+.modal-header h3{margin:0;font-size:1.1rem}
+.modal-close{background:none;border:none;color:#888;font-size:1.25rem;cursor:pointer;padding:.25rem;width:32px;height:32px;display:flex;align-items:center;justify-content:center;border-radius:8px;transition:all .2s}
+.modal-close:hover{background:rgba(255,255,255,.08);color:#fff}
+.modal-body{padding:1.5rem;overflow-y:auto;flex:1}
+.modal-footer{padding:1rem 1.5rem;border-top:1px solid rgba(255,255,255,.08);display:flex;gap:.5rem;justify-content:flex-end}
+
+/* Remarks */
+.remarks-section{margin-top:1.5rem;padding-top:1.5rem;border-top:1px solid rgba(255,255,255,.08)}
+.remarks-section h4{font-size:.9rem;color:#aaa;margin-bottom:.75rem;text-transform:uppercase;letter-spacing:.5px}
+.remark-item{padding:.75rem;border-radius:10px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);margin-bottom:.5rem}
+.remark-item p{font-size:.875rem;color:#ddd;margin:0}
+.remark-item .remark-meta{font-size:.75rem;color:#666;margin-top:.25rem;display:flex;gap:1rem}
+.remark-form{display:flex;gap:.5rem;margin-top:.75rem}
+.remark-form input{flex:1;padding:.75rem 1rem;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:10px;color:#fff;font-size:.875rem;outline:none}
+.remark-form input:focus{border-color:#FF0050}
+
+/* Clickable cards */
+.clickable-card{cursor:pointer;transition:all .2s}
+.clickable-card:hover{border-color:rgba(255,0,80,.3);transform:translateY(-2px)}
+.clickable-card:hover .card-title{color:#FF0050}
+
+/* Detail view */
+.detail-row{display:flex;margin-bottom:.75rem}
+.detail-label{width:120px;flex-shrink:0;color:#888;font-size:.875rem}
+.detail-value{flex:1;color:#fff;font-size:.875rem}
+
 /* Scrollbar */
 ::-webkit-scrollbar{width:6px}
 ::-webkit-scrollbar-track{background:transparent}
@@ -361,13 +393,13 @@ function renderDashboard(el) {
       <h3><i class="fas fa-history" style="color:#FF0050"></i> Recent Interactions</h3>
       ${myInteractions.length === 0 ? '<div class="empty-state"><i class="fas fa-inbox"></i><p>No interactions yet. Start by logging one!</p></div>' :
         myInteractions.slice().reverse().slice(0, 8).map(i => `
-        <div class="list-item">
+        <div class="list-item clickable-card" onclick="openInteractionModal(${i.id})">
           <div class="list-item-header">
             <span style="font-weight:700">@${i.creatorUsername}</span>
             <span class="badge badge-gray">${i.region}</span>
             <span class="badge badge-${i.status === 'resolved' ? 'green' : i.status === 'pending' ? 'amber' : 'red'}">${i.status}</span>
           </div>
-          <p style="color:#888;font-size:.875rem">${i.issue.substring(0, 100)}${i.issue.length > 100 ? '...' : ''}</p>
+          <p style="color:#888;font-size:.875rem">${i.issue.substring(0, 100)}${i.issue.length > 100 ? '...' : ''}${i.remarks && i.remarks.length > 0 ? ` · <i class="fas fa-comments" style="color:#FF0050"></i> ${i.remarks.length}` : ''}</p>
         </div>`).join('')}
     </div>`;
 }
@@ -442,6 +474,7 @@ function submitInteraction(e) {
     action: document.getElementById('iAction').value.trim(),
     status: document.getElementById('iStatus').value,
     notes: document.getElementById('iNotes').value.trim(),
+    remarks: [],
     createdAt: Date.now(),
   };
   const interactions = getStore('interactions', []);
@@ -493,7 +526,7 @@ function doSearch(e) {
         ${sorted.map(i => `
         <div class="timeline-item">
           <div class="timeline-dot" style="border-color:${i.status === 'resolved' ? '#10b981' : i.status === 'pending' ? '#f59e0b' : '#ef4444'}"></div>
-          <div class="timeline-content">
+          <div class="timeline-content clickable-card" onclick="openInteractionModal(${i.id})">
             <div style="display:flex;align-items:center;gap:.5rem;margin-bottom:.5rem;flex-wrap:wrap">
               <span class="badge badge-${i.status === 'resolved' ? 'green' : i.status === 'pending' ? 'amber' : 'red'}">${i.status}</span>
               <span class="badge badge-gray">${i.region}</span>
@@ -506,6 +539,7 @@ function doSearch(e) {
               <p style="font-size:.75rem;color:#666;text-transform:uppercase;margin-bottom:.25rem">Action Taken</p>
               <p style="font-size:.875rem;color:#ddd;margin-bottom:.5rem">${i.action}</p>
               ${i.notes ? `<p style="font-size:.75rem;color:#666;text-transform:uppercase;margin-bottom:.25rem">Notes</p><p style="font-size:.875rem;color:#888">${i.notes}</p>` : ''}
+              ${i.remarks && i.remarks.length > 0 ? `<p style="font-size:.75rem;color:#FF0050;margin-top:.5rem"><i class="fas fa-comments"></i> ${i.remarks.length} remark${i.remarks.length > 1 ? 's' : ''}</p>` : ''}
             </div>
           </div>
         </div>`).join('')}
@@ -532,20 +566,20 @@ function renderTasks(el) {
         myTasks.slice().reverse().map(t => {
           const assignee = users.find(u => u.id === t.assignedTo);
           return `
-          <div class="card" style="padding:1.25rem">
+          <div class="card clickable-card" style="padding:1.25rem" onclick="openTaskModal(${t.id})">
             <div style="display:flex;justify-content:space-between;align-items:start;margin-bottom:.5rem;flex-wrap:wrap;gap:.5rem">
-              <h4 style="font-size:1rem">${t.title}</h4>
+              <h4 class="card-title" style="font-size:1rem">${t.title}</h4>
               <div style="display:flex;gap:.5rem">
                 <span class="badge badge-${t.priority === 'high' ? 'red' : t.priority === 'medium' ? 'amber' : 'blue'}">${t.priority}</span>
                 <span class="badge badge-${t.status === 'completed' ? 'green' : t.status === 'in_progress' ? 'blue' : 'gray'}">${t.status.replace('_',' ')}</span>
               </div>
             </div>
             ${t.description ? `<p style="color:#aaa;font-size:.875rem;margin-bottom:.5rem">${t.description}</p>` : ''}
-            <p style="color:#666;font-size:.75rem;margin-bottom:.75rem"><i class="fas fa-user"></i> ${assignee?.name || 'Unassigned'} ${t.dueDate ? '· <i class="far fa-calendar"></i> ' + new Date(t.dueDate).toLocaleDateString() : ''}</p>
-            <div class="actions">
-              ${t.status !== 'in_progress' ? `<button class="btn btn-sm btn-blue" onclick="updateTask(${t.id},'in_progress')">Start</button>` : ''}
-              ${t.status !== 'completed' ? `<button class="btn btn-sm btn-green" onclick="updateTask(${t.id},'completed')">Complete</button>` : ''}
-              ${t.status === 'completed' ? `<button class="btn btn-sm" style="background:rgba(255,255,255,.08)" onclick="updateTask(${t.id},'open')">Reopen</button>` : ''}
+            <p style="color:#666;font-size:.75rem;margin-bottom:.75rem"><i class="fas fa-user"></i> ${assignee?.name || 'Unassigned'} ${t.dueDate ? '· <i class="far fa-calendar"></i> ' + new Date(t.dueDate).toLocaleDateString() : ''}${t.remarks && t.remarks.length > 0 ? ` · <i class="fas fa-comments"></i> ${t.remarks.length} remark${t.remarks.length > 1 ? 's' : ''}` : ''}</p>
+            <div class="actions" onclick="event.stopPropagation()">
+              ${t.status !== 'in_progress' ? `<button class="btn btn-sm btn-blue" onclick="updateTask(${t.id},'in_progress');renderTasks(document.getElementById('mainContent'))">Start</button>` : ''}
+              ${t.status !== 'completed' ? `<button class="btn btn-sm btn-green" onclick="updateTask(${t.id},'completed');renderTasks(document.getElementById('mainContent'))">Complete</button>` : ''}
+              ${t.status === 'completed' ? `<button class="btn btn-sm" style="background:rgba(255,255,255,.08)" onclick="updateTask(${t.id},'open');renderTasks(document.getElementById('mainContent'))">Reopen</button>` : ''}
             </div>
           </div>`;
         }).join('')}
@@ -585,6 +619,7 @@ function createTask(e) {
     priority: document.getElementById('tPriority').value,
     status: 'open',
     dueDate: document.getElementById('tDue').value || null,
+    remarks: [],
     createdAt: Date.now(),
   });
   setStore('tasks', tasks);
@@ -654,14 +689,14 @@ function renderAdmin(el) {
         <h3>All Interactions (${interactions.length})</h3>
         ${interactions.length === 0 ? '<div class="empty-state"><i class="fas fa-inbox"></i><p>No interactions yet</p></div>' :
           interactions.slice().reverse().map(i => `
-          <div class="list-item">
+          <div class="list-item clickable-card" onclick="openInteractionModal(${i.id})">
             <div class="list-item-header">
               <span style="font-weight:700">@${i.creatorUsername}</span>
               <span class="badge badge-gray">${i.region}</span>
               <span class="badge badge-${i.status === 'resolved' ? 'green' : i.status === 'pending' ? 'amber' : 'red'}">${i.status}</span>
               <span style="color:#666;font-size:.75rem;margin-left:auto">by ${i.managerName || 'Unknown'}</span>
             </div>
-            <p style="color:#888;font-size:.875rem">${i.issue}</p>
+            <p style="color:#888;font-size:.875rem">${i.issue}${i.remarks && i.remarks.length > 0 ? ` · <i class="fas fa-comments" style="color:#FF0050"></i> ${i.remarks.length}` : ''}</p>
           </div>`).join('')}
       </div>
     </div>
@@ -679,6 +714,160 @@ function renderAdmin(el) {
         </form>
       </div>
     </div>`;
+}
+
+// ============================================
+// MODAL SYSTEM
+// ============================================
+function openModal(title, bodyHtml, footerHtml) {
+  document.getElementById('modalTitle').innerHTML = title;
+  document.getElementById('modalBody').innerHTML = bodyHtml;
+  document.getElementById('modalFooter').innerHTML = footerHtml || '';
+  document.getElementById('detailModal').classList.add('active');
+}
+function closeModal() {
+  document.getElementById('detailModal').classList.remove('active');
+}
+
+// ============================================
+// TASK DETAIL + REMARKS
+// ============================================
+function openTaskModal(taskId) {
+  const tasks = getStore('tasks', []);
+  const users = getStore('users', []);
+  const task = tasks.find(t => t.id === taskId);
+  if (!task) return;
+
+  const assignee = users.find(u => u.id === task.assignedTo);
+  const assigner = users.find(u => u.id === task.assignedBy);
+  const remarks = task.remarks || [];
+
+  const statusColor = task.status === 'completed' ? 'badge-green' : task.status === 'in_progress' ? 'badge-blue' : 'badge-gray';
+  const priorityColor = task.priority === 'high' ? 'badge-red' : task.priority === 'medium' ? 'badge-amber' : 'badge-blue';
+
+  const body = `
+    <div class="detail-row"><span class="detail-label">Title</span><span class="detail-value" style="font-weight:700">${task.title}</span></div>
+    ${task.description ? `<div class="detail-row"><span class="detail-label">Description</span><span class="detail-value">${task.description}</span></div>` : ''}
+    <div class="detail-row"><span class="detail-label">Assigned To</span><span class="detail-value">${assignee?.name || 'Unassigned'} (@${assignee?.username || '?'})</span></div>
+    <div class="detail-row"><span class="detail-label">Assigned By</span><span class="detail-value">${assigner?.name || 'Unknown'}</span></div>
+    <div class="detail-row"><span class="detail-label">Priority</span><span class="detail-value"><span class="badge ${priorityColor}">${task.priority}</span></span></div>
+    <div class="detail-row"><span class="detail-label">Status</span><span class="detail-value"><span class="badge ${statusColor}">${task.status.replace('_',' ')}</span></span></div>
+    ${task.dueDate ? `<div class="detail-row"><span class="detail-label">Due Date</span><span class="detail-value">${new Date(task.dueDate).toLocaleDateString()}</span></div>` : ''}
+    <div class="detail-row"><span class="detail-label">Created</span><span class="detail-value">${new Date(task.createdAt).toLocaleDateString()}</span></div>
+
+    <div class="remarks-section">
+      <h4><i class="fas fa-comments"></i> Remarks & Updates (${remarks.length})</h4>
+      ${remarks.length === 0 ? '<p style="color:#666;font-size:.875rem">No remarks yet. Add the first one below.</p>' :
+        remarks.map(r => `
+        <div class="remark-item">
+          <p>${r.text}</p>
+          <div class="remark-meta"><span><i class="fas fa-user"></i> ${r.author}</span><span><i class="far fa-clock"></i> ${new Date(r.time).toLocaleString()}</span></div>
+        </div>`).join('')}
+      <div class="remark-form">
+        <input type="text" id="taskRemarkInput" placeholder="Add a remark or update..." onkeydown="if(event.key==='Enter')addTaskRemark(${task.id})">
+        <button class="btn btn-sm btn-green" onclick="addTaskRemark(${task.id})"><i class="fas fa-paper-plane"></i></button>
+      </div>
+    </div>`;
+
+  const footer = `
+    ${task.status !== 'in_progress' ? `<button class="btn btn-sm btn-blue" onclick="updateTask(${task.id},'in_progress');openTaskModal(${task.id})">Start</button>` : ''}
+    ${task.status !== 'completed' ? `<button class="btn btn-sm btn-green" onclick="updateTask(${task.id},'completed');openTaskModal(${task.id})">Complete</button>` : ''}
+    ${task.status === 'completed' ? `<button class="btn btn-sm" style="background:rgba(255,255,255,.08)" onclick="updateTask(${task.id},'open');openTaskModal(${task.id})">Reopen</button>` : ''}
+    <button class="btn btn-sm btn-secondary" onclick="closeModal()">Close</button>`;
+
+  openModal(`<i class="fas fa-tasks"></i> Task Details`, body, footer);
+}
+
+function addTaskRemark(taskId) {
+  const input = document.getElementById('taskRemarkInput');
+  const text = input.value.trim();
+  if (!text) return;
+  const tasks = getStore('tasks', []);
+  const task = tasks.find(t => t.id === taskId);
+  if (!task) return;
+  if (!task.remarks) task.remarks = [];
+  task.remarks.push({ text, author: currentUser.name, time: Date.now() });
+  setStore('tasks', tasks);
+  openTaskModal(taskId);
+}
+
+// ============================================
+// INTERACTION DETAIL + REMARKS
+// ============================================
+function openInteractionModal(intId) {
+  const interactions = getStore('interactions', []);
+  const interaction = interactions.find(i => i.id === intId);
+  if (!interaction) return;
+  const remarks = interaction.remarks || [];
+  const statusColor = interaction.status === 'resolved' ? 'badge-green' : interaction.status === 'pending' ? 'badge-amber' : 'badge-red';
+
+  const body = `
+    <div class="detail-row"><span class="detail-label">Creator</span><span class="detail-value" style="font-weight:700;font-size:1.1rem">@${interaction.creatorUsername}</span></div>
+    <div class="detail-row"><span class="detail-label">Region</span><span class="detail-value"><span class="badge badge-gray">${interaction.region}</span></span></div>
+    <div class="detail-row"><span class="detail-label">Manager</span><span class="detail-value">${interaction.managerName || 'Unknown'} (@${getManagerUsername(interaction.managerId)})</span></div>
+    <div class="detail-row"><span class="detail-label">Status</span><span class="detail-value"><span class="badge ${statusColor}">${interaction.status}</span></span></div>
+    <div class="detail-row"><span class="detail-label">Date</span><span class="detail-value">${new Date(interaction.createdAt).toLocaleString()}</span></div>
+    <div style="margin-top:1rem;padding-top:1rem;border-top:1px solid rgba(255,255,255,.08)">
+      <div style="margin-bottom:1rem">
+        <p style="font-size:.75rem;color:#666;text-transform:uppercase;margin-bottom:.25rem">Issue / Concern</p>
+        <p style="font-size:.9rem;color:#ddd">${interaction.issue}</p>
+      </div>
+      <div style="margin-bottom:1rem">
+        <p style="font-size:.75rem;color:#666;text-transform:uppercase;margin-bottom:.25rem">Action Taken</p>
+        <p style="font-size:.9rem;color:#ddd">${interaction.action}</p>
+      </div>
+      ${interaction.notes ? `<div><p style="font-size:.75rem;color:#666;text-transform:uppercase;margin-bottom:.25rem">Notes</p><p style="font-size:.9rem;color:#888">${interaction.notes}</p></div>` : ''}
+    </div>
+
+    <div class="remarks-section">
+      <h4><i class="fas fa-comments"></i> Remarks & Updates (${remarks.length})</h4>
+      ${remarks.length === 0 ? '<p style="color:#666;font-size:.875rem">No remarks yet. Add the first one below.</p>' :
+        remarks.map(r => `
+        <div class="remark-item">
+          <p>${r.text}</p>
+          <div class="remark-meta"><span><i class="fas fa-user"></i> ${r.author}</span><span><i class="far fa-clock"></i> ${new Date(r.time).toLocaleString()}</span></div>
+        </div>`).join('')}
+      <div class="remark-form">
+        <input type="text" id="intRemarkInput" placeholder="Add a remark or update..." onkeydown="if(event.key==='Enter')addInteractionRemark(${interaction.id})">
+        <button class="btn btn-sm btn-green" onclick="addInteractionRemark(${interaction.id})"><i class="fas fa-paper-plane"></i></button>
+      </div>
+    </div>`;
+
+  const footer = `
+    ${interaction.status !== 'resolved' ? `<button class="btn btn-sm btn-green" onclick="updateInteractionStatus(${interaction.id},'resolved');openInteractionModal(${interaction.id})">Mark Resolved</button>` : ''}
+    ${interaction.status !== 'pending' ? `<button class="btn btn-sm btn-amber" onclick="updateInteractionStatus(${interaction.id},'pending');openInteractionModal(${interaction.id})">Mark Pending</button>` : ''}
+    ${interaction.status !== 'escalated' ? `<button class="btn btn-sm btn-red" onclick="updateInteractionStatus(${interaction.id},'escalated');openInteractionModal(${interaction.id})">Escalate</button>` : ''}
+    <button class="btn btn-sm btn-secondary" onclick="closeModal()">Close</button>`;
+
+  openModal(`<i class="fas fa-comment-dots"></i> Interaction Details`, body, footer);
+}
+
+function addInteractionRemark(intId) {
+  const input = document.getElementById('intRemarkInput');
+  const text = input.value.trim();
+  if (!text) return;
+  const interactions = getStore('interactions', []);
+  const interaction = interactions.find(i => i.id === intId);
+  if (!interaction) return;
+  if (!interaction.remarks) interaction.remarks = [];
+  interaction.remarks.push({ text, author: currentUser.name, time: Date.now() });
+  setStore('interactions', interactions);
+  openInteractionModal(intId);
+}
+
+function updateInteractionStatus(intId, status) {
+  const interactions = getStore('interactions', []);
+  const interaction = interactions.find(i => i.id === intId);
+  if (interaction) {
+    interaction.status = status;
+    setStore('interactions', interactions);
+  }
+}
+
+function getManagerUsername(managerId) {
+  const users = getStore('users', []);
+  const u = users.find(user => user.id === managerId);
+  return u ? u.username : '?';
 }
 
 function switchTab(btn, panelId) {
@@ -818,5 +1007,17 @@ if (currentUser) {
   navigate('dashboard');
 }
 </script>
+<!-- DETAIL MODAL -->
+<div class="modal-overlay" id="detailModal" onclick="if(event.target===this)closeModal()">
+  <div class="modal">
+    <div class="modal-header">
+      <h3 id="modalTitle">Details</h3>
+      <button class="modal-close" onclick="closeModal()">&times;</button>
+    </div>
+    <div class="modal-body" id="modalBody"></div>
+    <div class="modal-footer" id="modalFooter"></div>
+  </div>
+</div>
+
 </body>
 </html>
