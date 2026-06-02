@@ -1,10 +1,11 @@
-
-<!DOCTYPE html><html lang="en"><head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>The Lion Force CRM</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 html,body{height:100%}
@@ -41,7 +42,7 @@ body{font-family:'Inter',sans-serif;background:#0a0a0a;color:#fff}
 .sidebar-header p{font-size:.75rem;color:#888}
 .user-info{padding:1rem;border-bottom:1px solid rgba(255,255,255,.06);display:flex;align-items:center;gap:.75rem}
 .user-avatar{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,#FF0050,#FF6B6B);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.875rem}
-.nav{flex:1;padding:.75rem}
+.nav{flex:1;padding:.75rem;overflow-y:auto}
 .nav-item{display:flex;align-items:center;gap:.75rem;padding:.75rem 1rem;border-radius:10px;color:#aaa;text-decoration:none;font-size:.875rem;transition:all .2s;cursor:pointer;margin-bottom:.25rem;border:none;background:none;width:100%;font-family:inherit}
 .nav-item:hover{background:rgba(255,255,255,.05);color:#fff}
 .nav-item.active{background:rgba(255,0,80,.1);color:#FF0050;border:1px solid rgba(255,0,80,.2)}
@@ -56,35 +57,6 @@ body{font-family:'Inter',sans-serif;background:#0a0a0a;color:#fff}
 .stat-card p:last-child{font-size:1.75rem;font-weight:800}
 .stat-icon{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.1rem}
 .form-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem}
-/* Mobile hamburger */
-.mobile-toggle{display:none;background:none;border:none;color:#fff;font-size:1.5rem;cursor:pointer;padding:.5rem;margin-right:.5rem}
-.sidebar-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:90}
-.sidebar-overlay.active{display:none}
-.header-username{display:inline}
-/* Mobile responsive */
-@media(max-width:768px){
-.app.active{display:block;height:100vh}
-.sidebar{position:fixed;left:0;top:0;bottom:0;transform:translateX(-100%);z-index:100;height:100vh}
-.sidebar.open{transform:translateX(0)}
-.sidebar-overlay.active{display:block}
-.main{width:100%}
-.mobile-toggle{display:inline-flex}
-.main-header{padding:0 1rem}
-.main-content{padding:1rem}
-.stats-grid{grid-template-columns:1fr 1fr}
-.card{padding:1rem}
-.form-row{grid-template-columns:1fr}
-.stat-card p:last-child{font-size:1.5rem}
-.tabs{flex-wrap:wrap;width:100%}
-.detail-row{flex-direction:column;gap:.25rem}
-.detail-label{width:auto}
-.header-username{display:none}
-.search-box{flex-direction:column}
-}
-.search-box{flex-direction:column}
-}
-textarea{width:100%;padding:.875rem 1rem;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:10px;color:#fff;font-size:1rem;outline:none;resize:vertical;font-family:inherit;min-height:80px}
-textarea:focus{border-color:#FF0050}
 .list-item{padding:1rem;border-radius:10px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);margin-bottom:.5rem}
 .list-item-header{display:flex;align-items:center;gap:.75rem;margin-bottom:.5rem;flex-wrap:wrap}
 .badge{display:inline-flex;align-items:center;gap:.35rem;padding:.25rem .7rem;border-radius:50px;font-size:.75rem;font-weight:600;border:1px solid}
@@ -104,7 +76,7 @@ textarea:focus{border-color:#FF0050}
 .modal-header h3{margin:0;font-size:1.1rem}
 .modal-close{background:none;border:none;color:#888;font-size:1.25rem;cursor:pointer;padding:.25rem;width:32px;height:32px;display:flex;align-items:center;justify-content:center;border-radius:8px}
 .modal-body{padding:1.5rem;overflow-y:auto;flex:1}
-.modal-footer{padding:1rem 1.5rem;border-top:1px solid rgba(255,255,255,.08);display:flex;gap:.5rem;justify-content:flex-end}
+.modal-footer{padding:1rem 1.5rem;border-top:1px solid rgba(255,255,255,.08);display:flex;gap:.5rem;justify-content:flex-end;flex-wrap:wrap}
 .remarks-section{margin-top:1.5rem;padding-top:1.5rem;border-top:1px solid rgba(255,255,255,.08)}
 .remarks-section h4{font-size:.9rem;color:#aaa;margin-bottom:.75rem;text-transform:uppercase;letter-spacing:.5px}
 .remark-item{padding:.75rem;border-radius:10px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);margin-bottom:.5rem}
@@ -124,14 +96,42 @@ textarea:focus{border-color:#FF0050}
 .tab-panel.active{display:block}
 .search-box{display:flex;gap:.75rem;margin-bottom:1.5rem}
 .search-box input{flex:1;padding:1rem 1rem 1rem 2.75rem;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:12px;color:#fff;font-size:1rem;outline:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='18' height='18' viewBox='0 0 24 24' fill='none' stroke='%23666' stroke-width='2'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cpath d='m21 21-4.35-4.35'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:1rem center}
+textarea{width:100%;padding:.875rem 1rem;background:rgba(255,255,255,.05)!important;border:1px solid rgba(255,255,255,.1);border-radius:10px;color:#fff!important;font-size:1rem;outline:none;resize:vertical;font-family:inherit;min-height:80px}
+textarea:focus{border-color:#FF0050;box-shadow:0 0 0 3px rgba(255,0,80,.15)}
+textarea::placeholder{color:#666}
+input[type="date"]{color-scheme:dark}
 ::-webkit-scrollbar{width:6px}
 ::-webkit-scrollbar-track{background:transparent}
 ::-webkit-scrollbar-thumb{background:rgba(255,255,255,.1);border-radius:3px}
+/* Mobile */
+.mobile-toggle{display:none;background:none;border:none;color:#fff;font-size:1.5rem;cursor:pointer;padding:.5rem;margin-right:.5rem}
+.sidebar-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:90}
+.sidebar-overlay.active{display:block}
+.header-username{display:inline}
+@media(max-width:768px){
+.app.active{display:block;height:100vh}
+.sidebar{position:fixed;left:0;top:0;bottom:0;transform:translateX(-100%);z-index:100;height:100vh}
+.sidebar.open{transform:translateX(0)}
+.sidebar-overlay.active{display:block}
+.main{width:100%}
+.mobile-toggle{display:inline-flex}
+.main-header{padding:0 1rem}
+.main-content{padding:1rem}
+.stats-grid{grid-template-columns:1fr 1fr}
+.card{padding:1rem}
+.form-row{grid-template-columns:1fr}
+.stat-card p:last-child{font-size:1.5rem}
+.tabs{flex-wrap:wrap;width:100%}
+.detail-row{flex-direction:column;gap:.25rem}
+.detail-label{width:auto}
+.header-username{display:none}
+.search-box{flex-direction:column}
+}
 </style>
-<script src="https://www.kimi.com/sdk-seed.js" defer=""></script></head>
+</head>
 <body>
 
-<!-- LOGIN PAGE -->
+<!-- LOGIN -->
 <div class="login-page" id="loginPage">
   <div class="login-box" id="loginBox">
     <div class="login-logo">
@@ -143,8 +143,8 @@ textarea:focus{border-color:#FF0050}
       <h2>Manager Login</h2>
       <div id="loginError"></div>
       <form id="loginForm" onsubmit="return false">
-        <div class="form-group"><label>Username</label><input type="text" id="loginUser" placeholder="Enter username" required=""/></div>
-        <div class="form-group"><label>Password</label><input type="password" id="loginPass" placeholder="Enter password" required=""/></div>
+        <div class="form-group"><label>Username</label><input type="text" id="loginUser" placeholder="Enter username" required></div>
+        <div class="form-group"><label>Password</label><input type="password" id="loginPass" placeholder="Enter password" required></div>
         <button type="button" class="btn" id="loginBtn" onclick="doLogin()">Sign In</button>
       </form>
     </div>
@@ -152,7 +152,6 @@ textarea:focus{border-color:#FF0050}
     <p style="text-align:center;margin-top:.5rem"><a href="#" onclick="showRegister()" style="color:#FF0050;font-size:.875rem;text-decoration:none">Register as Manager</a></p>
   </div>
 
-  <!-- REGISTER -->
   <div class="login-box" id="registerBox" style="display:none">
     <div class="login-logo">
       <div class="lion">🦁</div>
@@ -163,11 +162,11 @@ textarea:focus{border-color:#FF0050}
       <h2>Create Manager Account</h2>
       <div id="regMsg"></div>
       <form id="regForm" onsubmit="return false">
-        <div class="form-group"><label>Admin Key *</label><input type="text" id="regKey" placeholder="Enter admin key" required=""/><p style="color:#666;font-size:.75rem;margin-top:.25rem">Admin key: lionforce2024</p></div>
-        <div class="form-group"><label>Full Name *</label><input type="text" id="regName" placeholder="Your full name" required=""/></div>
-        <div class="form-group"><label>Username *</label><input type="text" id="regUser" placeholder="Choose a username" required=""/></div>
-        <div class="form-group"><label>Password *</label><input type="password" id="regPass" placeholder="Min 4 characters" required="" minlength="4"/></div>
-        <div class="form-group"><label>Email</label><input type="email" id="regEmail" placeholder="Optional"/></div>
+        <div class="form-group"><label>Admin Key *</label><input type="text" id="regKey" placeholder="Enter admin key" required><p style="color:#666;font-size:.75rem;margin-top:.25rem">Admin key: lionforce2024</p></div>
+        <div class="form-group"><label>Full Name *</label><input type="text" id="regName" placeholder="Your full name" required></div>
+        <div class="form-group"><label>Username *</label><input type="text" id="regUser" placeholder="Choose a username" required></div>
+        <div class="form-group"><label>Password *</label><input type="password" id="regPass" placeholder="Min 4 characters" required minlength="4"></div>
+        <div class="form-group"><label>Email</label><input type="email" id="regEmail" placeholder="Optional"></div>
         <button type="button" class="btn" onclick="doRegister()">Create Account</button>
       </form>
       <p style="text-align:center;margin-top:1rem"><a href="#" onclick="showLogin()" style="color:#888;font-size:.875rem;text-decoration:none">Back to Login</a></p>
@@ -181,13 +180,16 @@ textarea:focus{border-color:#FF0050}
     <div class="sidebar-header"><span class="lion">🦁</span><div><h1>The Lion Force</h1><p>CRM Portal</p></div></div>
     <div class="user-info"><div class="user-avatar" id="sideAvatar">A</div><div><p id="sideName">Admin</p><span id="sideRole" style="font-size:.75rem;color:#888;text-transform:capitalize">admin</span></div></div>
     <nav class="nav">
-      <button class="nav-item active" onclick="goPage(&#39;dashboard&#39;);closeSidebar()" data-p="dashboard"><i class="fas fa-chart-line"></i> Dashboard</button>
-      <button class="nav-item" onclick="goPage(&#39;interactions&#39;);closeSidebar()" data-p="interactions"><i class="fas fa-comment-dots"></i> Log Interaction</button>
-      <button class="nav-item" onclick="goPage(&#39;search&#39;);closeSidebar()" data-p="search"><i class="fas fa-search"></i> Creator Search</button>
-      <button class="nav-item" onclick="goPage(&#39;tasks&#39;);closeSidebar()" data-p="tasks"><i class="fas fa-tasks"></i> Tasks</button>
-      <button class="nav-item" onclick="goPage(&#39;admin&#39;);closeSidebar()" data-p="admin" id="adminNav" style="display:none"><i class="fas fa-shield-alt"></i> Admin Panel</button>
+      <button class="nav-item active" onclick="goPage('dashboard');closeSidebar()" data-p="dashboard"><i class="fas fa-chart-line"></i> Dashboard</button>
+      <button class="nav-item" onclick="goPage('interactions');closeSidebar()" data-p="interactions"><i class="fas fa-comment-dots"></i> Log Interaction</button>
+      <button class="nav-item" onclick="goPage('search');closeSidebar()" data-p="search"><i class="fas fa-search"></i> Creator Search</button>
+      <button class="nav-item" onclick="goPage('tasks');closeSidebar()" data-p="tasks"><i class="fas fa-tasks"></i> Tasks</button>
+      <button class="nav-item" onclick="goPage('admin');closeSidebar()" data-p="admin" id="adminNav" style="display:none"><i class="fas fa-shield-alt"></i> Admin Panel</button>
     </nav>
-    <div class="sidebar-footer"><button class="nav-item" onclick="doLogout()"><i class="fas fa-sign-out-alt"></i> Sign Out</button></div>
+    <div class="sidebar-footer">
+      <button class="nav-item" onclick="showChangePassword();closeSidebar()"><i class="fas fa-key"></i> Change Password</button>
+      <button class="nav-item" onclick="doLogout()"><i class="fas fa-sign-out-alt"></i> Sign Out</button>
+    </div>
   </div>
   <div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar()"></div>
   <div class="main" style="width:100%">
@@ -211,7 +213,7 @@ textarea:focus{border-color:#FF0050}
 <!-- MODAL -->
 <div class="modal-overlay" id="detailModal" onclick="if(event.target===this)closeModal()">
   <div class="modal">
-    <div class="modal-header"><h3 id="modalTitle">Details</h3><button class="modal-close" onclick="closeModal()">×</button></div>
+    <div class="modal-header"><h3 id="modalTitle">Details</h3><button class="modal-close" onclick="closeModal()">&times;</button></div>
     <div class="modal-body" id="modalBody"></div>
     <div class="modal-footer" id="modalFooter"></div>
   </div>
@@ -233,30 +235,6 @@ const firebaseConfig = {
 
 const fbApp = initializeApp(firebaseConfig);
 const db = getDatabase(fbApp);
-        <div class="sidebar-header"><span class="lion">🦁</span><div><h1>The Lion Force</h1><p>CRM Portal</p></div></div>
-        <div class="user-info"><div class="user-avatar" id="sideAvatar">A</div><div><p id="sideName">Admin</p><span id="sideRole" style="font-size:.75rem;color:#888;text-transform:capitalize">admin</span></div></div>
-        <nav class="nav">
-          <button class="nav-item active" onclick="goPage('dashboard')" data-p="dashboard"><i class="fas fa-chart-line"></i> Dashboard</button>
-          <button class="nav-item" onclick="goPage('interactions')" data-p="interactions"><i class="fas fa-comment-dots"></i> Log Interaction</button>
-          <button class="nav-item" onclick="goPage('search')" data-p="search"><i class="fas fa-search"></i> Creator Search</button>
-          <button class="nav-item" onclick="goPage('tasks')" data-p="tasks"><i class="fas fa-tasks"></i> Tasks</button>
-          <button class="nav-item" onclick="goPage('admin')" data-p="admin" id="adminNav" style="display:none"><i class="fas fa-shield-alt"></i> Admin Panel</button>
-        </nav>
-        <div class="sidebar-footer"><button class="nav-item" onclick="doLogout()"><i class="fas fa-sign-out-alt"></i> Sign Out</button></div>
-      </div>
-      <div class="main-content" id="mainContent"></div>
-    </div>
-  </div>
-</div>
-
-<!-- MODAL -->
-<div class="modal-overlay" id="detailModal" onclick="if(event.target===this)closeModal()">
-  <div class="modal">
-    <div class="modal-header"><h3 id="modalTitle">Details</h3><button class="modal-close" onclick="closeModal()">&times;</button></div>
-    <div class="modal-body" id="modalBody"></div>
-    <div class="modal-footer" id="modalFooter"></div>
-  </div>
-</div>
 
 const REGIONS = ['United Kingdom','MENA','Turkey','CCA','Italy','France','Philippines','AU+','Germany','Netherlands','Malaysia','Japan','Brazil'];
 const ADMIN_KEY = 'lionforce2024';
@@ -272,14 +250,15 @@ async function fbGet(path){const s=await get(ref(db,path));return s.exists()?s.v
 async function fbSet(path,val){await set(ref(db,path),val)}
 async function fbUpdate(path,val){await update(ref(db,path),val)}
 
-async function loadUsers(){const d=await fbGet('users');allUsers=d?Object.values(d):[];return allUsers}
-async function loadInteractions(){const d=await fbGet('interactions');allInteractions=d?Object.values(d):[];return allInteractions}
-async function loadTasks(){const d=await fbGet('tasks');allTasks=d?Object.values(d):[];return allTasks}
+async function loadUsers(){const d=await fbGet('users');allUsers=d?Object.values(d).filter(u=>u!==null):[];return allUsers}
+async function loadInteractions(){const d=await fbGet('interactions');allInteractions=d?Object.values(d).filter(i=>i!==null):[];return allInteractions}
+async function loadTasks(){const d=await fbGet('tasks');allTasks=d?Object.values(d).filter(t=>t!==null):[];return allTasks}
 
+// ============ AUTH ============
 window.doLogin = async function(){
   const u=document.getElementById('loginUser').value.trim();
   const p=document.getElementById('loginPass').value;
-  document.getElementById('loginError').innerHTML='<p style="color:#888;text-align:center">Loading...</p>';
+  document.getElementById('loginError').innerHTML='<p style="color:#888;text-align:center"><i class="fas fa-spinner fa-spin"></i> Checking...</p>';
   try{
     await loadUsers();
     const user=allUsers.find(x=>x.username===u&&x.password===hashPW(p));
@@ -300,7 +279,7 @@ window.doRegister = async function(){
   if(key!==ADMIN_KEY){document.getElementById('regMsg').innerHTML='<div class="error-msg">Invalid admin key</div>';return}
   try{
     await loadUsers();
-    if(allUsers.find(u=>u.username===username)){document.getElementById('regMsg').innerHTML='<div class="error-msg">Username exists</div>';return}
+    if(allUsers.find(u=>u.username===username)){document.getElementById('regMsg').innerHTML='<div class="error-msg">Username already exists</div>';return}
     const user={id:Date.now(),username,password:hashPW(password),name,email:email||null,role:'manager',isActive:'yes',createdAt:Date.now()};
     await fbSet('users/'+username,user);
     document.getElementById('regMsg').innerHTML='<div class="success-msg">Account created! Redirecting...</div>';
@@ -340,6 +319,7 @@ function showApp(){
   goPage('dashboard');
 }
 
+// ============ NAVIGATION ============
 window.goPage = async function(page){
   document.querySelectorAll('.nav-item').forEach(el=>el.classList.remove('active'));
   document.querySelector(`.nav-item[data-p="${page}"]`)?.classList.add('active');
@@ -357,21 +337,54 @@ window.goPage = async function(page){
 }
 
 window.toggleSidebar = function(){
-  const sb=document.getElementById('sidebar');
-  const ov=document.getElementById('sidebarOverlay');
-  sb.classList.toggle('open');
-  ov.classList.toggle('active');
+  document.getElementById('sidebar').classList.toggle('open');
+  document.getElementById('sidebarOverlay').classList.toggle('active');
 }
-
 window.closeSidebar = function(){
   document.getElementById('sidebar').classList.remove('open');
   document.getElementById('sidebarOverlay').classList.remove('active');
 }
 
+// ============ CHANGE PASSWORD ============
+window.showChangePassword = function(){
+  document.querySelectorAll('.nav-item').forEach(el=>el.classList.remove('active'));
+  document.getElementById('pageTitle').textContent='Change Password';
+  const el=document.getElementById('mainContent');
+  el.innerHTML=`<div style="max-width:500px;margin:0 auto"><div id="pwdMsg"></div><div class="card">
+    <h3 style="margin-bottom:1.25rem"><i class="fas fa-key" style="color:#FF0050"></i> Change Password</h3>
+    <p style="color:#888;margin-bottom:1.5rem;font-size:.875rem">Update your password for ${currentUser.name} (@${currentUser.username})</p>
+    <div class="form-group"><label>Current Password *</label><input type="password" id="oldPass" placeholder="Enter current password"></div>
+    <div class="form-group"><label>New Password *</label><input type="password" id="newPass" placeholder="Min 4 characters" minlength="4"></div>
+    <div class="form-group"><label>Confirm New Password *</label><input type="password" id="newPass2" placeholder="Repeat new password" minlength="4"></div>
+    <button class="btn btn-sm" onclick="updatePassword()">Update Password</button>
+  </div></div>`;
+}
+
+window.updatePassword = async function(){
+  const oldPass=document.getElementById('oldPass').value;
+  const newPass=document.getElementById('newPass').value;
+  const newPass2=document.getElementById('newPass2').value;
+  const msgEl=document.getElementById('pwdMsg');
+  if(!oldPass||!newPass||!newPass2){msgEl.innerHTML='<div class="error-msg">All fields are required</div>';return}
+  if(newPass.length<4){msgEl.innerHTML='<div class="error-msg">New password must be at least 4 characters</div>';return}
+  if(newPass!==newPass2){msgEl.innerHTML='<div class="error-msg">New passwords do not match</div>';return}
+  try{
+    await loadUsers();
+    const user=allUsers.find(u=>u.username===currentUser.username);
+    if(!user){msgEl.innerHTML='<div class="error-msg">User not found</div>';return}
+    if(user.password!==hashPW(oldPass)){msgEl.innerHTML='<div class="error-msg">Current password is incorrect</div>';return}
+    user.password=hashPW(newPass);
+    await fbSet('users/'+currentUser.username,user);
+    msgEl.innerHTML='<div class="success-msg"><i class="fas fa-check-circle"></i> Password updated successfully!</div>';
+    document.getElementById('oldPass').value='';
+    document.getElementById('newPass').value='';
+    document.getElementById('newPass2').value='';
+  }catch(e){msgEl.innerHTML=`<div class="error-msg">Error: ${e.message}</div>`}
+}
+
 // ============ DASHBOARD ============
 async function pageDashboard(el){
   await loadInteractions();await loadTasks();
-  // ALL managers see ALL interactions and tasks - shared data
   const viewInt=allInteractions;
   const viewTasks=allTasks;
   el.innerHTML=`<div class="stats-grid">
@@ -381,10 +394,9 @@ async function pageDashboard(el){
     <div class="stat-card stat-card-click" onclick="goPage('tasks')"><div><p style="color:#888">Tasks</p><p style="font-size:1.75rem;font-weight:800">${viewTasks.length}</p></div><div class="stat-icon" style="background:linear-gradient(135deg,#FF0050,#FF6B6B)"><i class="fas fa-tasks"></i></div></div>
   </div>
   <div class="card"><h3 style="margin-bottom:1rem"><i class="fas fa-history" style="color:#FF0050"></i> Recent Interactions</h3>
-  <div id="dashFilterTags" style="margin-bottom:1rem;display:none"></div>
   ${viewInt.length===0?'<div class="empty-state"><i class="fas fa-inbox" style="font-size:3rem;color:#333;margin-bottom:1rem;display:block"></i><p>No interactions yet</p></div>':
     viewInt.sort((a,b)=>b.createdAt-a.createdAt).slice(0,10).map(i=>`
-    <div class="list-item clickable-card dash-int-item" data-status="${i.status}" onclick="openIntModal(${i.id})">
+    <div class="list-item clickable-card" onclick="openIntModal(${i.id})">
       <div class="list-item-header"><span style="font-weight:700">@${i.creatorUsername}</span><span class="badge badge-gray">${i.region}</span><span class="badge badge-${i.status==='resolved'?'green':i.status==='pending'?'amber':'red'}">${i.status}</span>${i.managerName?`<span style="color:#666;font-size:.75rem;margin-left:auto">${i.managerName}</span>`:''}</div>
       <p style="color:#888;font-size:.875rem">${i.issue.substring(0,120)}${i.issue.length>120?'...':''}${i.remarks?.length?` <i class="fas fa-comments" style="color:#FF0050"></i> ${i.remarks.length}`:''}</p>
     </div>`).join('')}</div>`;
@@ -522,7 +534,7 @@ window.showNewTask = async function(){
     <div class="form-group"><label>Title *</label><input type="text" id="tTitle" required></div>
     <div class="form-group"><label>Description</label><textarea id="tDesc" style="min-height:60px"></textarea></div>
     <div class="form-row"><div class="form-group"><label>Assign To *</label><select id="tAssign" required><option value="">Select manager</option>${managers.map(m=>`<option value="${m.id}">${m.name}</option>`).join('')}</select></div><div class="form-group"><label>Priority</label><select id="tPri"><option value="low">Low</option><option value="medium" selected>Medium</option><option value="high">High</option></select></div></div>
-    <div class="form-group"><label>Due Date</label><input type="date" id="tDue" style="color-scheme:dark"></div>
+    <div class="form-group"><label>Due Date</label><input type="date" id="tDue"></div>
     <div style="display:flex;gap:.5rem"><button class="btn btn-sm btn-green" onclick="createTask()">Create Task</button><button class="btn btn-sm btn-secondary" onclick="document.getElementById('taskForm').innerHTML=''">Cancel</button></div>
   </div>`;
 }
@@ -570,7 +582,7 @@ async function pageAdmin(el){
     <h3 style="margin-bottom:1rem">All Users</h3>
     ${users.map(u=>`<div class="list-item"><div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.5rem">
       <div style="display:flex;align-items:center;gap:.75rem"><div style="width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,#FF0050,#FF6B6B);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.875rem">${u.name.charAt(0).toUpperCase()}</div><div><p style="font-weight:600">${u.name}</p><p style="color:#888;font-size:.75rem">@${u.username} · ${u.email||'No email'}</p></div></div>
-      <div style="display:flex;align-items:center;gap:.5rem"><span class="badge badge-${u.role==='admin'?'red':'blue'}">${u.role}</span><span class="badge badge-${u.isActive==='yes'?'green':'gray'}">${u.isActive==='yes'?'Active':'Inactive'}</span>${u.role!=='admin'?`<button class="btn btn-sm btn-secondary" style="font-size:.75rem;padding:.4rem .8rem" onclick="toggleUser('${u.username}')">${u.isActive==='yes'?'Deactivate':'Activate'}</button><button class="btn btn-sm btn-red" style="font-size:.75rem;padding:.4rem .8rem" onclick="deleteUser('${u.username}')" title="Delete manager"><i class="fas fa-trash"></i></button>`:''}</div>
+      <div style="display:flex;align-items:center;gap:.5rem"><span class="badge badge-${u.role==='admin'?'red':'blue'}">${u.role}</span><span class="badge badge-${u.isActive==='yes'?'green':'gray'}">${u.isActive==='yes'?'Active':'Inactive'}</span>${u.role!=='admin'?`<button class="btn btn-sm btn-secondary" style="font-size:.75rem;padding:.4rem .8rem" onclick="toggleUser('${u.username}')">${u.isActive==='yes'?'Deactivate':'Activate'}</button><button class="btn btn-sm btn-blue" style="font-size:.75rem;padding:.4rem .8rem" onclick="resetManagerPassword('${u.username}')" title="Reset password"><i class="fas fa-key"></i></button><button class="btn btn-sm btn-red" style="font-size:.75rem;padding:.4rem .8rem" onclick="deleteUser('${u.username}')" title="Delete manager"><i class="fas fa-trash"></i></button>`:''}</div>
     </div></div>`).join('')}
   </div></div>
   <div id="iTab" class="tab-panel"><div class="card">
@@ -600,13 +612,12 @@ window.switchTab = function(btn,id){
 }
 
 window.switchAdminTab = function(tabId){
-  const tabNames = {mTab:'Managers',iTab:'All Interactions',cTab:'Create Manager'};
-  const btnIndex = {mTab:0,iTab:1,cTab:2};
-  const tabs = document.querySelectorAll('.tab-btn');
-  const panels = document.querySelectorAll('.tab-panel');
+  const btnIndex={mTab:0,iTab:1,cTab:2};
+  const tabs=document.querySelectorAll('.tab-btn');
+  const panels=document.querySelectorAll('.tab-panel');
   tabs.forEach(b=>b.classList.remove('active'));
   panels.forEach(p=>p.classList.remove('active'));
-  const idx = btnIndex[tabId]||0;
+  const idx=btnIndex[tabId]||0;
   if(tabs[idx]) tabs[idx].classList.add('active');
   document.getElementById(tabId).classList.add('active');
 }
@@ -617,11 +628,25 @@ window.toggleUser = async function(username){
   if(u){u.isActive=u.isActive==='yes'?'no':'yes';await fbSet('users/'+username,u);goPage('admin')}
 }
 
+window.resetManagerPassword = async function(username){
+  const newPass=prompt(`Reset password for "@${username}"\n\nEnter new password (min 4 characters):`);
+  if(!newPass) return;
+  if(newPass.length<4){alert('Password must be at least 4 characters');return}
+  try{
+    await loadUsers();
+    const u=allUsers.find(x=>x.username===username);
+    if(!u){alert('Manager not found');return}
+    u.password=hashPW(newPass);
+    await fbSet('users/'+username,u);
+    alert(`Password for "@${username}" has been reset successfully!`);
+  }catch(e){alert('Error: '+e.message)}
+}
+
 window.deleteUser = async function(username){
   if(!confirm(`Are you sure you want to DELETE manager "@${username}"?\n\nThis action cannot be undone. All their data will remain but they will no longer be able to log in.`)) return;
   try{
     await loadUsers();
-    await set(ref(db, 'users/'+username), null);
+    await set(ref(db,'users/'+username),null);
     goPage('admin');
   }catch(e){alert('Error deleting: '+e.message)}
 }
@@ -630,7 +655,7 @@ window.createMgr = async function(){
   const username=document.getElementById('cUser').value.trim();
   try{
     await loadUsers();
-    if(allUsers.find(u=>u.username===username)){document.getElementById('cMsg').innerHTML='<div class="error-msg">Username exists</div>';return}
+    if(allUsers.find(u=>u.username===username)){document.getElementById('cMsg').innerHTML='<div class="error-msg">Username already exists</div>';return}
     await fbSet('users/'+username,{id:Date.now(),username,password:hashPW(document.getElementById('cPass').value),name:document.getElementById('cName').value.trim(),email:document.getElementById('cEmail').value.trim()||null,role:'manager',isActive:'yes',createdAt:Date.now()});
     document.getElementById('cMsg').innerHTML='<div class="success-msg">Manager created!</div>';
     setTimeout(()=>goPage('admin'),1000);
@@ -739,17 +764,21 @@ function openModal(title,body,footer){
 }
 window.closeModal=function(){document.getElementById('detailModal').classList.remove('active')}
 
-// Seed admin on load
+// Seed admin and auto-login
 async function init(){
   await loadUsers();
-  if(!allUsers.find(u=>u.username==='thelionforce')){
-    await fbSet('users/thelionforce',{id:1,username:'thelionforce',password:hashPW('thelionforce5'),name:'The Lion Force Admin',email:'admin@thelionforce.com',role:'admin',isActive:'yes',createdAt:Date.now()});
+  const adminExists=allUsers.find(u=>u.username==='thelionforce');
+  const adminData={id:1,username:'thelionforce',password:hashPW('thelionforce5'),name:'The Lion Force Admin',email:'admin@thelionforce.com',role:'admin',isActive:'yes',createdAt:Date.now()};
+  if(!adminExists){
+    await fbSet('users/thelionforce',adminData);
+  }else{
+    // Always ensure admin password is correct (in case it was set by different system)
+    await fbSet('users/thelionforce',{...adminData,...adminExists,password:hashPW('thelionforce5')});
   }
   const saved=localStorage.getItem('lf_crm_user');
-  if(saved){currentUser=JSON.parse(saved);showApp()}
+  if(saved){try{currentUser=JSON.parse(saved);showApp()}catch(e){localStorage.removeItem('lf_crm_user')}}
 }
 init();
 </script>
-
-
-</body></html>
+</body>
+</html>
