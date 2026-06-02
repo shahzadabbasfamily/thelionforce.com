@@ -234,30 +234,6 @@ const firebaseConfig = {
 
 const fbApp = initializeApp(firebaseConfig);
 const db = getDatabase(fbApp);
-        <div class="sidebar-header"><span class="lion">🦁</span><div><h1>The Lion Force</h1><p>CRM Portal</p></div></div>
-        <div class="user-info"><div class="user-avatar" id="sideAvatar">A</div><div><p id="sideName">Admin</p><span id="sideRole" style="font-size:.75rem;color:#888;text-transform:capitalize">admin</span></div></div>
-        <nav class="nav">
-          <button class="nav-item active" onclick="goPage('dashboard')" data-p="dashboard"><i class="fas fa-chart-line"></i> Dashboard</button>
-          <button class="nav-item" onclick="goPage('interactions')" data-p="interactions"><i class="fas fa-comment-dots"></i> Log Interaction</button>
-          <button class="nav-item" onclick="goPage('search')" data-p="search"><i class="fas fa-search"></i> Creator Search</button>
-          <button class="nav-item" onclick="goPage('tasks')" data-p="tasks"><i class="fas fa-tasks"></i> Tasks</button>
-          <button class="nav-item" onclick="goPage('admin')" data-p="admin" id="adminNav" style="display:none"><i class="fas fa-shield-alt"></i> Admin Panel</button>
-        </nav>
-        <div class="sidebar-footer"><button class="nav-item" onclick="doLogout()"><i class="fas fa-sign-out-alt"></i> Sign Out</button></div>
-      </div>
-      <div class="main-content" id="mainContent"></div>
-    </div>
-  </div>
-</div>
-
-<!-- MODAL -->
-<div class="modal-overlay" id="detailModal" onclick="if(event.target===this)closeModal()">
-  <div class="modal">
-    <div class="modal-header"><h3 id="modalTitle">Details</h3><button class="modal-close" onclick="closeModal()">&times;</button></div>
-    <div class="modal-body" id="modalBody"></div>
-    <div class="modal-footer" id="modalFooter"></div>
-  </div>
-</div>
 
 const REGIONS = ['United Kingdom','MENA','Turkey','CCA','Italy','France','Philippines','AU+','Germany','Netherlands','Malaysia','Japan','Brazil'];
 const ADMIN_KEY = 'lionforce2024';
