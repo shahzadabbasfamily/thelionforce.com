@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -165,7 +164,34 @@ textarea:focus{border-color:#FF0050}
         <button type="submit" class="btn">Sign In</button>
       </form>
     </div>
-    <p style="text-align:center;color:#666;font-size:.875rem;margin-top:1.5rem">Internal use only</p>
+    <p style="text-align:center;color:#666;font-size:.875rem;margin-top:1rem">Internal use only</p>
+    <p style="text-align:center;margin-top:1rem"><a href="#" onclick="showRegister()" style="color:#FF0050;font-size:.875rem;text-decoration:none">Register as Manager</a></p>
+  </div>
+
+  <!-- MANAGER REGISTRATION -->
+  <div class="login-box" id="registerBox" style="display:none">
+    <div class="login-logo">
+      <div class="lion">🦁</div>
+      <h1>The Lion Force</h1>
+      <p>Manager Registration</p>
+    </div>
+    <div class="login-card">
+      <h2>Create Manager Account</h2>
+      <div id="regMsg"></div>
+      <form id="registerForm" onsubmit="registerManager(event)">
+        <div class="form-group">
+          <label>Admin Key *</label>
+          <input type="text" id="regKey" placeholder="Enter admin key" required>
+          <p style="color:#666;font-size:.75rem;margin-top:.25rem">Ask admin for the registration key</p>
+        </div>
+        <div class="form-group"><label>Full Name *</label><input type="text" id="regName" placeholder="Your full name" required></div>
+        <div class="form-group"><label>Username *</label><input type="text" id="regUser" placeholder="Choose a username" required></div>
+        <div class="form-group"><label>Password *</label><input type="password" id="regPass" placeholder="Min 4 characters" required minlength="4"></div>
+        <div class="form-group"><label>Email</label><input type="email" id="regEmail" placeholder="Optional"></div>
+        <button type="submit" class="btn">Create Account</button>
+      </form>
+      <p style="text-align:center;margin-top:1rem"><a href="#" onclick="showLogin()" style="color:#888;font-size:.875rem;text-decoration:none">Back to Login</a></p>
+    </div>
   </div>
 </div>
 
@@ -668,6 +694,64 @@ function createManager(e) {
 // ============================================
 function openSidebar() { document.getElementById('sidebar').classList.add('open'); document.getElementById('sidebarOverlay').classList.add('open'); }
 function closeSidebar() { document.getElementById('sidebar').classList.remove('open'); document.getElementById('sidebarOverlay').classList.remove('open'); }
+
+// ============================================
+// REGISTRATION
+// ============================================
+// Admin registration key - managers need this to register
+const ADMIN_KEY = 'lionforce2024';
+
+function showRegister() {
+  document.querySelector('.login-box').style.display = 'none';
+  document.getElementById('registerBox').style.display = 'block';
+}
+function showLogin() {
+  document.querySelector('.login-box').style.display = 'block';
+  document.getElementById('registerBox').style.display = 'none';
+  document.getElementById('loginError').innerHTML = '';
+}
+
+function registerManager(e) {
+  e.preventDefault();
+  const key = document.getElementById('regKey').value.trim();
+  const name = document.getElementById('regName').value.trim();
+  const username = document.getElementById('regUser').value.trim();
+  const password = document.getElementById('regPass').value;
+  const email = document.getElementById('regEmail').value.trim();
+
+  if (key !== ADMIN_KEY) {
+    document.getElementById('regMsg').innerHTML = '<div class="error-msg"><i class="fas fa-exclamation-circle"></i> Invalid admin key. Contact admin for the correct key.</div>';
+    return;
+  }
+
+  initData();
+  const users = getStore('users', []);
+
+  if (users.find(u => u.username === username)) {
+    document.getElementById('regMsg').innerHTML = '<div class="error-msg"><i class="fas fa-exclamation-circle"></i> Username already exists. Choose a different one.</div>';
+    return;
+  }
+
+  users.push({
+    id: Date.now(),
+    username: username,
+    password: hashPassword(password),
+    name: name,
+    email: email || null,
+    role: 'manager',
+    isActive: 'yes',
+    createdAt: Date.now(),
+  });
+  setStore('users', users);
+
+  document.getElementById('regMsg').innerHTML = '<div class="success-msg"><i class="fas fa-check-circle"></i> Account created! Redirecting to login...</div>';
+  e.target.reset();
+  setTimeout(() => {
+    showLogin();
+    document.getElementById('loginUser').value = username;
+    document.getElementById('regMsg').innerHTML = '';
+  }, 2000);
+}
 
 // ============================================
 // INIT
