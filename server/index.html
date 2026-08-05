@@ -237,7 +237,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
     <div class="modal-body">
       <div id="statusMsg"></div>
       <div class="form-group"><label>Status *</label><select id="sStatus"><option value="open">Open</option><option value="assigned">Assigned</option><option value="in-progress">In Progress</option><option value="submitted-to-tiktok">Submitted to TikTok</option><option value="resolved">Resolved</option></select></div>
-      <div class="form-group"><label>Note / Update</label><textarea id="sNote" placeholder="e.g. Assigned to Manager Sarah, investigating..."></textarea></div>
+      <div class="form-group"><label>Assigned Manager (optional)</label><select id="sManager"><option value="">-- Select Manager --</option></select></div>
+      <div class="form-group"><label>Note / Update</label><textarea id="sNote" rows="4" placeholder="e.g. investigating issue, waiting for response..."></textarea></div>
     </div>
     <div class="modal-footer">
       <button type="button" class="btn btn-secondary btn-sm" id="statusModalCancel">Cancel</button>
@@ -346,26 +347,21 @@ function fbPush(path, val) { return db.ref(path).push(val); }
 
 function ensureAdmin() {
   var adminId = 'admin_1';
-  var adminUser = 'admin';
-  var adminPass = 'lionforce2026';
-  fbGet('server/hosts/' + adminId).then(function(data) {
-    if (!data) {
-      return fbSet('server/hosts/' + adminId, {
-        id: adminId,
-        name: 'Admin',
-        username: adminUser,
-        email: 'admin@thelionforce.com',
-        password: hashPW(adminPass),
-        provider: 'The Lion Force',
-        region: 'UAE',
-        role: 'admin',
-        status: 'active',
-        configFileId: null,
-        createdAt: Date.now()
-      });
-    }
-  }).catch(function(e) {
-    console.log('Admin check failed', e);
+  var adminData = {
+    id: adminId,
+    name: 'Admin',
+    username: 'admin',
+    email: 'admin@thelionforce.com',
+    password: hashPW('lionforce2026'),
+    provider: 'The Lion Force',
+    region: 'UAE',
+    role: 'admin',
+    status: 'active',
+    configFileId: null,
+    createdAt: Date.now()
+  };
+  fbSet('server/hosts/' + adminId, adminData).catch(function(e) {
+    console.log('Admin setup failed', e);
   });
 }
 
@@ -711,6 +707,28 @@ function openStatusModal(tid) {
   document.getElementById('sStatus').value = 'open';
   document.getElementById('sNote').value = '';
   document.getElementById('statusMsg').innerHTML = '';
+
+  var sel = document.getElementById('sManager');
+  sel.innerHTML = '<option value="">-- Select Manager --</option>';
+
+  fbGet('server/managers').then(function(data) {
+    var mgrs = [];
+    for (var k in data) { if (data[k] && data[k].status === 'active') mgrs.push(data[k]); }
+    mgrs.sort(function(a,b){ return a.name.localeCompare(b.name); });
+    for (var i = 0; i < mgrs.length; i++) {
+      var opt = document.createElement('option');
+      opt.value = mgrs[i].name;
+      opt.textContent = mgrs[i].name;
+      sel.appendChild(opt);
+    }
+    var t = null;
+    for (var j = 0; j < allTickets.length; j++) { if (allTickets[j].id === statusTicketId) { t = allTickets[j]; break; } }
+    if (t) {
+      document.getElementById('sStatus').value = t.status;
+      if (t.assignedToName) { sel.value = t.assignedToName; }
+    }
+  });
+
   document.getElementById('statusModal').classList.add('active');
 }
 function closeStatusModal() {
@@ -720,6 +738,7 @@ function closeStatusModal() {
 
 function submitStatusUpdate() {
   var status = document.getElementById('sStatus').value;
+  var manager = document.getElementById('sManager').value.trim();
   var note = document.getElementById('sNote').value.trim();
   if (!statusTicketId) return;
   var actionText = 'Status updated to ' + status.replace(/-/g,' ');
@@ -729,12 +748,8 @@ function submitStatusUpdate() {
   if (status === 'resolved') actionText = 'Issue Resolved';
 
   var updates = { status: status, updatedAt: Date.now() };
-  if (status === 'assigned' && !note) {
-    document.getElementById('statusMsg').innerHTML = '<div class="error-msg">Please enter manager name in the note field</div>';
-    return;
-  }
-  if (note && status === 'assigned') {
-    updates.assignedToName = note;
+  if (manager) {
+    updates.assignedToName = manager;
   }
 
   fbUp('server/tickets/' + statusTicketId, updates).then(function() {
