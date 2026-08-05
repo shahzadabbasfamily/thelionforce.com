@@ -626,21 +626,53 @@ function renderTicketDetail(tid) {
     }
     html += '</div>';
 
-    // Timeline / Activity Log
+    var stageGroups = {
+      'Submitted': [], 'Assigned': [], 'In Progress': [],
+      'Submitted to TikTok': [], 'Resolved': [], 'Other': []
+    };
+    for (var l = 0; l < logArr.length; l++) {
+      var lg = logArr[l];
+      var a = lg.action;
+      if (a.indexOf('Resolved') >= 0) stageGroups['Resolved'].push(lg);
+      else if (a.indexOf('TikTok') >= 0) stageGroups['Submitted to TikTok'].push(lg);
+      else if (a.indexOf('Progress') >= 0) stageGroups['In Progress'].push(lg);
+      else if (a.indexOf('Assigned') >= 0) stageGroups['Assigned'].push(lg);
+      else if (a.indexOf('Submitted') >= 0 || a.indexOf('open') >= 0) stageGroups['Submitted'].push(lg);
+      else stageGroups['Other'].push(lg);
+    }
+    var groupOrder = ['Submitted','Assigned','In Progress','Submitted to TikTok','Resolved'];
+    var groupIcons = {
+      'Submitted':{i:'fa-ticket-alt',co:'#3B6BF5'},
+      'Assigned':{i:'fa-user-check',co:'#f59e0b'},
+      'In Progress':{i:'fa-spinner',co:'#06b6d4'},
+      'Submitted to TikTok':{i:'fa-paper-plane',co:'#a855f7'},
+      'Resolved':{i:'fa-check-circle',co:'#22c55e'}
+    };
+
     html += '<div class="card"><h3 style="font-size:14px;font-weight:600;margin-bottom:1.5rem;color:#6B7280;text-transform:uppercase;letter-spacing:0.05em"><i class="fas fa-history"></i> Activity Log</h3>';
     if (logArr.length === 0) {
       html += '<p style="color:#6B7280;font-size:13px">No updates yet.</p>';
     } else {
-      for (var l = 0; l < logArr.length; l++) {
-        var lg = logArr[l];
-        var icon = 'fa-info-circle';
-        var iconColor = '#3B6BF5';
-        if (lg.action.indexOf('Submitted') >= 0) { icon = 'fa-ticket-alt'; iconColor = '#3B6BF5'; }
-        else if (lg.action.indexOf('Assigned') >= 0) { icon = 'fa-user-check'; iconColor = '#f59e0b'; }
-        else if (lg.action.indexOf('Progress') >= 0) { icon = 'fa-spinner'; iconColor = '#06b6d4'; }
-        else if (lg.action.indexOf('TikTok') >= 0) { icon = 'fa-paper-plane'; iconColor = '#a855f7'; }
-        else if (lg.action.indexOf('Resolved') >= 0) { icon = 'fa-check-circle'; iconColor = '#22c55e'; }
-        html += '<div class="timeline-log"><div class="timeline-icon" style="background:' + iconColor + '15;color:' + iconColor + '"><i class="fas ' + icon + '"></i></div><div class="timeline-content"><p><strong>' + lg.by + '</strong> ' + lg.action + '</p><span class="time">' + new Date(lg.date).toLocaleString() + '</span>' + (lg.note ? '<div class="note">' + lg.note + '</div>' : '') + '</div></div>';
+      for (var g = 0; g < groupOrder.length; g++) {
+        var grp = groupOrder[g];
+        var items = stageGroups[grp];
+        if (items.length === 0) continue;
+        items.sort(function(a,b){ return a.date - b.date; });
+        var gi = groupIcons[grp];
+        html += '<div style="margin-bottom:1.5rem;border-left:3px solid ' + gi.co + ';padding-left:1rem">';
+        html += '<div style="display:flex;align-items:center;gap:.5rem;margin-bottom:.75rem"><div style="width:28px;height:28px;border-radius:50%;background:' + gi.co + '15;display:flex;align-items:center;justify-content:center;color:' + gi.co + ';font-size:12px"><i class="fas ' + gi.i + '"></i></div><span style="font-size:13px;font-weight:700;color:' + gi.co + ';text-transform:uppercase;letter-spacing:0.05em">' + grp + '</span><span style="margin-left:auto;font-size:11px;color:#6B7280">' + items.length + ' update' + (items.length>1?'s':'') + '</span></div>';
+        for (var ii = 0; ii < items.length; ii++) {
+          var it = items[ii];
+          html += '<div style="margin-bottom:.75rem;padding:.5rem .75rem;background:rgba(255,255,255,.03);border-radius:8px"><p style="font-size:13px;color:#e2e8f0"><strong>' + it.by + '</strong> <span style="color:#9CA3AF">' + it.action + '</span></p><p style="font-size:11px;color:#6B7280">' + new Date(it.date).toLocaleString() + '</p>' + (it.note ? '<p style="font-size:12px;color:#9CA3AF;margin-top:.25rem;padding:.35rem .5rem;background:rgba(15,23,42,.5);border-radius:6px;border-left:2px solid ' + gi.co + '">' + it.note + '</p>' : '') + '</div>';
+        }
+        html += '</div>';
+      }
+      if (stageGroups['Other'].length > 0) {
+        stageGroups['Other'].sort(function(a,b){ return a.date - b.date; });
+        for (var o = 0; o < stageGroups['Other'].length; o++) {
+          var ot = stageGroups['Other'][o];
+          html += '<div style="margin-bottom:.75rem;padding:.5rem .75rem;background:rgba(255,255,255,.03);border-radius:8px"><p style="font-size:13px;color:#e2e8f0"><strong>' + ot.by + '</strong> <span style="color:#9CA3AF">' + ot.action + '</span></p><p style="font-size:11px;color:#6B7280">' + new Date(ot.date).toLocaleString() + '</p>' + (ot.note ? '<p style="font-size:12px;color:#9CA3AF;margin-top:.25rem">' + ot.note + '</p>' : '') + '</div>';
+        }
       }
     }
     html += '</div></div>';
