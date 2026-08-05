@@ -23,16 +23,21 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 .card h2{font-size:1.25rem;font-weight:700;margin-bottom:1.5rem;text-align:center}
 .form-group{margin-bottom:1rem}
 .form-group label{display:block;font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;color:#6B7280;margin-bottom:.5rem}
-.form-group input,.form-group select{width:100%;padding:.875rem 1rem;background:rgba(255,255,255,.03);border:1px solid rgba(59,107,245,0.2);border-radius:10px;color:#fff;font-size:1rem;outline:none}
+.form-group input,.form-group select,.form-group textarea{width:100%;padding:.875rem 1rem;background:rgba(255,255,255,.03);border:1px solid rgba(59,107,245,0.2);border-radius:10px;color:#fff;font-size:1rem;outline:none;font-family:inherit}
 .form-group select option{background:#0A0D14;color:#fff;padding:.5rem}
-.form-group input:focus,.form-group select:focus{border-color:#3B6BF5}
-.form-group input::placeholder{color:#6B7280}
+.form-group textarea{resize:vertical;min-height:100px}
+.form-group input:focus,.form-group select:focus,.form-group textarea:focus{border-color:#3B6BF5}
+.form-group input::placeholder,.form-group textarea::placeholder{color:#6B7280}
 .btn{width:100%;padding:1rem;background:#3B6BF5;color:#fff;border:none;border-radius:10px;font-size:13px;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;cursor:pointer;transition:all .3s}
 .btn:hover{background:#5C8DFF}
 .btn-sm{padding:.6rem 1rem;font-size:12px;width:auto}
 .btn:disabled{opacity:0.5;cursor:not-allowed}
 .btn-outline{background:transparent;border:1px solid rgba(59,107,245,0.4);color:#3B6BF5}
 .btn-outline:hover{background:rgba(59,107,245,0.1)}
+.btn-green{background:#22c55e}
+.btn-green:hover{background:#16a34a}
+.btn-amber{background:#f59e0b}
+.btn-amber:hover{background:#d97706}
 .error-msg{background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.3);color:#fca5a5;padding:.75rem 1rem;border-radius:8px;margin-bottom:1rem;font-size:.875rem}
 .success-msg{background:rgba(34,197,94,.1);border:1px solid rgba(34,197,94,.3);color:#86efac;padding:.75rem 1rem;border-radius:8px;margin-bottom:1rem;font-size:.875rem}
 .nav{height:64px;background:rgba(5,5,8,0.9);backdrop-filter:blur(20px);border-bottom:1px solid rgba(59,107,245,0.1);display:flex;align-items:center;padding:0 1rem;position:sticky;top:0;z-index:100}
@@ -65,6 +70,11 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 .status-badge{display:inline-flex;align-items:center;gap:.35rem;padding:.3rem .6rem;border-radius:50px;font-size:10px;font-weight:600;border:1px solid}
 .status-active{border-color:rgba(34,197,94,.3);color:#86efac;background:rgba(34,197,94,.08)}
 .status-disabled{border-color:rgba(239,68,68,.3);color:#fca5a5;background:rgba(239,68,68,.08)}
+.status-open{border-color:rgba(59,107,245,.3);color:#93bbfd;background:rgba(59,107,245,.08)}
+.status-assigned{border-color:rgba(245,158,11,.3);color:#fcd34d;background:rgba(245,158,11,.08)}
+.status-progress{border-color:rgba(6,182,212,.3);color:#67e8f9;background:rgba(6,182,212,.08)}
+.status-tiktok{border-color:rgba(168,85,247,.3);color:#d8b4fe;background:rgba(168,85,247,.08)}
+.status-resolved{border-color:rgba(34,197,94,.3);color:#86efac;background:rgba(34,197,94,.08)}
 .icon-btn{padding:.5rem;border-radius:8px;background:none;border:none;color:#6B7280;cursor:pointer;transition:all .2s;font-size:12px}
 .icon-btn:hover{background:rgba(59,107,245,.1);color:#3B6BF5}
 .icon-btn.danger:hover{background:rgba(239,68,68,.1);color:#ef4444}
@@ -87,6 +97,35 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 .spinner{width:40px;height:40px;border:2px solid rgba(59,107,245,0.2);border-top-color:#3B6BF5;border-radius:50%;animation:spin 1s linear infinite;margin:0 auto}
 @keyframes spin{to{transform:rotate(360deg)}}
 
+/* Ticket timeline styles */
+.milestone-tracker{display:flex;justify-content:space-between;align-items:center;margin:1.5rem 0;padding:0 .5rem}
+.milestone{flex:1;text-align:center;position:relative}
+.milestone-dot{width:28px;height:28px;border-radius:50%;background:#1f2937;border:2px solid #374151;color:#6B7280;display:flex;align-items:center;justify-content:center;margin:0 auto .5rem;font-size:11px;font-weight:700}
+.milestone-dot.done{background:rgba(34,197,94,.15);border-color:rgba(34,197,94,.4);color:#86efac}
+.milestone-dot.active{background:rgba(59,107,245,.2);border-color:#3B6BF5;color:#3B6BF5}
+.milestone-label{font-size:10px;font-weight:600;color:#6B7280;text-transform:uppercase;letter-spacing:0.05em}
+.milestone-label.done{color:#86efac}
+.milestone-label.active{color:#3B6BF5}
+.milestone-line{position:absolute;top:14px;left:-50%;width:100%;height:2px;background:#1f2937;z-index:-1}
+.milestone-line.done{background:rgba(34,197,94,.3)}
+.milestone:first-child .milestone-line{display:none}
+.timeline-log{display:flex;gap:1rem;margin-bottom:1.25rem}
+.timeline-icon{width:36px;height:36px;border-radius:50%;background:rgba(59,107,245,.1);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:13px;color:#3B6BF5}
+.timeline-content{flex:1}
+.timeline-content p{font-size:13px;color:#F0F2F5;margin-bottom:.15rem}
+.timeline-content .time{font-size:11px;color:#6B7280}
+.timeline-content .note{font-size:12px;color:#9ca3af;margin-top:.35rem;background:rgba(255,255,255,.03);padding:.5rem .75rem;border-radius:8px;border-left:2px solid rgba(59,107,245,.3)}
+.ticket-card{background:#0A0D14;border:1px solid rgba(59,107,245,0.15);border-radius:16px;padding:1.25rem;margin-bottom:.75rem;cursor:pointer;transition:all .2s}
+.ticket-card:hover{border-color:rgba(59,107,245,0.35)}
+.ticket-card-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:.75rem}
+.ticket-card-title{font-weight:600;font-size:14px;margin-bottom:.25rem}
+.ticket-card-meta{font-size:12px;color:#6B7280}
+.screenshot-thumb{max-width:100%;max-height:200px;border-radius:8px;border:1px solid rgba(59,107,245,.2);margin-top:.75rem;cursor:zoom-in}
+.screenshot-full{max-width:100%;border-radius:12px;border:1px solid rgba(59,107,245,.3)}
+.file-upload-area{border:2px dashed rgba(59,107,245,.25);border-radius:12px;padding:1.5rem;text-align:center;cursor:pointer;transition:all .2s;color:#6B7280;font-size:13px}
+.file-upload-area:hover{border-color:rgba(59,107,245,.5);background:rgba(59,107,245,.05)}
+.file-upload-area i{font-size:1.5rem;margin-bottom:.5rem;display:block;color:#3B6BF5}
+
 @media(max-width:768px){
   .container{padding:1rem}
   .stats-grid{grid-template-columns:repeat(2,1fr);gap:.5rem}
@@ -100,6 +139,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
   .nav-brand span{font-size:13px}
   .nav a{font-size:11px;margin-right:.75rem}
   .config-item{flex-direction:column;align-items:flex-start;gap:.5rem}
+  .milestone-tracker{overflow-x:auto;padding-bottom:.5rem}
+  .milestone-label{font-size:9px}
 }
 @media(min-width:769px){
   .stats-grid{grid-template-columns:repeat(4,1fr)}
@@ -158,6 +199,54 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
   <div class="container" id="mainContent"></div>
 </div>
 
+<!-- Ticket Submit Modal -->
+<div class="modal-overlay" id="ticketModal">
+  <div class="modal">
+    <div class="modal-header">
+      <h3>Submit Support Ticket</h3>
+      <button type="button" class="modal-close" id="ticketModalClose">&times;</button>
+    </div>
+    <div class="modal-body">
+      <div id="ticketMsg"></div>
+      <div class="form-group"><label>Issue / Subject *</label><input id="tTitle" placeholder="e.g. Config not connecting"></div>
+      <div class="form-group"><label>Details *</label><textarea id="tDetails" placeholder="Describe your issue in detail..."></textarea></div>
+      <div class="form-group">
+        <label>Screenshot (optional)</label>
+        <div class="file-upload-area" id="tFileArea" onclick="document.getElementById('tFile').click()">
+          <i class="fas fa-cloud-upload-alt"></i>
+          <span id="tFileLabel">Click to upload screenshot</span>
+        </div>
+        <input type="file" id="tFile" accept="image/*" style="display:none" onchange="onTicketFile(this)">
+        <img id="tFilePreview" style="display:none;max-width:100%;max-height:150px;border-radius:8px;margin-top:.5rem;border:1px solid rgba(59,107,245,.2)">
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary btn-sm" id="ticketModalCancel">Cancel</button>
+      <button type="button" class="btn btn-sm" id="ticketModalSubmit">Submit Ticket</button>
+    </div>
+  </div>
+</div>
+
+<!-- Ticket Status Update Modal (Admin) -->
+<div class="modal-overlay" id="statusModal">
+  <div class="modal">
+    <div class="modal-header">
+      <h3>Update Ticket Status</h3>
+      <button type="button" class="modal-close" id="statusModalClose">&times;</button>
+    </div>
+    <div class="modal-body">
+      <div id="statusMsg"></div>
+      <div class="form-group"><label>Status *</label><select id="sStatus"><option value="open">Open</option><option value="assigned">Assigned</option><option value="in-progress">In Progress</option><option value="submitted-to-tiktok">Submitted to TikTok</option><option value="resolved">Resolved</option></select></div>
+      <div class="form-group"><label>Note / Update</label><textarea id="sNote" placeholder="e.g. Assigned to Manager Sarah, investigating..."></textarea></div>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary btn-sm" id="statusModalCancel">Cancel</button>
+      <button type="button" class="btn btn-sm" id="statusModalSubmit">Update Status</button>
+    </div>
+  </div>
+</div>
+
+<!-- Password Reset Modal -->
 <div class="modal-overlay" id="pwdModal">
   <div class="modal">
     <div class="modal-header">
@@ -175,6 +264,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
   </div>
 </div>
 
+<!-- Add Host Modal -->
 <div class="modal-overlay" id="hostModal">
   <div class="modal">
     <div class="modal-header">
@@ -201,11 +291,16 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 </div>
 
 <script>
+
 var db = null;
 var currentUser = null;
 var allHosts = [];
 var allConfigs = [];
+var allTickets = [];
 var currentPage = 'dashboard';
+var currentTicketId = null;
+var statusTicketId = null;
+var ticketScreenshotData = null;
 
 function showError(msg) {
   var el = document.getElementById('loginError');
@@ -247,6 +342,32 @@ function fbGet(path) { return db.ref(path).once('value').then(function(s){ retur
 function fbSet(path, val) { return db.ref(path).set(val); }
 function fbUp(path, val) { return db.ref(path).update(val); }
 function fbRm(path) { return db.ref(path).remove(); }
+function fbPush(path, val) { return db.ref(path).push(val); }
+
+function ensureAdmin() {
+  var adminId = 'admin_1';
+  var adminUser = 'admin';
+  var adminPass = 'lionforce2026';
+  fbGet('server/hosts/' + adminId).then(function(data) {
+    if (!data) {
+      return fbSet('server/hosts/' + adminId, {
+        id: adminId,
+        name: 'Admin',
+        username: adminUser,
+        email: 'admin@thelionforce.com',
+        password: hashPW(adminPass),
+        provider: 'The Lion Force',
+        region: 'UAE',
+        role: 'admin',
+        status: 'active',
+        configFileId: null,
+        createdAt: Date.now()
+      });
+    }
+  }).catch(function(e) {
+    console.log('Admin check failed', e);
+  });
+}
 
 function showPage(id) {
   var pages = document.getElementsByClassName('page');
@@ -320,6 +441,7 @@ function renderNav() {
   document.getElementById('navUser').textContent = currentUser ? currentUser.name : '';
   var links = '';
   links += '<a href="#" onclick="goPage(\'dashboard\');return false"' + (currentPage === 'dashboard' ? ' class="active"' : '') + '>Dashboard</a>';
+  links += '<a href="#" onclick="goPage(\'tickets\');return false"' + (currentPage === 'tickets' ? ' class="active"' : '') + '>Tickets</a>';
   if (isAdmin) {
     links += '<a href="#" onclick="goPage(\'hosts\');return false"' + (currentPage === 'hosts' ? ' class="active"' : '') + '>Hosts</a>';
     links += '<a href="#" onclick="goPage(\'configs\');return false"' + (currentPage === 'configs' ? ' class="active"' : '') + '>Configs</a>';
@@ -331,74 +453,299 @@ function goPage(p) {
   currentPage = p;
   renderNav();
   if (p === 'dashboard') renderDashboard();
+  else if (p === 'tickets') renderTickets();
   else if (p === 'hosts') renderHosts();
   else if (p === 'configs') renderConfigs();
   else if (p === 'upload') renderUpload();
+  else if (p === 'ticketDetail') renderTicketDetail(currentTicketId);
 }
 
 function renderDashboard() {
   var el = document.getElementById('mainContent');
   var isAdmin = currentUser.role === 'admin';
   if (!isAdmin) {
-    fbGet('server/configs').then(function(cs) {
+    Promise.all([fbGet('server/configs'), fbGet('server/tickets')]).then(function(results) {
+      var cs = results[0] || {};
+      var ts = results[1] || {};
       var mc = null;
       for (var k in cs) { if (cs[k] && cs[k].assignedTo === currentUser.id) { mc = cs[k]; break; } }
-      el.innerHTML = hostView(mc);
+      var myTickets = [];
+      for (var k2 in ts) { if (ts[k2] && ts[k2].hostId === currentUser.id) myTickets.push(ts[k2]); }
+      var openCount = 0;
+      for (var i = 0; i < myTickets.length; i++) { if (myTickets[i].status !== 'resolved') openCount++; }
+      var html = '<div class="stats-grid">' +
+        '<div class="stat-card"><i class="fas fa-shield-alt" style="color:#3B6BF5"></i><div class="num">' + (mc ? '1' : '0') + '</div><div class="label">Config Files</div></div>' +
+        '<div class="stat-card"><i class="fas fa-ticket-alt" style="color:#00D4FF"></i><div class="num">' + myTickets.length + '</div><div class="label">Total Tickets</div></div>' +
+        '<div class="stat-card"><i class="fas fa-exclamation-circle" style="color:#f59e0b"></i><div class="num">' + openCount + '</div><div class="label">Open Issues</div></div>' +
+        '<div class="stat-card"><i class="fas fa-check-circle" style="color:#22c55e"></i><div class="num">' + (myTickets.length - openCount) + '</div><div class="label">Resolved</div></div>' +
+        '</div>';
+      html += '<div class="action-grid">' +
+        '<button class="action-card" onclick="goPage(\'tickets\')"><div class="action-icon"><i class="fas fa-ticket-alt" style="color:#f59e0b"></i></div><div><h3>My Support Tickets</h3><p>Submit and track your issues</p></div></button>' +
+        '<button class="action-card" onclick="downloadConfig()"><div class="action-icon"><i class="fas fa-download" style="color:#22c55e"></i></div><div><h3>Download Config</h3><p>Get your WireGuard config</p></div></button>' +
+        '</div>';
+      html += '<div class="card" style="margin-top:1.5rem"><h3 style="margin-bottom:1rem"><i class="fas fa-user" style="color:#3B6BF5"></i> Your Profile</h3><div style="display:grid;gap:.75rem">';
+      html += '<div style="display:flex;align-items:center;gap:.75rem"><i class="fas fa-user" style="color:#3B6BF5;width:20px"></i><div><span style="color:#6B7280;font-size:12px">Name</span><p style="font-weight:600">' + currentUser.name + '</p></div></div>';
+      if (currentUser.username) html += '<div style="display:flex;align-items:center;gap:.75rem"><i class="fas fa-id-badge" style="color:#3B6BF5;width:20px"></i><div><span style="color:#6B7280;font-size:12px">Username</span><p style="font-weight:600">' + currentUser.username + '</p></div></div>';
+      if (currentUser.tiktokUsername) html += '<div style="display:flex;align-items:center;gap:.75rem"><i class="fab fa-tiktok" style="color:#3B6BF5;width:20px"></i><div><span style="color:#6B7280;font-size:12px">TikTok</span><p style="font-weight:600">@' + currentUser.tiktokUsername + '</p></div></div>';
+      html += '<div style="display:flex;align-items:center;gap:.75rem"><i class="fas fa-server" style="color:#3B6BF5;width:20px"></i><div><span style="color:#6B7280;font-size:12px">Provider</span><p style="font-weight:600">' + currentUser.provider + '</p></div></div>';
+      html += '<div style="display:flex;align-items:center;gap:.75rem"><i class="fas fa-map-marker-alt" style="color:#3B6BF5;width:20px"></i><div><span style="color:#6B7280;font-size:12px">Region</span><p style="font-weight:600">' + currentUser.region + '</p></div></div>';
+      html += '</div></div>';
+      el.innerHTML = html;
     });
     return;
   }
-  Promise.all([fbGet('server/hosts'), fbGet('server/configs')]).then(function(results) {
+  Promise.all([fbGet('server/hosts'), fbGet('server/configs'), fbGet('server/tickets')]).then(function(results) {
     var d = results[0] || {};
     var cs = results[1] || {};
+    var ts = results[2] || {};
     allHosts = []; for (var k in d) { if (d[k]) allHosts.push(d[k]); }
     allConfigs = []; for (var k2 in cs) { if (cs[k2]) allConfigs.push(cs[k2]); }
+    allTickets = []; for (var k3 in ts) { if (ts[k3]) allTickets.push(ts[k3]); }
     var active = 0, disabled = 0;
     for (var i = 0; i < allHosts.length; i++) { if (allHosts[i].status === 'active') active++; else disabled++; }
+    var openTickets = 0;
+    for (var j = 0; j < allTickets.length; j++) { if (allTickets[j].status !== 'resolved') openTickets++; }
     var html = '<div class="stats-grid">' +
       '<div class="stat-card"><i class="fas fa-users" style="color:#3B6BF5"></i><div class="num">' + allHosts.length + '</div><div class="label">Total Hosts</div></div>' +
       '<div class="stat-card"><i class="fas fa-shield-alt" style="color:#22c55e"></i><div class="num">' + active + '</div><div class="label">Active</div></div>' +
-      '<div class="stat-card"><i class="fas fa-user-slash" style="color:#f59e0b"></i><div class="num">' + disabled + '</div><div class="label">Disabled</div></div>' +
       '<div class="stat-card"><i class="fas fa-file-shield" style="color:#00D4FF"></i><div class="num">' + allConfigs.length + '</div><div class="label">Config Files</div></div>' +
+      '<div class="stat-card"><i class="fas fa-ticket-alt" style="color:#f59e0b"></i><div class="num">' + openTickets + '</div><div class="label">Open Tickets</div></div>' +
       '</div>' +
       '<div class="action-grid">' +
       '<button class="action-card" onclick="goPage(\'hosts\')"><div class="action-icon"><i class="fas fa-users" style="color:#3B6BF5"></i></div><div><h3>Manage Hosts</h3><p>Add, edit, disable hosts</p></div></button>' +
       '<button class="action-card" onclick="goPage(\'configs\')"><div class="action-icon"><i class="fas fa-file-shield" style="color:#00D4FF"></i></div><div><h3>Config Files</h3><p>Upload and assign configs</p></div></button>' +
+      '<button class="action-card" onclick="goPage(\'tickets\')"><div class="action-icon"><i class="fas fa-ticket-alt" style="color:#f59e0b"></i></div><div><h3>Support Tickets</h3><p>View and manage host issues</p></div></button>' +
       '</div>' +
-      '<div class="hosts-table"><div style="padding:1rem 1.5rem;border-bottom:1px solid rgba(59,107,245,0.1);display:flex;justify-content:space-between;align-items:center"><h3 style="font-size:1rem">All Hosts</h3><button class="btn btn-sm" onclick="goPage(\'hosts\')">View All</button></div>' +
-      (allHosts.length === 0 ? '<div class="empty-state"><i class="fas fa-users"></i><p>No hosts yet. Add your first host.</p></div>' : renderHostRows(allHosts.slice(0,5))) +
+      '<div class="hosts-table"><div style="padding:1rem 1.5rem;border-bottom:1px solid rgba(59,107,245,0.1);display:flex;justify-content:space-between;align-items:center"><h3 style="font-size:1rem">Recent Tickets</h3><button class="btn btn-sm" onclick="goPage(\'tickets\')">View All</button></div>' +
+      (allTickets.length === 0 ? '<div class="empty-state"><i class="fas fa-ticket-alt"></i><p>No tickets yet.</p></div>' : renderTicketRows(allTickets.slice(0,5), true)) +
       '</div>';
     el.innerHTML = html;
   });
 }
 
-function renderHostRows(hosts) {
-  var html = '<table><tbody>';
-  for (var i = 0; i < hosts.length; i++) {
-    var h = hosts[i];
-    html += '<tr><td><div style="display:flex;align-items:center;gap:.75rem"><div class="avatar">' + h.name.charAt(0) + '</div><div><p style="font-weight:600">' + h.name + '</p><p style="color:#6B7280;font-size:12px">' + (h.username || h.email) + '</p></div></div></td>' +
-      '<td><span style="color:#6B7280;font-size:12px"><i class="fas fa-server"></i> ' + h.provider + ' <i class="fas fa-map-marker-alt" style="margin-left:.5rem"></i> ' + h.region + '</span></td>' +
-      '<td><span class="status-badge ' + (h.status === 'active' ? 'status-active' : 'status-disabled') + '">' + h.status + '</span></td></tr>';
+function renderTickets() {
+  var el = document.getElementById('mainContent');
+  var isAdmin = currentUser.role === 'admin';
+  if (!isAdmin) {
+    fbGet('server/tickets').then(function(ts) {
+      var myTickets = [];
+      for (var k in ts) { if (ts[k] && ts[k].hostId === currentUser.id) myTickets.push(ts[k]); }
+      myTickets.sort(function(a,b){ return b.createdAt - a.createdAt; });
+      var html = '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1.5rem"><h2 style="font-size:1.25rem;font-weight:700">My Support Tickets (' + myTickets.length + ')</h2><button class="btn btn-sm" onclick="openTicketModal()"><i class="fas fa-plus"></i> Submit Ticket</button></div>';
+      if (myTickets.length === 0) {
+        html += '<div class="empty-state"><i class="fas fa-ticket-alt"></i><p>No tickets yet. Click Submit Ticket to create one.</p></div>';
+      } else {
+        html += '<div class="hosts-table"><table><thead><tr><th>Ticket</th><th>Status</th><th>Last Updated</th><th>Actions</th></tr></thead><tbody>';
+        for (var i = 0; i < myTickets.length; i++) {
+          var t = myTickets[i];
+          var statusClass = 'status-' + t.status;
+          var statusLabel = t.status.replace(/-/g, ' ');
+          var dateStr = t.updatedAt ? new Date(t.updatedAt).toLocaleDateString() : new Date(t.createdAt).toLocaleDateString();
+          html += '<tr><td><p style="font-weight:600">' + t.title + '</p><p style="color:#6B7280;font-size:12px">' + t.details.substring(0,60) + (t.details.length > 60 ? '...' : '') + '</p></td>';
+          html += '<td><span class="status-badge ' + statusClass + '">' + statusLabel + '</span></td>';
+          html += '<td style="color:#6B7280;font-size:12px">' + dateStr + '</td>';
+          html += '<td><button class="icon-btn" onclick="viewTicket(\'' + t.id + '\')" title="View Details"><i class="fas fa-eye"></i></button></td></tr>';
+        }
+        html += '</tbody></table></div>';
+      }
+      el.innerHTML = html;
+    });
+    return;
   }
-  html += '</tbody></table>';
+  Promise.all([fbGet('server/tickets'), fbGet('server/hosts')]).then(function(results) {
+    var ts = results[0] || {};
+    var hs = results[1] || {};
+    allTickets = []; for (var k in ts) { if (ts[k]) allTickets.push(ts[k]); }
+    allHosts = []; for (var k2 in hs) { if (hs[k2]) allHosts.push(hs[k2]); }
+    allTickets.sort(function(a,b){ return b.createdAt - a.createdAt; });
+    var html = '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1.5rem"><h2 style="font-size:1.25rem;font-weight:700">All Support Tickets (' + allTickets.length + ')</h2></div>';
+    html += renderTicketRows(allTickets, true);
+    el.innerHTML = html;
+  });
+}
+
+function renderTicketRows(tickets, clickable) {
+  if (tickets.length === 0) return '<div class="empty-state"><i class="fas fa-ticket-alt"></i><p>No tickets yet.</p></div>';
+  var html = '<div class="hosts-table"><table><thead><tr><th>Ticket</th><th>Host</th><th>Status</th><th>Assigned To</th><th>Date</th><th>Actions</th></tr></thead><tbody>';
+  for (var i = 0; i < tickets.length; i++) {
+    var t = tickets[i];
+    var h = null;
+    for (var j = 0; j < allHosts.length; j++) { if (allHosts[j].id === t.hostId) { h = allHosts[j]; break; } }
+    var statusClass = 'status-' + t.status;
+    var statusLabel = t.status.replace(/-/g, ' ');
+    var dateStr = t.updatedAt ? new Date(t.updatedAt).toLocaleDateString() : new Date(t.createdAt).toLocaleDateString();
+    html += '<tr><td><p style="font-weight:600">' + t.title + '</p><p style="color:#6B7280;font-size:11px">' + t.details.substring(0,50) + (t.details.length > 50 ? '...' : '') + '</p></td>';
+    html += '<td><div style="display:flex;align-items:center;gap:.5rem"><div class="avatar" style="width:24px;height:24px;font-size:10px">' + (h ? h.name.charAt(0) : '?') + '</div><span style="font-size:12px">' + (h ? h.name : 'Unknown') + '</span></div></td>';
+    html += '<td><span class="status-badge ' + statusClass + '">' + statusLabel + '</span></td>';
+    html += '<td style="font-size:12px;color:#6B7280">' + (t.assignedToName || '-') + '</td>';
+    html += '<td style="color:#6B7280;font-size:12px">' + dateStr + '</td>';
+    html += '<td><button class="icon-btn" onclick="viewTicket(\'' + t.id + '\')" title="View Details"><i class="fas fa-eye"></i></button>' + (currentUser.role === 'admin' ? '<button class="icon-btn" onclick="openStatusModal(\'' + t.id + '\')" title="Update Status" style="color:#3B6BF5"><i class="fas fa-edit"></i></button>' : '') + '</td></tr>';
+  }
+  html += '</tbody></table></div>';
   return html;
 }
 
-function hostView(mc) {
-  var html = '<div style="max-width:600px;margin:0 auto"><div class="card" style="margin-bottom:1.5rem"><h3 style="margin-bottom:1rem"><i class="fas fa-user" style="color:#3B6BF5"></i> Your Profile</h3><div style="display:grid;gap:.75rem">';
-  html += '<div style="display:flex;align-items:center;gap:.75rem"><i class="fas fa-user" style="color:#3B6BF5;width:20px"></i><div><span style="color:#6B7280;font-size:12px">Name</span><p style="font-weight:600">' + currentUser.name + '</p></div></div>';
-  if (currentUser.username) html += '<div style="display:flex;align-items:center;gap:.75rem"><i class="fas fa-id-badge" style="color:#3B6BF5;width:20px"></i><div><span style="color:#6B7280;font-size:12px">Username</span><p style="font-weight:600">' + currentUser.username + '</p></div></div>';
-  if (currentUser.tiktokUsername) html += '<div style="display:flex;align-items:center;gap:.75rem"><i class="fab fa-tiktok" style="color:#3B6BF5;width:20px"></i><div><span style="color:#6B7280;font-size:12px">TikTok</span><p style="font-weight:600">@' + currentUser.tiktokUsername + '</p></div></div>';
-  html += '<div style="display:flex;align-items:center;gap:.75rem"><i class="fas fa-server" style="color:#3B6BF5;width:20px"></i><div><span style="color:#6B7280;font-size:12px">Provider</span><p style="font-weight:600">' + currentUser.provider + '</p></div></div>';
-  html += '<div style="display:flex;align-items:center;gap:.75rem"><i class="fas fa-map-marker-alt" style="color:#3B6BF5;width:20px"></i><div><span style="color:#6B7280;font-size:12px">Region</span><p style="font-weight:600">' + currentUser.region + '</p></div></div>';
-  html += '</div></div><div class="card"><h3 style="margin-bottom:1rem"><i class="fas fa-shield-alt" style="color:#3B6BF5"></i> WireGuard Config</h3>';
-  if (mc) {
-    html += '<div style="background:rgba(59,107,245,0.05);border-radius:12px;padding:1rem;margin-bottom:1rem"><p style="color:#6B7280;font-size:12px">Config File</p><p style="font-weight:600">' + mc.fileName + '</p><p style="color:#6B7280;font-size:12px">' + mc.provider + ' - ' + mc.region + '</p></div>';
-    html += '<button class="btn" onclick="downloadConfig()"><i class="fas fa-download"></i> Download Config</button>';
-  } else {
-    html += '<div style="background:rgba(245,158,11,0.05);border:1px solid rgba(245,158,11,0.2);border-radius:12px;padding:1rem"><p style="color:#f59e0b;font-weight:600;font-size:14px">No config assigned yet.</p><p style="color:#6B7280;font-size:12px;margin-top:.25rem">Your admin will assign a config file to you soon.</p></div>';
+function viewTicket(tid) {
+  currentTicketId = tid;
+  goPage('ticketDetail');
+}
+
+function renderTicketDetail(tid) {
+  var el = document.getElementById('mainContent');
+  var isAdmin = currentUser.role === 'admin';
+  Promise.all([fbGet('server/tickets/' + tid), fbGet('server/ticketLogs/' + tid)]).then(function(results) {
+    var t = results[0];
+    var logs = results[1] || {};
+    if (!t) { goPage('tickets'); return; }
+    var logArr = [];
+    for (var k in logs) { if (logs[k]) { logs[k]._key = k; logArr.push(logs[k]); } }
+    logArr.sort(function(a,b){ return a.date - b.date; });
+    var h = null;
+    for (var i = 0; i < allHosts.length; i++) { if (allHosts[i].id === t.hostId) { h = allHosts[i]; break; } }
+
+    // Milestone tracker
+    var stages = ['open','assigned','in-progress','submitted-to-tiktok','resolved'];
+    var stageLabels = ['Submitted','Assigned','In Progress','TikTok','Resolved'];
+    var currentStageIdx = stages.indexOf(t.status);
+    if (currentStageIdx < 0) currentStageIdx = 0;
+
+    var html = '<div style="max-width:800px;margin:0 auto">';
+    html += '<div style="display:flex;align-items:center;gap:1rem;margin-bottom:1.5rem"><button class="icon-btn" onclick="goPage(\'tickets\')"><i class="fas fa-arrow-left"></i></button><h2 style="font-size:1.25rem;font-weight:700">Ticket #' + tid.replace('ticket_','') + '</h2>' + (isAdmin ? '<button class="btn btn-sm" style="margin-left:auto" onclick="openStatusModal(\'' + tid + '\')"><i class="fas fa-edit"></i> Update Status</button>' : '') + '</div>';
+
+    // Milestone tracker
+    html += '<div class="card" style="margin-bottom:1.5rem"><h3 style="font-size:14px;font-weight:600;margin-bottom:1rem;color:#6B7280;text-transform:uppercase;letter-spacing:0.05em">Progress Tracker</h3><div class="milestone-tracker">';
+    for (var s = 0; s < stages.length; s++) {
+      var done = s <= currentStageIdx;
+      var active = s === currentStageIdx;
+      html += '<div class="milestone"><div class="milestone-line' + (done ? ' done' : '') + '"></div><div class="milestone-dot' + (done ? ' done' : '') + (active ? ' active' : '') + '">' + (done && !active ? '<i class="fas fa-check" style="font-size:10px"></i>' : (s+1)) + '</div><div class="milestone-label' + (done ? ' done' : '') + (active ? ' active' : '') + '">' + stageLabels[s] + '</div></div>';
+    }
+    html += '</div></div>';
+
+    // Ticket info card
+    html += '<div class="card" style="margin-bottom:1.5rem"><div class="ticket-card-header"><div><h3 style="font-size:16px;font-weight:700;margin-bottom:.5rem">' + t.title + '</h3><p style="color:#6B7280;font-size:12px"><i class="fas fa-user"></i> ' + (h ? h.name : 'Unknown') + ' <span style="margin-left:1rem"><i class="fas fa-calendar"></i> ' + new Date(t.createdAt).toLocaleString() + '</span></p></div><span class="status-badge status-' + t.status + '">' + t.status.replace(/-/g,' ') + '</span></div><p style="font-size:14px;line-height:1.6;margin:1rem 0">' + t.details + '</p>';
+    if (t.screenshot) {
+      html += '<p style="color:#6B7280;font-size:12px;margin-bottom:.5rem"><i class="fas fa-image"></i> Screenshot</p><img src="' + t.screenshot + '" class="screenshot-full" onclick="window.open(this.src)" style="cursor:zoom-in">';
+    }
+    html += '</div>';
+
+    // Timeline / Activity Log
+    html += '<div class="card"><h3 style="font-size:14px;font-weight:600;margin-bottom:1.5rem;color:#6B7280;text-transform:uppercase;letter-spacing:0.05em"><i class="fas fa-history"></i> Activity Log</h3>';
+    if (logArr.length === 0) {
+      html += '<p style="color:#6B7280;font-size:13px">No updates yet.</p>';
+    } else {
+      for (var l = 0; l < logArr.length; l++) {
+        var lg = logArr[l];
+        var icon = 'fa-info-circle';
+        var iconColor = '#3B6BF5';
+        if (lg.action.indexOf('Submitted') >= 0) { icon = 'fa-ticket-alt'; iconColor = '#3B6BF5'; }
+        else if (lg.action.indexOf('Assigned') >= 0) { icon = 'fa-user-check'; iconColor = '#f59e0b'; }
+        else if (lg.action.indexOf('Progress') >= 0) { icon = 'fa-spinner'; iconColor = '#06b6d4'; }
+        else if (lg.action.indexOf('TikTok') >= 0) { icon = 'fa-paper-plane'; iconColor = '#a855f7'; }
+        else if (lg.action.indexOf('Resolved') >= 0) { icon = 'fa-check-circle'; iconColor = '#22c55e'; }
+        html += '<div class="timeline-log"><div class="timeline-icon" style="background:' + iconColor + '15;color:' + iconColor + '"><i class="fas ' + icon + '"></i></div><div class="timeline-content"><p><strong>' + lg.by + '</strong> ' + lg.action + '</p><span class="time">' + new Date(lg.date).toLocaleString() + '</span>' + (lg.note ? '<div class="note">' + lg.note + '</div>' : '') + '</div></div>';
+      }
+    }
+    html += '</div></div>';
+    el.innerHTML = html;
+  });
+}
+
+function openTicketModal() {
+  ticketScreenshotData = null;
+  document.getElementById('tTitle').value = '';
+  document.getElementById('tDetails').value = '';
+  document.getElementById('tFile').value = '';
+  document.getElementById('tFileLabel').textContent = 'Click to upload screenshot';
+  document.getElementById('tFilePreview').style.display = 'none';
+  document.getElementById('ticketMsg').innerHTML = '';
+  document.getElementById('ticketModal').classList.add('active');
+}
+function closeTicketModal() {
+  document.getElementById('ticketModal').classList.remove('active');
+}
+
+function onTicketFile(input) {
+  var file = input.files[0];
+  if (!file) return;
+  document.getElementById('tFileLabel').textContent = file.name;
+  var reader = new FileReader();
+  reader.onload = function(e) {
+    ticketScreenshotData = e.target.result;
+    var img = document.getElementById('tFilePreview');
+    img.src = ticketScreenshotData;
+    img.style.display = 'block';
+  };
+  reader.readAsDataURL(file);
+}
+
+function submitTicket() {
+  var title = document.getElementById('tTitle').value.trim();
+  var details = document.getElementById('tDetails').value.trim();
+  if (!title || !details) {
+    document.getElementById('ticketMsg').innerHTML = '<div class="error-msg">Title and Details are required</div>';
+    return;
   }
-  html += '</div></div>';
-  return html;
+  var id = 'ticket_' + Date.now();
+  var ticketData = {
+    id: id, hostId: currentUser.id, hostName: currentUser.name,
+    title: title, details: details,
+    screenshot: ticketScreenshotData || null,
+    screenshotName: ticketScreenshotData ? (document.getElementById('tFile').files[0] ? document.getElementById('tFile').files[0].name : 'screenshot.png') : null,
+    status: 'open', assignedTo: null, assignedToName: null,
+    createdAt: Date.now(), updatedAt: Date.now()
+  };
+  fbSet('server/tickets/' + id, ticketData).then(function() {
+    return fbSet('server/ticketLogs/' + id + '/log_1', {
+      date: Date.now(), by: currentUser.name, action: 'Ticket Submitted', note: ''
+    });
+  }).then(function() {
+    closeTicketModal();
+    goPage('tickets');
+  }).catch(function(err) {
+    document.getElementById('ticketMsg').innerHTML = '<div class="error-msg">' + err.message + '</div>';
+  });
+}
+
+function openStatusModal(tid) {
+  statusTicketId = tid;
+  document.getElementById('sStatus').value = 'open';
+  document.getElementById('sNote').value = '';
+  document.getElementById('statusMsg').innerHTML = '';
+  document.getElementById('statusModal').classList.add('active');
+}
+function closeStatusModal() {
+  document.getElementById('statusModal').classList.remove('active');
+  statusTicketId = null;
+}
+
+function submitStatusUpdate() {
+  var status = document.getElementById('sStatus').value;
+  var note = document.getElementById('sNote').value.trim();
+  if (!statusTicketId) return;
+  var actionText = 'Status updated to ' + status.replace(/-/g,' ');
+  if (status === 'assigned') actionText = 'Assigned to manager';
+  if (status === 'in-progress') actionText = 'Issue is being investigated';
+  if (status === 'submitted-to-tiktok') actionText = 'Submitted to TikTok Support';
+  if (status === 'resolved') actionText = 'Issue Resolved';
+
+  var updates = { status: status, updatedAt: Date.now() };
+  if (status === 'assigned' && !note) {
+    document.getElementById('statusMsg').innerHTML = '<div class="error-msg">Please enter manager name in the note field</div>';
+    return;
+  }
+  if (note && status === 'assigned') {
+    updates.assignedToName = note;
+  }
+
+  fbUp('server/tickets/' + statusTicketId, updates).then(function() {
+    var logData = { date: Date.now(), by: currentUser.name || 'Admin', action: actionText, note: note || '' };
+    return fbPush('server/ticketLogs/' + statusTicketId, logData);
+  }).then(function() {
+    closeStatusModal();
+    renderTicketDetail(statusTicketId);
+  }).catch(function(err) {
+    document.getElementById('statusMsg').innerHTML = '<div class="error-msg">' + err.message + '</div>';
+  });
 }
 
 function renderHosts() {
@@ -675,14 +1022,21 @@ document.getElementById('modalSubmitBtn').addEventListener('click', submitHost);
 document.getElementById('pwdModalClose').addEventListener('click', closePwdModal);
 document.getElementById('pwdModalCancel').addEventListener('click', closePwdModal);
 document.getElementById('pwdModalSubmit').addEventListener('click', submitPwdReset);
+document.getElementById('ticketModalClose').addEventListener('click', closeTicketModal);
+document.getElementById('ticketModalCancel').addEventListener('click', closeTicketModal);
+document.getElementById('ticketModalSubmit').addEventListener('click', submitTicket);
+document.getElementById('statusModalClose').addEventListener('click', closeStatusModal);
+document.getElementById('statusModalCancel').addEventListener('click', closeStatusModal);
+document.getElementById('statusModalSubmit').addEventListener('click', submitStatusUpdate);
 
-// Enter key on login inputs
+// Enter key on login
 document.getElementById('loginPass').addEventListener('keypress', function(e) {
   if (e.key === 'Enter') doLogin();
 });
 
 // Init
 initFirebase();
+ensureAdmin();
 var saved = localStorage.getItem('lf_server_user');
 if (saved) {
   try {
