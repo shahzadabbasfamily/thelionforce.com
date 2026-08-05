@@ -18,9 +18,11 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 .login-logo p{color:#64748b;font-size:.875rem;margin-top:.25rem}
 .form-group{margin-bottom:1rem}
 .form-group label{display:block;font-size:12px;font-weight:600;color:#475569;margin-bottom:.35rem;text-transform:uppercase;letter-spacing:0.05em}
-.form-group input,.form-group select{width:100%;padding:.75rem 1rem;background:#f8fafc;border:1px solid #e2e8f0;border-radius:10px;color:#0f172a;font-size:14px;outline:none}
-.form-group input:focus{border-color:#3B6BF5}
-.form-group input::placeholder{color:#94a3b8}
+.form-group input,.form-group select,.form-group textarea{width:100%;padding:.75rem 1rem;background:#f8fafc;border:1px solid #e2e8f0;border-radius:10px;color:#0f172a;font-size:14px;outline:none;font-family:inherit}
+.form-group input:focus,.form-group select:focus,.form-group textarea:focus{border-color:#3B6BF5}
+.form-group input::placeholder,.form-group textarea::placeholder{color:#94a3b8}
+.form-group textarea{min-height:100px;resize:vertical}
+.form-group select option{background:#fff;color:#0f172a}
 .btn{width:100%;padding:1rem;background:#3B6BF5;color:#fff;border:none;border-radius:10px;font-size:13px;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;cursor:pointer;transition:all .2s}
 .btn:hover{background:#5C8DFF}
 .btn-sm{padding:.5rem 1rem;font-size:12px;width:auto}
@@ -192,8 +194,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
     <div class="modal-body">
       <div id="upMsg"></div>
       <div class="form-group"><label>Status</label><select id="upStatus"><option value="open">Open</option><option value="assigned">Assigned</option><option value="in-progress">In Progress</option><option value="submitted-to-tiktok">Submitted to TikTok</option><option value="resolved">Resolved</option></select></div>
-      <div class="form-group"><label>Assigned Manager (optional)</label><input id="upManager" placeholder="Manager name"></div>
-      <div class="form-group"><label>Update Note</label><textarea id="upNote" placeholder="What action was taken..."></textarea></div>
+      <div class="form-group"><label>Assigned Manager (optional)</label><select id="upManager"><option value="">-- Select Manager --</option></select></div>
+      <div class="form-group"><label>Update Note</label><textarea id="upNote" rows="4" placeholder="What action was taken..."></textarea></div>
     </div>
     <div class="modal-footer">
       <button class="btn btn-secondary btn-sm" onclick="closeUpdateModal()">Cancel</button>
@@ -260,18 +262,15 @@ function showPage(id) {
 
 function ensureAdmin() {
   var adminId = 'admin_1';
-  fbGet('server/hosts/' + adminId).then(function(data) {
-    if (!data) {
-      return fbSet('server/hosts/' + adminId, {
-        id: adminId, name: 'Admin', username: 'admin',
-        email: 'admin@thelionforce.com',
-        password: hashPW('lionforce2026'),
-        provider: 'The Lion Force', region: 'UAE',
-        role: 'admin', status: 'active',
-        configFileId: null, createdAt: Date.now()
-      });
-    }
-  }).catch(function(e) { console.log('Admin check failed', e); });
+  var adminData = {
+    id: adminId, name: 'Admin', username: 'admin',
+    email: 'admin@thelionforce.com',
+    password: hashPW('lionforce2026'),
+    provider: 'The Lion Force', region: 'UAE',
+    role: 'admin', status: 'active',
+    configFileId: null, createdAt: Date.now()
+  };
+  fbSet('server/hosts/' + adminId, adminData).catch(function(e) { console.log('Admin setup failed', e); });
 }
 
 function doLogin() {
@@ -599,8 +598,29 @@ function submitMgrPwdReset() {
 function openUpdateModal() {
   document.getElementById('upMsg').innerHTML = '';
   document.getElementById('upStatus').value = 'open';
-  document.getElementById('upManager').value = '';
   document.getElementById('upNote').value = '';
+
+  var sel = document.getElementById('upManager');
+  sel.innerHTML = '<option value="">-- Select Manager --</option>';
+
+  fbGet('server/managers').then(function(data) {
+    var mgrs = [];
+    for (var k in data) { if (data[k] && data[k].status === 'active') mgrs.push(data[k]); }
+    mgrs.sort(function(a,b){ return a.name.localeCompare(b.name); });
+    for (var i = 0; i < mgrs.length; i++) {
+      var opt = document.createElement('option');
+      opt.value = mgrs[i].name;
+      opt.textContent = mgrs[i].name;
+      sel.appendChild(opt);
+    }
+    var t = null;
+    for (var j = 0; j < allTickets.length; j++) { if (allTickets[j].id === currentTicketId) { t = allTickets[j]; break; } }
+    if (t) {
+      document.getElementById('upStatus').value = t.status;
+      if (t.assignedToName) { sel.value = t.assignedToName; }
+    }
+  });
+
   document.getElementById('updateModal').classList.add('active');
 }
 function closeUpdateModal() {
