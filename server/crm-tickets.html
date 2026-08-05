@@ -10,11 +10,40 @@
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#f8fafc;color:#0f172a;min-height:100vh}
-.nav{height:64px;background:#fff;border-bottom:1px solid #e2e8f0;display:flex;align-items:center;padding:0 1.5rem;position:sticky;top:0;z-index:100}
+.login-page{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:1rem;background:linear-gradient(135deg,#0f172a,#1e293b)}
+.login-box{width:100%;max-width:400px;background:#fff;border-radius:20px;padding:2.5rem;box-shadow:0 25px 50px -12px rgba(0,0,0,.25)}
+.login-logo{text-align:center;margin-bottom:2rem}
+.logo-icon{width:52px;height:52px;border-radius:14px;background:linear-gradient(135deg,#3B6BF5,#00D4FF);display:inline-flex;align-items:center;justify-content:center;margin-bottom:1rem;color:#fff;font-weight:800;font-size:20px}
+.login-logo h1{font-size:1.5rem;font-weight:800;color:#0f172a}
+.login-logo p{color:#64748b;font-size:.875rem;margin-top:.25rem}
+.form-group{margin-bottom:1rem}
+.form-group label{display:block;font-size:12px;font-weight:600;color:#475569;margin-bottom:.35rem;text-transform:uppercase;letter-spacing:0.05em}
+.form-group input,.form-group select{width:100%;padding:.75rem 1rem;background:#f8fafc;border:1px solid #e2e8f0;border-radius:10px;color:#0f172a;font-size:14px;outline:none}
+.form-group input:focus{border-color:#3B6BF5}
+.form-group input::placeholder{color:#94a3b8}
+.btn{width:100%;padding:1rem;background:#3B6BF5;color:#fff;border:none;border-radius:10px;font-size:13px;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;cursor:pointer;transition:all .2s}
+.btn:hover{background:#5C8DFF}
+.btn-sm{padding:.5rem 1rem;font-size:12px;width:auto}
+.btn-green{background:#22c55e}
+.btn-green:hover{background:#16a34a}
+.btn-amber{background:#f59e0b}
+.btn-amber:hover{background:#d97706}
+.btn-red{background:#ef4444}
+.btn-red:hover{background:#dc2626}
+.btn-secondary{background:#f1f5f9;border:1px solid #cbd5e1;color:#475569}
+.btn-secondary:hover{background:#e2e8f0}
+.btn-outline{background:transparent;border:1px solid #cbd5e1;color:#475569}
+.btn-outline:hover{background:#f8fafc}
+.error-msg{background:#fef2f2;border:1px solid #fecaca;color:#dc2626;padding:.75rem 1rem;border-radius:8px;margin-bottom:1rem;font-size:13px}
+.success-msg{background:#f0fdf4;border:1px solid #bbf7d0;color:#15803d;padding:.75rem 1rem;border-radius:8px;margin-bottom:1rem;font-size:13px}
+.nav{height:60px;background:#fff;border-bottom:1px solid #e2e8f0;display:flex;align-items:center;padding:0 1.5rem;position:sticky;top:0;z-index:100}
 .nav-brand{display:flex;align-items:center;gap:.5rem}
-.logo-icon{width:32px;height:32px;border-radius:8px;background:linear-gradient(135deg,#3B6BF5,#00D4FF);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:12px}
-.nav-brand span{font-weight:700;font-size:16px;color:#0f172a}
+.logo-icon-small{width:32px;height:32px;border-radius:8px;background:linear-gradient(135deg,#3B6BF5,#00D4FF);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:12px}
+.nav-brand span{font-weight:700;font-size:15px;color:#0f172a}
+.badge-admin{font-size:10px;font-weight:600;color:#3B6BF5;background:#eff6ff;padding:3px 10px;border-radius:20px;margin-left:6px;border:1px solid #bfdbfe}
+.badge-manager{font-size:10px;font-weight:600;color:#0891b2;background:#ecfeff;padding:3px 10px;border-radius:20px;margin-left:6px;border:1px solid #a5f3fc}
 .nav-right{margin-left:auto;display:flex;align-items:center;gap:.75rem}
+.nav-user{color:#64748b;font-size:13px}
 .container{max-width:1200px;margin:0 auto;padding:1.5rem}
 .stats-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1rem;margin-bottom:1.5rem}
 .stat-card{background:#fff;border:1px solid #e2e8f0;border-radius:16px;padding:1.25rem}
@@ -23,15 +52,6 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 .stat-card .label{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.05em;color:#64748b;margin-top:.25rem}
 .card{background:#fff;border:1px solid #e2e8f0;border-radius:16px;padding:1.5rem;margin-bottom:1rem}
 .card h2{font-size:1.1rem;font-weight:700;margin-bottom:1rem}
-.btn{padding:.6rem 1rem;background:#3B6BF5;color:#fff;border:none;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;transition:all .2s}
-.btn:hover{background:#5C8DFF}
-.btn-sm{padding:.4rem .75rem;font-size:12px}
-.btn-green{background:#22c55e}
-.btn-green:hover{background:#16a34a}
-.btn-amber{background:#f59e0b}
-.btn-amber:hover{background:#d97706}
-.btn-secondary{background:#f1f5f9;border:1px solid #cbd5e1;color:#475569}
-.btn-secondary:hover{background:#e2e8f0}
 .icon-btn{padding:.5rem;border-radius:6px;background:none;border:none;color:#64748b;cursor:pointer;transition:all .2s;font-size:13px}
 .icon-btn:hover{background:#f1f5f9;color:#3B6BF5}
 .icon-btn.danger:hover{background:#fef2f2;color:#ef4444}
@@ -44,6 +64,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 .status-in-progress{border-color:#a5f3fc;color:#0891b2;background:#ecfeff}
 .status-submitted-to-tiktok{border-color:#e9d5ff;color:#7c3aed;background:#faf5ff}
 .status-resolved{border-color:#bbf7d0;color:#15803d;background:#f0fdf4}
+.status-active{border-color:#bbf7d0;color:#15803d;background:#f0fdf4}
+.status-disabled{border-color:#fecaca;color:#dc2626;background:#fef2f2}
 .avatar{width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,#3B6BF5,#00D4FF);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:12px;color:#fff}
 .empty-state{text-align:center;padding:3rem;color:#94a3b8}
 .milestone-tracker{display:flex;justify-content:space-between;align-items:center;margin:1.5rem 0;padding:0 .5rem}
@@ -63,11 +85,12 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 .timeline-content p{font-size:14px;color:#0f172a;margin-bottom:.15rem}
 .timeline-content .time{font-size:12px;color:#94a3b8}
 .timeline-content .note{font-size:13px;color:#475569;margin-top:.35rem;background:#f8fafc;padding:.5rem .75rem;border-radius:8px;border-left:3px solid #3B6BF5}
-.form-group{margin-bottom:1rem}
-.form-group label{display:block;font-size:12px;font-weight:600;color:#475569;margin-bottom:.35rem}
-.form-group input,.form-group select,.form-group textarea{width:100%;padding:.65rem .875rem;background:#fff;border:1px solid #cbd5e1;border-radius:8px;color:#0f172a;font-size:14px;outline:none;font-family:inherit}
-.form-group textarea{resize:vertical;min-height:80px}
-.form-group input:focus,.form-group select:focus,.form-group textarea:focus{border-color:#3B6BF5}
+.screenshot-full{max-width:100%;border-radius:12px;border:1px solid #e2e8f0;margin-top:.5rem}
+.filter-bar{display:flex;gap:.5rem;margin-bottom:1rem;flex-wrap:wrap}
+.filter-bar button{padding:.4rem .75rem;border-radius:20px;border:1px solid #e2e8f0;background:#fff;color:#64748b;font-size:12px;font-weight:600;cursor:pointer}
+.filter-bar button.active{background:#3B6BF5;color:#fff;border-color:#3B6BF5}
+.page{display:none}
+.page.active{display:block}
 .modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:200;align-items:center;justify-content:center;padding:1rem}
 .modal-overlay.active{display:flex}
 .modal{background:#fff;border-radius:16px;width:100%;max-width:500px;max-height:85vh;display:flex;flex-direction:column;overflow:hidden}
@@ -76,10 +99,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 .modal-close{background:none;border:none;color:#64748b;font-size:1.5rem;cursor:pointer}
 .modal-body{padding:1.5rem;overflow-y:auto}
 .modal-footer{padding:1rem 1.5rem;border-top:1px solid #e2e8f0;display:flex;gap:.5rem;justify-content:flex-end}
-.screenshot-full{max-width:100%;border-radius:12px;border:1px solid #e2e8f0;margin-top:.5rem}
-.filter-bar{display:flex;gap:.5rem;margin-bottom:1rem;flex-wrap:wrap}
-.filter-bar button{padding:.4rem .75rem;border-radius:20px;border:1px solid #e2e8f0;background:#fff;color:#64748b;font-size:12px;font-weight:600;cursor:pointer}
-.filter-bar button.active{background:#3B6BF5;color:#fff;border-color:#3B6BF5}
+.manager-card{background:#f8fafc;border:1px solid #e2e8f0;border-radius:12px;padding:1rem;margin-bottom:.75rem;display:flex;align-items:center;justify-content:space-between}
 @media(min-width:769px){.stats-grid{grid-template-columns:repeat(5,1fr)}}
 @media(max-width:768px){
   .stats-grid{grid-template-columns:repeat(2,1fr)}
@@ -91,58 +111,81 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 </head>
 <body>
 
-<nav class="nav">
-  <div class="nav-brand">
-    <div class="logo-icon">LF</div>
-    <span>CRM - Support Tickets</span>
-  </div>
-  <div class="nav-right">
-    <span style="color:#64748b;font-size:13px"><i class="fas fa-circle" style="color:#22c55e;font-size:8px;margin-right:4px"></i>Live Sync</span>
-  </div>
-</nav>
-
-<div class="container">
-  <div id="mainContent">
-    <div class="stats-grid">
-      <div class="stat-card"><i class="fas fa-ticket-alt" style="color:#3B6BF5"></i><div class="num" id="statTotal">-</div><div class="label">Total Tickets</div></div>
-      <div class="stat-card"><i class="fas fa-exclamation-circle" style="color:#f59e0b"></i><div class="num" id="statOpen">-</div><div class="label">Open</div></div>
-      <div class="stat-card"><i class="fas fa-user-check" style="color:#a855f7"></i><div class="num" id="statAssigned">-</div><div class="label">Assigned</div></div>
-      <div class="stat-card"><i class="fas fa-spinner" style="color:#06b6d4"></i><div class="num" id="statProgress">-</div><div class="label">In Progress</div></div>
-      <div class="stat-card"><i class="fas fa-check-circle" style="color:#22c55e"></i><div class="num" id="statResolved">-</div><div class="label">Resolved</div></div>
-    </div>
-
-    <div class="card">
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem">
-        <h2>All Tickets</h2>
-        <button class="btn btn-sm" onclick="loadTickets()"><i class="fas fa-sync-alt"></i> Refresh</button>
+<!-- LOGIN PAGE -->
+<div class="page active" id="loginPage">
+  <div class="login-page">
+    <div class="login-box">
+      <div class="login-logo">
+        <div class="logo-icon">LF</div>
+        <h1>CRM Login</h1>
+        <p>Lion Force - Support Ticket Management</p>
       </div>
-      <div class="filter-bar">
-        <button onclick="filterTickets('all')" class="active" id="f-all">All</button>
-        <button onclick="filterTickets('open')" id="f-open">Open</button>
-        <button onclick="filterTickets('assigned')" id="f-assigned">Assigned</button>
-        <button onclick="filterTickets('in-progress')" id="f-in-progress">In Progress</button>
-        <button onclick="filterTickets('submitted-to-tiktok')" id="f-submitted-to-tiktok">TikTok</button>
-        <button onclick="filterTickets('resolved')" id="f-resolved">Resolved</button>
+      <div id="loginError"></div>
+      <div class="form-group">
+        <label>Username</label>
+        <input type="text" id="loginUser" placeholder="Enter username">
       </div>
-      <div id="ticketList"><div class="empty-state"><i class="fas fa-spinner fa-spin" style="font-size:2rem"></i><p>Loading tickets...</p></div></div>
+      <div class="form-group">
+        <label>Password</label>
+        <input type="password" id="loginPass" placeholder="Enter password">
+      </div>
+      <button class="btn" id="loginBtn">Sign In</button>
+      <p style="text-align:center;color:#94a3b8;font-size:12px;margin-top:1rem">Secure Manager & Admin Portal</p>
     </div>
   </div>
 </div>
 
-<div class="modal-overlay" id="detailModal">
-  <div class="modal" style="max-width:700px">
-    <div class="modal-header">
-      <h3>Ticket Details</h3>
-      <button class="modal-close" onclick="closeDetailModal()">&times;</button>
+<!-- APP PAGE -->
+<div class="page" id="appPage">
+  <nav class="nav">
+    <div class="nav-brand">
+      <div class="logo-icon-small">LF</div>
+      <span>CRM Tickets</span>
+      <span class="badge-admin" id="adminBadge" style="display:none">Admin</span>
+      <span class="badge-manager" id="managerBadge" style="display:none">Manager</span>
     </div>
-    <div class="modal-body" id="detailBody"></div>
+    <div id="navLinks"></div>
+    <div class="nav-right">
+      <span class="nav-user" id="navUser"></span>
+      <button class="icon-btn" id="logoutBtn" title="Sign Out"><i class="fas fa-sign-out-alt"></i></button>
+    </div>
+  </nav>
+  <div class="container" id="mainContent"></div>
+</div>
+
+<!-- Manager Modal (Admin Only) -->
+<div class="modal-overlay" id="mgrModal">
+  <div class="modal">
+    <div class="modal-header"><h3>Add New Manager</h3><button class="modal-close" onclick="closeMgrModal()">&times;</button></div>
+    <div class="modal-body">
+      <div id="mgrMsg"></div>
+      <div class="form-group"><label>Full Name *</label><input id="mName" placeholder="Manager full name"></div>
+      <div class="form-group"><label>Username *</label><input id="mUser" placeholder="Login username"></div>
+      <div class="form-group"><label>Password *</label><input type="password" id="mPass" placeholder="Min 4 characters"></div>
+    </div>
     <div class="modal-footer">
-      <button class="btn btn-secondary btn-sm" onclick="closeDetailModal()">Close</button>
-      <button class="btn btn-sm btn-green" onclick="openUpdateModal()"><i class="fas fa-edit"></i> Update Status</button>
+      <button class="btn btn-secondary btn-sm" onclick="closeMgrModal()">Cancel</button>
+      <button class="btn btn-sm" onclick="submitManager()">Create Manager</button>
     </div>
   </div>
 </div>
 
+<!-- Manager Password Reset Modal (Admin Only) -->
+<div class="modal-overlay" id="mgrPwdModal">
+  <div class="modal">
+    <div class="modal-header"><h3>Reset Manager Password</h3><button class="modal-close" onclick="closeMgrPwdModal()">&times;</button></div>
+    <div class="modal-body">
+      <div id="mgrPwdMsg"></div>
+      <div class="form-group"><label>New Password *</label><input type="password" id="mgrNewPwd" placeholder="Enter new password"></div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-secondary btn-sm" onclick="closeMgrPwdModal()">Cancel</button>
+      <button class="btn btn-sm" onclick="submitMgrPwdReset()">Update Password</button>
+    </div>
+  </div>
+</div>
+
+<!-- Ticket Update Modal -->
 <div class="modal-overlay" id="updateModal">
   <div class="modal">
     <div class="modal-header"><h3>Update Ticket</h3><button class="modal-close" onclick="closeUpdateModal()">&times;</button></div>
@@ -160,30 +203,182 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 </div>
 
 <script>
+
 var db = null;
+var currentUser = null;
 var allTickets = [];
 var allHosts = [];
-var currentFilter = 'all';
+var allManagers = [];
+var currentPage = 'tickets';
 var currentTicketId = null;
+var currentFilter = 'all';
+var mgrResetId = null;
+
+function showError(msg) {
+  var el = document.getElementById('loginError');
+  if (el) el.innerHTML = '<div class="error-msg">' + msg + '</div>';
+}
+
+function hashPW(pw) {
+  var h = 0;
+  for (var i = 0; i < pw.length; i++) {
+    h = ((h << 5) - h + pw.charCodeAt(i)) | 0;
+  }
+  return 'h' + Math.abs(h).toString(16);
+}
 
 function initFirebase() {
-  firebase.initializeApp({
-    apiKey: "AIzaSyA7WO6r3cbiZiJZVv82wF2SnCI5rRJRLkI",
-    authDomain: "lionforce-crm.firebaseapp.com",
-    databaseURL: "https://lionforce-crm-default-rtdb.europe-west1.firebasedatabase.app",
-    projectId: "lionforce-crm",
-    storageBucket: "lionforce-crm.firebasestorage.app",
-    messagingSenderId: "951731260622",
-    appId: "1:951731260622:web:9dedc08f62461add52949f"
-  });
-  db = firebase.database();
+  try {
+    firebase.initializeApp({
+      apiKey: "AIzaSyA7WO6r3cbiZiJZVv82wF2SnCI5rRJRLkI",
+      authDomain: "lionforce-crm.firebaseapp.com",
+      databaseURL: "https://lionforce-crm-default-rtdb.europe-west1.firebasedatabase.app",
+      projectId: "lionforce-crm",
+      storageBucket: "lionforce-crm.firebasestorage.app",
+      messagingSenderId: "951731260622",
+      appId: "1:951731260622:web:9dedc08f62461add52949f"
+    });
+    db = firebase.database();
+    return true;
+  } catch(e) {
+    showError('Firebase failed: ' + e.message);
+    return false;
+  }
 }
 
 function fbGet(path) { return db.ref(path).once('value').then(function(s){ return s.val(); }); }
+function fbSet(path, val) { return db.ref(path).set(val); }
 function fbUp(path, val) { return db.ref(path).update(val); }
+function fbRm(path) { return db.ref(path).remove(); }
 function fbPush(path, val) { return db.ref(path).push(val); }
 
+function showPage(id) {
+  var pages = document.getElementsByClassName('page');
+  for (var i = 0; i < pages.length; i++) pages[i].classList.remove('active');
+  document.getElementById(id).classList.add('active');
+}
+
+function ensureAdmin() {
+  var adminId = 'admin_1';
+  fbGet('server/hosts/' + adminId).then(function(data) {
+    if (!data) {
+      return fbSet('server/hosts/' + adminId, {
+        id: adminId, name: 'Admin', username: 'admin',
+        email: 'admin@thelionforce.com',
+        password: hashPW('lionforce2026'),
+        provider: 'The Lion Force', region: 'UAE',
+        role: 'admin', status: 'active',
+        configFileId: null, createdAt: Date.now()
+      });
+    }
+  }).catch(function(e) { console.log('Admin check failed', e); });
+}
+
+function doLogin() {
+  var userInput = document.getElementById('loginUser').value.trim();
+  var pass = document.getElementById('loginPass').value;
+  var btn = document.getElementById('loginBtn');
+  if (!userInput || !pass) { showError('Please enter username and password'); return; }
+  btn.disabled = true;
+  document.getElementById('loginError').innerHTML = '';
+
+  Promise.all([fbGet('server/hosts'), fbGet('server/managers')]).then(function(results) {
+    var hosts = results[0] || {};
+    var managers = results[1] || {};
+    var allUsers = [];
+    for (var k in hosts) { if (hosts[k]) allUsers.push(hosts[k]); }
+    for (var k2 in managers) { if (managers[k2]) allUsers.push(managers[k2]); }
+
+    if (allUsers.length === 0) { throw new Error('No accounts found.'); }
+
+    var pw = hashPW(pass);
+    var user = null;
+    for (var i = 0; i < allUsers.length; i++) {
+      var rec = allUsers[i];
+      var matchUser = rec.username && rec.username.toLowerCase() === userInput.toLowerCase();
+      var matchEmail = rec.email && rec.email.toLowerCase() === userInput.toLowerCase();
+      if ((matchUser || matchEmail) && rec.password === pw) {
+        user = rec;
+        break;
+      }
+    }
+
+    if (!user) {
+      var foundUser = false;
+      for (var j = 0; j < allUsers.length; j++) {
+        var ru = allUsers[j].username && allUsers[j].username.toLowerCase() === userInput.toLowerCase();
+        var re = allUsers[j].email && allUsers[j].email.toLowerCase() === userInput.toLowerCase();
+        if (ru || re) { foundUser = true; break; }
+      }
+      if (foundUser) { throw new Error('Wrong password.'); }
+      else { throw new Error('Username not found.'); }
+    }
+    if (user.status === 'disabled') { throw new Error('Account is disabled. Contact admin.'); }
+
+    currentUser = user;
+    localStorage.setItem('lf_crm_user', JSON.stringify(currentUser));
+    showApp();
+  }).catch(function(err) {
+    showError(err.message);
+    btn.disabled = false;
+  });
+}
+
+function doLogout() {
+  currentUser = null;
+  localStorage.removeItem('lf_crm_user');
+  showPage('loginPage');
+  document.getElementById('loginUser').value = '';
+  document.getElementById('loginPass').value = '';
+  document.getElementById('loginBtn').disabled = false;
+}
+
+function showApp() {
+  showPage('appPage');
+  renderNav();
+  goPage('tickets');
+}
+
+function renderNav() {
+  var isAdmin = currentUser && currentUser.role === 'admin';
+  document.getElementById('adminBadge').style.display = isAdmin ? 'inline-block' : 'none';
+  document.getElementById('managerBadge').style.display = !isAdmin ? 'inline-block' : 'none';
+  document.getElementById('navUser').textContent = currentUser ? currentUser.name : '';
+  var links = '';
+  links += '<a href="#" onclick="goPage(\'tickets\');return false"' + (currentPage === 'tickets' ? ' style=\'color:#3B6BF5\'' : '') + ' style="color:#64748b;text-decoration:none;font-size:13px;font-weight:600;margin-right:1.5rem">Tickets</a>';
+  if (isAdmin) {
+    links += '<a href="#" onclick="goPage(\'managers\');return false" style="color:#64748b;text-decoration:none;font-size:13px;font-weight:600;margin-right:1.5rem">Managers</a>';
+  }
+  document.getElementById('navLinks').innerHTML = links;
+}
+
+function goPage(p) {
+  currentPage = p;
+  renderNav();
+  if (p === 'tickets') loadTickets();
+  else if (p === 'managers') renderManagers();
+  else if (p === 'ticketDetail') renderTicketDetail(currentTicketId);
+}
+
 function loadTickets() {
+  var el = document.getElementById('mainContent');
+  el.innerHTML = '<div class="stats-grid">' +
+    '<div class="stat-card"><i class="fas fa-ticket-alt" style="color:#3B6BF5"></i><div class="num" id="statTotal">-</div><div class="label">Total</div></div>' +
+    '<div class="stat-card"><i class="fas fa-exclamation-circle" style="color:#f59e0b"></i><div class="num" id="statOpen">-</div><div class="label">Open</div></div>' +
+    '<div class="stat-card"><i class="fas fa-user-check" style="color:#a855f7"></i><div class="num" id="statAssigned">-</div><div class="label">Assigned</div></div>' +
+    '<div class="stat-card"><i class="fas fa-spinner" style="color:#06b6d4"></i><div class="num" id="statProgress">-</div><div class="label">In Progress</div></div>' +
+    '<div class="stat-card"><i class="fas fa-check-circle" style="color:#22c55e"></i><div class="num" id="statResolved">-</div><div class="label">Resolved</div></div>' +
+    '</div>' +
+    '<div class="card"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem"><h2>All Tickets</h2><button class="btn btn-sm btn-secondary" onclick="loadTickets()"><i class="fas fa-sync-alt"></i> Refresh</button></div>' +
+    '<div class="filter-bar">' +
+    '<button onclick="filterTickets(\'all\')" class="active" id="f-all">All</button>' +
+    '<button onclick="filterTickets(\'open\')" id="f-open">Open</button>' +
+    '<button onclick="filterTickets(\'assigned\')" id="f-assigned">Assigned</button>' +
+    '<button onclick="filterTickets(\'in-progress\')" id="f-in-progress">In Progress</button>' +
+    '<button onclick="filterTickets(\'submitted-to-tiktok\')" id="f-submitted-to-tiktok">TikTok</button>' +
+    '<button onclick="filterTickets(\'resolved\')" id="f-resolved">Resolved</button>' +
+    '</div><div id="ticketList"><div class="empty-state"><i class="fas fa-spinner fa-spin" style="font-size:2rem"></i><p>Loading tickets...</p></div></div></div>';
+
   Promise.all([fbGet('server/tickets'), fbGet('server/hosts')]).then(function(results) {
     var ts = results[0] || {};
     var hs = results[1] || {};
@@ -238,9 +433,14 @@ function renderTicketList() {
 
 function viewTicketDetail(tid) {
   currentTicketId = tid;
+  goPage('ticketDetail');
+}
+
+function renderTicketDetail(tid) {
+  var el = document.getElementById('mainContent');
   var t = null;
   for (var i=0;i<allTickets.length;i++) if (allTickets[i].id === tid) { t = allTickets[i]; break; }
-  if (!t) return;
+  if (!t) { goPage('tickets'); return; }
   var h = null;
   for (var j=0;j<allHosts.length;j++) if (allHosts[j].id === t.hostId) { h = allHosts[j]; break; }
 
@@ -254,10 +454,17 @@ function viewTicketDetail(tid) {
     var currentStageIdx = stages.indexOf(t.status);
     if (currentStageIdx < 0) currentStageIdx = 0;
 
-    var html = '<div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:1rem"><div><h2 style="font-size:1.25rem;font-weight:700">' + t.title + '</h2><p style="color:#64748b;font-size:13px"><i class="fas fa-user"></i> ' + (h?h.name:'Unknown') + ' <span style="margin-left:1rem"><i class="fas fa-calendar"></i> ' + new Date(t.createdAt).toLocaleString() + '</span></p></div><span class="status-badge status-' + t.status + '">' + t.status.replace(/-/g,' ') + '</span></div>';
+    var html = '<div style="max-width:800px;margin:0 auto">';
+    html += '<div style="display:flex;align-items:center;gap:1rem;margin-bottom:1.5rem"><button class="icon-btn" onclick="goPage(\'tickets\')"><i class="fas fa-arrow-left"></i></button><h2 style="font-size:1.25rem;font-weight:700">Ticket #' + tid.replace('ticket_','') + '</h2><button class="btn btn-sm btn-green" style="margin-left:auto" onclick="openUpdateModal()"><i class="fas fa-edit"></i> Update</button></div>';
 
-    // Milestones
-    html += '<div style="margin:1.5rem 0"><div class="milestone-tracker">';
+    html += '<div class="card" style="margin-bottom:1.5rem"><div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:1rem"><div><h3 style="font-size:1.1rem;font-weight:700">' + t.title + '</h3><p style="color:#64748b;font-size:13px"><i class="fas fa-user"></i> ' + (h?h.name:'Unknown') + (h&&h.username?' (@'+h.username+')':'') + ' <span style="margin-left:1rem"><i class="fas fa-calendar"></i> ' + new Date(t.createdAt).toLocaleString() + '</span></p></div><span class="status-badge status-' + t.status + '">' + t.status.replace(/-/g,' ') + '</span></div>';
+    html += '<p style="font-size:15px;line-height:1.6;margin:1rem 0">' + t.details + '</p>';
+    if (t.screenshot) {
+      html += '<p style="color:#64748b;font-size:13px;margin-bottom:.5rem"><i class="fas fa-image"></i> Screenshot</p><img src="' + t.screenshot + '" class="screenshot-full" style="cursor:pointer" onclick="window.open(this.src)">';
+    }
+    html += '</div>';
+
+    html += '<div class="card" style="margin-bottom:1.5rem"><h3 style="font-size:14px;font-weight:600;margin-bottom:1rem;color:#64748b;text-transform:uppercase;letter-spacing:0.05em">Progress Tracker</h3><div class="milestone-tracker">';
     for (var s=0;s<stages.length;s++) {
       var done = s <= currentStageIdx;
       var active = s === currentStageIdx;
@@ -265,12 +472,7 @@ function viewTicketDetail(tid) {
     }
     html += '</div></div>';
 
-    html += '<p style="font-size:15px;line-height:1.6;margin:1rem 0">' + t.details + '</p>';
-    if (t.screenshot) {
-      html += '<p style="color:#64748b;font-size:13px;margin-bottom:.5rem"><i class="fas fa-image"></i> Screenshot</p><img src="' + t.screenshot + '" class="screenshot-full">';
-    }
-
-    html += '<h3 style="font-size:14px;font-weight:600;margin:1.5rem 0 .75rem;color:#64748b;text-transform:uppercase;letter-spacing:0.05em"><i class="fas fa-history"></i> Activity Log</h3>';
+    html += '<div class="card"><h3 style="font-size:14px;font-weight:600;margin-bottom:1.5rem;color:#64748b;text-transform:uppercase;letter-spacing:0.05em"><i class="fas fa-history"></i> Activity Log</h3>';
     if (logArr.length === 0) {
       html += '<p style="color:#94a3b8;font-size:13px">No updates yet.</p>';
     } else {
@@ -285,13 +487,113 @@ function viewTicketDetail(tid) {
         html += '<div class="timeline-log"><div class="timeline-icon" style="background:' + iconBg + ';color:' + iconColor + '"><i class="fas ' + icon + '"></i></div><div class="timeline-content"><p><strong>' + lg.by + '</strong> ' + lg.action + '</p><span class="time">' + new Date(lg.date).toLocaleString() + '</span>' + (lg.note?'<div class="note">' + lg.note + '</div>':'') + '</div></div>';
       }
     }
-    document.getElementById('detailBody').innerHTML = html;
-    document.getElementById('detailModal').classList.add('active');
+    html += '</div></div>';
+    el.innerHTML = html;
   });
 }
 
-function closeDetailModal() {
-  document.getElementById('detailModal').classList.remove('active');
+function renderManagers() {
+  var el = document.getElementById('mainContent');
+  fbGet('server/managers').then(function(data) {
+    allManagers = [];
+    for (var k in data) { if (data[k]) allManagers.push(data[k]); }
+    var html = '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1.5rem"><h2 style="font-size:1.25rem;font-weight:700">Managers (' + allManagers.length + ')</h2><button class="btn btn-sm" onclick="openMgrModal()"><i class="fas fa-plus"></i> Add Manager</button></div>';
+    html += '<div class="card">';
+    if (allManagers.length === 0) {
+      html += '<div class="empty-state"><i class="fas fa-users" style="font-size:3rem"></i><p>No managers yet. Add your first manager.</p></div>';
+    } else {
+      for (var i = 0; i < allManagers.length; i++) {
+        var m = allManagers[i];
+        html += '<div class="manager-card"><div style="display:flex;align-items:center;gap:.75rem"><div class="avatar">' + m.name.charAt(0) + '</div><div><p style="font-weight:600">' + m.name + '</p><p style="color:#64748b;font-size:12px">@' + m.username + '</p></div></div><div style="display:flex;align-items:center;gap:.5rem"><span class="status-badge ' + (m.status === 'active' ? 'status-active' : 'status-disabled') + '">' + m.status + '</span><button class="icon-btn" onclick="toggleManager(\'' + m.id + '\')" title="' + (m.status === 'active' ? 'Disable' : 'Enable') + '"><i class="fas fa-' + (m.status === 'active' ? 'user-slash' : 'user-check') + '"></i></button><button class="icon-btn" onclick="openMgrPwdModal(\'' + m.id + '\')" title="Reset Password" style="color:#f59e0b"><i class="fas fa-key"></i></button><button class="icon-btn danger" onclick="deleteManager(\'' + m.id + '\')" title="Delete"><i class="fas fa-trash"></i></button></div></div>';
+      }
+    }
+    html += '</div>';
+    el.innerHTML = html;
+  });
+}
+
+function openMgrModal() {
+  document.getElementById('mName').value = '';
+  document.getElementById('mUser').value = '';
+  document.getElementById('mPass').value = '';
+  document.getElementById('mgrMsg').innerHTML = '';
+  document.getElementById('mgrModal').classList.add('active');
+}
+function closeMgrModal() {
+  document.getElementById('mgrModal').classList.remove('active');
+}
+
+function submitManager() {
+  var n = document.getElementById('mName').value.trim();
+  var u = document.getElementById('mUser').value.trim();
+  var p = document.getElementById('mPass').value;
+  if (!n || !u || !p) {
+    document.getElementById('mgrMsg').innerHTML = '<div class="error-msg">All fields are required</div>';
+    return;
+  }
+  if (p.length < 4) {
+    document.getElementById('mgrMsg').innerHTML = '<div class="error-msg">Password must be at least 4 characters</div>';
+    return;
+  }
+  fbGet('server/managers').then(function(d) {
+    if (d) {
+      for (var k in d) {
+        if (d[k] && d[k].username && d[k].username.toLowerCase() === u.toLowerCase()) {
+          document.getElementById('mgrMsg').innerHTML = '<div class="error-msg">Username already exists</div>';
+          return;
+        }
+      }
+    }
+    var id = 'mgr_' + Date.now();
+    return fbSet('server/managers/' + id, {
+      id: id, name: n, username: u,
+      password: hashPW(p),
+      role: 'manager', status: 'active',
+      createdAt: Date.now()
+    });
+  }).then(function() {
+    closeMgrModal();
+    renderManagers();
+  }).catch(function(err) {
+    document.getElementById('mgrMsg').innerHTML = '<div class="error-msg">' + err.message + '</div>';
+  });
+}
+
+function toggleManager(id) {
+  var m = null;
+  for (var i = 0; i < allManagers.length; i++) { if (allManagers[i].id === id) { m = allManagers[i]; break; } }
+  if (!m) return;
+  var ns = m.status === 'active' ? 'disabled' : 'active';
+  fbUp('server/managers/' + id, { status: ns }).then(function() { renderManagers(); });
+}
+
+function deleteManager(id) {
+  if (!confirm('Delete this manager permanently?')) return;
+  fbRm('server/managers/' + id).then(function() { renderManagers(); });
+}
+
+function openMgrPwdModal(id) {
+  mgrResetId = id;
+  document.getElementById('mgrNewPwd').value = '';
+  document.getElementById('mgrPwdMsg').innerHTML = '';
+  document.getElementById('mgrPwdModal').classList.add('active');
+}
+function closeMgrPwdModal() {
+  document.getElementById('mgrPwdModal').classList.remove('active');
+  mgrResetId = null;
+}
+function submitMgrPwdReset() {
+  var pw = document.getElementById('mgrNewPwd').value;
+  if (!pw || pw.length < 4) {
+    document.getElementById('mgrPwdMsg').innerHTML = '<div class="error-msg">Password must be at least 4 characters</div>';
+    return;
+  }
+  fbUp('server/managers/' + mgrResetId, { password: hashPW(pw) }).then(function() {
+    closeMgrPwdModal();
+    renderManagers();
+  }).catch(function(err) {
+    document.getElementById('mgrPwdMsg').innerHTML = '<div class="error-msg">' + err.message + '</div>';
+  });
 }
 
 function openUpdateModal() {
@@ -321,21 +623,50 @@ function saveUpdate() {
   if (manager) updates.assignedToName = manager;
 
   fbUp('server/tickets/' + currentTicketId, updates).then(function() {
-    var logData = { date: Date.now(), by: 'CRM Admin', action: actionText, note: note || '' };
+    var logData = { date: Date.now(), by: currentUser.name || currentUser.username, action: actionText, note: note || '' };
     return fbPush('server/ticketLogs/' + currentTicketId, logData);
   }).then(function() {
     closeUpdateModal();
-    closeDetailModal();
     loadTickets();
   }).catch(function(err) {
-    document.getElementById('upMsg').innerHTML = '<div style="color:#ef4444;font-size:13px">' + err.message + '</div>';
+    document.getElementById('upMsg').innerHTML = '<div class="error-msg">' + err.message + '</div>';
   });
 }
 
+// Event listeners
+document.getElementById('loginBtn').addEventListener('click', doLogin);
+document.getElementById('logoutBtn').addEventListener('click', doLogout);
+document.getElementById('loginPass').addEventListener('keypress', function(e) {
+  if (e.key === 'Enter') doLogin();
+});
+
+// Init
 initFirebase();
-loadTickets();
-// Auto refresh every 30 seconds
-setInterval(loadTickets, 30000);
+ensureAdmin();
+var saved = localStorage.getItem('lf_crm_user');
+if (saved) {
+  try {
+    currentUser = JSON.parse(saved);
+    showApp();
+  } catch(e) {
+    localStorage.removeItem('lf_crm_user');
+  }
+}
+
+// Auto refresh tickets every 30 seconds when logged in
+setInterval(function() {
+  if (currentUser && currentPage === 'tickets') {
+    Promise.all([fbGet('server/tickets'), fbGet('server/hosts')]).then(function(results) {
+      var ts = results[0] || {};
+      var hs = results[1] || {};
+      allTickets = []; for (var k in ts) { if (ts[k]) { ts[k]._key = k; allTickets.push(ts[k]); } }
+      allHosts = []; for (var k2 in hs) { if (hs[k2]) allHosts.push(hs[k2]); }
+      allTickets.sort(function(a,b){ return b.createdAt - a.createdAt; });
+      updateStats();
+      renderTicketList();
+    });
+  }
+}, 30000);
 </script>
 </body>
 </html>
