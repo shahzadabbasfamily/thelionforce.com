@@ -104,10 +104,22 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 .manager-card{background:#f8fafc;border:1px solid #e2e8f0;border-radius:12px;padding:1rem;margin-bottom:.75rem;display:flex;align-items:center;justify-content:space-between}
 @media(min-width:769px){.stats-grid{grid-template-columns:repeat(5,1fr)}}
 @media(max-width:768px){
-  .stats-grid{grid-template-columns:repeat(2,1fr)}
+  .stats-grid{grid-template-columns:repeat(2,1fr);gap:.75rem}
   .container{padding:1rem}
   .milestone-tracker{overflow-x:auto;padding-bottom:.5rem}
   .milestone-label{font-size:9px}
+  .nav{height:auto;flex-wrap:wrap;padding:.5rem .75rem;gap:.25rem}
+  .nav-brand span{font-size:14px}
+  .badge-admin,.badge-manager{font-size:9px;padding:2px 6px;margin-left:3px}
+  .nav-user{display:none}
+  .nav-right{gap:.4rem}
+  #navLinks{width:100%;order:3;margin-top:.25rem;display:flex;gap:1rem}
+  #navLinks a{margin-right:0 !important;font-size:12px !important}
+  .tickets-table{font-size:12px}
+  .tickets-table th,.tickets-table td{padding:.5rem .35rem;white-space:nowrap}
+  .filter-bar button{padding:.3rem .5rem;font-size:11px}
+  .modal{margin:0 .5rem;max-height:92vh}
+  .manager-card{flex-direction:column;align-items:flex-start !important;gap:.5rem}
 }
 </style>
 </head>
@@ -414,7 +426,7 @@ function renderTicketList() {
     el.innerHTML = '<div class="empty-state"><i class="fas fa-ticket-alt" style="font-size:3rem"></i><p>No tickets in this category.</p></div>';
     return;
   }
-  var html = '<table class="tickets-table"><thead><tr><th>Ticket</th><th>Host</th><th>Status</th><th>Manager</th><th>Date</th><th></th></tr></thead><tbody>';
+  var html = '<div style="overflow-x:auto;-webkit-overflow-scrolling:touch"><table class="tickets-table"><thead><tr><th>Ticket</th><th>Host</th><th>Status</th><th>Manager</th><th>Date</th><th></th></tr></thead><tbody>';
   for (var i=0;i<filtered.length;i++) {
     var t = filtered[i];
     var h = null;
@@ -426,7 +438,7 @@ function renderTicketList() {
     html += '<td style="font-size:12px;color:#64748b">' + new Date(t.createdAt).toLocaleDateString() + '</td>';
     html += '<td><button class="icon-btn" onclick="viewTicketDetail(\'' + t.id + '\')"><i class="fas fa-eye"></i></button></td></tr>';
   }
-  html += '</tbody></table>';
+  html += '</tbody></table></div>';
   el.innerHTML = html;
 }
 
