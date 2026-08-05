@@ -4,6 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Lion Force Server Portal</title>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
@@ -76,8 +78,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 .empty-state i{font-size:3rem;margin-bottom:1rem;display:block;color:#1f2937}
 .page{display:none}
 .page.active{display:block}
-.loading{text-align:center;padding:3rem}
-.spinner{width:40px;height:40px;border:2px solid rgba(59,107,245,0.2);border-top-color:#3B6BF5;border-radius:50%;animation:spin 1s linear infinite;margin:0 auto 1rem}
+.spinner{width:40px;height:40px;border:2px solid rgba(59,107,245,0.2);border-top-color:#3B6BF5;border-radius:50%;animation:spin 1s linear infinite;margin:0 auto}
 @keyframes spin{to{transform:rotate(360deg)}}
 @media(max-width:768px){.container{padding:1rem}.stats-grid{grid-template-columns:repeat(2,1fr)}.form-row{grid-template-columns:1fr}.hosts-table{overflow-x:auto}.hosts-table table{min-width:700px}}
 </style>
@@ -99,13 +100,16 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
         <div id="loginError"></div>
         <div class="form-group">
           <label>Email</label>
-          <input type="email" id="loginEmail" placeholder="your@email.com">
+          <input type="email" id="loginEmail" placeholder="your@email.com" value="syedshahzadabbas@yahoo.com">
         </div>
         <div class="form-group">
           <label>Password</label>
-          <input type="password" id="loginPass" placeholder="Enter password">
+          <input type="password" id="loginPass" placeholder="Enter password" value="lionforce2026">
         </div>
         <button class="btn" onclick="app.login()">Sign In</button>
+        <div style="margin-top:1rem;text-align:center">
+          <button onclick="app.resetAdmin()" style="background:none;border:none;color:#6B7280;font-size:12px;cursor:pointer;text-decoration:underline">Reset Admin Account</button>
+        </div>
       </div>
       <p style="text-align:center;color:#374151;font-size:13px;margin-top:1.5rem">Secure VPN Config Portal - The Lion Force</p>
     </div>
@@ -152,10 +156,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
   </div>
 </div>
 
-<script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-import { getDatabase, ref, set, get, update, remove } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
-
+<script>
+// Initialize Firebase with compat mode (global firebase object)
 const firebaseConfig = {
   apiKey: "AIzaSyA7WO6r3cbiZiJZVv82wF2SnCI5rRJRLkI",
   authDomain: "lionforce-crm.firebaseapp.com",
@@ -166,52 +168,92 @@ const firebaseConfig = {
   appId: "1:951731260622:web:9dedc08f62461add52949f"
 };
 
-const fbApp = initializeApp(firebaseConfig);
-const db = getDatabase(fbApp);
+firebase.initializeApp(firebaseConfig);
+const db = firebase.database();
 
-async function fbGet(p) { const s = await get(ref(db, p)); return s.exists() ? s.val() : null; }
-async function fbSet(p, v) { await set(ref(db, p), v); }
-async function fbUp(p, v) { await update(ref(db, p), v); }
-async function fbRm(p) { await remove(ref(db, p)); }
+function fbGet(path) { return db.ref(path).once('value').then(s => s.val()); }
+function fbSet(path, val) { return db.ref(path).set(val); }
+function fbUp(path, val) { return db.ref(path).update(val); }
+function fbRm(path) { return db.ref(path).remove(); }
 
-function hashPW(p) { let h = 0; for (let i = 0; i < p.length; i++) h = ((h << 5) - h + p.charCodeAt(i)) | 0; return 'h' + Math.abs(h).toString(16); }
+function hashPW(p) {
+  let h = 0;
+  for (let i = 0; i < p.length; i++) {
+    h = ((h << 5) - h + p.charCodeAt(i)) | 0;
+  }
+  return 'h' + Math.abs(h).toString(16);
+}
 
-window.app = {
+const app = {
   user: null,
   hosts: [],
   configs: [],
   page: 'dashboard',
 
   async init() {
-    await this.seedAdmin();
+    await this.ensureAdmin();
     const saved = localStorage.getItem('lf_server_user');
     if (saved) {
       try { this.user = JSON.parse(saved); this.showApp(); } catch (e) { localStorage.removeItem('lf_server_user'); }
     }
   },
 
-  async seedAdmin() {
-    const d = await fbGet('server/hosts');
-    if (!d) {
+  async ensureAdmin() {
+    try {
+      const d = await fbGet('server/hosts');
+      let hasAdmin = false;
+      if (d) {
+        const arr = Object.values(d).filter(x => x !== null);
+        hasAdmin = arr.some(x => x.role === 'admin');
+      }
+      if (!hasAdmin) {
+        await fbSet('server/hosts/admin_1', {
+          id: 'admin_1', name: 'Lion Force Admin', email: 'syedshahzadabbas@yahoo.com',
+          password: hashPW('lionforce2026'), tiktokUsername: null,
+          provider: 'EDIS', region: 'UAE', role: 'admin', status: 'active',
+          configFileId: null, createdAt: Date.now()
+        });
+        console.log('Admin created');
+      }
+    } catch (e) { console.error('ensureAdmin error:', e); }
+  },
+
+  async resetAdmin() {
+    document.getElementById('loginError').innerHTML = '<div class="success-msg">Resetting admin...</div>';
+    try {
       await fbSet('server/hosts/admin_1', {
-        id: 'admin_1', name: 'Lion Force Admin', email: 'admin@thelionforce.com',
+        id: 'admin_1', name: 'Lion Force Admin', email: 'syedshahzadabbas@yahoo.com',
         password: hashPW('lionforce2026'), tiktokUsername: null,
         provider: 'EDIS', region: 'UAE', role: 'admin', status: 'active',
         configFileId: null, createdAt: Date.now()
       });
+      document.getElementById('loginError').innerHTML = '<div class="success-msg">Admin reset! Try logging in now.</div>';
+    } catch (e) {
+      document.getElementById('loginError').innerHTML = '<div class="error-msg">Error: ' + e.message + '</div>';
     }
   },
 
   async login() {
     const email = document.getElementById('loginEmail').value.trim();
     const pass = document.getElementById('loginPass').value;
-    document.getElementById('loginError').innerHTML = '<div class="loading"><div class="spinner" style="width:24px;height:24px"></div></div>';
+    if (!email || !pass) {
+      document.getElementById('loginError').innerHTML = '<div class="error-msg">Please enter email and password</div>';
+      return;
+    }
+    document.getElementById('loginError').innerHTML = '<div style="text-align:center;padding:1rem"><div class="spinner" style="width:24px;height:24px"></div></div>';
     try {
       const d = await fbGet('server/hosts');
-      const arr = d ? Object.values(d).filter(x => x !== null) : [];
-      const u = arr.find(x => x.email === email && x.password === hashPW(pass));
-      if (!u) throw new Error('Invalid email or password');
-      if (u.status === 'disabled') throw new Error('Account is disabled');
+      if (!d) throw new Error('No accounts found. Click "Reset Admin Account" below.');
+      const arr = Object.values(d).filter(x => x !== null);
+      if (arr.length === 0) throw new Error('No accounts found. Click "Reset Admin Account" below.');
+      const pw = hashPW(pass);
+      const u = arr.find(x => x.email === email && x.password === pw);
+      if (!u) {
+        const foundByEmail = arr.find(x => x.email === email);
+        if (foundByEmail) throw new Error('Wrong password. Try clicking "Reset Admin Account" below.');
+        else throw new Error('Email not found. Try clicking "Reset Admin Account" below.');
+      }
+      if (u.status === 'disabled') throw new Error('Account is disabled. Contact admin.');
       this.user = { ...u, id: u.id || u.email.replace(/[^a-zA-Z0-9]/g, '') };
       localStorage.setItem('lf_server_user', JSON.stringify(this.user));
       this.showApp();
