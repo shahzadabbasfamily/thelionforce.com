@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Lion Force CRM - Support Tickets</title>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#f8fafc;color:#0f172a;min-height:100vh}
+.nav{height:64px;background:#fff;border-bottom:1px solid #e2e8f0;display:flex;align-items:center;padding:0 1.5rem;position:sticky;top:0;z-index:100}
+.nav-brand{display:flex;align-items:center;gap:.5rem}
+.logo-icon{width:32px;height:32px;border-radius:8px;background:linear-gradient(135deg,#3B6BF5,#00D4FF);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:12px}
+.nav-brand span{font-weight:700;font-size:16px;color:#0f172a}
+.nav-right{margin-left:auto;display:flex;align-items:center;gap:.75rem}
+.container{max-width:1200px;margin:0 auto;padding:1.5rem}
+.stats-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1rem;margin-bottom:1.5rem}
+.stat-card{background:#fff;border:1px solid #e2e8f0;border-radius:16px;padding:1.25rem}
+.stat-card i{font-size:1.1rem;margin-bottom:.5rem;display:block}
+.stat-card .num{font-size:1.75rem;font-weight:800}
+.stat-card .label{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.05em;color:#64748b;margin-top:.25rem}
+.card{background:#fff;border:1px solid #e2e8f0;border-radius:16px;padding:1.5rem;margin-bottom:1rem}
+.card h2{font-size:1.1rem;font-weight:700;margin-bottom:1rem}
+.btn{padding:.6rem 1rem;background:#3B6BF5;color:#fff;border:none;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;transition:all .2s}
+.btn:hover{background:#5C8DFF}
+.btn-sm{padding:.4rem .75rem;font-size:12px}
+.btn-green{background:#22c55e}
+.btn-green:hover{background:#16a34a}
+.btn-amber{background:#f59e0b}
+.btn-amber:hover{background:#d97706}
+.btn-secondary{background:#f1f5f9;border:1px solid #cbd5e1;color:#475569}
+.btn-secondary:hover{background:#e2e8f0}
+.icon-btn{padding:.5rem;border-radius:6px;background:none;border:none;color:#64748b;cursor:pointer;transition:all .2s;font-size:13px}
+.icon-btn:hover{background:#f1f5f9;color:#3B6BF5}
+.icon-btn.danger:hover{background:#fef2f2;color:#ef4444}
+.tickets-table{width:100%;border-collapse:collapse}
+.tickets-table th{text-align:left;padding:.75rem;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.05em;color:#64748b;border-bottom:1px solid #e2e8f0}
+.tickets-table td{padding:.75rem;font-size:.85rem;border-bottom:1px solid #f1f5f9}
+.status-badge{display:inline-flex;align-items:center;gap:.35rem;padding:.3rem .6rem;border-radius:50px;font-size:11px;font-weight:600;border:1px solid}
+.status-open{border-color:#bfdbfe;color:#2563eb;background:#eff6ff}
+.status-assigned{border-color:#fde68a;color:#b45309;background:#fffbeb}
+.status-in-progress{border-color:#a5f3fc;color:#0891b2;background:#ecfeff}
+.status-submitted-to-tiktok{border-color:#e9d5ff;color:#7c3aed;background:#faf5ff}
+.status-resolved{border-color:#bbf7d0;color:#15803d;background:#f0fdf4}
+.avatar{width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,#3B6BF5,#00D4FF);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:12px;color:#fff}
+.empty-state{text-align:center;padding:3rem;color:#94a3b8}
+.milestone-tracker{display:flex;justify-content:space-between;align-items:center;margin:1.5rem 0;padding:0 .5rem}
+.milestone{flex:1;text-align:center;position:relative}
+.milestone-dot{width:28px;height:28px;border-radius:50%;background:#f1f5f9;border:2px solid #cbd5e1;color:#64748b;display:flex;align-items:center;justify-content:center;margin:0 auto .5rem;font-size:11px;font-weight:700}
+.milestone-dot.done{background:#dcfce7;border-color:#86efac;color:#15803d}
+.milestone-dot.active{background:#eff6ff;border-color:#3B6BF5;color:#3B6BF5}
+.milestone-label{font-size:10px;font-weight:600;color:#64748b;text-transform:uppercase;letter-spacing:0.05em}
+.milestone-label.done{color:#15803d}
+.milestone-label.active{color:#3B6BF5}
+.milestone-line{position:absolute;top:14px;left:-50%;width:100%;height:2px;background:#e2e8f0;z-index:-1}
+.milestone-line.done{background:#86efac}
+.milestone:first-child .milestone-line{display:none}
+.timeline-log{display:flex;gap:1rem;margin-bottom:1.25rem}
+.timeline-icon{width:36px;height:36px;border-radius:50%;background:#eff6ff;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:13px;color:#3B6BF5}
+.timeline-content{flex:1}
+.timeline-content p{font-size:14px;color:#0f172a;margin-bottom:.15rem}
+.timeline-content .time{font-size:12px;color:#94a3b8}
+.timeline-content .note{font-size:13px;color:#475569;margin-top:.35rem;background:#f8fafc;padding:.5rem .75rem;border-radius:8px;border-left:3px solid #3B6BF5}
+.form-group{margin-bottom:1rem}
+.form-group label{display:block;font-size:12px;font-weight:600;color:#475569;margin-bottom:.35rem}
+.form-group input,.form-group select,.form-group textarea{width:100%;padding:.65rem .875rem;background:#fff;border:1px solid #cbd5e1;border-radius:8px;color:#0f172a;font-size:14px;outline:none;font-family:inherit}
+.form-group textarea{resize:vertical;min-height:80px}
+.form-group input:focus,.form-group select:focus,.form-group textarea:focus{border-color:#3B6BF5}
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:200;align-items:center;justify-content:center;padding:1rem}
+.modal-overlay.active{display:flex}
+.modal{background:#fff;border-radius:16px;width:100%;max-width:500px;max-height:85vh;display:flex;flex-direction:column;overflow:hidden}
+.modal-header{padding:1.25rem 1.5rem;border-bottom:1px solid #e2e8f0;display:flex;align-items:center;justify-content:space-between}
+.modal-header h3{margin:0;font-size:1.1rem}
+.modal-close{background:none;border:none;color:#64748b;font-size:1.5rem;cursor:pointer}
+.modal-body{padding:1.5rem;overflow-y:auto}
+.modal-footer{padding:1rem 1.5rem;border-top:1px solid #e2e8f0;display:flex;gap:.5rem;justify-content:flex-end}
+.screenshot-full{max-width:100%;border-radius:12px;border:1px solid #e2e8f0;margin-top:.5rem}
+.filter-bar{display:flex;gap:.5rem;margin-bottom:1rem;flex-wrap:wrap}
+.filter-bar button{padding:.4rem .75rem;border-radius:20px;border:1px solid #e2e8f0;background:#fff;color:#64748b;font-size:12px;font-weight:600;cursor:pointer}
+.filter-bar button.active{background:#3B6BF5;color:#fff;border-color:#3B6BF5}
+@media(min-width:769px){.stats-grid{grid-template-columns:repeat(5,1fr)}}
+@media(max-width:768px){
+  .stats-grid{grid-template-columns:repeat(2,1fr)}
+  .container{padding:1rem}
+  .milestone-tracker{overflow-x:auto;padding-bottom:.5rem}
+  .milestone-label{font-size:9px}
+}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-brand">
+    <div class="logo-icon">LF</div>
+    <span>CRM - Support Tickets</span>
+  </div>
+  <div class="nav-right">
+    <span style="color:#64748b;font-size:13px"><i class="fas fa-circle" style="color:#22c55e;font-size:8px;margin-right:4px"></i>Live Sync</span>
+  </div>
+</nav>
+
+<div class="container">
+  <div id="mainContent">
+    <div class="stats-grid">
+      <div class="stat-card"><i class="fas fa-ticket-alt" style="color:#3B6BF5"></i><div class="num" id="statTotal">-</div><div class="label">Total Tickets</div></div>
+      <div class="stat-card"><i class="fas fa-exclamation-circle" style="color:#f59e0b"></i><div class="num" id="statOpen">-</div><div class="label">Open</div></div>
+      <div class="stat-card"><i class="fas fa-user-check" style="color:#a855f7"></i><div class="num" id="statAssigned">-</div><div class="label">Assigned</div></div>
+      <div class="stat-card"><i class="fas fa-spinner" style="color:#06b6d4"></i><div class="num" id="statProgress">-</div><div class="label">In Progress</div></div>
+      <div class="stat-card"><i class="fas fa-check-circle" style="color:#22c55e"></i><div class="num" id="statResolved">-</div><div class="label">Resolved</div></div>
+    </div>
+
+    <div class="card">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem">
+        <h2>All Tickets</h2>
+        <button class="btn btn-sm" onclick="loadTickets()"><i class="fas fa-sync-alt"></i> Refresh</button>
+      </div>
+      <div class="filter-bar">
+        <button onclick="filterTickets('all')" class="active" id="f-all">All</button>
+        <button onclick="filterTickets('open')" id="f-open">Open</button>
+        <button onclick="filterTickets('assigned')" id="f-assigned">Assigned</button>
+        <button onclick="filterTickets('in-progress')" id="f-in-progress">In Progress</button>
+        <button onclick="filterTickets('submitted-to-tiktok')" id="f-submitted-to-tiktok">TikTok</button>
+        <button onclick="filterTickets('resolved')" id="f-resolved">Resolved</button>
+      </div>
+      <div id="ticketList"><div class="empty-state"><i class="fas fa-spinner fa-spin" style="font-size:2rem"></i><p>Loading tickets...</p></div></div>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="detailModal">
+  <div class="modal" style="max-width:700px">
+    <div class="modal-header">
+      <h3>Ticket Details</h3>
+      <button class="modal-close" onclick="closeDetailModal()">&times;</button>
+    </div>
+    <div class="modal-body" id="detailBody"></div>
+    <div class="modal-footer">
+      <button class="btn btn-secondary btn-sm" onclick="closeDetailModal()">Close</button>
+      <button class="btn btn-sm btn-green" onclick="openUpdateModal()"><i class="fas fa-edit"></i> Update Status</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="updateModal">
+  <div class="modal">
+    <div class="modal-header"><h3>Update Ticket</h3><button class="modal-close" onclick="closeUpdateModal()">&times;</button></div>
+    <div class="modal-body">
+      <div id="upMsg"></div>
+      <div class="form-group"><label>Status</label><select id="upStatus"><option value="open">Open</option><option value="assigned">Assigned</option><option value="in-progress">In Progress</option><option value="submitted-to-tiktok">Submitted to TikTok</option><option value="resolved">Resolved</option></select></div>
+      <div class="form-group"><label>Assigned Manager (optional)</label><input id="upManager" placeholder="Manager name"></div>
+      <div class="form-group"><label>Update Note</label><textarea id="upNote" placeholder="What action was taken..."></textarea></div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-secondary btn-sm" onclick="closeUpdateModal()">Cancel</button>
+      <button class="btn btn-sm" onclick="saveUpdate()">Save Update</button>
+    </div>
+  </div>
+</div>
+
+<script>
+var db = null;
+var allTickets = [];
+var allHosts = [];
+var currentFilter = 'all';
+var currentTicketId = null;
+
+function initFirebase() {
+  firebase.initializeApp({
+    apiKey: "AIzaSyA7WO6r3cbiZiJZVv82wF2SnCI5rRJRLkI",
+    authDomain: "lionforce-crm.firebaseapp.com",
+    databaseURL: "https://lionforce-crm-default-rtdb.europe-west1.firebasedatabase.app",
+    projectId: "lionforce-crm",
+    storageBucket: "lionforce-crm.firebasestorage.app",
+    messagingSenderId: "951731260622",
+    appId: "1:951731260622:web:9dedc08f62461add52949f"
+  });
+  db = firebase.database();
+}
+
+function fbGet(path) { return db.ref(path).once('value').then(function(s){ return s.val(); }); }
+function fbUp(path, val) { return db.ref(path).update(val); }
+function fbPush(path, val) { return db.ref(path).push(val); }
+
+function loadTickets() {
+  Promise.all([fbGet('server/tickets'), fbGet('server/hosts')]).then(function(results) {
+    var ts = results[0] || {};
+    var hs = results[1] || {};
+    allTickets = []; for (var k in ts) { if (ts[k]) { ts[k]._key = k; allTickets.push(ts[k]); } }
+    allHosts = []; for (var k2 in hs) { if (hs[k2]) allHosts.push(hs[k2]); }
+    allTickets.sort(function(a,b){ return b.createdAt - a.createdAt; });
+    updateStats();
+    renderTicketList();
+  });
+}
+
+function updateStats() {
+  var counts = {total:allTickets.length, open:0, assigned:0, 'in-progress':0, 'submitted-to-tiktok':0, resolved:0};
+  for (var i=0;i<allTickets.length;i++) counts[allTickets[i].status] = (counts[allTickets[i].status]||0)+1;
+  document.getElementById('statTotal').textContent = counts.total;
+  document.getElementById('statOpen').textContent = counts.open;
+  document.getElementById('statAssigned').textContent = counts.assigned;
+  document.getElementById('statProgress').textContent = counts['in-progress'];
+  document.getElementById('statResolved').textContent = counts.resolved;
+}
+
+function filterTickets(status) {
+  currentFilter = status;
+  var btns = document.querySelectorAll('.filter-bar button');
+  for (var i=0;i<btns.length;i++) btns[i].classList.remove('active');
+  document.getElementById('f-' + status).classList.add('active');
+  renderTicketList();
+}
+
+function renderTicketList() {
+  var filtered = currentFilter === 'all' ? allTickets : allTickets.filter(function(t){ return t.status === currentFilter; });
+  var el = document.getElementById('ticketList');
+  if (filtered.length === 0) {
+    el.innerHTML = '<div class="empty-state"><i class="fas fa-ticket-alt" style="font-size:3rem"></i><p>No tickets in this category.</p></div>';
+    return;
+  }
+  var html = '<table class="tickets-table"><thead><tr><th>Ticket</th><th>Host</th><th>Status</th><th>Manager</th><th>Date</th><th></th></tr></thead><tbody>';
+  for (var i=0;i<filtered.length;i++) {
+    var t = filtered[i];
+    var h = null;
+    for (var j=0;j<allHosts.length;j++) if (allHosts[j].id === t.hostId) { h = allHosts[j]; break; }
+    html += '<tr><td><p style="font-weight:600">' + t.title + '</p><p style="color:#64748b;font-size:12px">' + t.details.substring(0,50) + (t.details.length>50?'...':'') + '</p></td>';
+    html += '<td><div style="display:flex;align-items:center;gap:.5rem"><div class="avatar" style="width:28px;height:28px;font-size:10px">' + (h?h.name.charAt(0):'?') + '</div><span style="font-size:13px">' + (h?h.name:'Unknown') + '</span></div></td>';
+    html += '<td><span class="status-badge status-' + t.status + '">' + t.status.replace(/-/g,' ') + '</span></td>';
+    html += '<td style="font-size:13px;color:#64748b">' + (t.assignedToName||'-') + '</td>';
+    html += '<td style="font-size:12px;color:#64748b">' + new Date(t.createdAt).toLocaleDateString() + '</td>';
+    html += '<td><button class="icon-btn" onclick="viewTicketDetail(\'' + t.id + '\')"><i class="fas fa-eye"></i></button></td></tr>';
+  }
+  html += '</tbody></table>';
+  el.innerHTML = html;
+}
+
+function viewTicketDetail(tid) {
+  currentTicketId = tid;
+  var t = null;
+  for (var i=0;i<allTickets.length;i++) if (allTickets[i].id === tid) { t = allTickets[i]; break; }
+  if (!t) return;
+  var h = null;
+  for (var j=0;j<allHosts.length;j++) if (allHosts[j].id === t.hostId) { h = allHosts[j]; break; }
+
+  fbGet('server/ticketLogs/' + tid).then(function(logs) {
+    var logArr = [];
+    for (var k in logs) if (logs[k]) { logs[k]._key = k; logArr.push(logs[k]); }
+    logArr.sort(function(a,b){ return a.date - b.date; });
+
+    var stages = ['open','assigned','in-progress','submitted-to-tiktok','resolved'];
+    var stageLabels = ['Submitted','Assigned','In Progress','TikTok','Resolved'];
+    var currentStageIdx = stages.indexOf(t.status);
+    if (currentStageIdx < 0) currentStageIdx = 0;
+
+    var html = '<div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:1rem"><div><h2 style="font-size:1.25rem;font-weight:700">' + t.title + '</h2><p style="color:#64748b;font-size:13px"><i class="fas fa-user"></i> ' + (h?h.name:'Unknown') + ' <span style="margin-left:1rem"><i class="fas fa-calendar"></i> ' + new Date(t.createdAt).toLocaleString() + '</span></p></div><span class="status-badge status-' + t.status + '">' + t.status.replace(/-/g,' ') + '</span></div>';
+
+    // Milestones
+    html += '<div style="margin:1.5rem 0"><div class="milestone-tracker">';
+    for (var s=0;s<stages.length;s++) {
+      var done = s <= currentStageIdx;
+      var active = s === currentStageIdx;
+      html += '<div class="milestone"><div class="milestone-line' + (done?' done':'') + '"></div><div class="milestone-dot' + (done?' done':'') + (active?' active':'') + '">' + (done&&!active?'<i class="fas fa-check" style="font-size:10px"></i>':(s+1)) + '</div><div class="milestone-label' + (done?' done':'') + (active?' active':'') + '">' + stageLabels[s] + '</div></div>';
+    }
+    html += '</div></div>';
+
+    html += '<p style="font-size:15px;line-height:1.6;margin:1rem 0">' + t.details + '</p>';
+    if (t.screenshot) {
+      html += '<p style="color:#64748b;font-size:13px;margin-bottom:.5rem"><i class="fas fa-image"></i> Screenshot</p><img src="' + t.screenshot + '" class="screenshot-full">';
+    }
+
+    html += '<h3 style="font-size:14px;font-weight:600;margin:1.5rem 0 .75rem;color:#64748b;text-transform:uppercase;letter-spacing:0.05em"><i class="fas fa-history"></i> Activity Log</h3>';
+    if (logArr.length === 0) {
+      html += '<p style="color:#94a3b8;font-size:13px">No updates yet.</p>';
+    } else {
+      for (var l=0;l<logArr.length;l++) {
+        var lg = logArr[l];
+        var icon = 'fa-info-circle', iconBg = '#eff6ff', iconColor = '#3B6BF5';
+        if (lg.action.indexOf('Submitted')>=0) { icon='fa-ticket-alt'; iconBg='#eff6ff'; iconColor='#3B6BF5'; }
+        else if (lg.action.indexOf('Assigned')>=0) { icon='fa-user-check'; iconBg='#fffbeb'; iconColor='#b45309'; }
+        else if (lg.action.indexOf('Progress')>=0) { icon='fa-spinner'; iconBg='#ecfeff'; iconColor='#0891b2'; }
+        else if (lg.action.indexOf('TikTok')>=0) { icon='fa-paper-plane'; iconBg='#faf5ff'; iconColor='#7c3aed'; }
+        else if (lg.action.indexOf('Resolved')>=0) { icon='fa-check-circle'; iconBg='#f0fdf4'; iconColor='#15803d'; }
+        html += '<div class="timeline-log"><div class="timeline-icon" style="background:' + iconBg + ';color:' + iconColor + '"><i class="fas ' + icon + '"></i></div><div class="timeline-content"><p><strong>' + lg.by + '</strong> ' + lg.action + '</p><span class="time">' + new Date(lg.date).toLocaleString() + '</span>' + (lg.note?'<div class="note">' + lg.note + '</div>':'') + '</div></div>';
+      }
+    }
+    document.getElementById('detailBody').innerHTML = html;
+    document.getElementById('detailModal').classList.add('active');
+  });
+}
+
+function closeDetailModal() {
+  document.getElementById('detailModal').classList.remove('active');
+}
+
+function openUpdateModal() {
+  document.getElementById('upMsg').innerHTML = '';
+  document.getElementById('upStatus').value = 'open';
+  document.getElementById('upManager').value = '';
+  document.getElementById('upNote').value = '';
+  document.getElementById('updateModal').classList.add('active');
+}
+function closeUpdateModal() {
+  document.getElementById('updateModal').classList.remove('active');
+}
+
+function saveUpdate() {
+  var status = document.getElementById('upStatus').value;
+  var manager = document.getElementById('upManager').value.trim();
+  var note = document.getElementById('upNote').value.trim();
+  if (!currentTicketId) return;
+
+  var actionText = 'Status updated to ' + status.replace(/-/g,' ');
+  if (status === 'assigned') actionText = 'Assigned to manager';
+  if (status === 'in-progress') actionText = 'Issue is being investigated';
+  if (status === 'submitted-to-tiktok') actionText = 'Submitted to TikTok Support';
+  if (status === 'resolved') actionText = 'Issue Resolved';
+
+  var updates = { status: status, updatedAt: Date.now() };
+  if (manager) updates.assignedToName = manager;
+
+  fbUp('server/tickets/' + currentTicketId, updates).then(function() {
+    var logData = { date: Date.now(), by: 'CRM Admin', action: actionText, note: note || '' };
+    return fbPush('server/ticketLogs/' + currentTicketId, logData);
+  }).then(function() {
+    closeUpdateModal();
+    closeDetailModal();
+    loadTickets();
+  }).catch(function(err) {
+    document.getElementById('upMsg').innerHTML = '<div style="color:#ef4444;font-size:13px">' + err.message + '</div>';
+  });
+}
+
+initFirebase();
+loadTickets();
+// Auto refresh every 30 seconds
+setInterval(loadTickets, 30000);
+</script>
+</body>
+</html>
