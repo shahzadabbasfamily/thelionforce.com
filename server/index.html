@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>Lion Force Server Portal</title>
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
@@ -26,44 +26,50 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 .form-group input,.form-group select{width:100%;padding:.875rem 1rem;background:rgba(255,255,255,.03);border:1px solid rgba(59,107,245,0.2);border-radius:10px;color:#fff;font-size:1rem;outline:none}
 .form-group select option{background:#0A0D14;color:#fff;padding:.5rem}
 .form-group input:focus,.form-group select:focus{border-color:#3B6BF5}
-.form-group input[type=file]{padding:.5rem;font-size:13px}
+.form-group input::placeholder{color:#6B7280}
 .btn{width:100%;padding:1rem;background:#3B6BF5;color:#fff;border:none;border-radius:10px;font-size:13px;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;cursor:pointer;transition:all .3s}
 .btn:hover{background:#5C8DFF}
 .btn-sm{padding:.6rem 1rem;font-size:12px;width:auto}
 .btn:disabled{opacity:0.5;cursor:not-allowed}
+.btn-outline{background:transparent;border:1px solid rgba(59,107,245,0.4);color:#3B6BF5}
+.btn-outline:hover{background:rgba(59,107,245,0.1)}
 .error-msg{background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.3);color:#fca5a5;padding:.75rem 1rem;border-radius:8px;margin-bottom:1rem;font-size:.875rem}
 .success-msg{background:rgba(34,197,94,.1);border:1px solid rgba(34,197,94,.3);color:#86efac;padding:.75rem 1rem;border-radius:8px;margin-bottom:1rem;font-size:.875rem}
-.nav{height:64px;background:rgba(5,5,8,0.9);backdrop-filter:blur(20px);border-bottom:1px solid rgba(59,107,245,0.1);display:flex;align-items:center;padding:0 1.5rem;position:sticky;top:0;z-index:100}
-.nav-brand{display:flex;align-items:center;gap:.75rem}
-.nav-brand .logo-icon{width:36px;height:36px;border-radius:10px}
-.nav-brand span{font-weight:700;font-size:16px}
-.badge-admin{font-size:11px;font-weight:600;color:#3B6BF5;background:rgba(59,107,245,0.1);padding:4px 10px;border-radius:20px;margin-left:8px}
-.nav-right{margin-left:auto;display:flex;align-items:center;gap:1rem}
-.nav-user{color:#6B7280;font-size:.875rem}
-.nav a{color:#6B7280;text-decoration:none;font-size:13px;font-weight:600;text-transform:uppercase;letter-spacing:0.05em;transition:color .3s;margin-right:1.5rem}
+.login-toggle{text-align:center;margin-top:1.25rem;color:#6B7280;font-size:.875rem}
+.login-toggle a{color:#3B6BF5;cursor:pointer;text-decoration:none;font-weight:600}
+.login-toggle a:hover{text-decoration:underline}
+
+.nav{height:64px;background:rgba(5,5,8,0.9);backdrop-filter:blur(20px);border-bottom:1px solid rgba(59,107,245,0.1);display:flex;align-items:center;padding:0 1rem;position:sticky;top:0;z-index:100}
+.nav-brand{display:flex;align-items:center;gap:.5rem}
+.nav-brand .logo-icon{width:32px;height:32px;border-radius:8px;font-size:12px}
+.nav-brand span{font-weight:700;font-size:14px}
+.badge-admin{font-size:10px;font-weight:600;color:#3B6BF5;background:rgba(59,107,245,0.1);padding:3px 8px;border-radius:20px;margin-left:4px}
+.nav-right{margin-left:auto;display:flex;align-items:center;gap:.75rem}
+.nav-user{color:#6B7280;font-size:12px;max-width:100px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.nav a{color:#6B7280;text-decoration:none;font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:0.05em;transition:color .3s;margin-right:1rem}
 .nav a:hover,.nav a.active{color:#3B6BF5}
-.container{max-width:1200px;margin:0 auto;padding:2rem 1.5rem}
-.stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem;margin-bottom:2rem}
-.stat-card{background:#0A0D14;border:1px solid rgba(59,107,245,0.15);border-radius:16px;padding:1.5rem}
-.stat-card i{font-size:1.25rem;margin-bottom:.75rem;display:block}
-.stat-card .num{font-size:2rem;font-weight:800}
-.stat-card .label{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;color:#6B7280;margin-top:.25rem}
-.action-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1rem;margin-bottom:2rem}
-.action-card{background:#0A0D14;border:1px solid rgba(59,107,245,0.15);border-radius:16px;padding:1.5rem;display:flex;align-items:center;gap:1rem;cursor:pointer;transition:all .3s;text-align:left;border:none;color:inherit;width:100%;font-family:inherit}
+.container{max-width:1200px;margin:0 auto;padding:1.5rem 1rem}
+.stats-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:.75rem;margin-bottom:1.5rem}
+.stat-card{background:#0A0D14;border:1px solid rgba(59,107,245,0.15);border-radius:16px;padding:1.25rem 1rem}
+.stat-card i{font-size:1.1rem;margin-bottom:.5rem;display:block}
+.stat-card .num{font-size:1.75rem;font-weight:800}
+.stat-card .label{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;color:#6B7280;margin-top:.25rem}
+.action-grid{display:grid;grid-template-columns:1fr;gap:.75rem;margin-bottom:1.5rem}
+.action-card{background:#0A0D14;border:1px solid rgba(59,107,245,0.15);border-radius:16px;padding:1.25rem;display:flex;align-items:center;gap:1rem;cursor:pointer;transition:all .3s;text-align:left;border:none;color:inherit;width:100%;font-family:inherit}
 .action-card:hover{border-color:rgba(59,107,245,0.4)}
-.action-icon{width:48px;height:48px;border-radius:12px;background:rgba(59,107,245,0.1);display:flex;align-items:center;justify-content:center;font-size:1.25rem;flex-shrink:0}
+.action-icon{width:44px;height:44px;border-radius:12px;background:rgba(59,107,245,0.1);display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0}
 .action-card h3{font-size:1rem;font-weight:600;margin-bottom:.25rem}
 .action-card p{font-size:13px;color:#6B7280}
 .hosts-table{width:100%;background:#0A0D14;border:1px solid rgba(59,107,245,0.15);border-radius:16px;overflow:hidden}
 .hosts-table table{width:100%;border-collapse:collapse}
-.hosts-table th{text-align:left;padding:1rem;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.05em;color:#6B7280;border-bottom:1px solid rgba(59,107,245,0.1)}
-.hosts-table td{padding:1rem;font-size:.875rem;border-bottom:1px solid rgba(59,107,245,0.06)}
+.hosts-table th{text-align:left;padding:.75rem;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:0.05em;color:#6B7280;border-bottom:1px solid rgba(59,107,245,0.1)}
+.hosts-table td{padding:.75rem;font-size:.8rem;border-bottom:1px solid rgba(59,107,245,0.06)}
 .hosts-table tr:last-child td{border-bottom:none}
 .avatar{width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,#3B6BF5,#00D4FF);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:12px;color:#fff;flex-shrink:0}
-.status-badge{display:inline-flex;align-items:center;gap:.35rem;padding:.35rem .7rem;border-radius:50px;font-size:11px;font-weight:600;border:1px solid}
+.status-badge{display:inline-flex;align-items:center;gap:.35rem;padding:.3rem .6rem;border-radius:50px;font-size:10px;font-weight:600;border:1px solid}
 .status-active{border-color:rgba(34,197,94,.3);color:#86efac;background:rgba(34,197,94,.08)}
 .status-disabled{border-color:rgba(239,68,68,.3);color:#fca5a5;background:rgba(239,68,68,.08)}
-.icon-btn{padding:.5rem;border-radius:8px;background:none;border:none;color:#6B7280;cursor:pointer;transition:all .2s}
+.icon-btn{padding:.5rem;border-radius:8px;background:none;border:none;color:#6B7280;cursor:pointer;transition:all .2s;font-size:12px}
 .icon-btn:hover{background:rgba(59,107,245,.1);color:#3B6BF5}
 .icon-btn.danger:hover{background:rgba(239,68,68,.1);color:#ef4444}
 .modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);backdrop-filter:blur(4px);z-index:200;align-items:center;justify-content:center;padding:1rem}
@@ -77,14 +83,37 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 .btn-secondary{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);color:#fff}
 .btn-secondary:hover{background:rgba(255,255,255,.1)}
 .form-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
-.config-item{background:#0A0D14;border:1px solid rgba(59,107,245,0.15);border-radius:12px;padding:1rem;margin-bottom:.75rem;display:flex;align-items:center;justify-content:space-between}
+.config-item{background:#0A0D14;border:1px solid rgba(59,107,245,0.15);border-radius:12px;padding:1rem;margin-bottom:.75rem;display:flex;align-items:center;justify-content:space-between;gap:1rem}
 .empty-state{text-align:center;padding:3rem;color:#374151}
 .empty-state i{font-size:3rem;margin-bottom:1rem;display:block;color:#1f2937}
 .page{display:none}
 .page.active{display:block}
 .spinner{width:40px;height:40px;border:2px solid rgba(59,107,245,0.2);border-top-color:#3B6BF5;border-radius:50%;animation:spin 1s linear infinite;margin:0 auto}
 @keyframes spin{to{transform:rotate(360deg)}}
-@media(max-width:768px){.container{padding:1rem}.stats-grid{grid-template-columns:repeat(2,1fr)}.form-row{grid-template-columns:1fr}.hosts-table{overflow-x:auto}.hosts-table table{min-width:700px}}
+
+@media(max-width:768px){
+  .container{padding:1rem}
+  .stats-grid{grid-template-columns:repeat(2,1fr);gap:.5rem}
+  .stat-card{padding:1rem .75rem}
+  .stat-card .num{font-size:1.5rem}
+  .action-grid{grid-template-columns:1fr}
+  .form-row{grid-template-columns:1fr}
+  .hosts-table{overflow-x:auto}
+  .hosts-table table{min-width:700px}
+  .nav{padding:0 .75rem}
+  .nav-brand span{font-size:13px}
+  .nav a{font-size:11px;margin-right:.75rem}
+  .config-item{flex-direction:column;align-items:flex-start;gap:.5rem}
+}
+@media(min-width:769px){
+  .stats-grid{grid-template-columns:repeat(4,1fr)}
+  .action-grid{grid-template-columns:repeat(2,1fr)}
+  .nav{padding:0 1.5rem}
+  .nav-brand .logo-icon{width:36px;height:36px;font-size:14px}
+  .nav-brand span{font-size:16px}
+  .nav-user{font-size:.875rem;max-width:none}
+  .nav a{font-size:13px;margin-right:1.5rem}
+}
 </style>
 </head>
 <body>
@@ -100,19 +129,47 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
         <p>The Lion Force - Server Config Access</p>
       </div>
       <div class="card">
-        <h2>Sign In</h2>
+        <h2 id="authTitle">Sign In</h2>
         <div id="loginError"></div>
-        <div class="form-group">
-          <label>Email</label>
-          <input type="email" id="loginEmail" value="syedshahzadabbas@yahoo.com">
+        <div id="loginForm">
+          <div class="form-group">
+            <label>Email</label>
+            <input type="email" id="loginEmail" placeholder="your@email.com">
+          </div>
+          <div class="form-group">
+            <label>Password</label>
+            <input type="password" id="loginPass" placeholder="Enter password">
+          </div>
+          <button type="button" class="btn" id="loginBtn">Sign In</button>
+          <div class="login-toggle">
+            Don't have an account? <a onclick="showRegister()">Register as Host</a>
+          </div>
         </div>
-        <div class="form-group">
-          <label>Password</label>
-          <input type="password" id="loginPass" value="lionforce2026">
-        </div>
-        <button type="button" class="btn" id="loginBtn">Sign In</button>
-        <div style="margin-top:1rem;text-align:center">
-          <button type="button" id="resetBtn" style="background:none;border:none;color:#6B7280;font-size:12px;cursor:pointer;text-decoration:underline">Reset Admin Account</button>
+        <div id="registerForm" style="display:none">
+          <div class="form-group">
+            <label>Full Name *</label>
+            <input id="regName" placeholder="Your full name">
+          </div>
+          <div class="form-group">
+            <label>TikTok Username</label>
+            <input id="regTiktok" placeholder="@username">
+          </div>
+          <div class="form-group">
+            <label>Email *</label>
+            <input type="email" id="regEmail" placeholder="your@email.com">
+          </div>
+          <div class="form-group">
+            <label>Password *</label>
+            <input type="password" id="regPass" placeholder="Min 4 characters">
+          </div>
+          <div class="form-row">
+            <div class="form-group"><label>Provider</label><div style="padding:.875rem 1rem;background:rgba(255,255,255,.03);border:1px solid rgba(59,107,245,0.2);border-radius:10px;color:#fff;font-size:1rem">The Lion Force</div></div>
+            <div class="form-group"><label>Region</label><select id="regRegion"><option>UAE</option><option>UK</option></select></div>
+          </div>
+          <button type="button" class="btn" id="registerBtn">Create Account</button>
+          <div class="login-toggle">
+            Already have an account? <a onclick="showLogin()">Sign In</a>
+          </div>
         </div>
       </div>
       <p style="text-align:center;color:#374151;font-size:13px;margin-top:1.5rem">Secure Server Config Portal - The Lion Force</p>
@@ -134,6 +191,23 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
     </div>
   </nav>
   <div class="container" id="mainContent"></div>
+</div>
+
+<div class="modal-overlay" id="pwdModal">
+  <div class="modal">
+    <div class="modal-header">
+      <h3>Reset Host Password</h3>
+      <button type="button" class="modal-close" id="pwdModalClose">&times;</button>
+    </div>
+    <div class="modal-body">
+      <div id="pwdMsg"></div>
+      <div class="form-group"><label>New Password *</label><input type="password" id="newPwd" placeholder="Enter new password"></div>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary btn-sm" id="pwdModalCancel">Cancel</button>
+      <button type="button" class="btn btn-sm" id="pwdModalSubmit">Update Password</button>
+    </div>
+  </div>
 </div>
 
 <div class="modal-overlay" id="hostModal">
@@ -161,19 +235,20 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 </div>
 
 <script>
+
 var db = null;
 var currentUser = null;
 var allHosts = [];
 var allConfigs = [];
 var currentPage = 'dashboard';
 
-function showDebug(msg) {
-  // Debug disabled - no output to user
-}
-
 function showError(msg) {
   var el = document.getElementById('loginError');
   if (el) el.innerHTML = '<div class="error-msg">' + msg + '</div>';
+}
+function showSuccess(msg) {
+  var el = document.getElementById('loginError');
+  if (el) el.innerHTML = '<div class="success-msg">' + msg + '</div>';
 }
 
 function hashPW(pw) {
@@ -198,7 +273,6 @@ function initFirebase() {
     db = firebase.database();
     return true;
   } catch(e) {
-    showDebug('Firebase ERROR: ' + e.message);
     showError('Firebase failed: ' + e.message);
     return false;
   }
@@ -217,59 +291,80 @@ function showPage(id) {
   document.getElementById(id).classList.add('active');
 }
 
+function showLogin() {
+  document.getElementById('authTitle').textContent = 'Sign In';
+  document.getElementById('loginForm').style.display = 'block';
+  document.getElementById('registerForm').style.display = 'none';
+  document.getElementById('loginError').innerHTML = '';
+}
+function showRegister() {
+  document.getElementById('authTitle').textContent = 'Register as Host';
+  document.getElementById('loginForm').style.display = 'none';
+  document.getElementById('registerForm').style.display = 'block';
+  document.getElementById('loginError').innerHTML = '';
+}
+
 function doLogin() {
   var email = document.getElementById('loginEmail').value.trim();
   var pass = document.getElementById('loginPass').value;
   var btn = document.getElementById('loginBtn');
-
-  if (!email || !pass) {
-    showError('Please enter email and password');
-    return;
-  }
-
+  if (!email || !pass) { showError('Please enter email and password'); return; }
   btn.disabled = true;
   document.getElementById('loginError').innerHTML = '';
-
   fbGet('server/hosts').then(function(data) {
-    if (!data) {
-      throw new Error('No accounts found. Click Reset Admin Account below.');
-    }
+    if (!data) { throw new Error('No accounts found. Contact your admin.'); }
     var arr = [];
-    for (var k in data) {
-      if (data[k]) arr.push(data[k]);
-    }
-    if (arr.length === 0) {
-      throw new Error('No accounts found. Click Reset Admin Account below.');
-    }
-
+    for (var k in data) { if (data[k]) arr.push(data[k]); }
+    if (arr.length === 0) { throw new Error('No accounts found. Contact your admin.'); }
     var pw = hashPW(pass);
     var user = null;
     for (var i = 0; i < arr.length; i++) {
-      if (arr[i].email === email && arr[i].password === pw) {
-        user = arr[i];
-        break;
-      }
+      if (arr[i].email === email && arr[i].password === pw) { user = arr[i]; break; }
     }
-
     if (!user) {
       var foundEmail = false;
-      for (var j = 0; j < arr.length; j++) {
-        if (arr[j].email === email) { foundEmail = true; break; }
-      }
-      if (foundEmail) {
-        throw new Error('Wrong password.');
-      } else {
-        throw new Error('Email not found.');
-      }
+      for (var j = 0; j < arr.length; j++) { if (arr[j].email === email) { foundEmail = true; break; } }
+      if (foundEmail) { throw new Error('Wrong password.'); }
+      else { throw new Error('Email not found.'); }
     }
-
-    if (user.status === 'disabled') {
-      throw new Error('Account is disabled. Contact admin.');
-    }
-
+    if (user.status === 'disabled') { throw new Error('Account is disabled. Contact admin.'); }
     currentUser = user;
     localStorage.setItem('lf_server_user', JSON.stringify(currentUser));
     showApp();
+  }).catch(function(err) {
+    showError(err.message);
+    btn.disabled = false;
+  });
+}
+
+function doRegister() {
+  var n = document.getElementById('regName').value.trim();
+  var tk = document.getElementById('regTiktok').value.trim();
+  var e = document.getElementById('regEmail').value.trim();
+  var p = document.getElementById('regPass').value;
+  var re = document.getElementById('regRegion').value;
+  var btn = document.getElementById('registerBtn');
+  if (!n || !e || !p) { showError('Name, Email and Password are required'); return; }
+  if (p.length < 4) { showError('Password must be at least 4 characters'); return; }
+  btn.disabled = true;
+  fbGet('server/hosts').then(function(d) {
+    if (d) {
+      for (var k in d) { if (d[k] && d[k].email === e) { throw new Error('Email already exists. Try signing in instead.'); } }
+    }
+    var id = 'host_' + Date.now();
+    return fbSet('server/hosts/' + id, {
+      id: id, name: n, tiktokUsername: tk || null, email: e,
+      password: hashPW(p), provider: 'The Lion Force', region: re,
+      role: 'host', status: 'active', configFileId: null, createdAt: Date.now()
+    });
+  }).then(function() {
+    showSuccess('Account created! You can now sign in.');
+    setTimeout(function() {
+      showLogin();
+      document.getElementById('loginEmail').value = e;
+      document.getElementById('loginPass').value = '';
+      btn.disabled = false;
+    }, 1500);
   }).catch(function(err) {
     showError(err.message);
     btn.disabled = false;
@@ -280,27 +375,10 @@ function doLogout() {
   currentUser = null;
   localStorage.removeItem('lf_server_user');
   showPage('loginPage');
-}
-
-function doResetAdmin() {
-  document.getElementById('loginError').innerHTML = '';
-  fbSet('server/hosts/admin_1', {
-    id: 'admin_1',
-    name: 'Lion Force Admin',
-    email: 'syedshahzadabbas@yahoo.com',
-    password: hashPW('lionforce2026'),
-    tiktokUsername: null,
-    provider: 'The Lion Force',
-    region: 'UAE',
-    role: 'admin',
-    status: 'active',
-    configFileId: null,
-    createdAt: Date.now()
-  }).then(function() {
-    document.getElementById('loginError').innerHTML = '<div class="success-msg">Admin account reset successfully. You can now log in.</div>';
-  }).catch(function(err) {
-    showError('Reset failed: ' + err.message);
-  });
+  showLogin();
+  document.getElementById('loginEmail').value = '';
+  document.getElementById('loginPass').value = '';
+  document.getElementById('loginBtn').disabled = false;
 }
 
 function showApp() {
@@ -337,12 +415,7 @@ function renderDashboard() {
   if (!isAdmin) {
     fbGet('server/configs').then(function(cs) {
       var mc = null;
-      for (var k in cs) {
-        if (cs[k] && cs[k].assignedTo === currentUser.id) {
-          mc = cs[k];
-          break;
-        }
-      }
+      for (var k in cs) { if (cs[k] && cs[k].assignedTo === currentUser.id) { mc = cs[k]; break; } }
       el.innerHTML = hostView(mc);
     });
     return;
@@ -350,15 +423,10 @@ function renderDashboard() {
   Promise.all([fbGet('server/hosts'), fbGet('server/configs')]).then(function(results) {
     var d = results[0] || {};
     var cs = results[1] || {};
-    allHosts = [];
-    for (var k in d) { if (d[k]) allHosts.push(d[k]); }
-    allConfigs = [];
-    for (var k2 in cs) { if (cs[k2]) allConfigs.push(cs[k2]); }
+    allHosts = []; for (var k in d) { if (d[k]) allHosts.push(d[k]); }
+    allConfigs = []; for (var k2 in cs) { if (cs[k2]) allConfigs.push(cs[k2]); }
     var active = 0, disabled = 0;
-    for (var i = 0; i < allHosts.length; i++) {
-      if (allHosts[i].status === 'active') active++;
-      else disabled++;
-    }
+    for (var i = 0; i < allHosts.length; i++) { if (allHosts[i].status === 'active') active++; else disabled++; }
     var html = '<div class="stats-grid">' +
       '<div class="stat-card"><i class="fas fa-users" style="color:#3B6BF5"></i><div class="num">' + allHosts.length + '</div><div class="label">Total Hosts</div></div>' +
       '<div class="stat-card"><i class="fas fa-shield-alt" style="color:#22c55e"></i><div class="num">' + active + '</div><div class="label">Active</div></div>' +
@@ -410,10 +478,8 @@ function renderHosts() {
   Promise.all([fbGet('server/hosts'), fbGet('server/configs')]).then(function(results) {
     var d = results[0] || {};
     var cs = results[1] || {};
-    allHosts = [];
-    for (var k in d) { if (d[k]) allHosts.push(d[k]); }
-    allConfigs = [];
-    for (var k2 in cs) { if (cs[k2]) allConfigs.push(cs[k2]); }
+    allHosts = []; for (var k in d) { if (d[k]) allHosts.push(d[k]); }
+    allConfigs = []; for (var k2 in cs) { if (cs[k2]) allConfigs.push(cs[k2]); }
     var html = '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1.5rem"><h2 style="font-size:1.25rem;font-weight:700">All Hosts (' + allHosts.length + ')</h2><button class="btn btn-sm" onclick="openModal()"><i class="fas fa-plus"></i> Add Host</button></div>';
     html += '<div class="hosts-table" style="overflow-x:auto"><table style="min-width:700px"><thead><tr><th>Host</th><th>Details</th><th>Config</th><th>Status</th><th>Actions</th></tr></thead><tbody>';
     if (allHosts.length === 0) {
@@ -431,9 +497,9 @@ function renderHosts() {
         }
         html += '<tr><td><div style="display:flex;align-items:center;gap:.75rem"><div class="avatar">' + h.name.charAt(0) + '</div><div><p style="font-weight:600">' + h.name + '</p>' + (h.tiktokUsername ? '<p style="color:#6B7280;font-size:12px">@' + h.tiktokUsername + '</p>' : '') + '</div></div></td>';
         html += '<td><p style="color:#6B7280;font-size:12px">' + h.email + '</p><p style="color:#6B7280;font-size:11px"><i class="fas fa-server"></i> ' + h.provider + ' <i class="fas fa-map-marker-alt"></i> ' + h.region + '</p></td>';
-        html += '<td>' + (mc ? '<span style="color:#3B6BF5;font-size:13px;font-weight:600">' + mc.fileName + '</span>' : '<select onchange="assignConfig(this.value, \'' + h.id + '\')" style="background:rgba(255,255,255,.03);border:1px solid rgba(59,107,245,0.2);border-radius:6px;color:#6B7280;font-size:12px;padding:.35rem .5rem;outline:none"><option value="">Assign config...</option>' + freeOpts + '</select>') + '</td>';
+        html += '<td>' + (mc ? '<span style="color:#3B6BF5;font-size:13px;font-weight:600">' + mc.fileName + '</span>' : '<select onchange="assignConfig(this.value, \' + h.id + '\')" style="background:rgba(255,255,255,.03);border:1px solid rgba(59,107,245,0.2);border-radius:6px;color:#6B7280;font-size:12px;padding:.35rem .5rem;outline:none"><option value="">Assign config...</option>' + freeOpts + '</select>') + '</td>';
         html += '<td><span class="status-badge ' + (h.status === 'active' ? 'status-active' : 'status-disabled') + '">' + h.status + '</span></td>';
-        html += '<td><button class="icon-btn" onclick="toggleHost(\'' + h.id + '\')" title="' + (h.status === 'active' ? 'Disable' : 'Enable') + '"><i class="fas fa-' + (h.status === 'active' ? 'user-slash' : 'user-check') + '"></i></button><button class="icon-btn danger" onclick="deleteHost(\'' + h.id + '\')" title="Delete"><i class="fas fa-trash"></i></button></td></tr>';
+        html += '<td><button class="icon-btn" onclick="toggleHost(\' + h.id + '\')" title="' + (h.status === 'active' ? 'Disable' : 'Enable') + '"><i class="fas fa-' + (h.status === 'active' ? 'user-slash' : 'user-check') + '"></i></button><button class="icon-btn" onclick="openPwdModal(\' + h.id + '\')" title="Reset Password" style="color:#f59e0b"><i class="fas fa-key"></i></button><button class="icon-btn danger" onclick="deleteHost(\' + h.id + '\')" title="Delete"><i class="fas fa-trash"></i></button></td></tr>';
       }
     }
     html += '</tbody></table></div>';
@@ -481,9 +547,7 @@ function submitHost() {
 
 function toggleHost(id) {
   var h = null;
-  for (var i = 0; i < allHosts.length; i++) {
-    if (allHosts[i].id === id) { h = allHosts[i]; break; }
-  }
+  for (var i = 0; i < allHosts.length; i++) { if (allHosts[i].id === id) { h = allHosts[i]; break; } }
   if (!h) return;
   var ns = h.status === 'active' ? 'disabled' : 'active';
   fbUp('server/hosts/' + id, { status: ns }).then(function() { renderHosts(); });
@@ -497,9 +561,7 @@ function deleteHost(id) {
 function assignConfig(cid, hid) {
   if (!cid) return;
   var ex = null;
-  for (var i = 0; i < allConfigs.length; i++) {
-    if (allConfigs[i].assignedTo === hid) { ex = allConfigs[i]; break; }
-  }
+  for (var i = 0; i < allConfigs.length; i++) { if (allConfigs[i].assignedTo === hid) { ex = allConfigs[i]; break; } }
   var p1 = ex ? fbUp('server/configs/' + ex.id, { assignedTo: null }) : Promise.resolve();
   p1.then(function() {
     return fbUp('server/configs/' + cid, { assignedTo: hid });
@@ -515,10 +577,8 @@ function renderConfigs() {
   Promise.all([fbGet('server/configs'), fbGet('server/hosts')]).then(function(results) {
     var cs = results[0] || {};
     var hs = results[1] || {};
-    allConfigs = [];
-    for (var k in cs) { if (cs[k]) allConfigs.push(cs[k]); }
-    allHosts = [];
-    for (var k2 in hs) { if (hs[k2]) allHosts.push(hs[k2]); }
+    allConfigs = []; for (var k in cs) { if (cs[k]) allConfigs.push(cs[k]); }
+    allHosts = []; for (var k2 in hs) { if (hs[k2]) allHosts.push(hs[k2]); }
     var html = '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1.5rem"><h2 style="font-size:1.25rem;font-weight:700">WireGuard Configs (' + allConfigs.length + ')</h2><button class="btn btn-sm" onclick="goPage(\'upload\')"><i class="fas fa-upload"></i> Upload Config</button></div>';
     if (allConfigs.length === 0) {
       html += '<div class="empty-state"><i class="fas fa-file-shield"></i><p>No config files yet. Upload your first config.</p></div>';
@@ -541,11 +601,11 @@ function renderConfigs() {
         }
         html += '<div class="config-item"><div style="display:flex;align-items:center;gap:1rem"><div style="width:40px;height:40px;border-radius:10px;background:rgba(59,107,245,0.1);display:flex;align-items:center;justify-content:center"><i class="fas fa-file-shield" style="color:#3B6BF5"></i></div><div><p style="font-weight:600;font-size:14px">' + c.fileName + '</p><p style="color:#6B7280;font-size:11px"><i class="fas fa-server"></i> ' + c.provider + ' <i class="fas fa-map-marker-alt" style="margin-left:.5rem"></i> ' + c.region + '</p></div></div><div style="display:flex;align-items:center;gap:.75rem">';
         if (ah) {
-          html += '<span style="color:#22c55e;font-size:12px"><i class="fas fa-user-check"></i> ' + ah.name + '</span><button onclick="unassignConfig(\'' + c.id + '\', \'' + ah.id + '\')" style="background:none;border:none;color:#6B7280;font-size:11px;cursor:pointer;text-decoration:underline">Unassign</button>';
+          html += '<span style="color:#22c55e;font-size:12px"><i class="fas fa-user-check"></i> ' + ah.name + '</span><button onclick="unassignConfig(\' + c.id + '\', \' + ah.id + '\')" style="background:none;border:none;color:#6B7280;font-size:11px;cursor:pointer;text-decoration:underline">Unassign</button>';
         } else {
-          html += '<select onchange="assignCfg(this.value, \'' + c.id + '\')" style="background:rgba(255,255,255,.03);border:1px solid rgba(59,107,245,0.2);border-radius:6px;color:#6B7280;font-size:12px;padding:.35rem .5rem;outline:none"><option value="">Assign to host...</option>' + freeOpts + '</select>';
+          html += '<select onchange="assignCfg(this.value, \' + c.id + '\')" style="background:rgba(255,255,255,.03);border:1px solid rgba(59,107,245,0.2);border-radius:6px;color:#6B7280;font-size:12px;padding:.35rem .5rem;outline:none"><option value="">Assign to host...</option>' + freeOpts + '</select>';
         }
-        html += '<button class="icon-btn danger" onclick="delConfig(\'' + c.id + '\')" title="Delete"><i class="fas fa-trash"></i></button></div></div>';
+        html += '<button class="icon-btn danger" onclick="delConfig(\' + c.id + '\')" title="Delete"><i class="fas fa-trash"></i></button></div></div>';
       }
     }
     el.innerHTML = html;
@@ -554,9 +614,7 @@ function renderConfigs() {
 
 function renderUpload() {
   var freeHosts = [];
-  for (var i = 0; i < allHosts.length; i++) {
-    if (allHosts[i].status === 'active' && allHosts[i].role === 'host') freeHosts.push(allHosts[i]);
-  }
+  for (var i = 0; i < allHosts.length; i++) { if (allHosts[i].status === 'active' && allHosts[i].role === 'host') freeHosts.push(allHosts[i]); }
   if (freeHosts.length === 0) { alert('No active hosts available. Add a host first.'); goPage('configs'); return; }
   var opts = '';
   for (var j = 0; j < freeHosts.length; j++) {
@@ -601,9 +659,7 @@ function submitUpload() {
 function assignCfg(hid, cid) {
   if (!hid) return;
   var ex = null;
-  for (var i = 0; i < allConfigs.length; i++) {
-    if (allConfigs[i].assignedTo === hid) { ex = allConfigs[i]; break; }
-  }
+  for (var i = 0; i < allConfigs.length; i++) { if (allConfigs[i].assignedTo === hid) { ex = allConfigs[i]; break; } }
   var p1 = ex ? fbUp('server/configs/' + ex.id, { assignedTo: null }) : Promise.resolve();
   p1.then(function() {
     return fbUp('server/configs/' + cid, { assignedTo: hid });
@@ -629,18 +685,13 @@ function delConfig(id) {
 
 function downloadConfig() {
   var mc = null;
-  for (var i = 0; i < allConfigs.length; i++) {
-    if (allConfigs[i].assignedTo === currentUser.id) { mc = allConfigs[i]; break; }
-  }
+  for (var i = 0; i < allConfigs.length; i++) { if (allConfigs[i].assignedTo === currentUser.id) { mc = allConfigs[i]; break; } }
   if (!mc || !mc.content) { alert('Config not found'); return; }
   var b = new Blob([mc.content], { type: 'text/plain' });
   var u = URL.createObjectURL(b);
   var a = document.createElement('a');
-  a.href = u;
-  a.download = mc.fileName || 'config.conf';
-  document.body.appendChild(a);
-  a.click();
-  document.body.removeChild(a);
+  a.href = u; a.download = mc.fileName || 'config.conf';
+  document.body.appendChild(a); a.click(); document.body.removeChild(a);
   URL.revokeObjectURL(u);
 }
 
@@ -650,23 +701,49 @@ function closeModal() {
   document.getElementById('hostMsg').innerHTML = '';
 }
 
-// ---- Attach events with addEventListener (more reliable than inline onclick) ----
+var pwdResetHostId = null;
+function openPwdModal(hostId) {
+  pwdResetHostId = hostId;
+  document.getElementById('newPwd').value = '';
+  document.getElementById('pwdMsg').innerHTML = '';
+  document.getElementById('pwdModal').classList.add('active');
+}
+function closePwdModal() {
+  document.getElementById('pwdModal').classList.remove('active');
+  pwdResetHostId = null;
+}
+function submitPwdReset() {
+  var pw = document.getElementById('newPwd').value;
+  if (!pw || pw.length < 4) {
+    document.getElementById('pwdMsg').innerHTML = '<div class="error-msg">Password must be at least 4 characters</div>';
+    return;
+  }
+  fbUp('server/hosts/' + pwdResetHostId, { password: hashPW(pw) }).then(function() {
+    closePwdModal();
+    if (currentPage === 'hosts') renderHosts();
+  }).catch(function(err) {
+    document.getElementById('pwdMsg').innerHTML = '<div class="error-msg">' + err.message + '</div>';
+  });
+}
+
+// Event listeners
 document.getElementById('loginBtn').addEventListener('click', doLogin);
-document.getElementById('resetBtn').addEventListener('click', doResetAdmin);
+document.getElementById('registerBtn').addEventListener('click', doRegister);
 document.getElementById('logoutBtn').addEventListener('click', doLogout);
 document.getElementById('modalCloseBtn').addEventListener('click', closeModal);
 document.getElementById('modalCancelBtn').addEventListener('click', closeModal);
 document.getElementById('modalSubmitBtn').addEventListener('click', submitHost);
+document.getElementById('pwdModalClose').addEventListener('click', closePwdModal);
+document.getElementById('pwdModalCancel').addEventListener('click', closePwdModal);
+document.getElementById('pwdModalSubmit').addEventListener('click', submitPwdReset);
 
-// Close modal when clicking outside
-document.getElementById('hostModal').addEventListener('click', function(e) {
-  if (e.target === this) closeModal();
+// Enter key on login inputs
+document.getElementById('loginPass').addEventListener('keypress', function(e) {
+  if (e.key === 'Enter') doLogin();
 });
 
 // Init
 initFirebase();
-
-// Check saved session
 var saved = localStorage.getItem('lf_server_user');
 if (saved) {
   try {
