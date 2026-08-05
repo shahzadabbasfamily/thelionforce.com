@@ -458,7 +458,7 @@ function renderTicketDetail(tid) {
   fbGet('server/ticketLogs/' + tid).then(function(logs) {
     var logArr = [];
     for (var k in logs) if (logs[k]) { logs[k]._key = k; logArr.push(logs[k]); }
-    logArr.sort(function(a,b){ return a.date - b.date; });
+    logArr.sort(function(a,b){ return b.date - a.date; });
 
     var stages = ['open','assigned','in-progress','submitted-to-tiktok','resolved'];
     var stageLabels = ['Submitted','Assigned','In Progress','TikTok','Resolved'];
