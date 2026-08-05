@@ -135,12 +135,14 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
   .form-row{grid-template-columns:1fr}
   .hosts-table{overflow-x:auto}
   .hosts-table table{min-width:700px}
-  .nav{padding:0 .75rem}
+  .nav{height:auto;flex-wrap:wrap;padding:.5rem .75rem;gap:.25rem}
   .nav-brand span{font-size:13px}
   .nav a{font-size:11px;margin-right:.75rem}
+  .nav-user{display:none}
   .config-item{flex-direction:column;align-items:flex-start;gap:.5rem}
   .milestone-tracker{overflow-x:auto;padding-bottom:.5rem}
   .milestone-label{font-size:9px}
+  .modal{max-width:92vw;margin:0 1rem}
 }
 @media(min-width:769px){
   .stats-grid{grid-template-columns:repeat(4,1fr)}
