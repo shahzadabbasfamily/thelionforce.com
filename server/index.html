@@ -24,6 +24,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 .form-group{margin-bottom:1rem}
 .form-group label{display:block;font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;color:#6B7280;margin-bottom:.5rem}
 .form-group input,.form-group select{width:100%;padding:.875rem 1rem;background:rgba(255,255,255,.03);border:1px solid rgba(59,107,245,0.2);border-radius:10px;color:#fff;font-size:1rem;outline:none}
+.form-group select option{background:#0A0D14;color:#fff;padding:.5rem}
 .form-group input:focus,.form-group select:focus{border-color:#3B6BF5}
 .form-group input[type=file]{padding:.5rem;font-size:13px}
 .btn{width:100%;padding:1rem;background:#3B6BF5;color:#fff;border:none;border-radius:10px;font-size:13px;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;cursor:pointer;transition:all .3s}
@@ -96,11 +97,10 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
       <div class="login-logo">
         <div class="logo-icon"><span>LF</span></div>
         <h1>Server Portal</h1>
-        <p>The Lion Force - VPN Config Access</p>
+        <p>The Lion Force - Server Config Access</p>
       </div>
       <div class="card">
         <h2>Sign In</h2>
-        <div id="debugInfo"></div>
         <div id="loginError"></div>
         <div class="form-group">
           <label>Email</label>
@@ -115,7 +115,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
           <button type="button" id="resetBtn" style="background:none;border:none;color:#6B7280;font-size:12px;cursor:pointer;text-decoration:underline">Reset Admin Account</button>
         </div>
       </div>
-      <p style="text-align:center;color:#374151;font-size:13px;margin-top:1.5rem">Secure VPN Config Portal - The Lion Force</p>
+      <p style="text-align:center;color:#374151;font-size:13px;margin-top:1.5rem">Secure Server Config Portal - The Lion Force</p>
     </div>
   </div>
 </div>
@@ -149,7 +149,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
       <div class="form-group"><label>Email *</label><input type="email" id="hEmail"></div>
       <div class="form-group"><label>Password *</label><input type="password" id="hPass" minlength="4"></div>
       <div class="form-row">
-        <div class="form-group"><label>Provider</label><select id="hProvider"><option>EDIS</option><option>Cloudzy</option></select></div>
+        <div class="form-group"><label>Provider</label><div style="padding:.875rem 1rem;background:rgba(255,255,255,.03);border:1px solid rgba(59,107,245,0.2);border-radius:10px;color:#fff;font-size:1rem">The Lion Force</div></div>
         <div class="form-group"><label>Region</label><select id="hRegion"><option>UAE</option><option>UK</option></select></div>
       </div>
     </div>
@@ -168,8 +168,7 @@ var allConfigs = [];
 var currentPage = 'dashboard';
 
 function showDebug(msg) {
-  var el = document.getElementById('debugInfo');
-  if (el) el.innerHTML = '<div style="background:rgba(59,107,245,0.1);border:1px solid rgba(59,107,245,0.3);color:#93bbfd;padding:.5rem .75rem;border-radius:6px;margin-bottom:1rem;font-size:11px;font-family:monospace">' + msg + '</div>';
+  // Debug disabled - no output to user
 }
 
 function showError(msg) {
@@ -229,7 +228,6 @@ function doLogin() {
   }
 
   btn.disabled = true;
-  showDebug('Checking: ' + email);
   document.getElementById('loginError').innerHTML = '';
 
   fbGet('server/hosts').then(function(data) {
@@ -285,7 +283,6 @@ function doLogout() {
 }
 
 function doResetAdmin() {
-  showDebug('Resetting admin...');
   document.getElementById('loginError').innerHTML = '';
   fbSet('server/hosts/admin_1', {
     id: 'admin_1',
@@ -293,15 +290,14 @@ function doResetAdmin() {
     email: 'syedshahzadabbas@yahoo.com',
     password: hashPW('lionforce2026'),
     tiktokUsername: null,
-    provider: 'EDIS',
+    provider: 'The Lion Force',
     region: 'UAE',
     role: 'admin',
     status: 'active',
     configFileId: null,
     createdAt: Date.now()
   }).then(function() {
-    showDebug('Admin created!');
-    document.getElementById('loginError').innerHTML = '<div class="success-msg">Admin created! Email: syedshahzadabbas@yahoo.com | Password: lionforce2026</div>';
+    document.getElementById('loginError').innerHTML = '<div class="success-msg">Admin account reset successfully. You can now log in.</div>';
   }).catch(function(err) {
     showError('Reset failed: ' + err.message);
   });
@@ -450,7 +446,6 @@ function submitHost() {
   var tk = document.getElementById('hTiktok').value.trim();
   var e = document.getElementById('hEmail').value.trim();
   var p = document.getElementById('hPass').value;
-  var pr = document.getElementById('hProvider').value;
   var re = document.getElementById('hRegion').value;
   if (!n || !e || !p) {
     document.getElementById('hostMsg').innerHTML = '<div class="error-msg">All required fields must be filled</div>';
@@ -468,7 +463,7 @@ function submitHost() {
     var id = 'host_' + Date.now();
     return fbSet('server/hosts/' + id, {
       id: id, name: n, tiktokUsername: tk || null, email: e,
-      password: hashPW(p), provider: pr, region: re,
+      password: hashPW(p), provider: 'The Lion Force', region: re,
       role: 'host', status: 'active', configFileId: null, createdAt: Date.now()
     });
   }).then(function() {
@@ -567,13 +562,12 @@ function renderUpload() {
   for (var j = 0; j < freeHosts.length; j++) {
     opts += '<option value="' + freeHosts[j].id + '">' + freeHosts[j].name + ' - ' + freeHosts[j].email + '</option>';
   }
-  document.getElementById('mainContent').innerHTML = '<div style="max-width:500px;margin:0 auto"><div style="display:flex;align-items:center;gap:1rem;margin-bottom:1.5rem"><button class="icon-btn" onclick="goPage(\'configs\')"><i class="fas fa-arrow-left"></i></button><h2 style="font-size:1.25rem;font-weight:700">Upload Config</h2></div><div class="card"><div id="upMsg"></div><div class="form-group"><label>Select Host *</label><select id="uHost">' + opts + '</select></div><div class="form-group"><label>Upload .conf File *</label><input type="file" id="uFile" accept=".conf"></div><div class="form-row"><div class="form-group"><label>Provider</label><select id="uProvider"><option>EDIS</option><option>Cloudzy</option></select></div><div class="form-group"><label>Region</label><select id="uRegion"><option>UAE</option><option>UK</option></select></div></div><button class="btn" onclick="submitUpload(); return false;"><i class="fas fa-upload"></i> Upload Config</button></div></div>';
+  document.getElementById('mainContent').innerHTML = '<div style="max-width:500px;margin:0 auto"><div style="display:flex;align-items:center;gap:1rem;margin-bottom:1.5rem"><button class="icon-btn" onclick="goPage(\'configs\')"><i class="fas fa-arrow-left"></i></button><h2 style="font-size:1.25rem;font-weight:700">Upload Config</h2></div><div class="card"><div id="upMsg"></div><div class="form-group"><label>Select Host *</label><select id="uHost">' + opts + '</select></div><div class="form-group"><label>Upload .conf File *</label><input type="file" id="uFile" accept=".conf"></div><div class="form-row"><div class="form-group"><label>Provider</label><div style="padding:.875rem 1rem;background:rgba(255,255,255,.03);border:1px solid rgba(59,107,245,0.2);border-radius:10px;color:#fff;font-size:1rem">The Lion Force</div></div><div class="form-group"><label>Region</label><select id="uRegion"><option>UAE</option><option>UK</option></select></div></div><button class="btn" onclick="submitUpload(); return false;"><i class="fas fa-upload"></i> Upload Config</button></div></div>';
 }
 
 function submitUpload() {
   var hid = document.getElementById('uHost').value;
   var f = document.getElementById('uFile');
-  var pr = document.getElementById('uProvider').value;
   var re = document.getElementById('uRegion').value;
   if (!hid || !f.files[0]) {
     document.getElementById('upMsg').innerHTML = '<div class="error-msg">Select a host and choose a .conf file</div>';
@@ -590,7 +584,7 @@ function submitUpload() {
     var id = 'cfg_' + Date.now();
     fbSet('server/configs/' + id, {
       id: id, fileName: file.name, content: content,
-      provider: pr, region: re, assignedTo: hid, uploadedAt: Date.now()
+      provider: 'The Lion Force', region: re, assignedTo: hid, uploadedAt: Date.now()
     }).then(function() {
       return fbUp('server/hosts/' + hid, { configFileId: id });
     }).then(function() {
@@ -670,7 +664,6 @@ document.getElementById('hostModal').addEventListener('click', function(e) {
 });
 
 // Init
-showDebug('JS loaded. Initializing Firebase...');
 initFirebase();
 
 // Check saved session
