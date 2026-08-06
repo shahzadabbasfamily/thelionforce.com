@@ -804,14 +804,12 @@ function renderPerformance() {
   var monthStart = new Date(currentYear, selectedMonth, 1).getTime();
   var monthEnd = new Date(currentYear, selectedMonth + 1, 1).getTime();
 
-  Promise.all([fbGet('server/managers'), fbGet('server/hosts/admin_1'), fbGet('server/tickets')]).then(function(results) {
+  Promise.all([fbGet('server/managers'), fbGet('server/tickets')]).then(function(results) {
     var mgrs = results[0] || {};
-    var adminData = results[1];
-    var ts = results[2] || {};
+    var ts = results[1] || {};
 
     var managers = [];
     for (var k in mgrs) { if (mgrs[k] && mgrs[k].status === 'active') managers.push(mgrs[k]); }
-    if (adminData) managers.push(adminData);
 
     if (managers.length === 0) {
       el.innerHTML = '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1.5rem"><h2 style="font-size:1.25rem;font-weight:700">Manager Performance</h2>' +
