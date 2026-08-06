@@ -347,6 +347,12 @@ function fbUp(path, val) { return db.ref(path).update(val); }
 function fbRm(path) { return db.ref(path).remove(); }
 function fbPush(path, val) { return db.ref(path).push(val); }
 
+function createNotification(userId, data) {
+  var notifId = 'notif_' + Date.now() + '_' + Math.random().toString(36).substr(2,6);
+  data.id = notifId; data.createdAt = Date.now(); data.read = false;
+  return fbSet('server/notifications/' + userId + '/' + notifId, data);
+}
+
 function ensureAdmin() {
   var adminId = 'admin_1';
   var adminData = {
@@ -729,6 +735,20 @@ function submitTicket() {
       date: Date.now(), by: currentUser.name, action: 'Ticket Submitted', note: ''
     });
   }).then(function() {
+    // Notify admin and all managers
+    var notifData = {
+      type: 'new_ticket', ticketId: id,
+      title: 'New Ticket',
+      message: currentUser.name + ' submitted "' + title + '"'
+    };
+    createNotification('admin_1', notifData);
+    fbGet('server/managers').then(function(mgrs) {
+      for (var k in mgrs) {
+        if (mgrs[k] && mgrs[k].status === 'active') {
+          createNotification(mgrs[k].id, notifData);
+        }
+      }
+    });
     closeTicketModal();
     goPage('tickets');
   }).catch(function(err) {
@@ -786,10 +806,30 @@ function submitStatusUpdate() {
     updates.assignedToName = manager;
   }
 
+  var ticketTitle = 'Ticket';
+  for (var ti = 0; ti < allTickets.length; ti++) {
+    if (allTickets[ti].id === statusTicketId) { ticketTitle = allTickets[ti].title; break; }
+  }
+
   fbUp('server/tickets/' + statusTicketId, updates).then(function() {
     var logData = { date: Date.now(), by: currentUser.name || 'Admin', action: actionText, note: note || '' };
     return fbPush('server/ticketLogs/' + statusTicketId, logData);
   }).then(function() {
+    // Notify assigned manager
+    if (manager) {
+      fbGet('server/managers').then(function(mgrs) {
+        for (var k in mgrs) {
+          if (mgrs[k] && mgrs[k].name === manager && mgrs[k].status === 'active') {
+            createNotification(mgrs[k].id, {
+              type: 'assigned', ticketId: statusTicketId,
+              title: 'Ticket Assigned',
+              message: '"' + ticketTitle + '" assigned to you'
+            });
+            break;
+          }
+        }
+      });
+    }
     closeStatusModal();
     renderTicketDetail(statusTicketId);
   }).catch(function(err) {
