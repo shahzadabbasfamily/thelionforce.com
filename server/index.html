@@ -47,8 +47,9 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 .badge-admin{font-size:10px;font-weight:600;color:#3B6BF5;background:rgba(59,107,245,0.1);padding:3px 8px;border-radius:20px;margin-left:4px}
 .nav-right{margin-left:auto;display:flex;align-items:center;gap:.75rem}
 .nav-user{color:#6B7280;font-size:12px;max-width:100px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.nav a{color:#6B7280;text-decoration:none;font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:0.05em;transition:color .3s;margin-right:1rem}
-.nav a:hover,.nav a.active{color:#3B6BF5}
+.nav a{color:#9CA3AF;text-decoration:none;font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:0.05em;transition:all .2s;padding:.5rem 1rem;border-radius:8px;border:1px solid transparent;margin-right:.35rem;display:inline-block}
+.nav a:hover{color:#e2e8f0;background:rgba(255,255,255,.05);border-color:rgba(255,255,255,.08)}
+.nav a.active{color:#fff;background:rgba(59,107,245,.15);border-color:rgba(59,107,245,.3)}
 .container{max-width:1200px;margin:0 auto;padding:1.5rem 1rem}
 .stats-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:.75rem;margin-bottom:1.5rem}
 .stat-card{background:#0A0D14;border:1px solid rgba(59,107,245,0.15);border-radius:16px;padding:1.25rem 1rem}
@@ -163,7 +164,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
   .hosts-table table{min-width:700px}
   .nav{height:auto;flex-wrap:wrap;padding:.5rem .75rem;gap:.25rem}
   .nav-brand span{font-size:13px}
-  .nav a{font-size:11px;margin-right:.75rem}
+  .nav a{font-size:11px;padding:.4rem .6rem;margin-right:.2rem}
   .nav-user{display:none}
   .config-item{flex-direction:column;align-items:flex-start;gap:.5rem}
   .milestone-tracker{overflow-x:auto;padding-bottom:.5rem}
@@ -177,7 +178,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
   .nav-brand .logo-icon{width:36px;height:36px;font-size:14px}
   .nav-brand span{font-size:16px}
   .nav-user{font-size:.875rem;max-width:none}
-  .nav a{font-size:13px;margin-right:1.5rem}
+  .nav a{font-size:13px;padding:.5rem 1rem;margin-right:.35rem}
 }
 </style>
 </head>
