@@ -437,8 +437,15 @@ function loadTickets() {
 }
 
 function updateStats() {
-  var counts = {total:allTickets.length, open:0, assigned:0, 'in-progress':0, 'submitted-to-tiktok':0, resolved:0};
-  for (var i=0;i<allTickets.length;i++) counts[allTickets[i].status] = (counts[allTickets[i].status]||0)+1;
+  var isAdmin = currentUser && currentUser.role === 'admin';
+  var visible = allTickets;
+  if (!isAdmin) {
+    visible = allTickets.filter(function(t){
+      return t.assignedToName === currentUser.name || t.status === 'open';
+    });
+  }
+  var counts = {total:visible.length, open:0, assigned:0, 'in-progress':0, 'submitted-to-tiktok':0, resolved:0};
+  for (var i=0;i<visible.length;i++) counts[visible[i].status] = (counts[visible[i].status]||0)+1;
   document.getElementById('statTotal').textContent = counts.total;
   document.getElementById('statOpen').textContent = counts.open;
   document.getElementById('statAssigned').textContent = counts.assigned;
@@ -455,10 +462,20 @@ function filterTickets(status) {
 }
 
 function renderTicketList() {
-  var filtered = currentFilter === 'all' ? allTickets : allTickets.filter(function(t){ return t.status === currentFilter; });
+  var isAdmin = currentUser && currentUser.role === 'admin';
+  var filtered = allTickets;
+  if (!isAdmin) {
+    // Manager sees: tickets assigned to them + all open tickets
+    filtered = allTickets.filter(function(t){
+      return t.assignedToName === currentUser.name || t.status === 'open';
+    });
+  }
+  if (currentFilter !== 'all') {
+    filtered = filtered.filter(function(t){ return t.status === currentFilter; });
+  }
   var el = document.getElementById('ticketList');
   if (filtered.length === 0) {
-    el.innerHTML = '<div class="empty-state"><i class="fas fa-ticket-alt" style="font-size:3rem"></i><p>No tickets in this category.</p></div>';
+    el.innerHTML = '<div class="empty-state"><i class="fas fa-ticket-alt" style="font-size:3rem"></i><p>No tickets found.</p></div>';
     return;
   }
   var html = '<div style="overflow-x:auto;-webkit-overflow-scrolling:touch"><table class="tickets-table"><thead><tr><th>Ticket</th><th>Host</th><th>Status</th><th>Manager</th><th>Date</th><th></th></tr></thead><tbody>';
@@ -483,10 +500,15 @@ function viewTicketDetail(tid) {
 }
 
 function renderTicketDetail(tid) {
+  var isAdmin = currentUser && currentUser.role === 'admin';
   var el = document.getElementById('mainContent');
   var t = null;
   for (var i=0;i<allTickets.length;i++) if (allTickets[i].id === tid) { t = allTickets[i]; break; }
   if (!t) { goPage('tickets'); return; }
+  // Manager can only view their assigned tickets or open tickets
+  if (!isAdmin && t.assignedToName !== currentUser.name && t.status !== 'open') {
+    goPage('tickets'); return;
+  }
   var h = null;
   for (var j=0;j<allHosts.length;j++) if (allHosts[j].id === t.hostId) { h = allHosts[j]; break; }
 
