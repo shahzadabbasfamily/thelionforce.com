@@ -244,7 +244,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
     </div>
     <div class="modal-body">
       <div id="ticketMsg"></div>
-      <div class="form-group"><label>Issue / Subject *</label><input id="tTitle" placeholder="e.g. Config not connecting"></div>
+      <div class="form-group"><label>Issue / Subject *</label><select id="tTitle"><option value="">-- Select Issue / Subject --</option><option value="LIVE Access / Account Suspended">LIVE Access / Account Suspended</option><option value="Gifting / Ranking Suspended">Gifting / Ranking Suspended</option><option value="Payment / Withdrawal Issue">Payment / Withdrawal Issue</option><option value="Low Viewership / FYP Issue">Low Viewership / FYP Issue</option><option value="Other Restrictions">Other Restrictions</option><option value="Other Issues">Other Issues</option></select></div>
       <div class="form-group"><label>Details *</label><textarea id="tDetails" placeholder="Describe your issue in detail..."></textarea></div>
       <div class="form-group">
         <label>Screenshot (optional)</label>
@@ -802,8 +802,12 @@ function onTicketFile(input) {
 function submitTicket() {
   var title = document.getElementById('tTitle').value.trim();
   var details = document.getElementById('tDetails').value.trim();
-  if (!title || !details) {
-    document.getElementById('ticketMsg').innerHTML = '<div class="error-msg">Title and Details are required</div>';
+  if (!title) {
+    document.getElementById('ticketMsg').innerHTML = '<div class="error-msg">Please select an Issue / Subject</div>';
+    return;
+  }
+  if (!details) {
+    document.getElementById('ticketMsg').innerHTML = '<div class="error-msg">Details are required</div>';
     return;
   }
   var id = 'ticket_' + Date.now();
