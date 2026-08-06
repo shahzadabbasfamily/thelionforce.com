@@ -481,10 +481,12 @@ function renderNav() {
   document.getElementById('navUser').textContent = currentUser ? currentUser.name : '';
   var links = '';
   links += '<a href="#" onclick="goPage(\'dashboard\');return false"' + (currentPage === 'dashboard' ? ' class="active"' : '') + '>Dashboard</a>';
-  links += '<a href="#" onclick="goPage(\'tickets\');return false"' + (currentPage === 'tickets' ? ' class="active"' : '') + '>Tickets</a>';
   if (isAdmin) {
     links += '<a href="#" onclick="goPage(\'hosts\');return false"' + (currentPage === 'hosts' ? ' class="active"' : '') + '>Hosts</a>';
     links += '<a href="#" onclick="goPage(\'configs\');return false"' + (currentPage === 'configs' ? ' class="active"' : '') + '>Configs</a>';
+    links += '<a href="#" onclick="goPage(\'tickets\');return false"' + (currentPage === 'tickets' ? ' class="active"' : '') + '>Tickets</a>';
+  } else {
+    links += '<a href="#" onclick="goPage(\'profile\');return false"' + (currentPage === 'profile' ? ' class="active"' : '') + '>Profile</a>';
   }
   document.getElementById('navLinks').innerHTML = links;
 }
@@ -497,6 +499,7 @@ function goPage(p) {
   else if (p === 'hosts') renderHosts();
   else if (p === 'configs') renderConfigs();
   else if (p === 'upload') renderUpload();
+  else if (p === 'profile') renderProfile();
   else if (p === 'ticketDetail') renderTicketDetail(currentTicketId);
 }
 
@@ -513,23 +516,45 @@ function renderDashboard() {
       for (var k2 in ts) { if (ts[k2] && ts[k2].hostId === currentUser.id) myTickets.push(ts[k2]); }
       var openCount = 0;
       for (var i = 0; i < myTickets.length; i++) { if (myTickets[i].status !== 'resolved') openCount++; }
+      myTickets.sort(function(a,b){ return b.createdAt - a.createdAt; });
+      var counts = {total:myTickets.length, open:0, assigned:0, 'in-progress':0, 'submitted-to-tiktok':0, resolved:0};
+      for (var ci=0;ci<myTickets.length;ci++) counts[myTickets[ci].status] = (counts[myTickets[ci].status]||0)+1;
+
       var html = '<div class="stats-grid">' +
-        '<div class="stat-card"><i class="fas fa-shield-alt" style="color:#3B6BF5"></i><div class="num">' + (mc ? '1' : '0') + '</div><div class="label">Config Files</div></div>' +
-        '<div class="stat-card"><i class="fas fa-ticket-alt" style="color:#00D4FF"></i><div class="num">' + myTickets.length + '</div><div class="label">Total Tickets</div></div>' +
-        '<div class="stat-card"><i class="fas fa-exclamation-circle" style="color:#f59e0b"></i><div class="num">' + openCount + '</div><div class="label">Open Issues</div></div>' +
-        '<div class="stat-card"><i class="fas fa-check-circle" style="color:#22c55e"></i><div class="num">' + (myTickets.length - openCount) + '</div><div class="label">Resolved</div></div>' +
+        '<div class="stat-card" onclick="hostFilterTickets(\'all\')"><i class="fas fa-ticket-alt" style="color:#3B6BF5"></i><div class="num">' + counts.total + '</div><div class="label">Total</div></div>' +
+        '<div class="stat-card" onclick="hostFilterTickets(\'open\')"><i class="fas fa-exclamation-circle" style="color:#f59e0b"></i><div class="num">' + (counts.open||0) + '</div><div class="label">Open</div></div>' +
+        '<div class="stat-card" onclick="hostFilterTickets(\'assigned\')"><i class="fas fa-user-check" style="color:#a855f7"></i><div class="num">' + (counts.assigned||0) + '</div><div class="label">Assigned</div></div>' +
+        '<div class="stat-card" onclick="hostFilterTickets(\'in-progress\')"><i class="fas fa-spinner" style="color:#06b6d4"></i><div class="num">' + (counts['in-progress']||0) + '</div><div class="label">In Progress</div></div>' +
+        '<div class="stat-card" onclick="hostFilterTickets(\'submitted-to-tiktok\')"><i class="fas fa-paper-plane" style="color:#a855f7"></i><div class="num">' + (counts['submitted-to-tiktok']||0) + '</div><div class="label">TikTok</div></div>' +
+        '<div class="stat-card" onclick="hostFilterTickets(\'resolved\')"><i class="fas fa-check-circle" style="color:#22c55e"></i><div class="num">' + (counts.resolved||0) + '</div><div class="label">Resolved</div></div>' +
         '</div>';
-      html += '<div class="action-grid">' +
-        '<button class="action-card" onclick="goPage(\'tickets\')"><div class="action-icon"><i class="fas fa-ticket-alt" style="color:#f59e0b"></i></div><div><h3>My Support Tickets</h3><p>Submit and track your issues</p></div></button>' +
-        '<button class="action-card" onclick="downloadConfig()"><div class="action-icon"><i class="fas fa-download" style="color:#22c55e"></i></div><div><h3>Download Config</h3><p>Get your WireGuard config</p></div></button>' +
+
+      html += '<div class="card"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem"><h2 style="font-size:1.1rem;font-weight:700">My Tickets</h2><button class="btn btn-sm" onclick="openTicketModal()"><i class="fas fa-plus"></i> Submit Ticket</button></div>';
+      html += '<div class="filter-bar">' +
+        '<button onclick="hostFilterTickets(\'all\')" class="' + (hostTicketFilter==='all'?'active':'') + '" id="hf-all">All</button>' +
+        '<button onclick="hostFilterTickets(\'open\')" class="' + (hostTicketFilter==='open'?'active':'') + '" id="hf-open">Open</button>' +
+        '<button onclick="hostFilterTickets(\'assigned\')" class="' + (hostTicketFilter==='assigned'?'active':'') + '" id="hf-assigned">Assigned</button>' +
+        '<button onclick="hostFilterTickets(\'in-progress\')" class="' + (hostTicketFilter==='in-progress'?'active':'') + '" id="hf-in-progress">In Progress</button>' +
+        '<button onclick="hostFilterTickets(\'submitted-to-tiktok\')" class="' + (hostTicketFilter==='submitted-to-tiktok'?'active':'') + '" id="hf-tiktok">TikTok</button>' +
+        '<button onclick="hostFilterTickets(\'resolved\')" class="' + (hostTicketFilter==='resolved'?'active':'') + '" id="hf-resolved">Resolved</button>' +
         '</div>';
-      html += '<div class="card" style="margin-top:1.5rem"><h3 style="margin-bottom:1rem"><i class="fas fa-user" style="color:#3B6BF5"></i> Your Profile</h3><div style="display:grid;gap:.75rem">';
-      html += '<div style="display:flex;align-items:center;gap:.75rem"><i class="fas fa-user" style="color:#3B6BF5;width:20px"></i><div><span style="color:#6B7280;font-size:12px">Name</span><p style="font-weight:600">' + currentUser.name + '</p></div></div>';
-      if (currentUser.username) html += '<div style="display:flex;align-items:center;gap:.75rem"><i class="fas fa-id-badge" style="color:#3B6BF5;width:20px"></i><div><span style="color:#6B7280;font-size:12px">Username</span><p style="font-weight:600">' + currentUser.username + '</p></div></div>';
-      if (currentUser.tiktokUsername) html += '<div style="display:flex;align-items:center;gap:.75rem"><i class="fab fa-tiktok" style="color:#3B6BF5;width:20px"></i><div><span style="color:#6B7280;font-size:12px">TikTok</span><p style="font-weight:600">@' + currentUser.tiktokUsername + '</p></div></div>';
-      html += '<div style="display:flex;align-items:center;gap:.75rem"><i class="fas fa-server" style="color:#3B6BF5;width:20px"></i><div><span style="color:#6B7280;font-size:12px">Provider</span><p style="font-weight:600">' + currentUser.provider + '</p></div></div>';
-      html += '<div style="display:flex;align-items:center;gap:.75rem"><i class="fas fa-map-marker-alt" style="color:#3B6BF5;width:20px"></i><div><span style="color:#6B7280;font-size:12px">Region</span><p style="font-weight:600">' + currentUser.region + '</p></div></div>';
-      html += '</div></div>';
+
+      var filtered = hostTicketFilter === 'all' ? myTickets : myTickets.filter(function(t){ return t.status === hostTicketFilter; });
+      if (filtered.length === 0) {
+        html += '<div class="empty-state"><i class="fas fa-ticket-alt" style="font-size:3rem"></i><p>No tickets found.</p></div>';
+      } else {
+        html += '<div style="overflow-x:auto;-webkit-overflow-scrolling:touch"><table class="hosts-table"><thead><tr><th>Ticket</th><th>Status</th><th>Manager</th><th>Date</th><th></th></tr></thead><tbody>';
+        for (var j=0;j<filtered.length;j++) {
+          var t = filtered[j];
+          html += '<tr><td><p style="font-weight:600">' + t.title + '</p><p style="color:#6B7280;font-size:12px">' + t.details.substring(0,50) + (t.details.length>50?'...':'') + '</p></td>';
+          html += '<td><span class="status-badge status-' + t.status + '">' + t.status.replace(/-/g,' ') + '</span></td>';
+          html += '<td style="font-size:13px;color:#6B7280">' + (t.assignedToName||'-') + '</td>';
+          html += '<td style="font-size:12px;color:#6B7280">' + new Date(t.createdAt).toLocaleDateString() + '</td>';
+          html += '<td><button class="icon-btn" onclick="viewTicket(\'' + t.id + '\')"><i class="fas fa-eye"></i></button></td></tr>';
+        }
+        html += '</tbody></table></div>';
+      }
+      html += '</div>';
       el.innerHTML = html;
     });
     return;
@@ -650,7 +675,7 @@ function renderTicketDetail(tid) {
     if (currentStageIdx < 0) currentStageIdx = 0;
 
     var html = '<div style="max-width:800px;margin:0 auto">';
-    html += '<div style="display:flex;align-items:center;gap:1rem;margin-bottom:1.5rem"><button class="icon-btn" onclick="goPage(\'tickets\')"><i class="fas fa-arrow-left"></i></button><h2 style="font-size:1.25rem;font-weight:700">Ticket #' + tid.replace('ticket_','') + '</h2>' + (isAdmin ? '<button class="btn btn-sm" style="margin-left:auto" onclick="openStatusModal(\'' + tid + '\')"><i class="fas fa-edit"></i> Update Status</button>' : '') + '</div>';
+    html += '<div style="display:flex;align-items:center;gap:1rem;margin-bottom:1.5rem"><button class="icon-btn" onclick="goPage(\'dashboard\')"><i class="fas fa-arrow-left"></i></button><h2 style="font-size:1.25rem;font-weight:700">Ticket #' + tid.replace('ticket_','') + '</h2>' + (isAdmin ? '<button class="btn btn-sm" style="margin-left:auto" onclick="openStatusModal(\'' + tid + '\')"><i class="fas fa-edit"></i> Update Status</button>' : '') + '</div>';
 
     // Milestone tracker
     html += '<div class="card" style="margin-bottom:1.5rem"><h3 style="font-size:14px;font-weight:600;margin-bottom:1rem;color:#6B7280;text-transform:uppercase;letter-spacing:0.05em">Progress Tracker</h3><div class="milestone-tracker">';
@@ -720,6 +745,30 @@ function renderTicketDetail(tid) {
     html += '</div></div>';
     el.innerHTML = html;
   });
+}
+
+function renderProfile() {
+  var el = document.getElementById('mainContent');
+  var html = '<div style="max-width:500px;margin:0 auto">';
+  html += '<div style="display:flex;align-items:center;gap:1rem;margin-bottom:1.5rem"><h2 style="font-size:1.25rem;font-weight:700">My Profile</h2></div>';
+  html += '<div class="card">';
+  html += '<div style="display:flex;align-items:center;gap:1rem;margin-bottom:1.5rem;padding-bottom:1.5rem;border-bottom:1px solid rgba(59,107,245,0.1)">';
+  html += '<div class="avatar" style="width:56px;height:56px;font-size:20px">' + currentUser.name.charAt(0) + '</div>';
+  html += '<div><p style="font-size:1.1rem;font-weight:700">' + currentUser.name + '</p><p style="color:#6B7280;font-size:13px">@' + currentUser.username + '</p></div>';
+  html += '</div>';
+  html += '<div style="display:grid;gap:1rem">';
+  html += '<div style="display:flex;align-items:center;gap:.75rem"><i class="fas fa-user" style="color:#3B6BF5;width:20px"></i><div><span style="color:#6B7280;font-size:12px">Full Name</span><p style="font-weight:600">' + currentUser.name + '</p></div></div>';
+  html += '<div style="display:flex;align-items:center;gap:.75rem"><i class="fas fa-id-badge" style="color:#3B6BF5;width:20px"></i><div><span style="color:#6B7280;font-size:12px">Username</span><p style="font-weight:600">' + currentUser.username + '</p></div></div>';
+  if (currentUser.tiktokUsername) html += '<div style="display:flex;align-items:center;gap:.75rem"><i class="fab fa-tiktok" style="color:#3B6BF5;width:20px"></i><div><span style="color:#6B7280;font-size:12px">TikTok</span><p style="font-weight:600">@' + currentUser.tiktokUsername + '</p></div></div>';
+  html += '<div style="display:flex;align-items:center;gap:.75rem"><i class="fas fa-server" style="color:#3B6BF5;width:20px"></i><div><span style="color:#6B7280;font-size:12px">Provider</span><p style="font-weight:600">' + currentUser.provider + '</p></div></div>';
+  html += '<div style="display:flex;align-items:center;gap:.75rem"><i class="fas fa-map-marker-alt" style="color:#3B6BF5;width:20px"></i><div><span style="color:#6B7280;font-size:12px">Region</span><p style="font-weight:600">' + currentUser.region + '</p></div></div>';
+  html += '<div style="display:flex;align-items:center;gap:.75rem"><i class="fas fa-envelope" style="color:#3B6BF5;width:20px"></i><div><span style="color:#6B7280;font-size:12px">Email</span><p style="font-weight:600">' + (currentUser.email || '-') + '</p></div></div>';
+  html += '</div>';
+  html += '<div style="margin-top:1.5rem;padding-top:1.5rem;border-top:1px solid rgba(59,107,245,0.1)">';
+  html += '<button class="btn btn-sm btn-secondary" onclick="downloadConfig()"><i class="fas fa-download"></i> Download Config</button>';
+  html += '</div>';
+  html += '</div></div>';
+  el.innerHTML = html;
 }
 
 function openTicketModal() {
