@@ -488,6 +488,7 @@ function renderNav() {
     links += '<a href="#" onclick="goPage(\'configs\');return false"' + (currentPage === 'configs' ? ' class="active"' : '') + '>Configs</a>';
     links += '<a href="#" onclick="goPage(\'tickets\');return false"' + (currentPage === 'tickets' ? ' class="active"' : '') + '>Tickets</a>';
   } else {
+    links += '<a href="#" onclick="goPage(\'contact\');return false"' + (currentPage === 'contact' ? ' class="active"' : '') + '>Contact Manager</a>';
     links += '<a href="#" onclick="goPage(\'profile\');return false"' + (currentPage === 'profile' ? ' class="active"' : '') + '>Profile</a>';
   }
   document.getElementById('navLinks').innerHTML = links;
@@ -502,6 +503,7 @@ function goPage(p) {
   else if (p === 'configs') renderConfigs();
   else if (p === 'upload') renderUpload();
   else if (p === 'profile') renderProfile();
+  else if (p === 'contact') renderContactManager();
   else if (p === 'ticketDetail') renderTicketDetail(currentTicketId);
 }
 
@@ -774,6 +776,45 @@ function renderProfile() {
   html += '</div>';
   html += '</div></div>';
   el.innerHTML = html;
+}
+
+function renderContactManager() {
+  var el = document.getElementById('mainContent');
+  el.innerHTML = '<div style="display:flex;align-items:center;gap:1rem;margin-bottom:1.5rem"><h2 style="font-size:1.25rem;font-weight:700">Contact Manager</h2></div><div class="empty-state"><i class="fas fa-spinner fa-spin" style="font-size:2rem"></i><p>Loading managers...</p></div>';
+  fbGet('server/managers').then(function(data) {
+    var managers = [];
+    for (var k in data) { if (data[k] && data[k].status === 'active') managers.push(data[k]); }
+    if (managers.length === 0) {
+      el.innerHTML = '<div style="display:flex;align-items:center;gap:1rem;margin-bottom:1.5rem"><h2 style="font-size:1.25rem;font-weight:700">Contact Manager</h2></div><div class="card"><div class="empty-state"><i class="fas fa-users" style="font-size:3rem"></i><p>No managers available yet.</p></div></div>';
+      return;
+    }
+    var html = '<div style="display:flex;align-items:center;gap:1rem;margin-bottom:1.5rem"><h2 style="font-size:1.25rem;font-weight:700">Contact Manager</h2></div>';
+    html += '<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1rem">';
+    for (var i = 0; i < managers.length; i++) {
+      var m = managers[i];
+      html += '<div class="card" style="padding:1.5rem">';
+      html += '<div style="display:flex;align-items:center;gap:1rem;margin-bottom:1rem">';
+      html += '<div class="avatar" style="width:48px;height:48px;font-size:18px;background:linear-gradient(135deg,#3B6BF5,#00D4FF)">' + m.name.charAt(0) + '</div>';
+      html += '<div><p style="font-weight:700;font-size:1.1rem">' + m.name + '</p><p style="color:#6B7280;font-size:12px">Manager</p></div>';
+      html += '</div>';
+      if (m.phone1) {
+        var wa1 = m.phone1.replace(/[^0-9]/g, '');
+        html += '<a href="https://wa.me/' + wa1 + '" target="_blank" style="display:flex;align-items:center;gap:.5rem;padding:.75rem 1rem;background:#f0fdf4;border-radius:8px;color:#166534;text-decoration:none;margin-bottom:.5rem;font-size:14px"><i class="fab fa-whatsapp" style="color:#22c55e;font-size:18px"></i><span>' + m.phone1 + '</span></a>';
+      }
+      if (m.phone2) {
+        var wa2 = m.phone2.replace(/[^0-9]/g, '');
+        html += '<a href="https://wa.me/' + wa2 + '" target="_blank" style="display:flex;align-items:center;gap:.5rem;padding:.75rem 1rem;background:#f0fdf4;border-radius:8px;color:#166534;text-decoration:none;font-size:14px"><i class="fab fa-whatsapp" style="color:#22c55e;font-size:18px"></i><span>' + m.phone2 + '</span></a>';
+      }
+      if (!m.phone1 && !m.phone2) {
+        html += '<p style="color:#6B7280;font-size:13px"><i class="fas fa-info-circle"></i> No contact number available</p>';
+      }
+      html += '</div>';
+    }
+    html += '</div>';
+    el.innerHTML = html;
+  }).catch(function(err) {
+    el.innerHTML = '<div class="error-msg">Failed to load managers: ' + err.message + '</div>';
+  });
 }
 
 function openTicketModal() {
