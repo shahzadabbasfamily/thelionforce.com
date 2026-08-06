@@ -224,16 +224,18 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 <!-- Manager Modal (Admin Only) -->
 <div class="modal-overlay" id="mgrModal">
   <div class="modal">
-    <div class="modal-header"><h3>Add New Manager</h3><button class="modal-close" onclick="closeMgrModal()">&times;</button></div>
+    <div class="modal-header"><h3 id="mgrModalTitle">Add New Manager</h3><button class="modal-close" onclick="closeMgrModal()">&times;</button></div>
     <div class="modal-body">
       <div id="mgrMsg"></div>
       <div class="form-group"><label>Full Name *</label><input id="mName" placeholder="Manager full name"></div>
       <div class="form-group"><label>Username *</label><input id="mUser" placeholder="Login username"></div>
-      <div class="form-group"><label>Password *</label><input type="password" id="mPass" placeholder="Min 4 characters"></div>
+      <div class="form-group" id="mPassWrap"><label>Password *</label><input type="password" id="mPass" placeholder="Min 4 characters"></div>
+      <div class="form-group"><label>WhatsApp Number 1</label><input id="mPhone1" placeholder="Primary WhatsApp with country code"></div>
+      <div class="form-group"><label>WhatsApp Number 2</label><input id="mPhone2" placeholder="Secondary WhatsApp with country code"></div>
     </div>
     <div class="modal-footer">
       <button class="btn btn-secondary btn-sm" onclick="closeMgrModal()">Cancel</button>
-      <button class="btn btn-sm" onclick="submitManager()">Create Manager</button>
+      <button class="btn btn-sm" id="mgrModalBtn" onclick="submitManager()">Create Manager</button>
     </div>
   </div>
 </div>
@@ -609,6 +611,9 @@ function renderTicketDetail(tid) {
 
     html += '<div class="card" style="margin-bottom:1.5rem"><div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:1rem"><div><h3 style="font-size:1.1rem;font-weight:700">' + t.title + '</h3><p style="color:#64748b;font-size:13px"><i class="fas fa-user"></i> ' + (h?h.name:'Unknown') + (h&&h.username?' (@'+h.username+')':'') + ' <span style="margin-left:1rem"><i class="fas fa-calendar"></i> ' + new Date(t.createdAt).toLocaleString() + '</span></p></div><span class="status-badge status-' + t.status + '">' + t.status.replace(/-/g,' ') + '</span></div>';
     html += '<p style="font-size:15px;line-height:1.6;margin:1rem 0">' + t.details + '</p>';
+    if (t.phone) {
+      html += '<p style="color:#64748b;font-size:13px;margin-bottom:.5rem"><i class="fas fa-phone"></i> <strong>Contact / WhatsApp:</strong> <a href="https://wa.me/' + t.phone.replace(/[^0-9]/g,'') + '" target="_blank" style="color:#3B6BF5;text-decoration:none">' + t.phone + '</a></p>';
+    }
     if (t.screenshot) {
       html += '<p style="color:#64748b;font-size:13px;margin-bottom:.5rem"><i class="fas fa-image"></i> Screenshot</p><img src="' + t.screenshot + '" class="screenshot-full" style="cursor:pointer" onclick="window.open(this.src)">';
     }
@@ -688,7 +693,21 @@ function renderManagers() {
     } else {
       for (var i = 0; i < allManagers.length; i++) {
         var m = allManagers[i];
-        html += '<div class="manager-card"><div style="display:flex;align-items:center;gap:.75rem"><div class="avatar">' + m.name.charAt(0) + '</div><div><p style="font-weight:600">' + m.name + '</p><p style="color:#64748b;font-size:12px">@' + m.username + '</p></div></div><div style="display:flex;align-items:center;gap:.5rem"><span class="status-badge ' + (m.status === 'active' ? 'status-active' : 'status-disabled') + '">' + m.status + '</span><button class="icon-btn" onclick="toggleManager(\'' + m.id + '\')" title="' + (m.status === 'active' ? 'Disable' : 'Enable') + '"><i class="fas fa-' + (m.status === 'active' ? 'user-slash' : 'user-check') + '"></i></button><button class="icon-btn" onclick="openMgrPwdModal(\'' + m.id + '\')" title="Reset Password" style="color:#f59e0b"><i class="fas fa-key"></i></button><button class="icon-btn danger" onclick="deleteManager(\'' + m.id + '\')" title="Delete"><i class="fas fa-trash"></i></button></div></div>';
+        html += '<div class="manager-card" style="cursor:pointer" onclick="openEditMgrModal(\'' + m.id + '\')">';
+        html += '<div style="display:flex;align-items:center;gap:.75rem"><div class="avatar">' + m.name.charAt(0) + '</div><div><p style="font-weight:600">' + m.name + '</p><p style="color:#64748b;font-size:12px">@' + m.username + '</p>';
+        if (m.phone1 || m.phone2) {
+          html += '<p style="color:#64748b;font-size:11px;margin-top:2px">';
+          if (m.phone1) html += '<i class="fab fa-whatsapp" style="color:#22c55e"></i> ' + m.phone1 + ' ';
+          if (m.phone2) html += '<i class="fab fa-whatsapp" style="color:#22c55e;margin-left:8px"></i> ' + m.phone2;
+          html += '</p>';
+        }
+        html += '</div></div>';
+        html += '<div style="display:flex;align-items:center;gap:.5rem">';
+        html += '<span class="status-badge ' + (m.status === 'active' ? 'status-active' : 'status-disabled') + '">' + m.status + '</span>';
+        html += '<button class="icon-btn" onclick="event.stopPropagation();toggleManager(\'' + m.id + '\')" title="' + (m.status === 'active' ? 'Disable' : 'Enable') + '"><i class="fas fa-' + (m.status === 'active' ? 'user-slash' : 'user-check') + '"></i></button>';
+        html += '<button class="icon-btn" onclick="event.stopPropagation();openMgrPwdModal(\'' + m.id + '\')" title="Reset Password" style="color:#f59e0b"><i class="fas fa-key"></i></button>';
+        html += '<button class="icon-btn danger" onclick="event.stopPropagation();deleteManager(\'' + m.id + '\')" title="Delete"><i class="fas fa-trash"></i></button>';
+        html += '</div></div>';
       }
     }
     html += '</div>';
@@ -696,27 +715,77 @@ function renderManagers() {
   });
 }
 
+var mgrEditId = null;
+
 function openMgrModal() {
+  mgrEditId = null;
+  document.getElementById('mgrModalTitle').textContent = 'Add New Manager';
+  document.getElementById('mgrModalBtn').textContent = 'Create Manager';
   document.getElementById('mName').value = '';
   document.getElementById('mUser').value = '';
   document.getElementById('mPass').value = '';
+  document.getElementById('mPhone1').value = '';
+  document.getElementById('mPhone2').value = '';
+  document.getElementById('mPassWrap').style.display = '';
+  document.getElementById('mgrMsg').innerHTML = '';
+  document.getElementById('mgrModal').classList.add('active');
+}
+function openEditMgrModal(id) {
+  var m = null;
+  for (var i = 0; i < allManagers.length; i++) { if (allManagers[i].id === id) { m = allManagers[i]; break; } }
+  if (!m) return;
+  mgrEditId = id;
+  document.getElementById('mgrModalTitle').textContent = 'Edit Manager';
+  document.getElementById('mgrModalBtn').textContent = 'Update Manager';
+  document.getElementById('mName').value = m.name || '';
+  document.getElementById('mUser').value = m.username || '';
+  document.getElementById('mPass').value = '';
+  document.getElementById('mPhone1').value = m.phone1 || '';
+  document.getElementById('mPhone2').value = m.phone2 || '';
+  document.getElementById('mPassWrap').style.display = 'none';
   document.getElementById('mgrMsg').innerHTML = '';
   document.getElementById('mgrModal').classList.add('active');
 }
 function closeMgrModal() {
   document.getElementById('mgrModal').classList.remove('active');
+  mgrEditId = null;
 }
 
 function submitManager() {
   var n = document.getElementById('mName').value.trim();
   var u = document.getElementById('mUser').value.trim();
   var p = document.getElementById('mPass').value;
-  if (!n || !u || !p) {
-    document.getElementById('mgrMsg').innerHTML = '<div class="error-msg">All fields are required</div>';
+  var ph1 = document.getElementById('mPhone1').value.trim();
+  var ph2 = document.getElementById('mPhone2').value.trim();
+  if (!n || !u) {
+    document.getElementById('mgrMsg').innerHTML = '<div class="error-msg">Name and username are required</div>';
     return;
   }
-  if (p.length < 4) {
+  if (!mgrEditId && !p) {
+    document.getElementById('mgrMsg').innerHTML = '<div class="error-msg">Password is required for new managers</div>';
+    return;
+  }
+  if (!mgrEditId && p.length < 4) {
     document.getElementById('mgrMsg').innerHTML = '<div class="error-msg">Password must be at least 4 characters</div>';
+    return;
+  }
+  if (mgrEditId) {
+    fbGet('server/managers').then(function(d) {
+      if (d) {
+        for (var k in d) {
+          if (d[k] && d[k].id !== mgrEditId && d[k].username && d[k].username.toLowerCase() === u.toLowerCase()) {
+            document.getElementById('mgrMsg').innerHTML = '<div class="error-msg">Username already exists</div>';
+            return;
+          }
+        }
+      }
+      return fbUp('server/managers/' + mgrEditId, { name: n, username: u, phone1: ph1, phone2: ph2 });
+    }).then(function() {
+      closeMgrModal();
+      renderManagers();
+    }).catch(function(err) {
+      document.getElementById('mgrMsg').innerHTML = '<div class="error-msg">' + err.message + '</div>';
+    });
     return;
   }
   fbGet('server/managers').then(function(d) {
@@ -732,6 +801,7 @@ function submitManager() {
     return fbSet('server/managers/' + id, {
       id: id, name: n, username: u,
       password: hashPW(p),
+      phone1: ph1, phone2: ph2,
       role: 'manager', status: 'active',
       createdAt: Date.now()
     });
