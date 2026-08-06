@@ -132,6 +132,22 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 .modal-body{padding:1.5rem;overflow-y:auto}
 .modal-footer{padding:1rem 1.5rem;border-top:1px solid #e2e8f0;display:flex;gap:.5rem;justify-content:flex-end}
 .manager-card{background:#f8fafc;border:1px solid #e2e8f0;border-radius:12px;padding:1rem;margin-bottom:.75rem;display:flex;align-items:center;justify-content:space-between}
+.host-filter-wrap{display:flex;gap:.5rem;margin-bottom:1rem;align-items:center;flex-wrap:wrap}
+.host-search{flex:1;min-width:200px;max-width:300px;padding:.5rem .75rem;border:1px solid #e2e8f0;border-radius:8px;font-size:13px;background:#fff;color:#0f172a;outline:none}
+.host-search:focus{border-color:#3B6BF5}
+.host-select{padding:.5rem .75rem;border:1px solid #e2e8f0;border-radius:8px;font-size:13px;background:#fff;color:#0f172a;outline:none;min-width:180px;cursor:pointer}
+.host-select:focus{border-color:#3B6BF5}
+.host-filter-label{font-size:12px;font-weight:600;color:#64748b;text-transform:uppercase;letter-spacing:0.05em}
+.perf-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-bottom:1.5rem}
+.perf-card{background:#fff;border:1px solid #e2e8f0;border-radius:16px;padding:1.25rem}
+.perf-card .perf-name{font-size:1rem;font-weight:700;margin-bottom:.25rem}
+.perf-card .perf-role{font-size:12px;color:#64748b;margin-bottom:1rem}
+.perf-stat-row{display:flex;justify-content:space-between;margin-bottom:.5rem;font-size:13px}
+.perf-stat-row .perf-label{color:#64748b}
+.perf-stat-row .perf-val{font-weight:700}
+.perf-bar{height:6px;border-radius:3px;background:#f1f5f9;margin-top:.25rem;overflow:hidden}
+.perf-bar-fill{height:100%;border-radius:3px;background:#3B6BF5}
+.month-selector{padding:.5rem .75rem;border:1px solid #e2e8f0;border-radius:8px;font-size:13px;background:#fff;color:#0f172a;outline:none;cursor:pointer;margin-bottom:1rem}
 @media(min-width:769px){.stats-grid{grid-template-columns:repeat(6,1fr)}}
 @media(max-width:768px){
   .stats-grid{grid-template-columns:repeat(2,1fr);gap:.75rem}
@@ -264,6 +280,7 @@ var allManagers = [];
 var currentPage = 'tickets';
 var currentTicketId = null;
 var currentFilter = 'all';
+var currentHostFilter = '';
 var mgrResetId = null;
 
 function showError(msg) {
@@ -398,6 +415,7 @@ function renderNav() {
   links += '<a href="#" onclick="goPage(\'tickets\');return false" class="' + (currentPage === 'tickets' ? 'active' : '') + '">Tickets</a>';
   if (isAdmin) {
     links += '<a href="#" onclick="goPage(\'managers\');return false" class="' + (currentPage === 'managers' ? 'active' : '') + '">Managers</a>';
+    links += '<a href="#" onclick="goPage(\'performance\');return false" class="' + (currentPage === 'performance' ? 'active' : '') + '">Performance</a>';
   }
   document.getElementById('navLinks').innerHTML = links;
 }
@@ -407,6 +425,7 @@ function goPage(p) {
   renderNav();
   if (p === 'tickets') loadTickets();
   else if (p === 'managers') renderManagers();
+  else if (p === 'performance') renderPerformance();
   else if (p === 'ticketDetail') renderTicketDetail(currentTicketId);
 }
 
@@ -421,6 +440,11 @@ function loadTickets() {
     '<div class="stat-card" onclick="filterTickets(\'resolved\')" style="cursor:pointer;transition:all .2s"><i class="fas fa-check-circle" style="color:#22c55e"></i><div class="num" id="statResolved">-</div><div class="label">Resolved</div></div>' +
     '</div>' +
     '<div class="card"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem"><h2>All Tickets</h2><button class="btn btn-sm btn-secondary" onclick="loadTickets()"><i class="fas fa-sync-alt"></i> Refresh</button></div>' +
+    '<div class="host-filter-wrap">' +
+    '<span class="host-filter-label">Filter by Host:</span>' +
+    '<input type="text" class="host-search" id="hostSearch" placeholder="Search host name..." oninput="onHostSearch()">' +
+    '<select class="host-select" id="hostSelect" onchange="filterByHost()"><option value="">All Hosts</option></select>' +
+    '</div>' +
     '<div class="filter-bar">' +
     '<button onclick="filterTickets(\'all\')" class="active" id="f-all">All</button>' +
     '<button onclick="filterTickets(\'open\')" id="f-open">Open</button>' +
@@ -436,6 +460,21 @@ function loadTickets() {
     allTickets = []; for (var k in ts) { if (ts[k]) { ts[k]._key = k; allTickets.push(ts[k]); } }
     allHosts = []; for (var k2 in hs) { if (hs[k2]) allHosts.push(hs[k2]); }
     allTickets.sort(function(a,b){ return b.createdAt - a.createdAt; });
+    // Populate host dropdown alphabetically
+    allHosts.sort(function(a,b){ return a.name.localeCompare(b.name); });
+    var sel = document.getElementById('hostSelect');
+    if (sel) {
+      sel.innerHTML = '<option value="">All Hosts</option>';
+      for (var hi = 0; hi < allHosts.length; hi++) {
+        if (allHosts[hi].role !== 'admin') {
+          var opt = document.createElement('option');
+          opt.value = allHosts[hi].id;
+          opt.textContent = allHosts[hi].name;
+          if (allHosts[hi].id === currentHostFilter) opt.selected = true;
+          sel.appendChild(opt);
+        }
+      }
+    }
     updateStats();
     renderTicketList();
   });
@@ -448,6 +487,9 @@ function updateStats() {
     visible = allTickets.filter(function(t){
       return t.assignedToName === currentUser.name || t.status === 'open';
     });
+  }
+  if (currentHostFilter) {
+    visible = visible.filter(function(t){ return t.hostId === currentHostFilter; });
   }
   var counts = {total:visible.length, open:0, assigned:0, 'in-progress':0, 'submitted-to-tiktok':0, resolved:0};
   for (var i=0;i<visible.length;i++) counts[visible[i].status] = (counts[visible[i].status]||0)+1;
@@ -467,6 +509,37 @@ function filterTickets(status) {
   renderTicketList();
 }
 
+function filterByHost() {
+  var sel = document.getElementById('hostSelect');
+  currentHostFilter = sel ? sel.value : '';
+  updateStats();
+  renderTicketList();
+}
+
+function onHostSearch() {
+  var search = document.getElementById('hostSearch').value.trim().toLowerCase();
+  var sel = document.getElementById('hostSelect');
+  if (!sel) return;
+  var opts = sel.querySelectorAll('option');
+  for (var i = 0; i < opts.length; i++) {
+    var txt = opts[i].textContent.toLowerCase();
+    if (i === 0) { opts[i].style.display = ''; continue; }
+    opts[i].style.display = txt.indexOf(search) === 0 ? '' : 'none';
+  }
+  // Auto-select first visible match if user typed something
+  if (search.length > 0) {
+    for (var j = 1; j < opts.length; j++) {
+      if (opts[j].style.display !== 'none') {
+        sel.value = opts[j].value;
+        currentHostFilter = opts[j].value;
+        updateStats();
+        renderTicketList();
+        break;
+      }
+    }
+  }
+}
+
 function renderTicketList() {
   var isAdmin = currentUser && currentUser.role === 'admin';
   var filtered = allTickets;
@@ -478,6 +551,9 @@ function renderTicketList() {
   }
   if (currentFilter !== 'all') {
     filtered = filtered.filter(function(t){ return t.status === currentFilter; });
+  }
+  if (currentHostFilter) {
+    filtered = filtered.filter(function(t){ return t.hostId === currentHostFilter; });
   }
   var el = document.getElementById('ticketList');
   if (filtered.length === 0) {
@@ -701,6 +777,99 @@ function submitMgrPwdReset() {
     renderManagers();
   }).catch(function(err) {
     document.getElementById('mgrPwdMsg').innerHTML = '<div class="error-msg">' + err.message + '</div>';
+  });
+}
+
+function renderPerformance() {
+  var el = document.getElementById('mainContent');
+  var months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+  var now = new Date();
+  var currentMonth = now.getMonth();
+  var currentYear = now.getFullYear();
+
+  var html = '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1.5rem"><h2 style="font-size:1.25rem;font-weight:700">Manager Performance</h2>';
+  html += '<select class="month-selector" id="perfMonth" onchange="renderPerformance()">';
+  for (var m = 0; m < 12; m++) {
+    var selected = m === currentMonth ? ' selected' : '';
+    html += '<option value="' + m + '"' + selected + '>' + months[m] + ' ' + currentYear + '</option>';
+  }
+  html += '</select></div>';
+
+  Promise.all([fbGet('server/managers'), fbGet('server/tickets')]).then(function(results) {
+    var mgrs = results[0] || {};
+    var ts = results[1] || {};
+    var selectedMonth = parseInt(document.getElementById('perfMonth').value || currentMonth);
+    var monthStart = new Date(currentYear, selectedMonth, 1).getTime();
+    var monthEnd = new Date(currentYear, selectedMonth + 1, 1).getTime();
+
+    var managers = [];
+    for (var k in mgrs) { if (mgrs[k]) managers.push(mgrs[k]); }
+
+    // Also include admin in performance tracking
+    fbGet('server/hosts/admin_1').then(function(adminData) {
+      if (adminData) managers.push(adminData);
+
+      var perfData = [];
+      for (var i = 0; i < managers.length; i++) {
+        var mgr = managers[i];
+        var mgrTickets = [];
+        for (var tk in ts) {
+          if (ts[tk] && ts[tk].assignedToName === mgr.name) {
+            // Check if ticket was created or updated in selected month
+            var inMonth = (ts[tk].createdAt >= monthStart && ts[tk].createdAt < monthEnd) ||
+                          (ts[tk].updatedAt >= monthStart && ts[tk].updatedAt < monthEnd);
+            mgrTickets.push(ts[tk]);
+          }
+        }
+        var total = mgrTickets.length;
+        var open = 0, assigned = 0, inProgress = 0, tiktok = 0, resolved = 0;
+        for (var j = 0; j < mgrTickets.length; j++) {
+          var s = mgrTickets[j].status;
+          if (s === 'open') open++;
+          else if (s === 'assigned') assigned++;
+          else if (s === 'in-progress') inProgress++;
+          else if (s === 'submitted-to-tiktok') tiktok++;
+          else if (s === 'resolved') resolved++;
+        }
+        perfData.push({
+          name: mgr.name,
+          role: mgr.role === 'admin' ? 'Admin' : 'Manager',
+          total: total,
+          open: open,
+          assigned: assigned,
+          inProgress: inProgress,
+          tiktok: tiktok,
+          resolved: resolved
+        });
+      }
+
+      // Sort by total cases descending
+      perfData.sort(function(a,b){ return b.total - a.total; });
+
+      if (perfData.length === 0) {
+        html += '<div class="card"><div class="empty-state"><i class="fas fa-chart-bar" style="font-size:3rem"></i><p>No manager data available.</p></div></div>';
+      } else {
+        html += '<div class="perf-grid">';
+        for (var p = 0; p < perfData.length; p++) {
+          var pd = perfData[p];
+          var resolvedPct = pd.total > 0 ? Math.round((pd.resolved / pd.total) * 100) : 0;
+          html += '<div class="perf-card">';
+          html += '<div class="perf-name">' + pd.name + '</div>';
+          html += '<div class="perf-role">' + pd.role + '</div>';
+          html += '<div style="margin-bottom:1rem"><span style="font-size:1.5rem;font-weight:800">' + pd.total + '</span> <span style="font-size:12px;color:#64748b">Total Cases</span></div>';
+          html += '<div class="perf-stat-row"><span class="perf-label">Open</span><span class="perf-val" style="color:#f59e0b">' + pd.open + '</span></div>';
+          html += '<div class="perf-stat-row"><span class="perf-label">Assigned</span><span class="perf-val" style="color:#a855f7">' + pd.assigned + '</span></div>';
+          html += '<div class="perf-stat-row"><span class="perf-label">In Progress</span><span class="perf-val" style="color:#06b6d4">' + pd.inProgress + '</span></div>';
+          html += '<div class="perf-stat-row"><span class="perf-label">TikTok</span><span class="perf-val" style="color:#7c3aed">' + pd.tiktok + '</span></div>';
+          html += '<div class="perf-stat-row"><span class="perf-label">Resolved</span><span class="perf-val" style="color:#22c55e">' + pd.resolved + '</span></div>';
+          html += '<div style="margin-top:1rem"><div style="display:flex;justify-content:space-between;font-size:11px;color:#64748b;margin-bottom:.25rem"><span>Resolution Rate</span><span>' + resolvedPct + '%</span></div>';
+          html += '<div class="perf-bar"><div class="perf-bar-fill" style="width:' + resolvedPct + '%;background:' + (resolvedPct >= 80 ? '#22c55e' : resolvedPct >= 50 ? '#f59e0b' : '#ef4444') + '"></div></div></div>';
+          html += '</div>';
+        }
+        html += '</div>';
+      }
+      el.innerHTML = html;
+    });
   });
 }
 
