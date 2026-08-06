@@ -787,89 +787,101 @@ function renderPerformance() {
   var currentMonth = now.getMonth();
   var currentYear = now.getFullYear();
 
-  var html = '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1.5rem"><h2 style="font-size:1.25rem;font-weight:700">Manager Performance</h2>';
-  html += '<select class="month-selector" id="perfMonth" onchange="renderPerformance()">';
-  for (var m = 0; m < 12; m++) {
-    var selected = m === currentMonth ? ' selected' : '';
-    html += '<option value="' + m + '"' + selected + '>' + months[m] + ' ' + currentYear + '</option>';
-  }
-  html += '</select></div>';
+  el.innerHTML = '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1.5rem"><h2 style="font-size:1.25rem;font-weight:700">Manager Performance</h2>' +
+    '<select class="month-selector" id="perfMonth" onchange="renderPerformance()"></select></div>' +
+    '<div class="empty-state"><i class="fas fa-spinner fa-spin" style="font-size:2rem"></i><p>Loading performance data...</p></div>';
 
-  Promise.all([fbGet('server/managers'), fbGet('server/tickets')]).then(function(results) {
+  var monthSel = document.getElementById('perfMonth');
+  for (var m = 0; m < 12; m++) {
+    var opt = document.createElement('option');
+    opt.value = m;
+    opt.textContent = months[m] + ' ' + currentYear;
+    if (m === currentMonth) opt.selected = true;
+    monthSel.appendChild(opt);
+  }
+
+  var selectedMonth = currentMonth;
+  var monthStart = new Date(currentYear, selectedMonth, 1).getTime();
+  var monthEnd = new Date(currentYear, selectedMonth + 1, 1).getTime();
+
+  Promise.all([fbGet('server/managers'), fbGet('server/hosts/admin_1'), fbGet('server/tickets')]).then(function(results) {
     var mgrs = results[0] || {};
-    var ts = results[1] || {};
-    var selectedMonth = parseInt(document.getElementById('perfMonth').value || currentMonth);
-    var monthStart = new Date(currentYear, selectedMonth, 1).getTime();
-    var monthEnd = new Date(currentYear, selectedMonth + 1, 1).getTime();
+    var adminData = results[1];
+    var ts = results[2] || {};
 
     var managers = [];
-    for (var k in mgrs) { if (mgrs[k]) managers.push(mgrs[k]); }
+    for (var k in mgrs) { if (mgrs[k] && mgrs[k].status === 'active') managers.push(mgrs[k]); }
+    if (adminData) managers.push(adminData);
 
-    // Also include admin in performance tracking
-    fbGet('server/hosts/admin_1').then(function(adminData) {
-      if (adminData) managers.push(adminData);
+    if (managers.length === 0) {
+      el.innerHTML = '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1.5rem"><h2 style="font-size:1.25rem;font-weight:700">Manager Performance</h2>' +
+        '<select class="month-selector" id="perfMonth" onchange="renderPerformance()"></select></div>' +
+        '<div class="card"><div class="empty-state"><i class="fas fa-users" style="font-size:3rem"></i><p>No managers found. Add managers first.</p></div></div>';
+      return;
+    }
 
-      var perfData = [];
-      for (var i = 0; i < managers.length; i++) {
-        var mgr = managers[i];
-        var mgrTickets = [];
-        for (var tk in ts) {
-          if (ts[tk] && ts[tk].assignedToName === mgr.name) {
-            // Check if ticket was created or updated in selected month
-            var inMonth = (ts[tk].createdAt >= monthStart && ts[tk].createdAt < monthEnd) ||
-                          (ts[tk].updatedAt >= monthStart && ts[tk].updatedAt < monthEnd);
-            mgrTickets.push(ts[tk]);
-          }
+    var perfData = [];
+    for (var i = 0; i < managers.length; i++) {
+      var mgr = managers[i];
+      var mgrTickets = [];
+      for (var tk in ts) {
+        if (ts[tk] && ts[tk].assignedToName === mgr.name) {
+          mgrTickets.push(ts[tk]);
         }
-        var total = mgrTickets.length;
-        var open = 0, assigned = 0, inProgress = 0, tiktok = 0, resolved = 0;
-        for (var j = 0; j < mgrTickets.length; j++) {
-          var s = mgrTickets[j].status;
-          if (s === 'open') open++;
-          else if (s === 'assigned') assigned++;
-          else if (s === 'in-progress') inProgress++;
-          else if (s === 'submitted-to-tiktok') tiktok++;
-          else if (s === 'resolved') resolved++;
-        }
-        perfData.push({
-          name: mgr.name,
-          role: mgr.role === 'admin' ? 'Admin' : 'Manager',
-          total: total,
-          open: open,
-          assigned: assigned,
-          inProgress: inProgress,
-          tiktok: tiktok,
-          resolved: resolved
-        });
       }
-
-      // Sort by total cases descending
-      perfData.sort(function(a,b){ return b.total - a.total; });
-
-      if (perfData.length === 0) {
-        html += '<div class="card"><div class="empty-state"><i class="fas fa-chart-bar" style="font-size:3rem"></i><p>No manager data available.</p></div></div>';
-      } else {
-        html += '<div class="perf-grid">';
-        for (var p = 0; p < perfData.length; p++) {
-          var pd = perfData[p];
-          var resolvedPct = pd.total > 0 ? Math.round((pd.resolved / pd.total) * 100) : 0;
-          html += '<div class="perf-card">';
-          html += '<div class="perf-name">' + pd.name + '</div>';
-          html += '<div class="perf-role">' + pd.role + '</div>';
-          html += '<div style="margin-bottom:1rem"><span style="font-size:1.5rem;font-weight:800">' + pd.total + '</span> <span style="font-size:12px;color:#64748b">Total Cases</span></div>';
-          html += '<div class="perf-stat-row"><span class="perf-label">Open</span><span class="perf-val" style="color:#f59e0b">' + pd.open + '</span></div>';
-          html += '<div class="perf-stat-row"><span class="perf-label">Assigned</span><span class="perf-val" style="color:#a855f7">' + pd.assigned + '</span></div>';
-          html += '<div class="perf-stat-row"><span class="perf-label">In Progress</span><span class="perf-val" style="color:#06b6d4">' + pd.inProgress + '</span></div>';
-          html += '<div class="perf-stat-row"><span class="perf-label">TikTok</span><span class="perf-val" style="color:#7c3aed">' + pd.tiktok + '</span></div>';
-          html += '<div class="perf-stat-row"><span class="perf-label">Resolved</span><span class="perf-val" style="color:#22c55e">' + pd.resolved + '</span></div>';
-          html += '<div style="margin-top:1rem"><div style="display:flex;justify-content:space-between;font-size:11px;color:#64748b;margin-bottom:.25rem"><span>Resolution Rate</span><span>' + resolvedPct + '%</span></div>';
-          html += '<div class="perf-bar"><div class="perf-bar-fill" style="width:' + resolvedPct + '%;background:' + (resolvedPct >= 80 ? '#22c55e' : resolvedPct >= 50 ? '#f59e0b' : '#ef4444') + '"></div></div></div>';
-          html += '</div>';
-        }
-        html += '</div>';
+      var total = mgrTickets.length;
+      var open = 0, assigned = 0, inProgress = 0, tiktok = 0, resolved = 0;
+      for (var j = 0; j < mgrTickets.length; j++) {
+        var s = mgrTickets[j].status;
+        if (s === 'open') open++;
+        else if (s === 'assigned') assigned++;
+        else if (s === 'in-progress') inProgress++;
+        else if (s === 'submitted-to-tiktok') tiktok++;
+        else if (s === 'resolved') resolved++;
       }
-      el.innerHTML = html;
-    });
+      perfData.push({
+        name: mgr.name,
+        role: mgr.role === 'admin' ? 'Admin' : 'Manager',
+        total: total,
+        open: open,
+        assigned: assigned,
+        inProgress: inProgress,
+        tiktok: tiktok,
+        resolved: resolved
+      });
+    }
+
+    perfData.sort(function(a,b){ return b.total - a.total; });
+
+    var html = '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1.5rem"><h2 style="font-size:1.25rem;font-weight:700">Manager Performance</h2>' +
+      '<select class="month-selector" id="perfMonth" onchange="renderPerformance()">';
+    for (var m2 = 0; m2 < 12; m2++) {
+      html += '<option value="' + m2 + '"' + (m2 === currentMonth ? ' selected' : '') + '>' + months[m2] + ' ' + currentYear + '</option>';
+    }
+    html += '</select></div>';
+    html += '<div class="perf-grid">';
+    for (var p = 0; p < perfData.length; p++) {
+      var pd = perfData[p];
+      var resolvedPct = pd.total > 0 ? Math.round((pd.resolved / pd.total) * 100) : 0;
+      var barColor = resolvedPct >= 80 ? '#22c55e' : resolvedPct >= 50 ? '#f59e0b' : '#ef4444';
+      html += '<div class="perf-card">';
+      html += '<div class="perf-name">' + pd.name + '</div>';
+      html += '<div class="perf-role">' + pd.role + '</div>';
+      html += '<div style="margin-bottom:1rem"><span style="font-size:1.75rem;font-weight:800">' + pd.total + '</span> <span style="font-size:12px;color:#64748b">Total Cases</span></div>';
+      html += '<div class="perf-stat-row"><span class="perf-label">Open</span><span class="perf-val" style="color:#f59e0b">' + pd.open + '</span></div>';
+      html += '<div class="perf-stat-row"><span class="perf-label">Assigned</span><span class="perf-val" style="color:#a855f7">' + pd.assigned + '</span></div>';
+      html += '<div class="perf-stat-row"><span class="perf-label">In Progress</span><span class="perf-val" style="color:#06b6d4">' + pd.inProgress + '</span></div>';
+      html += '<div class="perf-stat-row"><span class="perf-label">TikTok</span><span class="perf-val" style="color:#7c3aed">' + pd.tiktok + '</span></div>';
+      html += '<div class="perf-stat-row"><span class="perf-label">Resolved</span><span class="perf-val" style="color:#22c55e">' + pd.resolved + '</span></div>';
+      html += '<div style="margin-top:1rem;padding-top:.75rem;border-top:1px solid #f1f5f9">';
+      html += '<div style="display:flex;justify-content:space-between;font-size:11px;color:#64748b;margin-bottom:.35rem"><span>Resolution Rate</span><span>' + resolvedPct + '%</span></div>';
+      html += '<div class="perf-bar"><div class="perf-bar-fill" style="width:' + resolvedPct + '%;background:' + barColor + '"></div></div>';
+      html += '</div></div>';
+    }
+    html += '</div>';
+    el.innerHTML = html;
+  }).catch(function(err) {
+    el.innerHTML = '<div class="error-msg">Failed to load performance data: ' + err.message + '</div>';
   });
 }
 
