@@ -1119,7 +1119,7 @@ function loadNotifications() {
     for (var i = 0; i < notifs.length; i++) {
       var n = notifs[i];
       var timeAgo = getTimeAgo(n.createdAt);
-      html += '<div class="notif-item ' + (n.read ? '' : 'unread') + '" onclick="onNotifClick('' + n._key + '', '' + (n.ticketId || '') + '')">';
+      html += '<div class="notif-item ' + (n.read ? '' : 'unread') + '" onclick="onNotifClick(\'' + n._key + '\', \'' + (n.ticketId || '') + '\')">';
       html += '<div class="notif-dot"></div><div class="notif-body">';
       html += '<p><strong>' + (n.title || 'Notification') + '</strong> — ' + n.message + '</p>';
       html += '<div class="notif-time">' + timeAgo + '</div></div></div>';
