@@ -49,6 +49,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 .container{max-width:1200px;margin:0 auto;padding:1.5rem}
 .stats-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1rem;margin-bottom:1.5rem}
 .stat-card{background:#fff;border:1px solid #e2e8f0;border-radius:16px;padding:1.25rem}
+.stat-card:hover{border-color:#3B6BF5;box-shadow:0 4px 12px rgba(59,107,245,.1)}
+.stat-card:active{transform:scale(.98)}
 .stat-card i{font-size:1.1rem;margin-bottom:.5rem;display:block}
 .stat-card .num{font-size:1.75rem;font-weight:800}
 .stat-card .label{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.05em;color:#64748b;margin-top:.25rem}
@@ -374,11 +376,11 @@ function goPage(p) {
 function loadTickets() {
   var el = document.getElementById('mainContent');
   el.innerHTML = '<div class="stats-grid">' +
-    '<div class="stat-card"><i class="fas fa-ticket-alt" style="color:#3B6BF5"></i><div class="num" id="statTotal">-</div><div class="label">Total</div></div>' +
-    '<div class="stat-card"><i class="fas fa-exclamation-circle" style="color:#f59e0b"></i><div class="num" id="statOpen">-</div><div class="label">Open</div></div>' +
-    '<div class="stat-card"><i class="fas fa-user-check" style="color:#a855f7"></i><div class="num" id="statAssigned">-</div><div class="label">Assigned</div></div>' +
-    '<div class="stat-card"><i class="fas fa-spinner" style="color:#06b6d4"></i><div class="num" id="statProgress">-</div><div class="label">In Progress</div></div>' +
-    '<div class="stat-card"><i class="fas fa-check-circle" style="color:#22c55e"></i><div class="num" id="statResolved">-</div><div class="label">Resolved</div></div>' +
+    '<div class="stat-card" onclick="filterTickets(\'all\')" style="cursor:pointer;transition:all .2s"><i class="fas fa-ticket-alt" style="color:#3B6BF5"></i><div class="num" id="statTotal">-</div><div class="label">Total</div></div>' +
+    '<div class="stat-card" onclick="filterTickets(\'open\')" style="cursor:pointer;transition:all .2s"><i class="fas fa-exclamation-circle" style="color:#f59e0b"></i><div class="num" id="statOpen">-</div><div class="label">Open</div></div>' +
+    '<div class="stat-card" onclick="filterTickets(\'assigned\')" style="cursor:pointer;transition:all .2s"><i class="fas fa-user-check" style="color:#a855f7"></i><div class="num" id="statAssigned">-</div><div class="label">Assigned</div></div>' +
+    '<div class="stat-card" onclick="filterTickets(\'in-progress\')" style="cursor:pointer;transition:all .2s"><i class="fas fa-spinner" style="color:#06b6d4"></i><div class="num" id="statProgress">-</div><div class="label">In Progress</div></div>' +
+    '<div class="stat-card" onclick="filterTickets(\'resolved\')" style="cursor:pointer;transition:all .2s"><i class="fas fa-check-circle" style="color:#22c55e"></i><div class="num" id="statResolved">-</div><div class="label">Resolved</div></div>' +
     '</div>' +
     '<div class="card"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem"><h2>All Tickets</h2><button class="btn btn-sm btn-secondary" onclick="loadTickets()"><i class="fas fa-sync-alt"></i> Refresh</button></div>' +
     '<div class="filter-bar">' +
