@@ -46,6 +46,10 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 .badge-manager{font-size:10px;font-weight:600;color:#0891b2;background:#ecfeff;padding:3px 10px;border-radius:20px;margin-left:6px;border:1px solid #a5f3fc}
 .nav-right{margin-left:auto;display:flex;align-items:center;gap:.75rem;position:relative}
 .nav-user{color:#64748b;font-size:13px}
+#navLinks{display:flex;align-items:center;gap:.25rem;margin-left:1.5rem}
+#navLinks a{color:#64748b;text-decoration:none;font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:0.05em;padding:.5rem 1rem;border-radius:8px;border:1px solid transparent;transition:all .2s;display:inline-block}
+#navLinks a:hover{color:#0f172a;background:#f8fafc;border-color:#e2e8f0}
+#navLinks a.active{color:#3B6BF5;background:#eff6ff;border-color:#bfdbfe}
 .notif-bell{position:relative;width:36px;height:36px;border-radius:8px;display:flex;align-items:center;justify-content:center;color:#64748b;cursor:pointer;transition:all .2s;font-size:15px;background:none;border:none}
 .notif-bell:hover{background:#f1f5f9;color:#3B6BF5}
 .notif-badge{position:absolute;top:2px;right:2px;min-width:16px;height:16px;border-radius:50%;background:#ef4444;color:#fff;font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center;padding:0 4px}
@@ -139,8 +143,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
   .badge-admin,.badge-manager{font-size:9px;padding:2px 6px;margin-left:3px}
   .nav-user{display:none}
   .nav-right{gap:.4rem}
-  #navLinks{width:100%;order:3;margin-top:.25rem;display:flex;gap:1rem}
-  #navLinks a{margin-right:0 !important;font-size:12px !important}
+  #navLinks{width:100%;order:3;margin-top:.25rem;display:flex;gap:.25rem;margin-left:0}
+  #navLinks a{font-size:11px !important;padding:.4rem .6rem !important}
   .tickets-table{font-size:12px}
   .tickets-table th,.tickets-table td{padding:.5rem .35rem;white-space:nowrap}
   .filter-bar button{padding:.3rem .5rem;font-size:11px}
@@ -391,9 +395,9 @@ function renderNav() {
   document.getElementById('managerBadge').style.display = !isAdmin ? 'inline-block' : 'none';
   document.getElementById('navUser').textContent = currentUser ? currentUser.name : '';
   var links = '';
-  links += '<a href="#" onclick="goPage(\'tickets\');return false"' + (currentPage === 'tickets' ? ' style=\'color:#3B6BF5\'' : '') + ' style="color:#64748b;text-decoration:none;font-size:13px;font-weight:600;margin-right:1.5rem">Tickets</a>';
+  links += '<a href="#" onclick="goPage(\'tickets\');return false" class="' + (currentPage === 'tickets' ? 'active' : '') + '">Tickets</a>';
   if (isAdmin) {
-    links += '<a href="#" onclick="goPage(\'managers\');return false" style="color:#64748b;text-decoration:none;font-size:13px;font-weight:600;margin-right:1.5rem">Managers</a>';
+    links += '<a href="#" onclick="goPage(\'managers\');return false" class="' + (currentPage === 'managers' ? 'active' : '') + '">Managers</a>';
   }
   document.getElementById('navLinks').innerHTML = links;
 }
