@@ -256,6 +256,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
         <input type="file" id="tFile" accept="image/*" style="display:none" onchange="onTicketFile(this)">
         <img id="tFilePreview" style="display:none;max-width:100%;max-height:150px;border-radius:8px;margin-top:.5rem;border:1px solid rgba(59,107,245,.2)">
       </div>
+      <div class="form-group"><label>Contact / WhatsApp Number *</label><input type="tel" id="tPhone" placeholder="Enter your WhatsApp number with country code"></div>
     </div>
     <div class="modal-footer">
       <button type="button" class="btn btn-secondary btn-sm" id="ticketModalCancel">Cancel</button>
@@ -689,6 +690,9 @@ function renderTicketDetail(tid) {
 
     // Ticket info card
     html += '<div class="card" style="margin-bottom:1.5rem"><div class="ticket-card-header"><div><h3 style="font-size:16px;font-weight:700;margin-bottom:.5rem">' + t.title + '</h3><p style="color:#6B7280;font-size:12px"><i class="fas fa-user"></i> ' + (h ? h.name : 'Unknown') + ' <span style="margin-left:1rem"><i class="fas fa-calendar"></i> ' + new Date(t.createdAt).toLocaleString() + '</span></p></div><span class="status-badge status-' + t.status + '">' + t.status.replace(/-/g,' ') + '</span></div><p style="font-size:14px;line-height:1.6;margin:1rem 0">' + t.details + '</p>';
+    if (t.phone) {
+      html += '<p style="color:#6B7280;font-size:12px;margin-bottom:.5rem"><i class="fas fa-phone"></i> <strong>Contact / WhatsApp:</strong> <a href="https://wa.me/' + t.phone.replace(/[^0-9]/g,'') + '" target="_blank" style="color:#3B6BF5;text-decoration:none">' + t.phone + '</a></p>';
+    }
     if (t.screenshot) {
       html += '<p style="color:#6B7280;font-size:12px;margin-bottom:.5rem"><i class="fas fa-image"></i> Screenshot</p><img src="' + t.screenshot + '" class="screenshot-full" onclick="window.open(this.src)" style="cursor:zoom-in">';
     }
@@ -776,6 +780,7 @@ function openTicketModal() {
   ticketScreenshotData = null;
   document.getElementById('tTitle').value = '';
   document.getElementById('tDetails').value = '';
+  document.getElementById('tPhone').value = '';
   document.getElementById('tFile').value = '';
   document.getElementById('tFileLabel').textContent = 'Click to upload screenshot';
   document.getElementById('tFilePreview').style.display = 'none';
@@ -803,6 +808,7 @@ function onTicketFile(input) {
 function submitTicket() {
   var title = document.getElementById('tTitle').value.trim();
   var details = document.getElementById('tDetails').value.trim();
+  var phone = document.getElementById('tPhone').value.trim();
   if (!title) {
     document.getElementById('ticketMsg').innerHTML = '<div class="error-msg">Please select an Issue / Subject</div>';
     return;
@@ -811,10 +817,14 @@ function submitTicket() {
     document.getElementById('ticketMsg').innerHTML = '<div class="error-msg">Details are required</div>';
     return;
   }
+  if (!phone) {
+    document.getElementById('ticketMsg').innerHTML = '<div class="error-msg">Contact / WhatsApp number is required</div>';
+    return;
+  }
   var id = 'ticket_' + Date.now();
   var ticketData = {
     id: id, hostId: currentUser.id, hostName: currentUser.name,
-    title: title, details: details,
+    title: title, details: details, phone: phone,
     screenshot: ticketScreenshotData || null,
     screenshotName: ticketScreenshotData ? (document.getElementById('tFile').files[0] ? document.getElementById('tFile').files[0].name : 'screenshot.png') : null,
     status: 'open', assignedTo: null, assignedToName: null,
