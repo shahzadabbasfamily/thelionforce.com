@@ -13,7 +13,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 .login-page{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:1rem;background:#050508}
 .login-box{width:100%;max-width:400px;background:#0A0D14;border:1px solid rgba(59,107,245,0.15);border-radius:20px;padding:2.5rem}
 .login-logo{text-align:center;margin-bottom:2rem}
-.logo-icon{width:52px;height:52px;border-radius:14px;background:linear-gradient(135deg,#3B6BF5,#00D4FF);display:inline-flex;align-items:center;justify-content:center;margin-bottom:1rem;color:#fff;font-weight:800;font-size:20px}
+.logo-icon{width:120px;height:120px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;margin-bottom:1rem;overflow:hidden;border:2px solid rgba(212,175,55,0.3);box-shadow:0 0 30px rgba(212,175,55,0.15)}
+.logo-icon img{width:100%;height:100%;object-fit:cover}
 .login-logo h1{font-size:1.5rem;font-weight:800;color:#F0F2F5}
 .login-logo p{color:#6B7280;font-size:.875rem;margin-top:.25rem}
 .form-group{margin-bottom:1rem}
@@ -40,7 +41,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 .success-msg{background:rgba(34,197,94,.1);border:1px solid rgba(34,197,94,.3);color:#86efac;padding:.75rem 1rem;border-radius:8px;margin-bottom:1rem;font-size:13px}
 .nav{height:60px;background:rgba(5,5,8,0.9);backdrop-filter:blur(20px);border-bottom:1px solid rgba(59,107,245,0.1);display:flex;align-items:center;padding:0 1.5rem;position:sticky;top:0;z-index:100}
 .nav-brand{display:flex;align-items:center;gap:.5rem}
-.logo-icon-small{width:32px;height:32px;border-radius:8px;background:linear-gradient(135deg,#3B6BF5,#00D4FF);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:12px}
+.logo-icon-small{width:32px;height:32px;border-radius:6px;overflow:hidden;border:1px solid rgba(212,175,55,0.3);display:flex;align-items:center;justify-content:center}
+.logo-icon-small img{width:100%;height:100%;object-fit:cover}
 .nav-brand span{font-weight:700;font-size:15px;color:#F0F2F5}
 .badge-admin{font-size:10px;font-weight:600;color:#3B6BF5;background:rgba(59,107,245,0.1);padding:3px 10px;border-radius:20px;margin-left:6px;border:1px solid rgba(59,107,245,0.2)}
 .badge-manager{font-size:10px;font-weight:600;color:#0891b2;background:rgba(6,182,212,0.1);padding:3px 10px;border-radius:20px;margin-left:6px;border:1px solid rgba(6,182,212,0.2)}
@@ -176,7 +178,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
   <div class="login-page">
     <div class="login-box">
       <div class="login-logo">
-        <div class="logo-icon">LF</div>
+        <div class="logo-icon"><img src="logo.png" alt="The Lion Force"></div>
         <h1>CRM Login</h1>
         <p>Lion Force - Support Ticket Management</p>
       </div>
@@ -199,7 +201,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 <div class="page" id="appPage">
   <nav class="nav">
     <div class="nav-brand">
-      <div class="logo-icon-small">LF</div>
+      <div class="logo-icon-small"><img src="logo.png" alt="The Lion Force"></div>
       <span>CRM Tickets</span>
       <span class="badge-admin" id="adminBadge" style="display:none">Admin</span>
       <span class="badge-manager" id="managerBadge" style="display:none">Manager</span>
