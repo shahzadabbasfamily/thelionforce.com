@@ -313,11 +313,11 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
   </div>
 </div>
 
-<!-- Add Host Modal -->
+<!-- Add/Edit Host Modal -->
 <div class="modal-overlay" id="hostModal">
   <div class="modal">
     <div class="modal-header">
-      <h3>Add New Host</h3>
+      <h3 id="hostModalTitle">Add New Host</h3>
       <button type="button" class="modal-close" id="modalCloseBtn">&times;</button>
     </div>
     <div class="modal-body">
@@ -325,7 +325,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
       <div class="form-group"><label>Full Name *</label><input id="hName"></div>
       <div class="form-group"><label>Username *</label><input id="hUser" placeholder="Host login username"></div>
       <div class="form-group"><label>Email</label><input type="email" id="hEmail" placeholder="host@email.com"></div>
-      <div class="form-group"><label>Password *</label><input type="password" id="hPass" placeholder="Min 4 characters"></div>
+      <div class="form-group" id="hPassWrap"><label>Password *</label><input type="password" id="hPass" placeholder="Min 4 characters"></div>
       <div class="form-group"><label>TikTok Username</label><input id="hTiktok" placeholder="@username"></div>
       <div class="form-row">
         <div class="form-group"><label>Provider</label><div style="padding:.875rem 1rem;background:rgba(255,255,255,.03);border:1px solid rgba(59,107,245,0.2);border-radius:10px;color:#fff;font-size:1rem">The Lion Force</div></div>
@@ -1029,11 +1029,11 @@ function renderHostList() {
       for (var ff = 0; ff < free.length; ff++) {
         freeOpts += '<option value="' + free[ff].id + '">' + free[ff].fileName + '</option>';
       }
-      html += '<tr><td><div style="display:flex;align-items:center;gap:.75rem"><div class="avatar">' + h.name.charAt(0) + '</div><div><p style="font-weight:600">' + h.name + '</p>' + (h.tiktokUsername ? '<p style="color:#6B7280;font-size:12px">@' + h.tiktokUsername + '</p>' : '') + '<p style="color:#6B7280;font-size:11px">User: ' + (h.username || '-') + '</p></div></div></td>';
+      html += '<tr style="cursor:pointer" onclick="openEditHostModal(\'' + h.id + '\')"><td><div style="display:flex;align-items:center;gap:.75rem"><div class="avatar">' + h.name.charAt(0) + '</div><div><p style="font-weight:600">' + h.name + '</p>' + (h.tiktokUsername ? '<p style="color:#6B7280;font-size:12px">@' + h.tiktokUsername + '</p>' : '') + '<p style="color:#6B7280;font-size:11px">User: ' + (h.username || '-') + '</p></div></div></td>';
       html += '<td><p style="color:#6B7280;font-size:12px">' + (h.email || '') + '</p><p style="color:#6B7280;font-size:11px"><i class="fas fa-server"></i> ' + h.provider + ' <i class="fas fa-map-marker-alt"></i> ' + h.region + '</p></td>';
-      html += '<td>' + (mc ? '<span style="color:#3B6BF5;font-size:13px;font-weight:600">' + mc.fileName + '</span>' : '<select onchange="assignConfig(this.value, \'' + h.id + '\')" style="background:rgba(255,255,255,.03);border:1px solid rgba(59,107,245,0.2);border-radius:6px;color:#6B7280;font-size:12px;padding:.35rem .5rem;outline:none"><option value="">Assign config...</option>' + freeOpts + '</select>') + '</td>';
+      html += '<td>' + (mc ? '<span style="color:#3B6BF5;font-size:13px;font-weight:600">' + mc.fileName + '</span>' : '<select onchange="event.stopPropagation();assignConfig(this.value, \'' + h.id + '\')" style="background:rgba(255,255,255,.03);border:1px solid rgba(59,107,245,0.2);border-radius:6px;color:#6B7280;font-size:12px;padding:.35rem .5rem;outline:none"><option value="">Assign config...</option>' + freeOpts + '</select>') + '</td>';
       html += '<td><span class="status-badge ' + (h.status === 'active' ? 'status-active' : 'status-disabled') + '">' + h.status + '</span></td>';
-      html += '<td><button class="icon-btn" onclick="toggleHost(\'' + h.id + '\')" title="' + (h.status === 'active' ? 'Disable' : 'Enable') + '"><i class="fas fa-' + (h.status === 'active' ? 'user-slash' : 'user-check') + '"></i></button><button class="icon-btn" onclick="openPwdModal(\'' + h.id + '\')" title="Reset Password" style="color:#f59e0b"><i class="fas fa-key"></i></button><button class="icon-btn danger" onclick="deleteHost(\'' + h.id + '\')" title="Delete"><i class="fas fa-trash"></i></button></td></tr>';
+      html += '<td><button class="icon-btn" onclick="event.stopPropagation();toggleHost(\'' + h.id + '\')" title="' + (h.status === 'active' ? 'Disable' : 'Enable') + '"><i class="fas fa-' + (h.status === 'active' ? 'user-slash' : 'user-check') + '"></i></button><button class="icon-btn" onclick="event.stopPropagation();openPwdModal(\'' + h.id + '\')" title="Reset Password" style="color:#f59e0b"><i class="fas fa-key"></i></button><button class="icon-btn danger" onclick="event.stopPropagation();deleteHost(\'' + h.id + '\')" title="Delete"><i class="fas fa-trash"></i></button></td></tr>';
     }
   }
   tbody.innerHTML = html;
@@ -1069,12 +1069,41 @@ function submitHost() {
   var p = document.getElementById('hPass').value;
   var tk = document.getElementById('hTiktok').value.trim();
   var re = document.getElementById('hRegion').value;
-  if (!n || !u || !p) {
-    document.getElementById('hostMsg').innerHTML = '<div class="error-msg">Name, Username and Password are required</div>';
+  if (!n || !u) {
+    document.getElementById('hostMsg').innerHTML = '<div class="error-msg">Name and Username are required</div>';
     return;
   }
-  if (p.length < 4) {
+  if (!hostEditId && !p) {
+    document.getElementById('hostMsg').innerHTML = '<div class="error-msg">Password is required for new hosts</div>';
+    return;
+  }
+  if (!hostEditId && p.length < 4) {
     document.getElementById('hostMsg').innerHTML = '<div class="error-msg">Password must be at least 4 characters</div>';
+    return;
+  }
+  if (hostEditId) {
+    fbGet('server/hosts').then(function(d) {
+      if (d) {
+        for (var k in d) {
+          if (d[k] && d[k].id !== hostEditId) {
+            if (d[k].username && d[k].username.toLowerCase() === u.toLowerCase()) {
+              document.getElementById('hostMsg').innerHTML = '<div class="error-msg">Username already exists</div>';
+              return;
+            }
+            if (e && d[k].email && d[k].email.toLowerCase() === e.toLowerCase()) {
+              document.getElementById('hostMsg').innerHTML = '<div class="error-msg">Email already exists</div>';
+              return;
+            }
+          }
+        }
+      }
+      return fbUp('server/hosts/' + hostEditId, { name: n, username: u, tiktokUsername: tk || null, email: e || null, region: re });
+    }).then(function() {
+      closeModal();
+      renderHosts();
+    }).catch(function(err) {
+      document.getElementById('hostMsg').innerHTML = '<div class="error-msg">' + err.message + '</div>';
+    });
     return;
   }
   fbGet('server/hosts').then(function(d) {
@@ -1346,9 +1375,43 @@ function downloadConfig() {
   });
 }
 
-function openModal() { document.getElementById('hostModal').classList.add('active'); }
+var hostEditId = null;
+
+function openModal() {
+  hostEditId = null;
+  document.getElementById('hostModalTitle').textContent = 'Add New Host';
+  document.getElementById('modalSubmitBtn').textContent = 'Create Host';
+  document.getElementById('hName').value = '';
+  document.getElementById('hUser').value = '';
+  document.getElementById('hEmail').value = '';
+  document.getElementById('hPass').value = '';
+  document.getElementById('hTiktok').value = '';
+  document.getElementById('hPassWrap').style.display = '';
+  document.getElementById('hostMsg').innerHTML = '';
+  document.getElementById('hostModal').classList.add('active');
+}
+
+function openEditHostModal(id) {
+  var h = null;
+  for (var i = 0; i < allHosts.length; i++) { if (allHosts[i].id === id) { h = allHosts[i]; break; } }
+  if (!h) return;
+  hostEditId = id;
+  document.getElementById('hostModalTitle').textContent = 'Edit Host';
+  document.getElementById('modalSubmitBtn').textContent = 'Update Host';
+  document.getElementById('hName').value = h.name || '';
+  document.getElementById('hUser').value = h.username || '';
+  document.getElementById('hEmail').value = h.email || '';
+  document.getElementById('hPass').value = '';
+  document.getElementById('hTiktok').value = h.tiktokUsername || '';
+  document.getElementById('hRegion').value = h.region || 'UAE';
+  document.getElementById('hPassWrap').style.display = 'none';
+  document.getElementById('hostMsg').innerHTML = '';
+  document.getElementById('hostModal').classList.add('active');
+}
+
 function closeModal() {
   document.getElementById('hostModal').classList.remove('active');
+  hostEditId = null;
   document.getElementById('hostMsg').innerHTML = '';
 }
 
