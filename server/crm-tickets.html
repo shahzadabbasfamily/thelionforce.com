@@ -421,6 +421,7 @@ function renderNav() {
     links += '<a href="#" onclick="goPage(\'managers\');return false" class="' + (currentPage === 'managers' ? 'active' : '') + '">Managers</a>';
     links += '<a href="#" onclick="goPage(\'performance\');return false" class="' + (currentPage === 'performance' ? 'active' : '') + '">Performance</a>';
   }
+  links += '<a href="https://thelionforce.com/" target="_blank" style="color:#D4AF37;border-color:rgba(212,175,55,0.3)"><i class="fas fa-external-link-alt" style="margin-right:4px;font-size:10px"></i>Official Website</a>';
   document.getElementById('navLinks').innerHTML = links;
 }
 
