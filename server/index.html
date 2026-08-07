@@ -1282,15 +1282,21 @@ document.addEventListener('click', function(e) {
 });
 
 function downloadConfig() {
-  var mc = null;
-  for (var i = 0; i < allConfigs.length; i++) { if (allConfigs[i].assignedTo === currentUser.id) { mc = allConfigs[i]; break; } }
-  if (!mc || !mc.content) { alert('Config not found'); return; }
-  var b = new Blob([mc.content], { type: 'text/plain' });
-  var u = URL.createObjectURL(b);
-  var a = document.createElement('a');
-  a.href = u; a.download = mc.fileName || 'config.conf';
-  document.body.appendChild(a); a.click(); document.body.removeChild(a);
-  URL.revokeObjectURL(u);
+  fbGet('server/configs').then(function(data) {
+    var configs = [];
+    for (var k in data) { if (data[k]) configs.push(data[k]); }
+    var mc = null;
+    for (var i = 0; i < configs.length; i++) { if (configs[i].assignedTo === currentUser.id) { mc = configs[i]; break; } }
+    if (!mc || !mc.content) { alert('Config not found'); return; }
+    var b = new Blob([mc.content], { type: 'text/plain' });
+    var u = URL.createObjectURL(b);
+    var a = document.createElement('a');
+    a.href = u; a.download = mc.fileName || 'config.conf';
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+    URL.revokeObjectURL(u);
+  }).catch(function(err) {
+    alert('Error loading config: ' + err.message);
+  });
 }
 
 function openModal() { document.getElementById('hostModal').classList.add('active'); }
