@@ -67,6 +67,13 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 .hosts-table{width:100%;background:#0A0D14;border:1px solid rgba(59,107,245,0.15);border-radius:16px;overflow:hidden}
 .hosts-table table{width:100%;border-collapse:collapse}
 .hosts-table th{text-align:left;padding:.75rem;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:0.05em;color:#6B7280;border-bottom:1px solid rgba(59,107,245,0.1)}
+.host-filter-bar{display:flex;gap:.5rem;margin-bottom:1rem;flex-wrap:wrap;align-items:center}
+.host-search-input{flex:1;min-width:200px;max-width:300px;padding:.5rem .75rem;background:rgba(255,255,255,.03);border:1px solid rgba(59,107,245,0.2);border-radius:8px;color:#fff;font-size:13px;outline:none}
+.host-search-input:focus{border-color:#3B6BF5}
+.host-region-select{padding:.5rem .75rem;background:rgba(255,255,255,.03);border:1px solid rgba(59,107,245,0.2);border-radius:8px;color:#fff;font-size:13px;outline:none;cursor:pointer;min-width:140px}
+.host-region-select:focus{border-color:#3B6BF5}
+.host-region-select option{background:#0A0D14;color:#fff}
+.host-filter-label{font-size:11px;font-weight:600;color:#6B7280;text-transform:uppercase;letter-spacing:0.05em;align-self:center}
 .hosts-table td{padding:.75rem;font-size:.8rem;border-bottom:1px solid rgba(59,107,245,0.06)}
 .hosts-table tr:last-child td{border-bottom:none}
 .avatar{width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,#3B6BF5,#00D4FF);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:12px;color:#fff;flex-shrink:0}
@@ -322,7 +329,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
       <div class="form-group"><label>TikTok Username</label><input id="hTiktok" placeholder="@username"></div>
       <div class="form-row">
         <div class="form-group"><label>Provider</label><div style="padding:.875rem 1rem;background:rgba(255,255,255,.03);border:1px solid rgba(59,107,245,0.2);border-radius:10px;color:#fff;font-size:1rem">The Lion Force</div></div>
-        <div class="form-group"><label>Region</label><select id="hRegion"><option>UAE</option><option>UK</option></select></div>
+        <div class="form-group"><label>Region</label><select id="hRegion"><option>UAE</option><option>UK</option><option>TURKEY</option><option>ITALY</option><option>NETHERLANDS</option><option>GERMANY</option></select></div>
       </div>
     </div>
     <div class="modal-footer">
@@ -981,6 +988,59 @@ function submitStatusUpdate() {
   });
 }
 
+var currentHostSearch = '';
+var currentHostRegion = '';
+
+function filterHostsBySearch() {
+  currentHostSearch = document.getElementById('hostSearchInput').value.trim().toLowerCase();
+  renderHostList();
+}
+
+function filterHostsByRegion() {
+  currentHostRegion = document.getElementById('hostRegionSelect').value;
+  renderHostList();
+}
+
+function renderHostList() {
+  var tbody = document.getElementById('hostsTableBody');
+  if (!tbody) return;
+  var filtered = allHosts;
+  if (currentHostSearch) {
+    filtered = filtered.filter(function(h) {
+      return (h.name && h.name.toLowerCase().indexOf(currentHostSearch) !== -1) ||
+             (h.username && h.username.toLowerCase().indexOf(currentHostSearch) !== -1) ||
+             (h.tiktokUsername && h.tiktokUsername.toLowerCase().indexOf(currentHostSearch) !== -1);
+    });
+  }
+  if (currentHostRegion) {
+    filtered = filtered.filter(function(h) { return h.region === currentHostRegion; });
+  }
+  var html = '';
+  if (filtered.length === 0) {
+    html += '<tr><td colspan="5" style="text-align:center;color:#6B7280;padding:2rem">No hosts match your filters.</td></tr>';
+  } else {
+    for (var i = 0; i < filtered.length; i++) {
+      var h = filtered[i];
+      var mc = null;
+      for (var c = 0; c < allConfigs.length; c++) { if (allConfigs[c].assignedTo === h.id) { mc = allConfigs[c]; break; } }
+      var free = [];
+      for (var f = 0; f < allConfigs.length; f++) { if (!allConfigs[f].assignedTo) free.push(allConfigs[f]); }
+      var freeOpts = '';
+      for (var ff = 0; ff < free.length; ff++) {
+        freeOpts += '<option value="' + free[ff].id + '">' + free[ff].fileName + '</option>';
+      }
+      html += '<tr><td><div style="display:flex;align-items:center;gap:.75rem"><div class="avatar">' + h.name.charAt(0) + '</div><div><p style="font-weight:600">' + h.name + '</p>' + (h.tiktokUsername ? '<p style="color:#6B7280;font-size:12px">@' + h.tiktokUsername + '</p>' : '') + '<p style="color:#6B7280;font-size:11px">User: ' + (h.username || '-') + '</p></div></div></td>';
+      html += '<td><p style="color:#6B7280;font-size:12px">' + (h.email || '') + '</p><p style="color:#6B7280;font-size:11px"><i class="fas fa-server"></i> ' + h.provider + ' <i class="fas fa-map-marker-alt"></i> ' + h.region + '</p></td>';
+      html += '<td>' + (mc ? '<span style="color:#3B6BF5;font-size:13px;font-weight:600">' + mc.fileName + '</span>' : '<select onchange="assignConfig(this.value, \'' + h.id + '\')" style="background:rgba(255,255,255,.03);border:1px solid rgba(59,107,245,0.2);border-radius:6px;color:#6B7280;font-size:12px;padding:.35rem .5rem;outline:none"><option value="">Assign config...</option>' + freeOpts + '</select>') + '</td>';
+      html += '<td><span class="status-badge ' + (h.status === 'active' ? 'status-active' : 'status-disabled') + '">' + h.status + '</span></td>';
+      html += '<td><button class="icon-btn" onclick="toggleHost(\'' + h.id + '\')" title="' + (h.status === 'active' ? 'Disable' : 'Enable') + '"><i class="fas fa-' + (h.status === 'active' ? 'user-slash' : 'user-check') + '"></i></button><button class="icon-btn" onclick="openPwdModal(\'' + h.id + '\')" title="Reset Password" style="color:#f59e0b"><i class="fas fa-key"></i></button><button class="icon-btn danger" onclick="deleteHost(\'' + h.id + '\')" title="Delete"><i class="fas fa-trash"></i></button></td></tr>';
+    }
+  }
+  tbody.innerHTML = html;
+  var countEl = document.getElementById('hostsCount');
+  if (countEl) countEl.textContent = 'All Hosts (' + filtered.length + ')';
+}
+
 function renderHosts() {
   var el = document.getElementById('mainContent');
   Promise.all([fbGet('server/hosts'), fbGet('server/configs')]).then(function(results) {
@@ -988,30 +1048,17 @@ function renderHosts() {
     var cs = results[1] || {};
     allHosts = []; for (var k in d) { if (d[k]) allHosts.push(d[k]); }
     allConfigs = []; for (var k2 in cs) { if (cs[k2]) allConfigs.push(cs[k2]); }
-    var html = '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1.5rem"><h2 style="font-size:1.25rem;font-weight:700">All Hosts (' + allHosts.length + ')</h2><button class="btn btn-sm" onclick="openModal()"><i class="fas fa-plus"></i> Add Host</button></div>';
-    html += '<div class="hosts-table" style="overflow-x:auto"><table style="min-width:700px"><thead><tr><th>Host</th><th>Details</th><th>Config</th><th>Status</th><th>Actions</th></tr></thead><tbody>';
-    if (allHosts.length === 0) {
-      html += '<tr><td colspan="5" style="text-align:center;color:#374151;padding:2rem">No hosts yet. Click Add Host to create one.</td></tr>';
-    } else {
-      for (var i = 0; i < allHosts.length; i++) {
-        var h = allHosts[i];
-        var mc = null;
-        for (var c = 0; c < allConfigs.length; c++) { if (allConfigs[c].assignedTo === h.id) { mc = allConfigs[c]; break; } }
-        var free = [];
-        for (var f = 0; f < allConfigs.length; f++) { if (!allConfigs[f].assignedTo) free.push(allConfigs[f]); }
-        var freeOpts = '';
-        for (var ff = 0; ff < free.length; ff++) {
-          freeOpts += '<option value="' + free[ff].id + '">' + free[ff].fileName + '</option>';
-        }
-        html += '<tr><td><div style="display:flex;align-items:center;gap:.75rem"><div class="avatar">' + h.name.charAt(0) + '</div><div><p style="font-weight:600">' + h.name + '</p>' + (h.tiktokUsername ? '<p style="color:#6B7280;font-size:12px">@' + h.tiktokUsername + '</p>' : '') + '<p style="color:#6B7280;font-size:11px">User: ' + (h.username || '-') + '</p></div></div></td>';
-        html += '<td><p style="color:#6B7280;font-size:12px">' + (h.email || '') + '</p><p style="color:#6B7280;font-size:11px"><i class="fas fa-server"></i> ' + h.provider + ' <i class="fas fa-map-marker-alt"></i> ' + h.region + '</p></td>';
-        html += '<td>' + (mc ? '<span style="color:#3B6BF5;font-size:13px;font-weight:600">' + mc.fileName + '</span>' : '<select onchange="assignConfig(this.value, \'' + h.id + '\')" style="background:rgba(255,255,255,.03);border:1px solid rgba(59,107,245,0.2);border-radius:6px;color:#6B7280;font-size:12px;padding:.35rem .5rem;outline:none"><option value="">Assign config...</option>' + freeOpts + '</select>') + '</td>';
-        html += '<td><span class="status-badge ' + (h.status === 'active' ? 'status-active' : 'status-disabled') + '">' + h.status + '</span></td>';
-        html += '<td><button class="icon-btn" onclick="toggleHost(\'' + h.id + '\')" title="' + (h.status === 'active' ? 'Disable' : 'Enable') + '"><i class="fas fa-' + (h.status === 'active' ? 'user-slash' : 'user-check') + '"></i></button><button class="icon-btn" onclick="openPwdModal(\'' + h.id + '\')" title="Reset Password" style="color:#f59e0b"><i class="fas fa-key"></i></button><button class="icon-btn danger" onclick="deleteHost(\'' + h.id + '\')" title="Delete"><i class="fas fa-trash"></i></button></td></tr>';
-      }
-    }
+    var html = '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1.5rem"><h2 style="font-size:1.25rem;font-weight:700" id="hostsCount">All Hosts (' + allHosts.length + ')</h2><button class="btn btn-sm" onclick="openModal()"><i class="fas fa-plus"></i> Add Host</button></div>';
+    html += '<div class="host-filter-bar">';
+    html += '<span class="host-filter-label">Search</span>';
+    html += '<input type="text" id="hostSearchInput" class="host-search-input" placeholder="Search by name, username..." oninput="filterHostsBySearch()">';
+    html += '<span class="host-filter-label">Region</span>';
+    html += '<select id="hostRegionSelect" class="host-region-select" onchange="filterHostsByRegion()"><option value="">All Regions</option><option>UAE</option><option>UK</option><option>TURKEY</option><option>ITALY</option><option>NETHERLANDS</option><option>GERMANY</option></select>';
+    html += '</div>';
+    html += '<div class="hosts-table" style="overflow-x:auto"><table style="min-width:700px"><thead><tr><th>Host</th><th>Details</th><th>Config</th><th>Status</th><th>Actions</th></tr></thead><tbody id="hostsTableBody">';
     html += '</tbody></table></div>';
     el.innerHTML = html;
+    renderHostList();
   });
 }
 
@@ -1140,7 +1187,7 @@ function renderUpload() {
   for (var j = 0; j < freeHosts.length; j++) {
     opts += '<option value="' + freeHosts[j].id + '">' + freeHosts[j].name + ' - ' + (freeHosts[j].username || freeHosts[j].email) + '</option>';
   }
-  document.getElementById('mainContent').innerHTML = '<div style="max-width:500px;margin:0 auto"><div style="display:flex;align-items:center;gap:1rem;margin-bottom:1.5rem"><button class="icon-btn" onclick="goPage(\'configs\')"><i class="fas fa-arrow-left"></i></button><h2 style="font-size:1.25rem;font-weight:700">Upload Config</h2></div><div class="card"><div id="upMsg"></div><div class="form-group"><label>Select Host *</label><select id="uHost">' + opts + '</select></div><div class="form-group"><label>Upload .conf File *</label><input type="file" id="uFile" accept=".conf"></div><div class="form-row"><div class="form-group"><label>Provider</label><div style="padding:.875rem 1rem;background:rgba(255,255,255,.03);border:1px solid rgba(59,107,245,0.2);border-radius:10px;color:#fff;font-size:1rem">The Lion Force</div></div><div class="form-group"><label>Region</label><select id="uRegion"><option>UAE</option><option>UK</option></select></div></div><button class="btn" onclick="submitUpload(); return false;"><i class="fas fa-upload"></i> Upload Config</button></div></div>';
+  document.getElementById('mainContent').innerHTML = '<div style="max-width:500px;margin:0 auto"><div style="display:flex;align-items:center;gap:1rem;margin-bottom:1.5rem"><button class="icon-btn" onclick="goPage(\'configs\')"><i class="fas fa-arrow-left"></i></button><h2 style="font-size:1.25rem;font-weight:700">Upload Config</h2></div><div class="card"><div id="upMsg"></div><div class="form-group"><label>Select Host *</label><select id="uHost">' + opts + '</select></div><div class="form-group"><label>Upload .conf File *</label><input type="file" id="uFile" accept=".conf"></div><div class="form-row"><div class="form-group"><label>Provider</label><div style="padding:.875rem 1rem;background:rgba(255,255,255,.03);border:1px solid rgba(59,107,245,0.2);border-radius:10px;color:#fff;font-size:1rem">The Lion Force</div></div><div class="form-group"><label>Region</label><select id="uRegion"><option>UAE</option><option>UK</option><option>TURKEY</option><option>ITALY</option><option>NETHERLANDS</option><option>GERMANY</option></select></div></div><button class="btn" onclick="submitUpload(); return false;"><i class="fas fa-upload"></i> Upload Config</button></div></div>';
 }
 
 function submitUpload() {
