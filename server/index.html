@@ -497,9 +497,11 @@ function renderNav() {
     links += '<a href="#" onclick="goPage(\'hosts\');return false"' + (currentPage === 'hosts' ? ' class="active"' : '') + '>Hosts</a>';
     links += '<a href="#" onclick="goPage(\'configs\');return false"' + (currentPage === 'configs' ? ' class="active"' : '') + '>Configs</a>';
     links += '<a href="#" onclick="goPage(\'tickets\');return false"' + (currentPage === 'tickets' ? ' class="active"' : '') + '>Tickets</a>';
+    links += '<a href="https://thelionforce.com/" target="_blank" style="color:#D4AF37;border-color:rgba(212,175,55,0.3)"><i class="fas fa-external-link-alt" style="margin-right:4px;font-size:10px"></i>Official Website</a>';
   } else {
     links += '<a href="#" onclick="goPage(\'contact\');return false"' + (currentPage === 'contact' ? ' class="active"' : '') + '>Contact Manager</a>';
     links += '<a href="#" onclick="goPage(\'profile\');return false"' + (currentPage === 'profile' ? ' class="active"' : '') + '>Profile</a>';
+    links += '<a href="https://thelionforce.com/" target="_blank" style="color:#D4AF37;border-color:rgba(212,175,55,0.3)"><i class="fas fa-external-link-alt" style="margin-right:4px;font-size:10px"></i>Official Website</a>';
   }
   document.getElementById('navLinks').innerHTML = links;
 }
