@@ -898,6 +898,92 @@ function submitMgrPwdReset() {
 
 function renderPerformance() { renderPerformanceWithGrowth(); }
 
+/* ===== TICKET UPDATE FUNCTIONS ===== */
+function openUpdateModal() {
+  var t = null;
+  for (var i = 0; i < allTickets.length; i++) if (allTickets[i].id === currentTicketId) { t = allTickets[i]; break; }
+  if (!t) {
+    fbGet('server/tickets/' + currentTicketId).then(function(data) {
+      if (data) { allTickets = [data]; t = data; doOpenUpdateModal(t); }
+    });
+    return;
+  }
+  doOpenUpdateModal(t);
+}
+
+function doOpenUpdateModal(t) {
+  if (!t) return;
+  document.getElementById('upMsg').innerHTML = '';
+  document.getElementById('upNote').value = '';
+  var statusSel = document.getElementById('upStatus');
+  if (statusSel) statusSel.value = t.status || 'open';
+
+  var populateMgrs = function() {
+    var mgrSel = document.getElementById('upManager');
+    if (mgrSel) {
+      mgrSel.innerHTML = '<option value="">-- Select Manager --</option>';
+      for (var m = 0; m < allManagers.length; m++) {
+        if (allManagers[m].status === 'active') {
+          var opt = document.createElement('option');
+          opt.value = allManagers[m].name;
+          opt.textContent = allManagers[m].name;
+          if (allManagers[m].name === t.assignedToName) opt.selected = true;
+          mgrSel.appendChild(opt);
+        }
+      }
+    }
+    document.getElementById('updateModal').classList.add('active');
+  };
+
+  if (allManagers.length === 0) {
+    fbGet('server/managers').then(function(data) {
+      allManagers = [];
+      for (var k in data) { if (data[k]) allManagers.push(data[k]); }
+      populateMgrs();
+    }).catch(function() { populateMgrs(); });
+  } else {
+    populateMgrs();
+  }
+}
+
+function closeUpdateModal() {
+  document.getElementById('updateModal').classList.remove('active');
+}
+
+function saveUpdate() {
+  var status = document.getElementById('upStatus').value;
+  var managerName = document.getElementById('upManager').value;
+  var note = document.getElementById('upNote').value.trim();
+  var msg = document.getElementById('upMsg');
+
+  if (!status) { msg.innerHTML = '<div class="error-msg">Please select a status.</div>'; return; }
+
+  var updates = { status: status, updatedAt: Date.now() };
+  if (managerName) {
+    updates.assignedToName = managerName;
+    var mgrId = '';
+    for (var i = 0; i < allManagers.length; i++) {
+      if (allManagers[i].name === managerName) { mgrId = allManagers[i].id; break; }
+    }
+    if (mgrId) updates.assignedTo = mgrId;
+  } else {
+    updates.assignedToName = '';
+    updates.assignedTo = '';
+  }
+
+  fbUp('server/tickets/' + currentTicketId, updates).then(function() {
+    var logEntry = { action: 'Status updated to ' + status.replace(/-/g,' '), by: currentUser ? currentUser.name : 'Admin', date: Date.now(), note: note || '' };
+    if (managerName) logEntry.action += ' | Assigned to ' + managerName;
+    fbPush('server/ticketLogs/' + currentTicketId, logEntry).then(function() {
+      closeUpdateModal();
+      loadTickets();
+      renderTicketDetail(currentTicketId);
+    });
+  }).catch(function(err) {
+    msg.innerHTML = '<div class="error-msg">Error: ' + err.message + '</div>';
+  });
+}
+
 function renderGrowth() {
   var el = document.getElementById('mainContent');
   el.innerHTML = '<div class="empty-state"><i class="fas fa-spinner fa-spin" style="font-size:2rem"></i><p>Loading growth activities...</p></div>';
