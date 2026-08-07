@@ -149,7 +149,48 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 .perf-stat-row .perf-val{font-weight:700}
 .perf-bar{height:6px;border-radius:3px;background:rgba(59,107,245,0.1);margin-top:.25rem;overflow:hidden}
 .perf-bar-fill{height:100%;border-radius:3px;background:#3B6BF5}
+.perf-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:.75rem;margin-top:1rem}
+.perf-stat{background:rgba(255,255,255,.03);border:1px solid rgba(59,107,245,0.1);border-radius:10px;padding:.75rem;text-align:center}
+.perf-stat-label{font-size:10px;color:#6B7280;text-transform:uppercase;letter-spacing:0.04em;margin-bottom:.35rem}
+.perf-stat-val{font-size:1.4rem;font-weight:800;color:#F0F2F5}
 .month-selector{padding:.5rem .75rem;border:1px solid rgba(59,107,245,0.15);border-radius:8px;font-size:13px;background:#0A0D14;color:#fff;outline:none;cursor:pointer;margin-bottom:1rem}
+
+/* Growth Activities */
+.growth-dash-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:1.5rem}
+.growth-dash-card{background:#0A0D14;border:1px solid rgba(59,107,245,0.15);border-radius:12px;padding:1.25rem;text-align:center}
+.growth-dash-card .g-icon{font-size:1.5rem;margin-bottom:.5rem}
+.growth-dash-card .g-val{font-size:1.75rem;font-weight:800;color:#F0F2F5}
+.growth-dash-card .g-label{font-size:11px;color:#6B7280;text-transform:uppercase;letter-spacing:0.05em;margin-top:.25rem}
+.growth-dash-card.gold{border-color:rgba(212,175,55,0.3)}
+.growth-dash-card.gold .g-val{color:#D4AF37}
+.growth-filter-bar{display:flex;gap:.5rem;margin-bottom:1rem;flex-wrap:wrap;align-items:center}
+.growth-filter-bar select,.growth-filter-bar input{padding:.5rem .75rem;background:rgba(255,255,255,.03);border:1px solid rgba(59,107,245,0.2);border-radius:8px;color:#fff;font-size:13px;outline:none;min-width:140px}
+.growth-filter-bar select option{background:#0A0D14;color:#fff}
+.growth-filter-bar input{min-width:180px}
+.growth-filter-label{font-size:11px;font-weight:600;color:#6B7280;text-transform:uppercase;letter-spacing:0.05em;align-self:center}
+.growth-card{background:#0A0D14;border:1px solid rgba(59,107,245,0.15);border-radius:12px;padding:1.25rem;margin-bottom:1rem;cursor:pointer;transition:all .2s}
+.growth-card:hover{border-color:rgba(59,107,245,0.3);transform:translateY(-2px)}
+.growth-card-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:.75rem}
+.growth-card-type{display:inline-block;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.03em}
+.growth-type-recruitment{background:rgba(59,107,245,0.1);color:#5C8DFF;border:1px solid rgba(59,107,245,0.2)}
+.growth-type-pk{background:rgba(245,158,11,0.1);color:#fbbf24;border:1px solid rgba(245,158,11,0.2)}
+.growth-card-body{font-size:13px;color:#9CA3AF;line-height:1.6}
+.growth-card-body strong{color:#F0F2F5}
+.growth-card-footer{display:flex;justify-content:space-between;align-items:center;margin-top:1rem;padding-top:.75rem;border-top:1px solid rgba(59,107,245,0.1)}
+.growth-card-status{display:inline-block;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:600}
+.growth-status-new{background:rgba(107,114,128,0.1);color:#9CA3AF;border:1px solid rgba(107,114,128,0.2)}
+.growth-status-contacted{background:rgba(59,107,245,0.1);color:#5C8DFF;border:1px solid rgba(59,107,245,0.2)}
+.growth-status-joined,.growth-status-planned{background:rgba(245,158,11,0.1);color:#fbbf24;border:1px solid rgba(245,158,11,0.2)}
+.growth-status-first-live,.growth-status-completed,.growth-status-active{background:rgba(34,197,94,0.1);color:#4ade80;border:1px solid rgba(34,197,94,0.2)}
+.growth-status-rejected,.growth-status-cancelled{background:rgba(239,68,68,0.1);color:#f87171;border:1px solid rgba(239,68,68,0.2)}
+.growth-status-rescheduled{background:rgba(6,182,212,0.1);color:#22d3ee;border:1px solid rgba(6,182,212,0.2)}
+.growth-form-section{display:none}
+.growth-form-section.active{display:block}
+.growth-detail-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1rem}
+.growth-detail-item{padding:.75rem;background:rgba(255,255,255,.03);border-radius:8px}
+.growth-detail-label{font-size:11px;color:#6B7280;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:.25rem}
+.growth-detail-value{font-size:14px;color:#F0F2F5;font-weight:600}
+@media(max-width:768px){.growth-dash-grid{grid-template-columns:repeat(2,1fr)}.growth-detail-grid{grid-template-columns:1fr}}
 @media(min-width:769px){.stats-grid{grid-template-columns:repeat(6,1fr)}}
 @media(max-width:768px){
   .stats-grid{grid-template-columns:repeat(2,1fr);gap:.75rem}
@@ -421,6 +462,7 @@ function renderNav() {
     links += '<a href="#" onclick="goPage(\'managers\');return false" class="' + (currentPage === 'managers' ? 'active' : '') + '">Managers</a>';
     links += '<a href="#" onclick="goPage(\'performance\');return false" class="' + (currentPage === 'performance' ? 'active' : '') + '">Performance</a>';
   }
+  links += '<a href="#" onclick="goPage(\'growth\');return false" class="' + (currentPage === 'growth' ? 'active' : '') + '">Growth Activities</a>';
   links += '<a href="https://thelionforce.com/" target="_blank" style="color:#D4AF37;border-color:rgba(212,175,55,0.3)"><i class="fas fa-external-link-alt" style="margin-right:4px;font-size:10px"></i>Official Website</a>';
   document.getElementById('navLinks').innerHTML = links;
 }
@@ -431,6 +473,7 @@ function goPage(p) {
   if (p === 'tickets') loadTickets();
   else if (p === 'managers') renderManagers();
   else if (p === 'performance') renderPerformance();
+  else if (p === 'growth') renderGrowth();
   else if (p === 'ticketDetail') renderTicketDetail(currentTicketId);
 }
 
@@ -853,101 +896,521 @@ function submitMgrPwdReset() {
   });
 }
 
-function renderPerformance() {
+function renderPerformance() { renderPerformanceWithGrowth(); }
+
+function renderGrowth() {
   var el = document.getElementById('mainContent');
+  el.innerHTML = '<div class="empty-state"><i class="fas fa-spinner fa-spin" style="font-size:2rem"></i><p>Loading growth activities...</p></div>';
+  Promise.all([fbGet('server/growthActivities'), fbGet('server/managers'), fbGet('server/hosts')]).then(function(results) {
+    var acts = results[0] || {};
+    var mgrs = results[1] || {};
+    var hs = results[2] || {};
+    var allActs = [];
+    for (var k in acts) { if (acts[k]) allActs.push(acts[k]); }
+    var isAdmin = currentUser && currentUser.role === 'admin';
+    if (!isAdmin) {
+      allActs = allActs.filter(function(a) { return a.managerName === currentUser.name; });
+    }
+    renderGrowthDashboard(allActs);
+    renderGrowthFilters(allActs, mgrs);
+    renderGrowthList(allActs);
+  }).catch(function(err) {
+    el.innerHTML = '<div class="error-msg">Failed to load growth activities: ' + err.message + '</div>';
+  });
+}
+
+function renderGrowthDashboard(allActs) {
+  var now = new Date();
+  var monthStart = new Date(now.getFullYear(), now.getMonth(), 1).getTime();
+  var monthEnd = new Date(now.getFullYear(), now.getMonth() + 1, 1).getTime();
+  var monthActs = allActs.filter(function(a) {
+    var d = a.createdAt || 0;
+    return d >= monthStart && d < monthEnd;
+  });
+  var recruits = monthActs.filter(function(a) { return a.taskType === 'recruitment'; });
+  var pkBattles = monthActs.filter(function(a) { return a.taskType === 'pk'; });
+  var joined = recruits.filter(function(a) { return a.joinedAgency === 'Yes'; }).length;
+  var firstLive = recruits.filter(function(a) { return a.firstLiveDone === 'Yes'; }).length;
+  var pkPlanned = pkBattles.filter(function(a) { return a.status === 'Planned'; }).length;
+  var pkCompleted = pkBattles.filter(function(a) { return a.status === 'Completed'; }).length;
+  var expDiamonds = 0, actDiamonds = 0;
+  for (var i = 0; i < allActs.length; i++) {
+    var a = allActs[i];
+    if (a.expectedDiamonds) expDiamonds += parseInt(a.expectedDiamonds) || 0;
+    if (a.actualDiamonds) actDiamonds += parseInt(a.actualDiamonds) || 0;
+  }
+  var bestMgr = '';
+  var mgrScores = {};
+  for (var j = 0; j < allActs.length; j++) {
+    var m = allActs[j].managerName;
+    if (!m) continue;
+    if (!mgrScores[m]) mgrScores[m] = 0;
+    if (allActs[j].status === 'Completed' || allActs[j].status === 'Active' || allActs[j].status === 'First Live Done') mgrScores[m] += 1;
+  }
+  var bestScore = 0;
+  for (var mn in mgrScores) { if (mgrScores[mn] > bestScore) { bestScore = mgrScores[mn]; bestMgr = mn; } }
+
+  var html = '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1.5rem"><h2 style="font-size:1.25rem;font-weight:700">Growth Activities</h2><button class="btn btn-sm" onclick="renderGrowthForm()"><i class="fas fa-plus"></i> Add Activity</button></div>';
+  html += '<div class="growth-dash-grid">';
+  html += '<div class="growth-dash-card"><div class="g-icon" style="color:#5C8DFF"><i class="fas fa-user-plus"></i></div><div class="g-val">' + recruits.length + '</div><div class="g-label">New Hosts This Month</div></div>';
+  html += '<div class="growth-dash-card"><div class="g-icon" style="color:#fbbf24"><i class="fas fa-check-circle"></i></div><div class="g-val">' + joined + '</div><div class="g-label">Joined Hosts</div></div>';
+  html += '<div class="growth-dash-card"><div class="g-icon" style="color:#4ade80"><i class="fas fa-video"></i></div><div class="g-val">' + firstLive + '</div><div class="g-label">First Live Done</div></div>';
+  html += '<div class="growth-dash-card"><div class="g-icon" style="color:#a78bfa"><i class="fas fa-fire"></i></div><div class="g-val">' + pkPlanned + '</div><div class="g-label">PK Battles Planned</div></div>';
+  html += '<div class="growth-dash-card"><div class="g-icon" style="color:#22d3ee"><i class="fas fa-trophy"></i></div><div class="g-val">' + pkCompleted + '</div><div class="g-label">PK Battles Completed</div></div>';
+  html += '<div class="growth-dash-card gold"><div class="g-icon" style="color:#D4AF37"><i class="fas fa-gem"></i></div><div class="g-val">' + expDiamonds + '</div><div class="g-label">Expected Diamonds</div></div>';
+  html += '<div class="growth-dash-card gold"><div class="g-icon" style="color:#D4AF37"><i class="fas fa-gem"></i></div><div class="g-val">' + actDiamonds + '</div><div class="g-label">Actual Diamonds</div></div>';
+  html += '<div class="growth-dash-card gold"><div class="g-icon" style="color:#D4AF37"><i class="fas fa-crown"></i></div><div class="g-val" style="font-size:1rem">' + (bestMgr || '-') + '</div><div class="g-label">Best Manager</div></div>';
+  html += '</div>';
+  document.getElementById('mainContent').innerHTML = html;
+}
+
+function renderGrowthFilters(allActs, mgrs) {
+  var isAdmin = currentUser && currentUser.role === 'admin';
   var months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
   var now = new Date();
-  var currentMonth = now.getMonth();
-  var currentYear = now.getFullYear();
-
-  el.innerHTML = '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1.5rem"><h2 style="font-size:1.25rem;font-weight:700">Manager Performance</h2>' +
-    '<select class="month-selector" id="perfMonth" onchange="renderPerformance()"></select></div>' +
-    '<div class="empty-state"><i class="fas fa-spinner fa-spin" style="font-size:2rem"></i><p>Loading performance data...</p></div>';
-
-  var monthSel = document.getElementById('perfMonth');
+  var html = '<div class="growth-filter-bar">';
+  html += '<span class="growth-filter-label">Month</span>';
+  html += '<select id="gFilterMonth" onchange="filterGrowthActivities()"><option value="">All Months</option>';
   for (var m = 0; m < 12; m++) {
-    var opt = document.createElement('option');
-    opt.value = m;
-    opt.textContent = months[m] + ' ' + currentYear;
-    if (m === currentMonth) opt.selected = true;
-    monthSel.appendChild(opt);
+    html += '<option value="' + m + '"' + (m === now.getMonth() ? ' selected' : '') + '>' + months[m] + ' ' + now.getFullYear() + '</option>';
   }
-
-  var selectedMonth = currentMonth;
-  var monthStart = new Date(currentYear, selectedMonth, 1).getTime();
-  var monthEnd = new Date(currentYear, selectedMonth + 1, 1).getTime();
-
-  Promise.all([fbGet('server/managers'), fbGet('server/tickets')]).then(function(results) {
-    var mgrs = results[0] || {};
-    var ts = results[1] || {};
-
-    var managers = [];
-    for (var k in mgrs) { if (mgrs[k] && mgrs[k].status === 'active') managers.push(mgrs[k]); }
-
-    if (managers.length === 0) {
-      el.innerHTML = '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1.5rem"><h2 style="font-size:1.25rem;font-weight:700">Manager Performance</h2>' +
-        '<select class="month-selector" id="perfMonth" onchange="renderPerformance()"></select></div>' +
-        '<div class="card"><div class="empty-state"><i class="fas fa-users" style="font-size:3rem"></i><p>No managers found. Add managers first.</p></div></div>';
-      return;
+  html += '</select>';
+  if (isAdmin) {
+    html += '<span class="growth-filter-label">Manager</span>';
+    html += '<select id="gFilterManager" onchange="filterGrowthActivities()"><option value="">All Managers</option>';
+    var mgrList = [];
+    for (var k in mgrs) { if (mgrs[k] && mgrs[k].status === 'active') mgrList.push(mgrs[k].name); }
+    mgrList.sort();
+    for (var i = 0; i < mgrList.length; i++) {
+      html += '<option value="' + mgrList[i] + '">' + mgrList[i] + '</option>';
     }
+    html += '</select>';
+  }
+  html += '<span class="growth-filter-label">Region</span>';
+  html += '<select id="gFilterRegion" onchange="filterGrowthActivities()"><option value="">All Regions</option><option>UAE</option><option>UK</option><option>TURKEY</option><option>ITALY</option><option>NETHERLANDS</option><option>GERMANY</option></select>';
+  html += '<span class="growth-filter-label">Type</span>';
+  html += '<select id="gFilterType" onchange="filterGrowthActivities()"><option value="">All Types</option><option value="recruitment">New Host Recruitment</option><option value="pk">PK Battle</option></select>';
+  html += '<span class="growth-filter-label">Status</span>';
+  html += '<select id="gFilterStatus" onchange="filterGrowthActivities()"><option value="">All Status</option><option>New</option><option>Contacted</option><option>Joined</option><option>Active</option><option>Rejected</option><option>Planned</option><option>Completed</option><option>Cancelled</option><option>Rescheduled</option></select>';
+  html += '</div>';
+  var el = document.getElementById('mainContent');
+  el.innerHTML = el.innerHTML + html + '<div id="growthList"></div>';
+}
 
-    var perfData = [];
-    for (var i = 0; i < managers.length; i++) {
-      var mgr = managers[i];
-      var mgrTickets = [];
-      for (var tk in ts) {
-        if (ts[tk] && ts[tk].assignedToName === mgr.name) {
-          mgrTickets.push(ts[tk]);
-        }
-      }
-      var total = mgrTickets.length;
-      var open = 0, assigned = 0, inProgress = 0, tiktok = 0, resolved = 0;
-      for (var j = 0; j < mgrTickets.length; j++) {
-        var s = mgrTickets[j].status;
-        if (s === 'open') open++;
-        else if (s === 'assigned') assigned++;
-        else if (s === 'in-progress') inProgress++;
-        else if (s === 'submitted-to-tiktok') tiktok++;
-        else if (s === 'resolved') resolved++;
-      }
-      perfData.push({
-        name: mgr.name,
-        role: mgr.role === 'admin' ? 'Admin' : 'Manager',
-        total: total,
-        open: open,
-        assigned: assigned,
-        inProgress: inProgress,
-        tiktok: tiktok,
-        resolved: resolved
-      });
+function filterGrowthActivities() {
+  var month = document.getElementById('gFilterMonth').value;
+  var manager = document.getElementById('gFilterManager') ? document.getElementById('gFilterManager').value : '';
+  var region = document.getElementById('gFilterRegion').value;
+  var type = document.getElementById('gFilterType').value;
+  var status = document.getElementById('gFilterStatus').value;
+  currentGrowthFilter = { month: month, manager: manager, region: region, taskType: type, status: status };
+  fbGet('server/growthActivities').then(function(data) {
+    var allActs = [];
+    for (var k in data) { if (data[k]) allActs.push(data[k]); }
+    var isAdmin = currentUser && currentUser.role === 'admin';
+    if (!isAdmin) {
+      allActs = allActs.filter(function(a) { return a.managerName === currentUser.name; });
     }
+    if (month !== '') {
+      var y = new Date().getFullYear();
+      var ms = new Date(y, parseInt(month), 1).getTime();
+      var me = new Date(y, parseInt(month) + 1, 1).getTime();
+      allActs = allActs.filter(function(a) { var d = a.createdAt || 0; return d >= ms && d < me; });
+    }
+    if (manager) allActs = allActs.filter(function(a) { return a.managerName === manager; });
+    if (region) allActs = allActs.filter(function(a) { return a.region === region; });
+    if (type) allActs = allActs.filter(function(a) { return a.taskType === type; });
+    if (status) allActs = allActs.filter(function(a) { return a.status === status; });
+    renderGrowthList(allActs);
+  });
+}
 
-    perfData.sort(function(a,b){ return b.total - a.total; });
+function renderGrowthList(allActs) {
+  var el = document.getElementById('growthList');
+  if (!el) return;
+  allActs.sort(function(a,b){ return (b.createdAt || 0) - (a.createdAt || 0); });
+  if (allActs.length === 0) {
+    el.innerHTML = '<div class="card"><div class="empty-state"><i class="fas fa-chart-line" style="font-size:3rem"></i><p>No growth activities found.</p></div></div>';
+    return;
+  }
+  var html = '';
+  for (var i = 0; i < allActs.length; i++) {
+    var a = allActs[i];
+    var typeClass = a.taskType === 'recruitment' ? 'growth-type-recruitment' : 'growth-type-pk';
+    var typeLabel = a.taskType === 'recruitment' ? 'New Host Recruitment' : 'PK Battle';
+    var statusClass = 'growth-status-' + a.status.toLowerCase().replace(/\s+/g, '-');
+    html += '<div class="growth-card" onclick="renderGrowthDetail(\'' + a.id + '\')">';
+    html += '<div class="growth-card-header">';
+    html += '<div><span class="growth-card-type ' + typeClass + '">' + typeLabel + '</span></div>';
+    html += '<span class="growth-card-status ' + statusClass + '">' + a.status + '</span>';
+    html += '</div>';
+    html += '<div class="growth-card-body">';
+    if (a.taskType === 'recruitment') {
+      html += '<p><strong>Host:</strong> ' + (a.hostName || '-') + ' <span style="color:#6B7280">| @' + (a.tiktokUsername || '-') + '</span></p>';
+      html += '<p><strong>Manager:</strong> ' + (a.managerName || '-') + ' | <strong>Region:</strong> ' + (a.region || '-') + '</p>';
+      if (a.firstLiveDone === 'Yes') {
+        html += '<p><strong>First Live:</strong> ' + (a.firstLiveDate || '-') + ' | <strong>Total Live:</strong> ' + (a.totalLiveFirstMonth || '0') + '</p>';
+      }
+      if (a.expectedDiamonds || a.actualDiamonds) {
+        html += '<p><strong>Diamonds:</strong> Expected ' + (a.expectedDiamonds || 0) + ' | Earned ' + (a.actualDiamonds || 0) + '</p>';
+      }
+    } else {
+      html += '<p><strong>Host 1:</strong> ' + (a.host1 || '-') + ' <strong>vs</strong> <strong>Host 2:</strong> ' + (a.host2 || '-') + '</p>';
+      html += '<p><strong>Manager:</strong> ' + (a.managerName || '-') + ' | <strong>Region:</strong> ' + (a.region || '-') + '</p>';
+      if (a.matchDate) html += '<p><strong>Match:</strong> ' + a.matchDate + ' at ' + (a.matchTime || '-') + '</p>';
+      if (a.expectedDiamonds || a.actualDiamonds) {
+        html += '<p><strong>Diamonds:</strong> Expected ' + (a.expectedDiamonds || 0) + ' | Actual ' + (a.actualDiamonds || 0) + '</p>';
+      }
+    }
+    html += '</div>';
+    html += '<div class="growth-card-footer">';
+    html += '<span style="font-size:12px;color:#6B7280"><i class="fas fa-calendar"></i> ' + new Date(a.createdAt).toLocaleDateString() + '</span>';
+    html += '<span style="font-size:12px;color:#6B7280"><i class="fas fa-user"></i> ' + (a.managerName || '-') + '</span>';
+    html += '</div>';
+    html += '</div>';
+  }
+  el.innerHTML = html;
+}
 
-    var html = '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1.5rem"><h2 style="font-size:1.25rem;font-weight:700">Manager Performance</h2>' +
-      '<select class="month-selector" id="perfMonth" onchange="renderPerformance()">';
-    for (var m2 = 0; m2 < 12; m2++) {
-      html += '<option value="' + m2 + '"' + (m2 === currentMonth ? ' selected' : '') + '>' + months[m2] + ' ' + currentYear + '</option>';
+function renderGrowthForm() {
+  var el = document.getElementById('mainContent');
+  var isAdmin = currentUser && currentUser.role === 'admin';
+  el.innerHTML = '<div class="empty-state"><i class="fas fa-spinner fa-spin" style="font-size:2rem"></i><p>Loading form...</p></div>';
+  fbGet('server/managers').then(function(mgrs) {
+    var mgrList = [];
+    for (var k in mgrs) { if (mgrs[k] && mgrs[k].status === 'active') mgrList.push(mgrs[k].name); }
+    mgrList.sort();
+    var html = '<div style="max-width:600px;margin:0 auto">';
+    html += '<div style="display:flex;align-items:center;gap:1rem;margin-bottom:1.5rem"><button class="icon-btn" onclick="goPage(\'growth\')"><i class="fas fa-arrow-left"></i></button><h2 style="font-size:1.25rem;font-weight:700">Add Growth Activity</h2></div>';
+    html += '<div class="card">';
+    html += '<div id="growthMsg"></div>';
+    html += '<div class="form-group"><label>Task Type *</label><select id="gTaskType" onchange="toggleGrowthFormFields()"><option value="">Select Task Type</option><option value="recruitment">New Host Recruitment</option><option value="pk">PK Battle</option></select></div>';
+    html += '<div class="form-group"><label>Manager Name *</label><select id="gManagerName">';
+    if (isAdmin) {
+      html += '<option value="">Select Manager</option>';
+      for (var i = 0; i < mgrList.length; i++) {
+        html += '<option value="' + mgrList[i] + '">' + mgrList[i] + '</option>';
+      }
+    } else {
+      html += '<option value="' + currentUser.name + '">' + currentUser.name + '</option>';
     }
     html += '</select></div>';
+
+  html += '<div id="gRecruitmentFields" class="growth-form-section">';
+  html += '<div class="form-group"><label>Host Name *</label><input id="gHostName" placeholder="Host full name"></div>';
+  html += '<div class="form-group"><label>TikTok Username</label><input id="gTiktokUsername" placeholder="@username"></div>';
+  html += '<div class="form-group"><label>Region</label><select id="gRecRegion"><option>UAE</option><option>UK</option><option>TURKEY</option><option>ITALY</option><option>NETHERLANDS</option><option>GERMANY</option></select></div>';
+  html += '<div class="form-group"><label>Recruitment Date</label><input type="date" id="gRecruitmentDate"></div>';
+  html += '<div class="form-group"><label>First Live Done</label><select id="gFirstLiveDone" onchange="toggleFirstLiveDate()"><option>No</option><option>Yes</option></select></div>';
+  html += '<div class="form-group" id="gFirstLiveDateWrap" style="display:none"><label>First Live Date</label><input type="date" id="gFirstLiveDate"></div>';
+  html += '<div class="form-group" id="gTotalLiveWrap" style="display:none"><label>Total Live (First Month)</label><input type="number" id="gTotalLiveFirstMonth" placeholder="Number of live streams"></div>';
+  html += '<div class="form-row"><div class="form-group"><label>Expected Monthly Diamonds</label><input type="number" id="gExpDiamonds" placeholder="0"></div><div class="form-group"><label>Total Diamonds Earned</label><input type="number" id="gActDiamonds" placeholder="0"></div></div>';
+  html += '<div class="form-group"><label>Notes</label><textarea id="gRecNotes" rows="3" placeholder="Additional notes..."></textarea></div>';
+  html += '<div class="form-group"><label>Status</label><select id="gRecStatus"><option>New</option><option>Contacted</option><option>Joined</option><option>Active</option><option>Rejected</option></select></div>';
+  html += '</div>';
+
+  html += '<div id="gPkFields" class="growth-form-section">';
+  html += '<div class="form-group"><label>Host 1 *</label><input id="gHost1" placeholder="Host 1 name"></div>';
+  html += '<div class="form-group"><label>Host 2 *</label><input id="gHost2" placeholder="Host 2 name"></div>';
+  html += '<div class="form-group"><label>Region</label><select id="gPkRegion"><option>UAE</option><option>UK</option><option>TURKEY</option><option>ITALY</option><option>NETHERLANDS</option><option>GERMANY</option></select></div>';
+  html += '<div class="form-group"><label>Match Date</label><input type="date" id="gMatchDate"></div>';
+  html += '<div class="form-group"><label>Match Time</label><input type="time" id="gMatchTime"></div>';
+  html += '<div class="form-row"><div class="form-group"><label>Expected Diamonds</label><input type="number" id="gPkExpDiamonds" placeholder="0"></div><div class="form-group"><label>Actual Diamonds</label><input type="number" id="gPkActDiamonds" placeholder="0"></div></div>';
+  html += '<div class="form-group"><label>Battle Played</label><select id="gBattlePlayed"><option>No</option><option>Yes</option></select></div>';
+  html += '<div class="form-group"><label>Winner Host</label><input id="gWinnerHost" placeholder="Winner host name"></div>';
+  html += '<div class="form-group"><label>Notes</label><textarea id="gPkNotes" rows="3" placeholder="Additional notes..."></textarea></div>';
+  html += '<div class="form-group"><label>Status</label><select id="gPkStatus"><option>Planned</option><option>Completed</option><option>Cancelled</option><option>Rescheduled</option></select></div>';
+  html += '</div>';
+
+  html += '<div style="display:flex;gap:1rem;margin-top:1.5rem"><button class="btn" onclick="submitGrowthActivity()"><i class="fas fa-save"></i> Save Activity</button><button class="btn btn-outline" onclick="goPage(\'growth\')">Cancel</button></div>';
+  html += '</div></div>';
+  el.innerHTML = html;
+  }).catch(function(err) {
+    el.innerHTML = '<div class="error-msg">Failed to load managers: ' + err.message + '</div>';
+  });
+}
+
+function toggleGrowthFormFields() {
+  var type = document.getElementById('gTaskType').value;
+  var rec = document.getElementById('gRecruitmentFields');
+  var pk = document.getElementById('gPkFields');
+  if (rec) rec.classList.remove('active');
+  if (pk) pk.classList.remove('active');
+  if (type === 'recruitment' && rec) rec.classList.add('active');
+  if (type === 'pk' && pk) pk.classList.add('active');
+}
+
+function toggleFirstLiveDate() {
+  var val = document.getElementById('gFirstLiveDone').value;
+  var wrap = document.getElementById('gFirstLiveDateWrap');
+  var liveWrap = document.getElementById('gTotalLiveWrap');
+  if (wrap) wrap.style.display = val === 'Yes' ? 'block' : 'none';
+  if (liveWrap) liveWrap.style.display = val === 'Yes' ? 'block' : 'none';
+}
+
+function toggleUpdFirstLiveDate() {
+  var val = document.getElementById('gUpdFirstLiveDone').value;
+  var wrap = document.getElementById('gUpdFirstLiveDateWrap');
+  var liveWrap = document.getElementById('gUpdTotalLiveWrap');
+  if (wrap) wrap.style.display = val === 'Yes' ? 'block' : 'none';
+  if (liveWrap) liveWrap.style.display = val === 'Yes' ? 'block' : 'none';
+}
+
+function submitGrowthActivity() {
+  var msg = document.getElementById('growthMsg');
+  var type = document.getElementById('gTaskType').value;
+  var managerName = document.getElementById('gManagerName').value.trim();
+  if (!type) { msg.innerHTML = '<div class="error-msg">Please select a task type.</div>'; return; }
+  if (!managerName) { msg.innerHTML = '<div class="error-msg">Manager name is required.</div>'; return; }
+
+  var data = { id: 'ga_' + Date.now(), taskType: type, managerName: managerName, createdAt: Date.now(), createdBy: currentUser ? currentUser.username : '' };
+
+  if (type === 'recruitment') {
+    var hostName = document.getElementById('gHostName').value.trim();
+    if (!hostName) { msg.innerHTML = '<div class="error-msg">Host name is required.</div>'; return; }
+    data.hostName = hostName;
+    data.tiktokUsername = document.getElementById('gTiktokUsername').value.trim();
+    data.region = document.getElementById('gRecRegion').value;
+    data.recruitmentDate = document.getElementById('gRecruitmentDate').value;
+    data.firstLiveDone = document.getElementById('gFirstLiveDone').value;
+    data.firstLiveDate = document.getElementById('gFirstLiveDate').value;
+    data.totalLiveFirstMonth = document.getElementById('gTotalLiveFirstMonth').value;
+    data.expectedDiamonds = document.getElementById('gExpDiamonds').value;
+    data.actualDiamonds = document.getElementById('gActDiamonds').value;
+    data.notes = document.getElementById('gRecNotes').value.trim();
+    data.status = document.getElementById('gRecStatus').value;
+  } else {
+    var host1 = document.getElementById('gHost1').value.trim();
+    var host2 = document.getElementById('gHost2').value.trim();
+    if (!host1 || !host2) { msg.innerHTML = '<div class="error-msg">Both host names are required.</div>'; return; }
+    data.host1 = host1;
+    data.host2 = host2;
+    data.region = document.getElementById('gPkRegion').value;
+    data.matchDate = document.getElementById('gMatchDate').value;
+    data.matchTime = document.getElementById('gMatchTime').value;
+    data.expectedDiamonds = document.getElementById('gPkExpDiamonds').value;
+    data.actualDiamonds = document.getElementById('gPkActDiamonds').value;
+    data.battlePlayed = document.getElementById('gBattlePlayed').value;
+    data.winnerHost = document.getElementById('gWinnerHost').value.trim();
+    data.notes = document.getElementById('gPkNotes').value.trim();
+    data.status = document.getElementById('gPkStatus').value;
+  }
+
+  fbSet('server/growthActivities/' + data.id, data).then(function() {
+    msg.innerHTML = '<div class="success-msg">Activity saved successfully!</div>';
+    setTimeout(function() { goPage('growth'); }, 1000);
+  }).catch(function(err) {
+    msg.innerHTML = '<div class="error-msg">Error: ' + err.message + '</div>';
+  });
+}
+
+function renderGrowthDetail(id) {
+  fbGet('server/growthActivities/' + id).then(function(data) {
+    if (!data) { goPage('growth'); return; }
+    var el = document.getElementById('mainContent');
+    var isAdmin = currentUser && currentUser.role === 'admin';
+    var canEdit = isAdmin || data.managerName === currentUser.name;
+    var typeLabel = data.taskType === 'recruitment' ? 'New Host Recruitment' : 'PK Battle';
+    var typeClass = data.taskType === 'recruitment' ? 'growth-type-recruitment' : 'growth-type-pk';
+    var statusClass = 'growth-status-' + data.status.toLowerCase().replace(/\s+/g, '-');
+
+    var html = '<div style="max-width:700px;margin:0 auto">';
+    html += '<div style="display:flex;align-items:center;gap:1rem;margin-bottom:1.5rem"><button class="icon-btn" onclick="goPage(\'growth\')"><i class="fas fa-arrow-left"></i></button><h2 style="font-size:1.25rem;font-weight:700">Activity Details</h2></div>';
+    html += '<div class="card">';
+    html += '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem">';
+    html += '<span class="growth-card-type ' + typeClass + '">' + typeLabel + '</span>';
+    html += '<span class="growth-card-status ' + statusClass + '">' + data.status + '</span>';
+    html += '</div>';
+    html += '<div class="growth-detail-grid">';
+    html += '<div class="growth-detail-item"><div class="growth-detail-label">Manager</div><div class="growth-detail-value">' + (data.managerName || '-') + '</div></div>';
+    html += '<div class="growth-detail-item"><div class="growth-detail-label">Region</div><div class="growth-detail-value">' + (data.region || '-') + '</div></div>';
+    if (data.taskType === 'recruitment') {
+      html += '<div class="growth-detail-item"><div class="growth-detail-label">Host Name</div><div class="growth-detail-value">' + (data.hostName || '-') + '</div></div>';
+      html += '<div class="growth-detail-item"><div class="growth-detail-label">TikTok Username</div><div class="growth-detail-value">@' + (data.tiktokUsername || '-') + '</div></div>';
+      html += '<div class="growth-detail-item"><div class="growth-detail-label">Recruitment Date</div><div class="growth-detail-value">' + (data.recruitmentDate || '-') + '</div></div>';
+      html += '<div class="growth-detail-item"><div class="growth-detail-label">First Live Done</div><div class="growth-detail-value">' + (data.firstLiveDone || '-') + '</div></div>';
+      html += '<div class="growth-detail-item"><div class="growth-detail-label">First Live Date</div><div class="growth-detail-value">' + (data.firstLiveDate || '-') + '</div></div>';
+      html += '<div class="growth-detail-item"><div class="growth-detail-label">Total Live (First Month)</div><div class="growth-detail-value">' + (data.totalLiveFirstMonth || '0') + '</div></div>';
+    } else {
+      html += '<div class="growth-detail-item"><div class="growth-detail-label">Host 1</div><div class="growth-detail-value">' + (data.host1 || '-') + '</div></div>';
+      html += '<div class="growth-detail-item"><div class="growth-detail-label">Host 2</div><div class="growth-detail-value">' + (data.host2 || '-') + '</div></div>';
+      html += '<div class="growth-detail-item"><div class="growth-detail-label">Match Date</div><div class="growth-detail-value">' + (data.matchDate || '-') + '</div></div>';
+      html += '<div class="growth-detail-item"><div class="growth-detail-label">Match Time</div><div class="growth-detail-value">' + (data.matchTime || '-') + '</div></div>';
+      html += '<div class="growth-detail-item"><div class="growth-detail-label">Battle Played</div><div class="growth-detail-value">' + (data.battlePlayed || '-') + '</div></div>';
+      html += '<div class="growth-detail-item"><div class="growth-detail-label">Winner Host</div><div class="growth-detail-value">' + (data.winnerHost || '-') + '</div></div>';
+    }
+    html += '<div class="growth-detail-item"><div class="growth-detail-label">Expected Diamonds</div><div class="growth-detail-value">' + (data.expectedDiamonds || 0) + '</div></div>';
+    html += '<div class="growth-detail-item"><div class="growth-detail-label">Actual Diamonds</div><div class="growth-detail-value">' + (data.actualDiamonds || 0) + '</div></div>';
+    html += '</div>';
+    if (data.notes) {
+      html += '<div style="margin-top:1rem;padding:.75rem;background:rgba(255,255,255,.03);border-radius:8px"><div class="growth-detail-label">Notes</div><div style="font-size:13px;color:#9CA3AF;margin-top:.25rem">' + data.notes + '</div></div>';
+    }
+    html += '<div style="margin-top:1.5rem;display:flex;gap:1rem">';
+    if (canEdit) {
+      html += '<button class="btn btn-sm" onclick="openGrowthUpdateModal(\'' + data.id + '\')"><i class="fas fa-edit"></i> Update Status</button>';
+      html += '<button class="btn btn-sm btn-outline" style="color:#ef4444;border-color:rgba(239,68,68,.3)" onclick="deleteGrowthActivity(\'' + data.id + '\')"><i class="fas fa-trash"></i> Delete</button>';
+    }
+    html += '</div>';
+    html += '</div></div>';
+    el.innerHTML = html;
+  });
+}
+
+function openGrowthUpdateModal(id) {
+  fbGet('server/growthActivities/' + id).then(function(data) {
+    if (!data) return;
+    var statuses = data.taskType === 'recruitment' ? ['New','Contacted','Joined','Active','Rejected'] : ['Planned','Completed','Cancelled','Rescheduled'];
+    var html = '<div class="modal-overlay" id="growthUpdateModal"><div class="modal"><div class="modal-header"><h3>Update Activity Status</h3><button class="close-btn" onclick="closeGrowthUpdateModal()">&times;</button></div><div class="modal-body">';
+    html += '<div id="growthUpdMsg"></div>';
+    html += '<div class="form-group"><label>Status</label><select id="gUpdStatus">';
+    for (var i = 0; i < statuses.length; i++) {
+      html += '<option value="' + statuses[i] + '"' + (statuses[i] === data.status ? ' selected' : '') + '>' + statuses[i] + '</option>';
+    }
+    html += '</select></div>';
+    html += '<div class="form-group"><label>Notes (optional)</label><textarea id="gUpdNotes" rows="3">' + (data.notes || '') + '</textarea></div>';
+    if (data.taskType === 'recruitment') {
+      html += '<div class="form-group"><label>Recruitment Date</label><input type="date" id="gUpdRecruitmentDate" value="' + (data.recruitmentDate || '') + '"></div>';
+      html += '<div class="form-group"><label>First Live Done</label><select id="gUpdFirstLiveDone"><option>No</option><option value="Yes"' + (data.firstLiveDone === 'Yes' ? ' selected' : '') + '>Yes</option></select></div>';
+      html += '<div class="form-group"><label>First Live Date</label><input type="date" id="gUpdFirstLiveDate" value="' + (data.firstLiveDate || '') + '"></div>';
+      html += '<div class="form-group"><label>Total Live (First Month)</label><input type="number" id="gUpdTotalLiveFirstMonth" value="' + (data.totalLiveFirstMonth || '') + '"></div>';
+      html += '<div class="form-group"><label>Total Diamonds Earned</label><input type="number" id="gUpdActDiamonds" value="' + (data.actualDiamonds || '') + '"></div>';
+    } else {
+      html += '<div class="form-group"><label>Actual Diamonds</label><input type="number" id="gUpdPkActDiamonds" value="' + (data.actualDiamonds || '') + '"></div>';
+      html += '<div class="form-group"><label>Winner Host</label><input id="gUpdWinner" value="' + (data.winnerHost || '') + '"></div>';
+    }
+    html += '</div><div class="modal-footer"><button class="btn" onclick="updateGrowthStatus(\'' + id + '\')">Update</button><button class="btn btn-outline" onclick="closeGrowthUpdateModal()">Cancel</button></div></div></div>';
+    document.body.insertAdjacentHTML('beforeend', html);
+  });
+}
+
+function closeGrowthUpdateModal() {
+  var m = document.getElementById('growthUpdateModal');
+  if (m) m.remove();
+}
+
+function updateGrowthStatus(id) {
+  var status = document.getElementById('gUpdStatus').value;
+  var notes = document.getElementById('gUpdNotes').value.trim();
+  var updates = { status: status };
+  if (notes) updates.notes = notes;
+  var recDate = document.getElementById('gUpdRecruitmentDate');
+  if (recDate) updates.recruitmentDate = recDate.value;
+  var fldInput = document.getElementById('gUpdFirstLiveDone');
+  if (fldInput) {
+    updates.firstLiveDone = fldInput.value;
+    var fldDate = document.getElementById('gUpdFirstLiveDate');
+    if (fldDate) updates.firstLiveDate = fldDate.value;
+    var totalLive = document.getElementById('gUpdTotalLiveFirstMonth');
+    if (totalLive) updates.totalLiveFirstMonth = totalLive.value;
+  }
+  var actInput = document.getElementById('gUpdActDiamonds');
+  var pkActInput = document.getElementById('gUpdPkActDiamonds');
+  if (actInput && actInput.value) updates.actualDiamonds = actInput.value;
+  if (pkActInput && pkActInput.value) updates.actualDiamonds = pkActInput.value;
+  var winnerInput = document.getElementById('gUpdWinner');
+  if (winnerInput && winnerInput.value) updates.winnerHost = winnerInput.value;
+  fbUp('server/growthActivities/' + id, updates).then(function() {
+    closeGrowthUpdateModal();
+    renderGrowthDetail(id);
+  }).catch(function(err) {
+    document.getElementById('growthUpdMsg').innerHTML = '<div class="error-msg">Error: ' + err.message + '</div>';
+  });
+}
+
+function deleteGrowthActivity(id) {
+  if (!confirm('Are you sure you want to delete this activity?')) return;
+  fbDel('server/growthActivities/' + id).then(function() {
+    goPage('growth');
+  }).catch(function(err) {
+    alert('Error deleting: ' + err.message);
+  });
+}
+
+/* ===== EVENT LISTENERS ===== */
+document.getElementById('loginBtn').addEventListener('click', doLogin);
+document.getElementById('loginUser').addEventListener('keypress', function(e) { if (e.key === 'Enter') doLogin(); });
+document.getElementById('loginPass').addEventListener('keypress', function(e) { if (e.key === 'Enter') doLogin(); });
+window.addEventListener('load', function() {
+  initFirebase();
+  ensureAdmin();
+  var saved = localStorage.getItem('lf_crm_user');
+  if (saved) {
+    try { currentUser = JSON.parse(saved); showApp(); } catch(e) { localStorage.removeItem('lf_crm_user'); }
+  }
+});
+
+function renderPerformanceWithGrowth() {
+  var el = document.getElementById('mainContent');
+  el.innerHTML = '<div class="empty-state"><i class="fas fa-spinner fa-spin" style="font-size:2rem"></i><p>Loading performance data...</p></div>';
+  var now = new Date();
+  var monthNames = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+  var currentMonth = now.getMonth();
+  var currentYear = now.getFullYear();
+  Promise.all([fbGet('server/managers'), fbGet('server/tickets'), fbGet('server/growthActivities')]).then(function(results) {
+    var managers = results[0] || {};
+    var tickets = results[1] || {};
+    var growth = results[2] || {};
+    var mgrList = [];
+    for (var k in managers) {
+      if (managers[k] && managers[k].status === 'active' && managers[k].role !== 'admin') {
+        mgrList.push(managers[k]);
+      }
+    }
+    var ticketList = [];
+    for (var tk in tickets) { if (tickets[tk]) ticketList.push(tickets[tk]); }
+    var growthList = [];
+    for (var gk in growth) { if (growth[gk]) growthList.push(growth[gk]); }
+
+    var monthStart = new Date(currentYear, currentMonth, 1).getTime();
+    var monthEnd = new Date(currentYear, currentMonth + 1, 1).getTime();
+
+    var html = '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1.5rem"><h2 style="font-size:1.25rem;font-weight:700">Manager Performance</h2>';
+    html += '<select class="month-selector" id="perfMonth" onchange="renderPerformanceWithGrowth()">';
+    for (var m = 0; m < 12; m++) {
+      html += '<option value="' + m + '"' + (m === currentMonth ? ' selected' : '') + '>' + monthNames[m] + ' ' + currentYear + '</option>';
+    }
+    html += '</select></div>';
+
     html += '<div class="perf-grid">';
-    for (var p = 0; p < perfData.length; p++) {
-      var pd = perfData[p];
-      var resolvedPct = pd.total > 0 ? Math.round((pd.resolved / pd.total) * 100) : 0;
-      var barColor = resolvedPct >= 80 ? '#22c55e' : resolvedPct >= 50 ? '#f59e0b' : '#ef4444';
+    for (var i = 0; i < mgrList.length; i++) {
+      var mgr = mgrList[i];
+      var mgrTickets = ticketList.filter(function(t) { return t.assignedToName === mgr.name; });
+      var assigned = mgrTickets.length;
+      var resolved = mgrTickets.filter(function(t) { return t.status && t.status.toLowerCase() === 'resolved'; }).length;
+      var mgrGrowth = growthList.filter(function(g) { return g.managerName === mgr.name; });
+      var monthGrowth = mgrGrowth.filter(function(g) { var d = g.createdAt || 0; return d >= monthStart && d < monthEnd; });
+      var recruits = monthGrowth.filter(function(g) { return g.taskType === 'recruitment'; }).length;
+      var joined = monthGrowth.filter(function(g) { return g.taskType === 'recruitment' && g.joinedAgency === 'Yes'; }).length;
+      var firstLive = monthGrowth.filter(function(g) { return g.taskType === 'recruitment' && g.firstLiveDone === 'Yes'; }).length;
+      var pkDone = monthGrowth.filter(function(g) { return g.taskType === 'pk' && g.status === 'Completed'; }).length;
+      var expDia = 0, actDia = 0;
+      for (var j = 0; j < monthGrowth.length; j++) {
+        if (monthGrowth[j].expectedDiamonds) expDia += parseInt(monthGrowth[j].expectedDiamonds) || 0;
+        if (monthGrowth[j].actualDiamonds) actDia += parseInt(monthGrowth[j].actualDiamonds) || 0;
+      }
+      var resolutionRate = assigned > 0 ? Math.round((resolved / assigned) * 100) : 0;
+      var overallScore = Math.min(100, Math.round((resolved * 10 + recruits * 5 + joined * 10 + firstLive * 15 + pkDone * 10 + actDia / 100) / 5));
+
       html += '<div class="perf-card">';
-      html += '<div class="perf-name">' + pd.name + '</div>';
-      html += '<div class="perf-role">' + pd.role + '</div>';
-      html += '<div style="margin-bottom:1rem"><span style="font-size:1.75rem;font-weight:800">' + pd.total + '</span> <span style="font-size:12px;color:#6B7280">Total Cases</span></div>';
-      html += '<div class="perf-stat-row"><span class="perf-label">Open</span><span class="perf-val" style="color:#f59e0b">' + pd.open + '</span></div>';
-      html += '<div class="perf-stat-row"><span class="perf-label">Assigned</span><span class="perf-val" style="color:#a855f7">' + pd.assigned + '</span></div>';
-      html += '<div class="perf-stat-row"><span class="perf-label">In Progress</span><span class="perf-val" style="color:#06b6d4">' + pd.inProgress + '</span></div>';
-      html += '<div class="perf-stat-row"><span class="perf-label">TikTok</span><span class="perf-val" style="color:#7c3aed">' + pd.tiktok + '</span></div>';
-      html += '<div class="perf-stat-row"><span class="perf-label">Resolved</span><span class="perf-val" style="color:#22c55e">' + pd.resolved + '</span></div>';
-      html += '<div style="margin-top:1rem;padding-top:.75rem;border-top:1px solid rgba(59,107,245,0.1)">';
-      html += '<div style="display:flex;justify-content:space-between;font-size:11px;color:#6B7280;margin-bottom:.35rem"><span>Resolution Rate</span><span>' + resolvedPct + '%</span></div>';
-      html += '<div class="perf-bar"><div class="perf-bar-fill" style="width:' + resolvedPct + '%;background:' + barColor + '"></div></div>';
-      html += '</div></div>';
+      html += '<div class="perf-card-header">';
+      html += '<div class="perf-avatar">' + mgr.name.charAt(0) + '</div>';
+      html += '<div class="perf-info"><div class="perf-name">' + mgr.name + '</div><div class="perf-role">Manager</div></div>';
+      html += '</div>';
+      var totalLive = monthGrowth.filter(function(g) { return g.taskType === 'recruitment' && g.firstLiveDone === 'Yes'; }).reduce(function(sum, g) { return sum + (parseInt(g.totalLiveFirstMonth) || 0); }, 0);
+      html += '<div class="perf-stats">';
+      html += '<div class="perf-stat"><div class="perf-stat-label">Tickets Assigned</div><div class="perf-stat-val">' + assigned + '</div></div>';
+      html += '<div class="perf-stat"><div class="perf-stat-label">Tickets Resolved</div><div class="perf-stat-val">' + resolved + '</div></div>';
+      html += '<div class="perf-stat"><div class="perf-stat-label">New Hosts</div><div class="perf-stat-val">' + recruits + '</div></div>';
+      html += '<div class="perf-stat"><div class="perf-stat-label">Hosts Joined</div><div class="perf-stat-val">' + joined + '</div></div>';
+      html += '<div class="perf-stat"><div class="perf-stat-label">First Live Done</div><div class="perf-stat-val">' + firstLive + '</div></div>';
+      html += '<div class="perf-stat"><div class="perf-stat-label">Total Live</div><div class="perf-stat-val">' + totalLive + '</div></div>';
+      html += '<div class="perf-stat"><div class="perf-stat-label">PK Battles</div><div class="perf-stat-val">' + pkDone + '</div></div>';
+      html += '<div class="perf-stat"><div class="perf-stat-label">Exp Diamonds</div><div class="perf-stat-val">' + expDia + '</div></div>';
+      html += '<div class="perf-stat"><div class="perf-stat-label">Total Diamonds</div><div class="perf-stat-val">' + actDia + '</div></div>';
+      html += '</div>';
+      html += '<div style="margin-top:1rem"><div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:.25rem"><span>Resolution Rate</span><span>' + resolutionRate + '%</span></div><div class="perf-bar"><div class="perf-bar-fill" style="width:' + resolutionRate + '%"></div></div></div>';
+      html += '<div style="margin-top:.75rem"><div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:.25rem"><span>Overall Score</span><span>' + overallScore + '/100</span></div><div class="perf-bar"><div class="perf-bar-fill" style="width:' + overallScore + '%;background:linear-gradient(90deg,#D4AF37,#fbbf24)"></div></div></div>';
+      html += '</div>';
     }
     html += '</div>';
     el.innerHTML = html;
@@ -956,212 +1419,7 @@ function renderPerformance() {
   });
 }
 
-function openUpdateModal() {
-  document.getElementById('upMsg').innerHTML = '';
-  document.getElementById('upStatus').value = 'open';
-  document.getElementById('upNote').value = '';
-
-  var sel = document.getElementById('upManager');
-  sel.innerHTML = '<option value="">-- Select Manager --</option>';
-
-  fbGet('server/managers').then(function(data) {
-    var mgrs = [];
-    for (var k in data) { if (data[k] && data[k].status === 'active') mgrs.push(data[k]); }
-    mgrs.sort(function(a,b){ return a.name.localeCompare(b.name); });
-    for (var i = 0; i < mgrs.length; i++) {
-      var opt = document.createElement('option');
-      opt.value = mgrs[i].name;
-      opt.textContent = mgrs[i].name;
-      sel.appendChild(opt);
-    }
-    var t = null;
-    for (var j = 0; j < allTickets.length; j++) { if (allTickets[j].id === currentTicketId) { t = allTickets[j]; break; } }
-    if (t) {
-      document.getElementById('upStatus').value = t.status;
-      if (t.assignedToName) { sel.value = t.assignedToName; }
-    }
-  });
-
-  document.getElementById('updateModal').classList.add('active');
-}
-function closeUpdateModal() {
-  document.getElementById('updateModal').classList.remove('active');
-}
-
-function saveUpdate() {
-  var status = document.getElementById('upStatus').value;
-  var manager = document.getElementById('upManager').value.trim();
-  var note = document.getElementById('upNote').value.trim();
-  if (!currentTicketId) return;
-
-  var actionText = 'Status updated to ' + status.replace(/-/g,' ');
-  if (status === 'assigned') actionText = 'Assigned to manager';
-  if (status === 'in-progress') actionText = 'Issue is being investigated';
-  if (status === 'submitted-to-tiktok') actionText = 'Submitted to TikTok Support';
-  if (status === 'resolved') actionText = 'Issue Resolved';
-
-  var updates = { status: status, updatedAt: Date.now() };
-  if (manager) updates.assignedToName = manager;
-
-  var t = null;
-  for (var x = 0; x < allTickets.length; x++) { if (allTickets[x].id === currentTicketId) { t = allTickets[x]; break; } }
-  var ticketTitle = t ? t.title : 'Ticket';
-
-  fbUp('server/tickets/' + currentTicketId, updates).then(function() {
-    var logData = { date: Date.now(), by: currentUser.name || currentUser.username, action: actionText, note: note || '' };
-    return fbPush('server/ticketLogs/' + currentTicketId, logData);
-  }).then(function() {
-    // Send notifications
-    if (manager) {
-      // Find manager by name
-      for (var m = 0; m < allManagers.length; m++) {
-        if (allManagers[m].name === manager && allManagers[m].id !== currentUser.id) {
-          createNotification(allManagers[m].id, {
-            type: 'assigned',
-            ticketId: currentTicketId,
-            title: 'Ticket Assigned',
-            message: '"' + ticketTitle + '" assigned to you'
-          });
-          break;
-        }
-      }
-    }
-    // Notify admin of any update
-    if (currentUser.role === 'manager') {
-      createNotification('admin_1', {
-        type: 'status_update',
-        ticketId: currentTicketId,
-        title: 'Ticket Updated',
-        message: currentUser.name + ' updated "' + ticketTitle + '" to ' + status.replace(/-/g,' ')
-      });
-    }
-    closeUpdateModal();
-    loadTickets();
-  }).catch(function(err) {
-    document.getElementById('upMsg').innerHTML = '<div class="error-msg">' + err.message + '</div>';
-  });
-}
-
-function createNotification(userId, data) {
-  var notifId = 'notif_' + Date.now() + '_' + Math.random().toString(36).substr(2,6);
-  data.id = notifId;
-  data.createdAt = Date.now();
-  data.read = false;
-  return fbSet('server/notifications/' + userId + '/' + notifId, data);
-}
-
-function loadNotifications() {
-  if (!currentUser) return;
-  fbGet('server/notifications/' + currentUser.id).then(function(data) {
-    var notifs = [];
-    for (var k in data) { if (data[k]) { data[k]._key = k; notifs.push(data[k]); } }
-    notifs.sort(function(a,b){ return b.createdAt - a.createdAt; });
-    var unread = notifs.filter(function(n){ return !n.read; });
-    var badge = document.getElementById('notifBadge');
-    if (unread.length > 0) {
-      badge.textContent = unread.length > 9 ? '9+' : unread.length;
-      badge.style.display = 'flex';
-    } else {
-      badge.style.display = 'none';
-    }
-    var list = document.getElementById('notifList');
-    if (notifs.length === 0) {
-      list.innerHTML = '<div class="notif-empty"><i class="fas fa-bell-slash" style="font-size:1.5rem;display:block;margin-bottom:.5rem"></i>No notifications yet</div>';
-      return;
-    }
-    var html = '';
-    for (var i = 0; i < notifs.length; i++) {
-      var n = notifs[i];
-      var timeAgo = getTimeAgo(n.createdAt);
-      html += '<div class="notif-item ' + (n.read ? '' : 'unread') + '" onclick="onNotifClick(\'' + n._key + '\', \'' + (n.ticketId || '') + '\')">';
-      html += '<div class="notif-dot"></div><div class="notif-body">';
-      html += '<p><strong>' + (n.title || 'Notification') + '</strong> — ' + n.message + '</p>';
-      html += '<div class="notif-time">' + timeAgo + '</div></div></div>';
-    }
-    list.innerHTML = html;
-  });
-}
-
-function getTimeAgo(ts) {
-  var s = Math.floor((Date.now() - ts) / 1000);
-  if (s < 60) return 'Just now';
-  if (s < 3600) return Math.floor(s/60) + 'm ago';
-  if (s < 86400) return Math.floor(s/3600) + 'h ago';
-  return Math.floor(s/86400) + 'd ago';
-}
-
-function toggleNotifPanel() {
-  var panel = document.getElementById('notifPanel');
-  panel.classList.toggle('active');
-  if (panel.classList.contains('active')) loadNotifications();
-}
-
-function onNotifClick(notifKey, ticketId) {
-  if (notifKey) fbUp('server/notifications/' + currentUser.id + '/' + notifKey, { read: true });
-  document.getElementById('notifPanel').classList.remove('active');
-  loadNotifications();
-  if (ticketId) {
-    Promise.all([fbGet('server/tickets'), fbGet('server/hosts')]).then(function(results) {
-      var ts = results[0] || {};
-      var hs = results[1] || {};
-      allTickets = []; for (var k in ts) { if (ts[k]) { ts[k]._key = k; allTickets.push(ts[k]); } }
-      allHosts = []; for (var k2 in hs) { if (hs[k2]) allHosts.push(hs[k2]); }
-      viewTicketDetail(ticketId);
-    });
-  }
-}
-
-function markAllRead() {
-  fbGet('server/notifications/' + currentUser.id).then(function(data) {
-    var updates = {};
-    for (var k in data) { if (data[k] && !data[k].read) updates[k + '/read'] = true; }
-    if (Object.keys(updates).length > 0) {
-      return fbUp('server/notifications/' + currentUser.id, updates);
-    }
-  }).then(function() { loadNotifications(); });
-}
-
-document.addEventListener('click', function(e) {
-  var bell = document.getElementById('notifBell');
-  var panel = document.getElementById('notifPanel');
-  if (panel && panel.classList.contains('active') && !bell.contains(e.target) && !panel.contains(e.target)) {
-    panel.classList.remove('active');
-  }
-});
-
-// Event listeners
-document.getElementById('loginBtn').addEventListener('click', doLogin);
-document.getElementById('logoutBtn').addEventListener('click', doLogout);
-document.getElementById('loginPass').addEventListener('keypress', function(e) {
-  if (e.key === 'Enter') doLogin();
-});
-
-// Init
-initFirebase();
-ensureAdmin();
-var saved = localStorage.getItem('lf_crm_user');
-if (saved) {
-  try {
-    currentUser = JSON.parse(saved);
-    showApp();
-  } catch(e) {
-    localStorage.removeItem('lf_crm_user');
-  }
-}
-
-// Auto refresh tickets every 30 seconds when logged in
 setInterval(function() {
-  if (currentUser && currentPage === 'tickets') {
-    Promise.all([fbGet('server/tickets'), fbGet('server/hosts')]).then(function(results) {
-      var ts = results[0] || {};
-      var hs = results[1] || {};
-      allTickets = []; for (var k in ts) { if (ts[k]) { ts[k]._key = k; allTickets.push(ts[k]); } }
-      allHosts = []; for (var k2 in hs) { if (hs[k2]) allHosts.push(hs[k2]); }
-      allTickets.sort(function(a,b){ return b.createdAt - a.createdAt; });
-      updateStats();
-      renderTicketList();
-    });
-  }
   if (currentUser) loadNotifications();
 }, 30000);
 </script>
