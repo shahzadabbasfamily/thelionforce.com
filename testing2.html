@@ -562,133 +562,174 @@
             display: block;
         }
 
-        /* Host Slideshow (hero) */
-        .host-slider {
-            position: relative;
-            aspect-ratio: 1 / 1;
-            background: linear-gradient(135deg, rgba(255, 0, 80, 0.25) 0%, rgba(0, 242, 234, 0.15) 100%), var(--dark);
+        /* Host Wall (hero) */
+        .hero-image-container.host-wall-container {
+            border-radius: 0;
+            overflow: visible;
+            box-shadow: none;
         }
 
-        .host-slide {
-            position: absolute;
-            inset: 0;
+        .host-wall {
+            position: relative;
+            height: 640px;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 14px;
+            -webkit-mask-image: linear-gradient(transparent, #000 10%, #000 90%, transparent);
+            mask-image: linear-gradient(transparent, #000 10%, #000 90%, transparent);
+        }
+
+        .host-wall-col {
+            overflow: hidden;
+        }
+
+        .host-wall-track {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            animation: hostRise 40s linear infinite;
+        }
+
+        .host-wall-col:nth-child(2) .host-wall-track {
+            animation-duration: 50s;
+            animation-direction: reverse;
+        }
+
+        .host-wall-col:nth-child(3) .host-wall-track {
+            animation-duration: 45s;
+        }
+
+        .host-wall:hover .host-wall-track {
+            animation-play-state: paused;
+        }
+
+        @keyframes hostRise {
+            from { transform: translateY(0); }
+            to { transform: translateY(calc(-50% - 7px)); }
+        }
+
+        .host-tile {
+            position: relative;
             display: block;
-            opacity: 0;
-            transition: opacity 1s ease;
+            aspect-ratio: 9 / 15;
+            border-radius: 18px;
+            overflow: hidden;
+            background: linear-gradient(135deg, rgba(255, 0, 80, 0.3) 0%, rgba(0, 242, 234, 0.2) 100%), var(--dark);
+            border: 1px solid rgba(255, 255, 255, 0.08);
             color: var(--light);
             text-decoration: none;
+            transition: border-color 0.3s ease;
         }
 
-        .host-slide.active {
-            opacity: 1;
-            z-index: 1;
+        .host-tile:hover {
+            border-color: var(--primary);
         }
 
-        .host-slide img {
+        .host-tile img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            object-position: center;
             display: block;
-            transform: scale(1.08);
-            transition: transform 6s ease-out;
         }
 
-        .host-slide.active img {
-            transform: scale(1);
-        }
-
-        .host-slide::after {
+        .host-tile::after {
             content: '';
             position: absolute;
             inset: 0;
-            background: linear-gradient(180deg, rgba(5, 5, 5, 0) 45%, rgba(5, 5, 5, 0.9) 100%);
+            background: linear-gradient(180deg, rgba(5, 5, 5, 0) 55%, rgba(5, 5, 5, 0.9) 100%);
             pointer-events: none;
         }
 
         .host-live {
             position: absolute;
-            top: 1.25rem;
-            left: 1.25rem;
+            top: 0.75rem;
+            left: 0.75rem;
             z-index: 2;
             display: inline-flex;
             align-items: center;
-            gap: 0.4rem;
+            gap: 0.35rem;
             background: var(--primary);
             color: var(--light);
-            font-size: 0.75rem;
+            font-size: 0.65rem;
             font-weight: 700;
             letter-spacing: 0.05em;
-            padding: 0.35rem 0.75rem;
-            border-radius: 8px;
-            box-shadow: 0 8px 24px rgba(255, 0, 80, 0.4);
+            padding: 0.25rem 0.55rem;
+            border-radius: 6px;
+            box-shadow: 0 6px 18px rgba(255, 0, 80, 0.4);
         }
 
         .host-live i {
-            font-size: 0.45rem;
+            font-size: 0.4rem;
             animation: pulse 1.5s infinite;
         }
 
-        .host-caption {
+        .host-tile-name {
             position: absolute;
-            left: 1.5rem;
-            right: 1.5rem;
-            bottom: 3.25rem;
+            left: 0.85rem;
+            right: 0.85rem;
+            bottom: 0.85rem;
             z-index: 2;
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-            gap: 0.35rem;
+            font-size: 0.95rem;
+            font-weight: 700;
+            line-height: 1.2;
             text-align: left;
         }
 
-        .host-caption strong {
-            font-size: 1.6rem;
-            font-weight: 800;
-            line-height: 1.1;
+        .host-tile-name small {
+            display: block;
+            font-size: 0.72rem;
+            font-weight: 500;
+            color: rgba(255, 255, 255, 0.7);
+            margin-top: 0.15rem;
         }
 
-        .host-meta {
-            font-size: 0.9rem;
-            color: rgba(255, 255, 255, 0.75);
+        @media (max-width: 1024px) {
+            .host-wall {
+                height: 440px;
+            }
         }
 
-        .host-caption .hof-award {
-            margin-top: 0.35rem;
-        }
+        @media (max-width: 560px) {
+            .host-wall {
+                height: 400px;
+                gap: 8px;
+            }
 
-        .host-dots {
-            position: absolute;
-            left: 0;
-            right: 0;
-            bottom: 1.25rem;
-            z-index: 3;
-            display: flex;
-            justify-content: center;
-            gap: 0.4rem;
-        }
+            .host-wall-track {
+                gap: 8px;
+            }
 
-        .host-dot {
-            width: 8px;
-            height: 8px;
-            padding: 0;
-            border: none;
-            border-radius: 50px;
-            background: rgba(255, 255, 255, 0.35);
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
+            @keyframes hostRise {
+                from { transform: translateY(0); }
+                to { transform: translateY(calc(-50% - 4px)); }
+            }
 
-        .host-dot.active {
-            width: 24px;
-            background: var(--gradient);
+            .host-tile {
+                border-radius: 12px;
+            }
+
+            .host-live {
+                top: 0.5rem;
+                left: 0.5rem;
+                font-size: 0.55rem;
+                padding: 0.2rem 0.4rem;
+            }
+
+            .host-tile-name {
+                left: 0.5rem;
+                right: 0.5rem;
+                bottom: 0.5rem;
+                font-size: 0.75rem;
+            }
+
+            .host-tile-name small {
+                font-size: 0.6rem;
+            }
         }
 
         @media (prefers-reduced-motion: reduce) {
-            .host-slide img,
-            .host-slide.active img {
-                transform: none;
-                transition: none;
+            .host-wall-track {
+                animation: none;
             }
         }
 
@@ -1907,118 +1948,141 @@
                 </div>
             </div>
             <div class="hero-visual">
-                <div class="hero-image-container">
-                    <!-- Host slideshow (replaces hero-image.png) -->
-                    <div class="host-slider" id="hostSlider" aria-roledescription="carousel" aria-label="The Lion Force star hosts">
-                        <a class="host-slide active" href="https://www.tiktok.com/@shizuka.534" target="_blank" aria-label="Shizuka on TikTok">
-                            <img src="images/shizuka.png" alt="Shizuka - The Lion Force TikTok LIVE host">
-                            <span class="host-live"><i class="fas fa-circle"></i> LIVE</span>
-                            <span class="host-caption">
-                                <strong>Shizuka</strong>
-                                <span class="host-meta">🇬🇧 United Kingdom</span>
-                                <span class="hof-award award-gold"><i class="fas fa-crown"></i> Universe Battle Winner</span>
-                            </span>
-                        </a>
-                        <a class="host-slide" href="https://www.tiktok.com/@menatophost1" target="_blank" aria-label="Hania Khan on TikTok">
-                            <img src="images/haniakhan.jpeg" alt="Hania Khan - The Lion Force TikTok LIVE host" loading="lazy">
-                            <span class="host-live"><i class="fas fa-circle"></i> LIVE</span>
-                            <span class="host-caption">
-                                <strong>Hania Khan</strong>
-                                <span class="host-meta">🌍 MENA</span>
-                                <span class="hof-award award-gold"><i class="fas fa-crown"></i> Top MENA Creator</span>
-                            </span>
-                        </a>
-                        <a class="host-slide" href="https://www.tiktok.com/@bravegirlbackupaccount" target="_blank" aria-label="Brave Girl on TikTok">
-                            <img src="images/bravegirl.png" alt="Brave Girl - The Lion Force TikTok LIVE host" loading="lazy">
-                            <span class="host-live"><i class="fas fa-circle"></i> LIVE</span>
-                            <span class="host-caption">
-                                <strong>Brave Girl</strong>
-                                <span class="host-meta">🌍 MENA</span>
-                                <span class="hof-award award-gold"><i class="fas fa-crown"></i> MENA Battle Champion</span>
-                            </span>
-                        </a>
-                        <a class="host-slide" href="https://www.tiktok.com/@zainiofficial1122" target="_blank" aria-label="Zainab Khan on TikTok">
-                            <img src="images/zainab.png" alt="Zainab Khan - The Lion Force TikTok LIVE host" loading="lazy">
-                            <span class="host-live"><i class="fas fa-circle"></i> LIVE</span>
-                            <span class="host-caption">
-                                <strong>Zainab Khan</strong>
-                                <span class="host-meta">🌍 MENA</span>
-                                <span class="hof-award award-gold"><i class="fas fa-crown"></i> Breakout Creator MENA</span>
-                            </span>
-                        </a>
-                        <a class="host-slide" href="https://www.tiktok.com/@aleezay3304" target="_blank" aria-label="Aleezay on TikTok">
-                            <img src="images/aleezay.png" alt="Aleezay - The Lion Force TikTok LIVE host" loading="lazy">
-                            <span class="host-live"><i class="fas fa-circle"></i> LIVE</span>
-                            <span class="host-caption">
-                                <strong>Aleezay</strong>
-                                <span class="host-meta">🇬🇧 United Kingdom</span>
-                                <span class="hof-award award-gold"><i class="fas fa-crown"></i> Rising Star UK</span>
-                            </span>
-                        </a>
-                        <a class="host-slide" href="https://www.tiktok.com/@mr.shawlive1" target="_blank" aria-label="Mr.Shaw on TikTok">
-                            <img src="images/mrshaw.png" alt="Mr.Shaw - The Lion Force TikTok LIVE host" loading="lazy">
-                            <span class="host-live"><i class="fas fa-circle"></i> LIVE</span>
-                            <span class="host-caption">
-                                <strong>Mr.Shaw</strong>
-                                <span class="host-meta">🇬🇧 United Kingdom</span>
-                                <span class="hof-award award-gold"><i class="fas fa-crown"></i> UK Regional Champion</span>
-                            </span>
-                        </a>
-                        <a class="host-slide" href="https://www.tiktok.com/@afshaofficialdubai" target="_blank" aria-label="Ashu Khan on TikTok">
-                            <img src="images/ashukhan.png" alt="Ashu Khan - The Lion Force TikTok LIVE host" loading="lazy">
-                            <span class="host-live"><i class="fas fa-circle"></i> LIVE</span>
-                            <span class="host-caption">
-                                <strong>Ashu Khan</strong>
-                                <span class="host-meta">🌍 MENA</span>
-                                <span class="hof-award award-gold"><i class="fas fa-crown"></i> MENA Champion</span>
-                            </span>
-                        </a>
-                        <a class="host-slide" href="https://www.tiktok.com/@missuni300" target="_blank" aria-label="Miss Uni on TikTok">
-                            <img src="images/missuni.png" alt="Miss Uni - The Lion Force TikTok LIVE host" loading="lazy">
-                            <span class="host-live"><i class="fas fa-circle"></i> LIVE</span>
-                            <span class="host-caption">
-                                <strong>Miss Uni</strong>
-                                <span class="host-meta">🌍 MENA</span>
-                                <span class="hof-award award-gold"><i class="fas fa-crown"></i> Most Engaging Host</span>
-                            </span>
-                        </a>
-                        <a class="host-slide" href="https://www.tiktok.com/@rafirwhck3l" target="_blank" aria-label="Rumi on TikTok">
-                            <img src="images/rumi.png" alt="Rumi - The Lion Force TikTok LIVE host" loading="lazy">
-                            <span class="host-live"><i class="fas fa-circle"></i> LIVE</span>
-                            <span class="host-caption">
-                                <strong>Rumi</strong>
-                                <span class="host-meta">🌍 MENA</span>
-                                <span class="hof-award award-gold"><i class="fas fa-crown"></i> MENA Star Creator</span>
-                            </span>
-                        </a>
-                        <a class="host-slide" href="https://www.tiktok.com/@branded.kurri46" target="_blank" aria-label="Branded Kurri on TikTok">
-                            <img src="images/branded.png" alt="Branded Kurri - The Lion Force TikTok LIVE host" loading="lazy">
-                            <span class="host-live"><i class="fas fa-circle"></i> LIVE</span>
-                            <span class="host-caption">
-                                <strong>Branded Kurri</strong>
-                                <span class="host-meta">🌍 MENA</span>
-                                <span class="hof-award award-gold"><i class="fas fa-crown"></i> Rising Star MENA</span>
-                            </span>
-                        </a>
-                        <a class="host-slide" href="https://www.tiktok.com/@ish4080" target="_blank" aria-label="Raja Ishaque on TikTok">
-                            <img src="images/raja.png" alt="Raja Ishaque - The Lion Force TikTok LIVE host" loading="lazy">
-                            <span class="host-live"><i class="fas fa-circle"></i> LIVE</span>
-                            <span class="host-caption">
-                                <strong>Raja Ishaque</strong>
-                                <span class="host-meta">🇬🇧 United Kingdom</span>
-                                <span class="hof-award award-gold"><i class="fas fa-crown"></i> Fan Favorite UK</span>
-                            </span>
-                        </a>
-                        <a class="host-slide" href="https://www.tiktok.com/@amal.khan1261" target="_blank" aria-label="Amal Khan on TikTok">
-                            <img src="images/amal.png" alt="Amal Khan - The Lion Force TikTok LIVE host" loading="lazy">
-                            <span class="host-live"><i class="fas fa-circle"></i> LIVE</span>
-                            <span class="host-caption">
-                                <strong>Amal Khan</strong>
-                                <span class="host-meta">🇹🇷 Turkey</span>
-                                <span class="hof-award award-gold"><i class="fas fa-crown"></i> Turkey Champion</span>
-                            </span>
-                        </a>
-                        <div class="host-dots" id="hostDots"><button type="button" class="host-dot active" aria-label="Show Shizuka"></button><button type="button" class="host-dot" aria-label="Show Hania Khan"></button><button type="button" class="host-dot" aria-label="Show Brave Girl"></button><button type="button" class="host-dot" aria-label="Show Zainab Khan"></button><button type="button" class="host-dot" aria-label="Show Aleezay"></button><button type="button" class="host-dot" aria-label="Show Mr.Shaw"></button><button type="button" class="host-dot" aria-label="Show Ashu Khan"></button><button type="button" class="host-dot" aria-label="Show Miss Uni"></button><button type="button" class="host-dot" aria-label="Show Rumi"></button><button type="button" class="host-dot" aria-label="Show Branded Kurri"></button><button type="button" class="host-dot" aria-label="Show Raja Ishaque"></button><button type="button" class="host-dot" aria-label="Show Amal Khan"></button></div>
+                <div class="hero-image-container host-wall-container">
+                    <!-- Host wall (replaces hero-image.png) -->
+                    <div class="host-wall" aria-label="The Lion Force star hosts">
+                    <div class="host-wall-col">
+                        <div class="host-wall-track">
+                            <a class="host-tile" href="https://www.tiktok.com/@shizuka.534" target="_blank">
+                                <img src="images/shizuka.png" alt="Shizuka - The Lion Force TikTok LIVE host" loading="lazy">
+                                <span class="host-live"><i class="fas fa-circle"></i> LIVE</span>
+                                <span class="host-tile-name">Shizuka<small>🇬🇧 United Kingdom</small></span>
+                            </a>
+                            <a class="host-tile" href="https://www.tiktok.com/@mr.shawlive1" target="_blank">
+                                <img src="images/mrshaw.png" alt="Mr.Shaw - The Lion Force TikTok LIVE host" loading="lazy">
+                                <span class="host-live"><i class="fas fa-circle"></i> LIVE</span>
+                                <span class="host-tile-name">Mr.Shaw<small>🇬🇧 United Kingdom</small></span>
+                            </a>
+                            <a class="host-tile" href="https://www.tiktok.com/@missuni300" target="_blank">
+                                <img src="images/missuni.png" alt="Miss Uni - The Lion Force TikTok LIVE host" loading="lazy">
+                                <span class="host-live"><i class="fas fa-circle"></i> LIVE</span>
+                                <span class="host-tile-name">Miss Uni<small>🌍 MENA</small></span>
+                            </a>
+                            <a class="host-tile" href="https://www.tiktok.com/@rafirwhck3l" target="_blank">
+                                <img src="images/rumi.png" alt="Rumi - The Lion Force TikTok LIVE host" loading="lazy">
+                                <span class="host-live"><i class="fas fa-circle"></i> LIVE</span>
+                                <span class="host-tile-name">Rumi<small>🌍 MENA</small></span>
+                            </a>
+                            <a class="host-tile" href="https://www.tiktok.com/@shizuka.534" target="_blank" tabindex="-1" aria-hidden="true">
+                                <img src="images/shizuka.png" alt="" loading="lazy">
+                                <span class="host-live"><i class="fas fa-circle"></i> LIVE</span>
+                                <span class="host-tile-name">Shizuka<small>🇬🇧 United Kingdom</small></span>
+                            </a>
+                            <a class="host-tile" href="https://www.tiktok.com/@mr.shawlive1" target="_blank" tabindex="-1" aria-hidden="true">
+                                <img src="images/mrshaw.png" alt="" loading="lazy">
+                                <span class="host-live"><i class="fas fa-circle"></i> LIVE</span>
+                                <span class="host-tile-name">Mr.Shaw<small>🇬🇧 United Kingdom</small></span>
+                            </a>
+                            <a class="host-tile" href="https://www.tiktok.com/@missuni300" target="_blank" tabindex="-1" aria-hidden="true">
+                                <img src="images/missuni.png" alt="" loading="lazy">
+                                <span class="host-live"><i class="fas fa-circle"></i> LIVE</span>
+                                <span class="host-tile-name">Miss Uni<small>🌍 MENA</small></span>
+                            </a>
+                            <a class="host-tile" href="https://www.tiktok.com/@rafirwhck3l" target="_blank" tabindex="-1" aria-hidden="true">
+                                <img src="images/rumi.png" alt="" loading="lazy">
+                                <span class="host-live"><i class="fas fa-circle"></i> LIVE</span>
+                                <span class="host-tile-name">Rumi<small>🌍 MENA</small></span>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="host-wall-col">
+                        <div class="host-wall-track">
+                            <a class="host-tile" href="https://www.tiktok.com/@menatophost1" target="_blank">
+                                <img src="images/haniakhan.jpeg" alt="Hania Khan - The Lion Force TikTok LIVE host" loading="lazy">
+                                <span class="host-live"><i class="fas fa-circle"></i> LIVE</span>
+                                <span class="host-tile-name">Hania Khan<small>🌍 MENA</small></span>
+                            </a>
+                            <a class="host-tile" href="https://www.tiktok.com/@afshaofficialdubai" target="_blank">
+                                <img src="images/ashukhan.png" alt="Ashu Khan - The Lion Force TikTok LIVE host" loading="lazy">
+                                <span class="host-live"><i class="fas fa-circle"></i> LIVE</span>
+                                <span class="host-tile-name">Ashu Khan<small>🌍 MENA</small></span>
+                            </a>
+                            <a class="host-tile" href="https://www.tiktok.com/@zainiofficial1122" target="_blank">
+                                <img src="images/zainab.png" alt="Zainab Khan - The Lion Force TikTok LIVE host" loading="lazy">
+                                <span class="host-live"><i class="fas fa-circle"></i> LIVE</span>
+                                <span class="host-tile-name">Zainab Khan<small>🌍 MENA</small></span>
+                            </a>
+                            <a class="host-tile" href="https://www.tiktok.com/@amal.khan1261" target="_blank">
+                                <img src="images/amal.png" alt="Amal Khan - The Lion Force TikTok LIVE host" loading="lazy">
+                                <span class="host-live"><i class="fas fa-circle"></i> LIVE</span>
+                                <span class="host-tile-name">Amal Khan<small>🇹🇷 Turkey</small></span>
+                            </a>
+                            <a class="host-tile" href="https://www.tiktok.com/@menatophost1" target="_blank" tabindex="-1" aria-hidden="true">
+                                <img src="images/haniakhan.jpeg" alt="" loading="lazy">
+                                <span class="host-live"><i class="fas fa-circle"></i> LIVE</span>
+                                <span class="host-tile-name">Hania Khan<small>🌍 MENA</small></span>
+                            </a>
+                            <a class="host-tile" href="https://www.tiktok.com/@afshaofficialdubai" target="_blank" tabindex="-1" aria-hidden="true">
+                                <img src="images/ashukhan.png" alt="" loading="lazy">
+                                <span class="host-live"><i class="fas fa-circle"></i> LIVE</span>
+                                <span class="host-tile-name">Ashu Khan<small>🌍 MENA</small></span>
+                            </a>
+                            <a class="host-tile" href="https://www.tiktok.com/@zainiofficial1122" target="_blank" tabindex="-1" aria-hidden="true">
+                                <img src="images/zainab.png" alt="" loading="lazy">
+                                <span class="host-live"><i class="fas fa-circle"></i> LIVE</span>
+                                <span class="host-tile-name">Zainab Khan<small>🌍 MENA</small></span>
+                            </a>
+                            <a class="host-tile" href="https://www.tiktok.com/@amal.khan1261" target="_blank" tabindex="-1" aria-hidden="true">
+                                <img src="images/amal.png" alt="" loading="lazy">
+                                <span class="host-live"><i class="fas fa-circle"></i> LIVE</span>
+                                <span class="host-tile-name">Amal Khan<small>🇹🇷 Turkey</small></span>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="host-wall-col">
+                        <div class="host-wall-track">
+                            <a class="host-tile" href="https://www.tiktok.com/@bravegirlbackupaccount" target="_blank">
+                                <img src="images/bravegirl.png" alt="Brave Girl - The Lion Force TikTok LIVE host" loading="lazy">
+                                <span class="host-live"><i class="fas fa-circle"></i> LIVE</span>
+                                <span class="host-tile-name">Brave Girl<small>🌍 MENA</small></span>
+                            </a>
+                            <a class="host-tile" href="https://www.tiktok.com/@aleezay3304" target="_blank">
+                                <img src="images/aleezay.png" alt="Aleezay - The Lion Force TikTok LIVE host" loading="lazy">
+                                <span class="host-live"><i class="fas fa-circle"></i> LIVE</span>
+                                <span class="host-tile-name">Aleezay<small>🇬🇧 United Kingdom</small></span>
+                            </a>
+                            <a class="host-tile" href="https://www.tiktok.com/@ish4080" target="_blank">
+                                <img src="images/raja.png" alt="Raja Ishaque - The Lion Force TikTok LIVE host" loading="lazy">
+                                <span class="host-live"><i class="fas fa-circle"></i> LIVE</span>
+                                <span class="host-tile-name">Raja Ishaque<small>🇬🇧 United Kingdom</small></span>
+                            </a>
+                            <a class="host-tile" href="https://www.tiktok.com/@branded.kurri46" target="_blank">
+                                <img src="images/branded.png" alt="Branded Kurri - The Lion Force TikTok LIVE host" loading="lazy">
+                                <span class="host-live"><i class="fas fa-circle"></i> LIVE</span>
+                                <span class="host-tile-name">Branded Kurri<small>🌍 MENA</small></span>
+                            </a>
+                            <a class="host-tile" href="https://www.tiktok.com/@bravegirlbackupaccount" target="_blank" tabindex="-1" aria-hidden="true">
+                                <img src="images/bravegirl.png" alt="" loading="lazy">
+                                <span class="host-live"><i class="fas fa-circle"></i> LIVE</span>
+                                <span class="host-tile-name">Brave Girl<small>🌍 MENA</small></span>
+                            </a>
+                            <a class="host-tile" href="https://www.tiktok.com/@aleezay3304" target="_blank" tabindex="-1" aria-hidden="true">
+                                <img src="images/aleezay.png" alt="" loading="lazy">
+                                <span class="host-live"><i class="fas fa-circle"></i> LIVE</span>
+                                <span class="host-tile-name">Aleezay<small>🇬🇧 United Kingdom</small></span>
+                            </a>
+                            <a class="host-tile" href="https://www.tiktok.com/@ish4080" target="_blank" tabindex="-1" aria-hidden="true">
+                                <img src="images/raja.png" alt="" loading="lazy">
+                                <span class="host-live"><i class="fas fa-circle"></i> LIVE</span>
+                                <span class="host-tile-name">Raja Ishaque<small>🇬🇧 United Kingdom</small></span>
+                            </a>
+                            <a class="host-tile" href="https://www.tiktok.com/@branded.kurri46" target="_blank" tabindex="-1" aria-hidden="true">
+                                <img src="images/branded.png" alt="" loading="lazy">
+                                <span class="host-live"><i class="fas fa-circle"></i> LIVE</span>
+                                <span class="host-tile-name">Branded Kurri<small>🌍 MENA</small></span>
+                            </a>
+                        </div>
+                    </div>
                     </div>
                 </div>
                 <div class="floating-card floating-card-1">
@@ -2958,58 +3022,6 @@
         document.querySelectorAll('.animate-on-scroll').forEach(el => {
             observer.observe(el);
         });
-
-        // Host slideshow (hero)
-        (function() {
-            var slider = document.getElementById('hostSlider');
-            if (!slider) return;
-            var slides = slider.querySelectorAll('.host-slide');
-            var dots = slider.querySelectorAll('.host-dot');
-            var current = 0;
-            var timer = null;
-
-            function show(i) {
-                slides[current].classList.remove('active');
-                dots[current].classList.remove('active');
-                current = (i + slides.length) % slides.length;
-                slides[current].classList.add('active');
-                dots[current].classList.add('active');
-            }
-
-            function start() {
-                stop();
-                timer = setInterval(function() { show(current + 1); }, 3500);
-            }
-
-            function stop() {
-                if (timer) clearInterval(timer);
-            }
-
-            dots.forEach(function(dot, i) {
-                dot.addEventListener('click', function() { show(i); start(); });
-            });
-
-            slider.addEventListener('mouseenter', stop);
-            slider.addEventListener('mouseleave', start);
-
-            // Swipe on phones
-            var startX = null;
-            slider.addEventListener('touchstart', function(e) { startX = e.touches[0].clientX; }, { passive: true });
-            slider.addEventListener('touchend', function(e) {
-                if (startX === null) return;
-                var dx = e.changedTouches[0].clientX - startX;
-                if (Math.abs(dx) > 40) { show(current + (dx < 0 ? 1 : -1)); start(); }
-                startX = null;
-            });
-
-            // If a photo is missing, skip that slide
-            slides.forEach(function(slide) {
-                var img = slide.querySelector('img');
-                img.addEventListener('error', function() { img.style.visibility = 'hidden'; });
-            });
-
-            start();
-        })();
 
         // Smooth scroll for anchor links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
