@@ -168,6 +168,13 @@ p{margin:0}
 .hero-stats dt{order:2;font-size:15px;color:var(--muted)}
 .hero-stats dd{margin:0;font:800 clamp(36px,4.2vw,52px)/1 var(--display);font-stretch:80%;letter-spacing:-.03em;background:var(--gold-metal);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
 
+.hero-founders{display:inline-flex;align-items:center;gap:14px;margin-top:28px;padding:8px 18px 8px 8px;border-radius:999px;background:var(--night-3);box-shadow:inset 0 0 0 1px var(--line);text-decoration:none;font-size:15px;color:var(--muted)}
+.hero-founders b{color:var(--ivory);font-weight:600}
+.hero-founders:hover{box-shadow:inset 0 0 0 1px var(--gold)}
+.hf-faces{display:flex;flex:none}
+.hf-faces img{width:40px;height:40px;border-radius:50%;background:#000;object-fit:contain;box-shadow:0 0 0 2px var(--night-3)}
+.hf-faces img + img{margin-left:-12px}
+
 /* Stream wall: the one moving moment on the page */
 .wall{
   position:relative;height:min(78vh,700px);
@@ -436,7 +443,9 @@ input[aria-invalid="true"],select[aria-invalid="true"]{border-color:var(--live)}
 
 /* ---------- Responsive ---------- */
 @media (max-width: 1024px){
-  .nav-links{gap:20px}
+  .nav-links{gap:16px}
+  .hero-founders{border-radius:20px}
+  .nav-links a{font-size:14px}
   .step-list{grid-template-columns:1fr 1fr;row-gap:32px}
   .step-list li:nth-child(3){padding-left:0;border-left:0}
   .foot-grid{grid-template-columns:1fr 1fr}
@@ -478,6 +487,7 @@ input[aria-invalid="true"],select[aria-invalid="true"]{border-color:var(--live)}
   .field-row{grid-template-columns:1fr;gap:0}
   .foot-grid{grid-template-columns:1fr}
   .hero-cta .btn{width:100%}
+  .hero-founders{border-radius:20px;align-items:center}
   .hero-stats{display:grid;grid-template-columns:repeat(3,auto);justify-content:space-between;gap:12px}
   .hero-stats dd{font-size:30px}
   .hero-stats dt{font-size:13px}
@@ -523,6 +533,7 @@ input[aria-invalid="true"],select[aria-invalid="true"]{border-color:var(--live)}
     <ul class="nav-links" id="nav-links">
       <li><a href="#support">What you get</a></li>
       <li><a href="#creators">Creators</a></li>
+      <li><a href="#founders">Founders</a></li>
       <li><a href="#how">How it works</a></li>
       <li><a href="#regions">Regions</a></li>
       <li><a href="#faq">FAQ</a></li>
@@ -551,6 +562,10 @@ input[aria-invalid="true"],select[aria-invalid="true"]{border-color:var(--live)}
         <div><dt>Creator earnings</dt><dd>$50M+</dd></div>
         <div><dt>Creator rating</dt><dd>4.9★</dd></div>
       </dl>
+      <a class="hero-founders" href="#founders">
+        <span class="hf-faces" aria-hidden="true"><img data-from="0" alt=""><img data-from="1" alt=""></span>
+        <span>Founded by <b>Syed Shahzad Abbas</b> and <b>Ansir Kamal</b></span>
+      </a>
     </div>
 
     <div class="wall" aria-hidden="true">
@@ -1031,6 +1046,10 @@ input[aria-invalid="true"],select[aria-invalid="true"]{border-color:var(--live)}
   document.querySelectorAll(".tile img").forEach(function(img){ guard(img, "no-img"); });
   document.querySelectorAll(".fighter img").forEach(function(img){ guard(img, "no-img"); });
   document.querySelectorAll(".founder-photo img").forEach(function(img){ guard(img, "no-img"); });
+
+  // Founder faces in the hero reuse the founder photos (no second copy in the file)
+  var fp = document.querySelectorAll(".founder-photo img");
+  document.querySelectorAll(".hf-faces img").forEach(function(img){ var src = fp[+img.dataset.from]; if (src) img.src = src.src; });
 
   // Mobile menu
   var toggle = document.querySelector(".menu-toggle");
