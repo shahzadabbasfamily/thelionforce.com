@@ -30,6 +30,10 @@
   "logo": "https://thelionforce.com/images/logo.png",
   "description": "Official TikTok LIVE Creator Network agency supporting creators in the UK and MENA.",
   "areaServed": ["United Kingdom", "Middle East", "North Africa"],
+  "founder": [
+    {"@type": "Person", "name": "Syed Shahzad Abbas", "sameAs": "https://www.tiktok.com/@shahzadabbasofficial"},
+    {"@type": "Person", "name": "Ansir Kamal", "alternateName": "Raja Kamal", "sameAs": "https://www.tiktok.com/@rajakamal1"}
+  ],
   "contactPoint": {
     "@type": "ContactPoint",
     "contactType": "creator applications",
@@ -298,6 +302,28 @@ section{scroll-margin-top:80px}
 .text-link{color:var(--gold);font-weight:700;text-decoration:none}
 .text-link:hover{text-decoration:underline}
 
+/* ---------- Founders ---------- */
+.founders{border-top:1px solid var(--line)}
+.founder-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.founder{
+  display:grid;grid-template-columns:auto 1fr;gap:clamp(20px,3vw,32px);align-items:center;
+  padding:clamp(24px,3.5vw,36px);border-radius:28px;
+  background:linear-gradient(155deg,#2A1F10 0%,var(--night-2) 65%);box-shadow:inset 0 0 0 1px var(--line);
+}
+.founder-photo{
+  position:relative;width:clamp(112px,12vw,148px);aspect-ratio:1;border-radius:50%;
+  padding:4px;background:var(--gold-metal);flex:none;
+}
+.founder-photo img,.founder-photo .initials{width:100%;height:100%;border-radius:50%;object-fit:cover;object-position:top center}
+.founder-photo .initials{display:none;place-items:center;background:var(--night);font:800 clamp(34px,3.6vw,46px)/1 var(--display);font-stretch:80%;color:var(--gold)}
+.founder-photo.no-img img{display:none}
+.founder-photo.no-img .initials{display:grid}
+.founder-role{font-size:14px;font-weight:600;color:var(--gold)}
+.founder h3{margin-top:6px;font-size:clamp(26px,2.8vw,34px);font-stretch:85%;letter-spacing:-.02em}
+.founder-aka{margin-top:4px;font-size:15px;color:var(--muted)}
+.founder .btn{margin-top:18px;min-height:44px;padding:0 18px;font-size:15px}
+.founder .btn svg{width:18px;height:18px}
+
 /* ---------- Steps (light band) ---------- */
 .steps{background:var(--mist);color:var(--ink)}
 .steps .section-head p{color:var(--ink-soft)}
@@ -432,7 +458,7 @@ input[aria-invalid="true"],select[aria-invalid="true"]{border-color:var(--live)}
   .rec-emblem{padding:40px 0 8px}
   .rec + .rec{border-left:0;border-top:1px solid var(--line)}
   .rec{padding:28px 0}
-  .support-grid,.apply-grid,.faq-grid,.region-grid{grid-template-columns:1fr}
+  .support-grid,.apply-grid,.faq-grid,.region-grid,.founder-grid{grid-template-columns:1fr}
   .support-feature{position:static}
   .fighters{grid-template-columns:1fr}
   .fighter{min-height:300px}
@@ -454,6 +480,7 @@ input[aria-invalid="true"],select[aria-invalid="true"]{border-color:var(--live)}
   .hero-stats dd{font-size:30px}
   .hero-stats dt{font-size:13px}
   .faq-list .answer{padding-right:0}
+  .founder{grid-template-columns:1fr;justify-items:start}
 }
 @media (prefers-reduced-motion: reduce){
   html{scroll-behavior:auto}
@@ -470,6 +497,7 @@ input[aria-invalid="true"],select[aria-invalid="true"]{border-color:var(--live)}
   <symbol id="i-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></symbol>
   <symbol id="i-award" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="6"/><path d="M15.5 12.9 17 22l-5-3-5 3 1.5-9.1"/></symbol>
   <symbol id="i-wa" viewBox="0 0 24 24" fill="currentColor"><path d="M17.5 14.4c-.3-.1-1.7-.8-2-.9-.3-.1-.5-.1-.7.1-.2.3-.8.9-.9 1.1-.2.2-.3.2-.6.1-.3-.1-1.2-.5-2.3-1.4-.9-.8-1.4-1.7-1.6-2-.2-.3 0-.5.1-.6l.4-.5c.1-.2.2-.3.3-.5.1-.2 0-.4 0-.5l-.9-2.2c-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.4s1 2.8 1.2 3c.1.2 2 3.1 4.9 4.3 2.4 1 2.9.8 3.4.7.5-.1 1.7-.7 2-1.4.2-.7.2-1.2.2-1.4-.1-.1-.3-.2-.6-.3zM12 21.8c-1.8 0-3.5-.5-5-1.4l-.4-.2-3.7 1 1-3.6-.2-.4C2.7 15.6 2.2 13.8 2.2 12 2.2 6.6 6.6 2.2 12 2.2c2.6 0 5.1 1 6.9 2.9 1.8 1.8 2.9 4.3 2.9 6.9 0 5.4-4.4 9.8-9.8 9.8zM20.5 3.5C18.2 1.2 15.2 0 12 0 5.4 0 0 5.4 0 12c0 2.1.6 4.2 1.6 6L0 24l6.2-1.6c1.8 1 3.8 1.5 5.8 1.5 6.6 0 12-5.4 12-12 0-3.2-1.2-6.2-3.5-8.4z"/></symbol>
+  <symbol id="i-tiktok" viewBox="0 0 24 24" fill="currentColor"><path d="M16.6 5.8A4.3 4.3 0 0 1 15.5 3h-3.1v12.4a2.6 2.6 0 1 1-2.6-2.6c.3 0 .5 0 .8.1V9.7a5.8 5.8 0 0 0-.8-.1 5.8 5.8 0 1 0 5.8 5.8V9.1a7.4 7.4 0 0 0 4.3 1.4V7.4a4.3 4.3 0 0 1-3.3-1.6z"/></symbol>
   <symbol id="i-plus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></symbol>
   <symbol id="i-shield" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></symbol>
   <symbol id="i-mic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="2" width="6" height="12" rx="3"/><path d="M19 10v1a7 7 0 0 1-14 0v-1M12 18v4M8 22h8"/></symbol>
@@ -671,6 +699,38 @@ input[aria-invalid="true"],select[aria-invalid="true"]{border-color:var(--live)}
     <div class="row-foot">
       <p>Swipe or scroll sideways to see more.</p>
       <a class="text-link" href="awards.html">See all awards and winners</a>
+    </div>
+  </div>
+</section>
+
+<!-- ================= FOUNDERS ================= -->
+<section class="section founders" id="founders" aria-labelledby="founders-title">
+  <div class="wrap">
+    <div class="section-head">
+      <h2 id="founders-title">Founded by creators, for creators.</h2>
+      <p>The Lion Force was founded by Syed Shahzad Abbas and Ansir Kamal. Both are on TikTok themselves, so they know what LIVE hosts deal with every day. Follow them and see for yourself.</p>
+    </div>
+    <div class="founder-grid">
+      <article class="founder">
+        <!-- Optional: upload a photo as images/founder-shahzad.jpg and it appears here automatically -->
+        <div class="founder-photo"><img src="images/founder-shahzad.jpg" alt="Syed Shahzad Abbas" loading="lazy"><span class="initials" aria-hidden="true">SA</span></div>
+        <div>
+          <div class="founder-role">Co-founder</div>
+          <h3>Syed Shahzad Abbas</h3>
+          <p class="founder-aka">@shahzadabbasofficial on TikTok</p>
+          <a class="btn btn-ghost" href="https://www.tiktok.com/@shahzadabbasofficial" target="_blank" rel="noopener"><svg aria-hidden="true"><use href="#i-tiktok"/></svg>Follow on TikTok</a>
+        </div>
+      </article>
+      <article class="founder">
+        <!-- Optional: upload a photo as images/founder-kamal.jpg and it appears here automatically -->
+        <div class="founder-photo"><img src="images/founder-kamal.jpg" alt="Ansir Kamal (Raja Kamal)" loading="lazy"><span class="initials" aria-hidden="true">AK</span></div>
+        <div>
+          <div class="founder-role">Co-founder</div>
+          <h3>Ansir Kamal</h3>
+          <p class="founder-aka">Known on TikTok as Raja Kamal, @rajakamal1</p>
+          <a class="btn btn-ghost" href="https://www.tiktok.com/@rajakamal1" target="_blank" rel="noopener"><svg aria-hidden="true"><use href="#i-tiktok"/></svg>Follow on TikTok</a>
+        </div>
+      </article>
     </div>
   </div>
 </section>
@@ -877,6 +937,7 @@ input[aria-invalid="true"],select[aria-invalid="true"]{border-color:var(--live)}
         <h3>The agency</h3>
         <ul>
           <li><a href="#support">What you get</a></li>
+          <li><a href="#founders">Our founders</a></li>
           <li><a href="awards.html">Awards</a></li>
           <li><a href="#how">How it works</a></li>
           <li><a href="#faq">FAQ</a></li>
@@ -969,6 +1030,7 @@ input[aria-invalid="true"],select[aria-invalid="true"]{border-color:var(--live)}
   }
   document.querySelectorAll(".tile img").forEach(function(img){ guard(img, "no-img"); });
   document.querySelectorAll(".fighter img").forEach(function(img){ guard(img, "no-img"); });
+  document.querySelectorAll(".founder-photo img").forEach(function(img){ guard(img, "no-img"); });
 
   // Mobile menu
   var toggle = document.querySelector(".menu-toggle");
