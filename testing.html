@@ -159,6 +159,11 @@ p{margin:0}
 .hero-proof li{display:flex;align-items:center;gap:10px;font-size:15px;color:var(--ivory)}
 .hero-proof svg{width:20px;height:20px;color:var(--gold);flex:none}
 
+.hero-stats{display:flex;flex-wrap:wrap;gap:20px clamp(28px,4vw,48px);margin:40px 0 0;padding:28px 0 0;border-top:1px solid var(--line)}
+.hero-stats div{display:flex;flex-direction:column;gap:6px}
+.hero-stats dt{order:2;font-size:15px;color:var(--muted)}
+.hero-stats dd{margin:0;font:800 clamp(36px,4.2vw,52px)/1 var(--display);font-stretch:80%;letter-spacing:-.03em;background:var(--gold-metal);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+
 /* Stream wall: the one moving moment on the page */
 .wall{
   position:relative;height:min(78vh,700px);
@@ -210,6 +215,7 @@ section{scroll-margin-top:80px}
 .rec{padding:44px clamp(16px,3vw,40px)}
 .rec + .rec{border-left:1px solid var(--line)}
 .rec{display:flex;flex-direction:column;justify-content:center}
+.rec strong{white-space:nowrap;font-size:clamp(36px,4.4vw,56px)}
 @media (min-width: 901px){.rec span{min-height:3.2em}}
 .rec strong{display:block;font:800 clamp(40px,5vw,60px)/1 var(--display);font-stretch:80%;color:var(--gold);letter-spacing:-.03em;background:var(--gold-metal);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
 .rec span{display:block;margin-top:12px;font-size:16px;color:var(--ivory);max-width:20em}
@@ -228,6 +234,8 @@ section{scroll-margin-top:80px}
 .esc-row{display:flex;align-items:center;gap:12px;padding:14px 16px;border-radius:14px;background:rgba(12,9,6,.6);font-size:15px}
 .esc-row svg{width:20px;height:20px;flex:none;color:var(--gold)}
 .esc-row b{margin-left:auto;font-weight:600;color:var(--muted);font-size:13px}
+.support-feature .btn{margin-top:24px}
+.pro-tag{display:inline-block;margin-left:8px;padding:3px 8px;border-radius:6px;background:var(--gold-metal);color:var(--ink);font:700 12px/1.2 var(--body);vertical-align:middle}
 
 .support-list{list-style:none;margin:0;padding:0}
 .support-list li{display:grid;grid-template-columns:48px 1fr;gap:18px;padding:28px 0;border-top:1px solid var(--line)}
@@ -436,6 +444,9 @@ input[aria-invalid="true"],select[aria-invalid="true"]{border-color:var(--live)}
   .field-row{grid-template-columns:1fr;gap:0}
   .foot-grid{grid-template-columns:1fr}
   .hero-cta .btn{width:100%}
+  .hero-stats{display:grid;grid-template-columns:repeat(3,auto);justify-content:space-between;gap:12px}
+  .hero-stats dd{font-size:30px}
+  .hero-stats dt{font-size:13px}
   .faq-list .answer{padding-right:0}
 }
 @media (prefers-reduced-motion: reduce){
@@ -499,10 +510,11 @@ input[aria-invalid="true"],select[aria-invalid="true"]{border-color:var(--live)}
         </a>
         <a class="btn btn-ghost" href="#how">See how it works</a>
       </div>
-      <ul class="hero-proof">
-        <li><svg aria-hidden="true"><use href="#i-award"/></svg>Top 12 agency, TikTok LIVE Fest 2025 UK</li>
-        <li><svg aria-hidden="true"><use href="#i-award"/></svg>Top 25 agency, TikTok MENA</li>
-      </ul>
+      <dl class="hero-stats">
+        <div><dt>Active creators</dt><dd>10K+</dd></div>
+        <div><dt>Creator earnings</dt><dd>$50M+</dd></div>
+        <div><dt>Creator rating</dt><dd>4.9★</dd></div>
+      </dl>
     </div>
 
     <div class="wall" aria-hidden="true">
@@ -518,17 +530,17 @@ input[aria-invalid="true"],select[aria-invalid="true"]{border-color:var(--live)}
   <div class="wrap rec-grid">
     <div class="rec-emblem"><span class="logo" role="img" aria-label="The Lion Force, TikTok LIVE agency crest"></span></div>
     <div class="rec">
-      <strong>1,000+</strong>
-      <span>creators supported across our markets</span>
-      <small>Onboarded, coached and managed since launch</small>
+      <strong>LIVE Pro</strong>
+      <span>hosts on our roster</span>
+      <small>New creators learn from hosts who stream at the top level</small>
     </div>
     <div class="rec">
-      <strong>Top 12</strong>
+      <strong>Top 5</strong>
       <span>agencies at TikTok LIVE Fest 2025</span>
       <small>United Kingdom, graduated Creator Network agency</small>
     </div>
     <div class="rec">
-      <strong>Top 25</strong>
+      <strong>Top 10</strong>
       <span>agencies in TikTok MENA</span>
       <small>Ranked among the region's leading agencies last quarter</small>
     </div>
@@ -545,19 +557,24 @@ input[aria-invalid="true"],select[aria-invalid="true"]{border-color:var(--live)}
 
     <div class="support-grid">
       <aside class="support-feature">
-        <h3>Account problem? You're not on your own.</h3>
-        <p>If your LIVE gets restricted or something goes wrong, tell your manager on WhatsApp. We check what happened, explain the policy and escalate eligible cases through our agency channel with TikTok.</p>
-        <div class="escalation" aria-label="How an issue is handled">
-          <div class="esc-row"><svg aria-hidden="true"><use href="#i-chat"/></svg>You message your manager<b>Any time</b></div>
-          <div class="esc-row"><svg aria-hidden="true"><use href="#i-book"/></svg>We review it against TikTok policy<b>Same day</b></div>
+        <h3>Got a problem? Log it in our own CRM.</h3>
+        <p>Every host gets access to The Lion Force creator CRM. Lodge a complaint or account issue directly, follow its progress, and your manager picks it up straight away.</p>
+        <div class="escalation" aria-label="How a complaint is handled">
+          <div class="esc-row"><svg aria-hidden="true"><use href="#i-chat"/></svg>You lodge a complaint in the CRM<b>Any time</b></div>
+          <div class="esc-row"><svg aria-hidden="true"><use href="#i-book"/></svg>Your manager reviews it<b>Tracked in CRM</b></div>
           <div class="esc-row"><svg aria-hidden="true"><use href="#i-shield"/></svg>Eligible cases escalated to TikTok<b>Agency channel</b></div>
         </div>
+        <a class="btn btn-gold crm-link" href="https://wa.me/447539357381?text=Hi%2C%20I%20want%20to%20lodge%20a%20complaint." target="_blank" rel="noopener">Lodge a complaint</a>
       </aside>
 
       <ul class="support-list">
         <li>
           <span class="ico"><svg aria-hidden="true"><use href="#i-flag"/></svg></span>
           <div><h3>Official LIVE onboarding</h3><p>Join through TikTok's own Creator Network invite. We walk you through every step until your first agency LIVE.</p></div>
+        </li>
+        <li>
+          <span class="ico"><svg aria-hidden="true"><use href="#i-award"/></svg></span>
+          <div><h3>LIVE Pro hosts<span class="pro-tag">PRO</span></h3><p>Our roster includes LIVE Pro hosts. Team up with them in battles and learn how top hosts run their streams.</p></div>
         </li>
         <li>
           <span class="ico"><svg aria-hidden="true"><use href="#i-mic"/></svg></span>
@@ -680,7 +697,7 @@ input[aria-invalid="true"],select[aria-invalid="true"]{border-color:var(--live)}
       <article class="region">
         <div class="region-flag" aria-hidden="true">🇬🇧</div>
         <h3>United Kingdom</h3>
-        <p>A graduated TikTok Creator Network agency in the UK, ranked Top 12 at LIVE Fest 2025, with hundreds of UK hosts onboarded.</p>
+        <p>A graduated TikTok Creator Network agency in the UK, ranked Top 5 at LIVE Fest 2025, with hundreds of UK hosts onboarded.</p>
         <ul>
           <li><svg aria-hidden="true"><use href="#i-check"/></svg>UK-based managers on UK hours</li>
           <li><svg aria-hidden="true"><use href="#i-check"/></svg>Support in English, Urdu and Hindi</li>
@@ -696,7 +713,7 @@ input[aria-invalid="true"],select[aria-invalid="true"]{border-color:var(--live)}
         <div class="region-flag" aria-hidden="true">🌍</div>
         <h3>Middle East &amp; North Africa</h3>
         <p class="ar" lang="ar">انضم إلى The Lion Force وابدأ البث المباشر مع فريق يدعمك</p>
-        <p>One of TikTok MENA's Top 25 agencies last quarter, with hosts streaming in Arabic, English, Urdu and Hindi.</p>
+        <p>One of TikTok MENA's Top 10 agencies last quarter, with hosts streaming in Arabic, English, Urdu and Hindi.</p>
         <ul>
           <li><svg aria-hidden="true"><use href="#i-check"/></svg>Arabic-speaking managers</li>
           <li><svg aria-hidden="true"><use href="#i-check"/></svg>UAE, Saudi Arabia, Qatar, Kuwait and across the region</li>
@@ -814,8 +831,12 @@ input[aria-invalid="true"],select[aria-invalid="true"]{border-color:var(--live)}
         <p class="answer">Usually within 48 hours. WhatsApp is the fastest way to reach a manager for your region.</p>
       </details>
       <details>
+        <summary>How do I make a complaint or report a problem?<span class="plus" aria-hidden="true"><svg><use href="#i-plus"/></svg></span></summary>
+        <p class="answer">Lodge it directly in our creator CRM. You can follow its progress there, and your manager is notified as soon as you submit it. You can also message your manager on WhatsApp.</p>
+      </details>
+      <details>
         <summary>What happens if my account gets restricted?<span class="plus" aria-hidden="true"><svg><use href="#i-plus"/></svg></span></summary>
-        <p class="answer">Tell your manager straight away. We'll review what happened, explain the relevant policy and escalate eligible cases to TikTok through our agency channel. Final decisions are always TikTok's.</p>
+        <p class="answer">Log it in our CRM or tell your manager straight away. We'll review what happened, explain the relevant policy and escalate eligible cases to TikTok through our agency channel. Final decisions are always TikTok's.</p>
       </details>
       <details>
         <summary>Can I leave if it's not right for me?<span class="plus" aria-hidden="true"><svg><use href="#i-plus"/></svg></span></summary>
@@ -859,6 +880,7 @@ input[aria-invalid="true"],select[aria-invalid="true"]{border-color:var(--live)}
         <h3>Contact</h3>
         <ul>
           <li><a href="https://wa.me/447539357381" target="_blank" rel="noopener">WhatsApp +44 7539 357381</a></li>
+          <li><a class="crm-link" href="https://wa.me/447539357381?text=Hi%2C%20I%20want%20to%20lodge%20a%20complaint." target="_blank" rel="noopener">Host complaints (CRM)</a></li>
           <!-- Add your business email below, then remove this comment -->
           <li><a href="mailto:hello@thelionforce.com">hello@thelionforce.com</a></li>
           <!-- Add your real TikTok / Instagram links below -->
@@ -882,6 +904,11 @@ input[aria-invalid="true"],select[aria-invalid="true"]{border-color:var(--live)}
 
 <script>
 (function(){
+  // Paste your CRM complaint page link here, e.g. "https://crm.yourdomain.com/complaints".
+  // While it is empty, the "Lodge a complaint" buttons open WhatsApp instead.
+  var CRM_URL = "";
+  if (CRM_URL) document.querySelectorAll(".crm-link").forEach(function(a){ a.href = CRM_URL; });
+
   var IMG = "https://thelionforce.com/images/";
   var creators = [
     {n:"Shizuka",       r:"🇬🇧 United Kingdom", img:"shizuka.png",   h:"shizuka.534",           a:"500K Diamond Challenge winner"},
